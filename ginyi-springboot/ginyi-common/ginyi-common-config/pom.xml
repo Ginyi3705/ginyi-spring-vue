@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ginyi-common</artifactId>
+        <groupId>com.ginyi</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ginyi-common-config</artifactId>
+
+    <dependencies>
+        <!-- aop -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- 异常处理 -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-common-exception</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
+        <!-- 通用工具类 -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-common-utils</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+    </dependencies>
+</project>

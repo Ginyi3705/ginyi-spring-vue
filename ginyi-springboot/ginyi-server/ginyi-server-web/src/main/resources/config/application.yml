@@ -1,0 +1,35 @@
+project-info:
+  project-name: 'ginyi-web-demo'
+  project-author: 'ginyi@aliyun.com'
+  project-description: '随便写点什么儿~'
+  project-version: '@project.version@'
+
+# web端的配置
+swagger:
+  # 接口文档标题
+  title: 'Ginyi-web api doc'
+  # 接口文档描述
+  description: 'This is a api doc of Ginyi'
+  # 基本包
+  base:
+    package: ginyi.server.web
+  # 联系方式
+  contact:
+    name: 'Author Email is Ginyi@aliyun.com'
+    email: Ginyi@aliyun.com
+  url: '写点什么呢~~~'
+  version: 1.0
+
+
+server:
+  port: 8055
+  servlet:
+    context-path: /
+    tomcat:
+      max-swallow-size: -1
+
+spring:
+  mvc:
+    pathmatch:
+      # swagger文档需要该配置
+      matching-strategy: ant_path_matcher

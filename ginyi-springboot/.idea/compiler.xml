@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ginyi-server-admin" />
+        <module name="ginyi-common-utils" />
+        <module name="ginyi-common-swagger" />
+        <module name="ginyi-common-result" />
+        <module name="ginyi-common-config" />
+        <module name="ginyi-server-web" />
+        <module name="ginyi-common-mysql" />
+        <module name="ginyi-common-exception" />
+        <module name="ginyi-framework" />
+        <module name="ginyi-server-common" />
+        <module name="ginyi-common-redis" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ginyi-common-config" options="-parameters" />
+      <module name="ginyi-common-exception" options="-parameters" />
+      <module name="ginyi-common-mysql" options="-parameters" />
+      <module name="ginyi-common-redis" options="-parameters" />
+      <module name="ginyi-common-result" options="-parameters" />
+      <module name="ginyi-common-swagger" options="-parameters" />
+      <module name="ginyi-common-utils" options="-parameters" />
+      <module name="ginyi-framework" options="-parameters" />
+      <module name="ginyi-server-admin" options="-parameters" />
+      <module name="ginyi-server-common" options="-parameters" />
+      <module name="ginyi-server-web" options="-parameters" />
+    </option>
+  </component>
+</project>

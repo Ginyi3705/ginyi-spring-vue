@@ -1,0 +1,31 @@
+project-info:
+  project-name: 'ginyi-admin-demo'
+  project-author: 'ginyi@aliyun.com'
+  project-description: '随便写点什么儿~'
+  project-version: '@project.version@'
+
+
+# admin端的配置
+swagger:
+  base:
+    package: ginyi.server.admin
+  contact:
+    email: Ginyi@aliyun.com
+    name: 'Author Email is Ginyi@aliyun.com'
+  title: 'Ginyi-admin api doc'
+  description: 'This is a api doc of Ginyi'
+  url: '写点什么呢~~~'
+  version: 1.0
+
+
+server:
+  port: 8066
+  servlet:
+    context-path: /
+    tomcat:
+      max-swallow-size: -1
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
