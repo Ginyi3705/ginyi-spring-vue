@@ -32,6 +32,7 @@
             <version>${ginyi.version}</version>
         </dependency>
 
+
         <!-- redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -57,10 +57,12 @@ public class RedisConfig {
 
         // 配置序列化
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
-        RedisCacheConfiguration redisCacheConfiguration = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
+        RedisCacheConfiguration redisCacheConfiguration = config.serializeKeysWith(RedisSerializationContext
+                        .SerializationPair.fromSerializer(redisSerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer));
 
-        RedisCacheManager cacheManager = RedisCacheManager.builder(factory)
+        RedisCacheManager cacheManager = RedisCacheManager
+                .builder(factory)
                 .cacheDefaults(redisCacheConfiguration)
                 .build();
         return cacheManager;

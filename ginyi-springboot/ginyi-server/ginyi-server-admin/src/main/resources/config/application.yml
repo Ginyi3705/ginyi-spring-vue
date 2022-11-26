@@ -29,3 +29,24 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  # 数据源
+  datasource:
+    type: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3307/reggie?serverTimezone=UTC
+      username: root
+      password: 123456
+  # 使用redis作为缓存
+  cache:
+    redis:
+      time-to-live: 180000
+  redis:
+    host: localhost
+    port: 6666
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: 1000

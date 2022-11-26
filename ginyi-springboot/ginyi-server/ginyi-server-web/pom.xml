@@ -12,11 +12,28 @@
     <artifactId>ginyi-server-web</artifactId>
 
     <dependencies>
+
+        <!-- 通用配置类 -->
         <dependency>
             <groupId>com.ginyi</groupId>
             <artifactId>ginyi-common-config</artifactId>
             <version>${ginyi.version}</version>
         </dependency>
+
+        <!-- 通用mysql -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-common-mysql</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
+        <!-- 通用redis -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-common-redis</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
 
         <!-- swagger2接口文档 -->
         <dependency>

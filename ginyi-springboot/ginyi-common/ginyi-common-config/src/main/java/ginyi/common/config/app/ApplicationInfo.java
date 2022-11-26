@@ -5,9 +5,27 @@ import lombok.extern.slf4j.Slf4j;
 import org.fusesource.jansi.Ansi;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisConnectionCommands;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 @Slf4j
 public class ApplicationInfo {
+
+    private static boolean mysqlConnection = false;
+    private static boolean redisConnection = false;
+
+    /**
+     * 彩色打印字体
+     */
+    public static String colorPrint(String s, Ansi.Color color) {
+        return Ansi.ansi().eraseScreen().fg(color).a(s).reset().toString();
+    }
 
     /**
      * 执行之前，打印前置条件提示
@@ -23,6 +41,22 @@ public class ApplicationInfo {
     }
 
     /**
+     * 创建数据库连接
+     */
+    public static void createMysqlConnection(DataSource dataSource) throws SQLException {
+        mysqlConnection = dataSource.getConnection() != null;
+    }
+
+
+    /**
+     * 创建数据库连接
+     */
+    public static void createRedisConnection(RedisTemplate redisTemplate) {
+        redisConnection = redisTemplate.execute(RedisConnectionCommands::ping) != null;
+    }
+
+
+    /**
      * 启动成功之后，打印项目信息
      */
     public static void afterApplication(ConfigurableApplicationContext context) {
@@ -36,10 +70,13 @@ public class ApplicationInfo {
         // 项目端口
         String port = environment.getProperty("server.port");
 
-        log.info("项目名称: {}", projectFinalName);
-        log.info("项目版本: {}", projectVersion);
         log.info("项目路径: {}", contextPath);
         log.info("项目端口: {}", port);
+        log.info("项目名称: {}", projectFinalName);
+        log.info("项目版本: {}", projectVersion);
+        log.info("服务状态: 数据库{} Redis{}",
+                colorPrint(mysqlConnection ? " ● 已连接" : " ✗ 未连接", mysqlConnection ? Ansi.Color.GREEN : Ansi.Color.RED),
+                colorPrint(redisConnection ? " ● 已连接" : " ✗ 未连接", redisConnection ? Ansi.Color.GREEN : Ansi.Color.RED));
 
         String startSuccess = "   _____   _______              _____    _______      _____   _    _    _____    _____   ______    _____    _____ \n" +
                 "  / ____| |__   __|     /\\     |  __ \\  |__   __|    / ____| | |  | |  / ____|  / ____| |  ____|  / ____|  / ____|\n" +
@@ -55,7 +92,7 @@ public class ApplicationInfo {
         log.info("服务地址: {}", homeUrl);
         log.info("Swagger接口文档: {}", swaggerUrl);
         log.info("knife4j接口文档: {}", knife4jUrl);
-        log.info("\n{}", Ansi.ansi().eraseScreen().fg(Ansi.Color.BLUE).a(startSuccess).reset().toString());
+        log.info("\n{}", colorPrint(startSuccess, Ansi.Color.BLUE));
 
     }
 
