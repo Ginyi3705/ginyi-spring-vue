@@ -12,8 +12,8 @@
     <artifactId>ginyi-common</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>ginyi-common-redis</module>
         <module>ginyi-common-mysql</module>
+        <module>ginyi-common-redis</module>
         <module>ginyi-common-exception</module>
         <module>ginyi-common-result</module>
         <module>ginyi-common-utils</module>
