@@ -95,8 +95,10 @@ spring:
 
 # MyBatis-plus配置
 mybatis-plus:
-  mapper-locations: classpath*:mapper/**/*Mapper.xml
-  type-aliases-package: ginyi.server.**
+  # mapper.xml文件的位置
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  # 类型别名的位置
+  type-aliases-package: ginyi.server.**.dto
   configuration:
     # 控制台输出sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

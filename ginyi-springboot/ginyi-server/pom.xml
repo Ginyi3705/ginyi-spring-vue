@@ -20,4 +20,12 @@
         <module>ginyi-server-system</module>
     </modules>
 
+    <dependencies>
+        <!-- 参数校验工具 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

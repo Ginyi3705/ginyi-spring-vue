@@ -60,7 +60,7 @@ spring:
     type: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3307/reggie?serverTimezone=UTC
+      url: jdbc:mysql://127.0.0.1:3307/ginyi-spring-vue?serverTimezone=UTC
       username: root
       password: 123456
   # redis 配置
@@ -86,3 +86,13 @@ spring:
         # #连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
 
+
+# MyBatis-plus配置
+mybatis-plus:
+  # mapper.xml文件的位置
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  # 类型别名的位置
+  type-aliases-package: ginyi.server.**.dto
+  configuration:
+    # 控制台输出sql语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

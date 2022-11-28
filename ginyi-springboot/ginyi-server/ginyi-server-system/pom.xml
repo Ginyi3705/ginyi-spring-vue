@@ -39,6 +39,12 @@
             <artifactId>ginyi-common-mysql</artifactId>
             <version>${ginyi.version}</version>
         </dependency>
+
+        <!-- 参数校验工具 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

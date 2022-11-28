@@ -43,6 +43,7 @@
         <fastjson.version>1.2.76</fastjson.version>
         <mysql.version>8.0.30</mysql.version>
         <mybatis.version>2.2.2</mybatis.version>
+        <validation.version>2.7.3</validation.version>
     </properties>
 
     <!-- 以下依赖 全局所有的模块都会引入  -->
@@ -86,6 +87,13 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
+        </dependency>
+
+        <!-- 参数校验工具 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>${validation.version}</version>
         </dependency>
 
         <!-- 控制台字体颜色 -->
