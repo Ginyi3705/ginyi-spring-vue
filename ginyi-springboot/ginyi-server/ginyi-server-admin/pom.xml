@@ -13,21 +13,18 @@
 
     <dependencies>
 
+        <!-- 系统服务 -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-server-system</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
         <!-- 通用配置类 -->
         <dependency>
             <groupId>com.ginyi</groupId>
             <artifactId>ginyi-common-config</artifactId>
             <version>${ginyi.version}</version>
-        </dependency>
-
-        <!-- swagger2接口文档 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
 
         <!-- 通用mysql -->
@@ -42,6 +39,16 @@
             <groupId>com.ginyi</groupId>
             <artifactId>ginyi-common-redis</artifactId>
             <version>${ginyi.version}</version>
+        </dependency>
+
+        <!-- swagger2接口文档 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
 
         <!-- Knife4j -->

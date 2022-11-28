@@ -1,5 +1,6 @@
 package ginyi.server.web.swagger;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,53 +22,53 @@ public class Swagger2Config {
     /**
      * 标题
      */
-    @Value("${swagger.title}")
+    @Value("${swagger.swagger-title}")
     private String title;
 
     /**
      * web端 - 基本包
      */
-    @Value("${swagger.base.package}")
+    @Value("${swagger.swagger-base-package}")
     private String basePackage;
 
     /**
      * 描述
      */
-    @Value("${swagger.description}")
+    @Value("${swagger.swagger-description}")
     private String description;
 
     /**
      * URL
      */
-    @Value("${swagger.url}")
+    @Value("${swagger.swagger-url}")
     private String url;
 
     /**
      * 作者
      */
-    @Value("${swagger.contact.name}")
+    @Value("${swagger.swagger-contact.name}")
     private String contactName;
 
 
     /**
      * 作者邮箱
      */
-    @Value("${swagger.contact.email}")
+    @Value("${swagger.swagger-contact.email}")
     private String contactEmail;
 
     /**
      * 版本
      */
-    @Value("${swagger.version}")
+    @Value("${swagger.swagger-version}")
     private String version;
 
     @Bean
     public Docket createAdminApiDoc() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("admin")
+                .groupName("web")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(basePackage(basePackage))
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build();
     }

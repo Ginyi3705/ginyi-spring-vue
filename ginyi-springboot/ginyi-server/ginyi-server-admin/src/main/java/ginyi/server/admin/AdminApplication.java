@@ -3,6 +3,7 @@ package ginyi.server.admin;
 
 import ginyi.common.config.app.ApplicationInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -10,8 +11,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.sql.DataSource;
 
-@SpringBootApplication
 @Slf4j
+@SpringBootApplication(scanBasePackages = {"ginyi.server"})
+@MapperScan({"ginyi.server.**.mapper"})
 public class AdminApplication {
 
     private static DataSource dataSource;

@@ -42,6 +42,7 @@
         <redis.version>2.2.5.RELEASE</redis.version>
         <fastjson.version>1.2.76</fastjson.version>
         <mysql.version>8.0.30</mysql.version>
+        <mybatis.version>2.2.2</mybatis.version>
     </properties>
 
     <!-- 以下依赖 全局所有的模块都会引入  -->
@@ -153,6 +154,13 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
+            </dependency>
+
+            <!-- SpringBoot集成mybatis框架 -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
 
             <!-- mybatis-plus -->

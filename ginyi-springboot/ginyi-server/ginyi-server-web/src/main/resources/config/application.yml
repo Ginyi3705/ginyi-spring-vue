@@ -1,32 +1,51 @@
+# 项目应用配置
+project:
+  # 项目应用名称
+  project-name: ginyi-web-demo
+  # 项目应用作者
+  project-author: ginyi@aliyun.com
+  # 项目应用版本
+  project-version: 1.0.0
+  # 项目应用描述
+  project-description: 随便写点什么儿~
+
+
+# 应用服务
 server:
+  # 服务端口
   port: 8055
   servlet:
+    # 应用访问的路径
     context-path: /
-    tomcat:
-      max-swallow-size: -1
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # 连接数满后的排队数，默认为100
+    accept-count: 1000
+    threads:
+      # tomcat最大线程数，默认为200
+      max: 800
+      # Tomcat启动初始化的线程数，默认值10
+      min-spare: 100
 
 
-project-info:
-  project-name: 'ginyi-web-demo'
-  project-author: 'ginyi@aliyun.com'
-  project-description: '随便写点什么儿~'
-  project-version: '@project.version@'
 
 # web端的配置
 swagger:
+  # 接口文档url
+  swagger-url: 写点什么呢~~~
   # 接口文档标题
-  title: 'Ginyi-web api doc'
+  swagger-title: Ginyi-web api doc
+  # 接口文档版本号
+  swaggerversion: 1.0
   # 接口文档描述
-  description: 'This is a api doc of Ginyi'
-  # 基本包
-  base:
-    package: ginyi.server.web
+  swagger-description: This is a api doc of Ginyi
+  # 接口文档基本包
+  swagger-base-package: ginyi.server.web
   # 联系方式
-  contact:
-    name: 'Author Email is Ginyi@aliyun.com'
+  swagger-contact:
+    name: Author Email is Ginyi@aliyun.com
     email: Ginyi@aliyun.com
-  url: '写点什么呢~~~'
-  version: 1.0
 
 
 
@@ -44,17 +63,26 @@ spring:
       url: jdbc:mysql://127.0.0.1:3307/reggie?serverTimezone=UTC
       username: root
       password: 123456
-  # 使用redis作为缓存
-  cache:
-    redis:
-      time-to-live: 180000
+  # redis 配置
   redis:
+    # 地址
     host: localhost
+    # 端口，默认为 6379
     port: 6666
+    # 数据库索引
+    database: 0
+    # 密码
+    password:
+    # 连接超时时间
+    timeout: 10s
     lettuce:
       pool:
-        max-active: 8
-        max-idle: 8
+        # 连接池中的最小空闲连接
         min-idle: 0
-        max-wait: 1000
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
 

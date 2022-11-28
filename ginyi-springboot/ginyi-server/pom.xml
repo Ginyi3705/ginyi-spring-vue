@@ -17,11 +17,7 @@
         <module>ginyi-server-web</module>
         <module>ginyi-server-admin</module>
         <module>ginyi-server-common</module>
+        <module>ginyi-server-system</module>
     </modules>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
 
 </project>

@@ -49,7 +49,7 @@ public class ApplicationInfo {
 
 
     /**
-     * 创建数据库连接
+     * 创建redis连接
      */
     public static void createRedisConnection(RedisTemplate redisTemplate) {
         redisConnection = redisTemplate.execute(RedisConnectionCommands::ping) != null;
@@ -62,9 +62,9 @@ public class ApplicationInfo {
     public static void afterApplication(ConfigurableApplicationContext context) {
         ConfigurableEnvironment environment = context.getEnvironment();
         // 项目名称
-        String projectFinalName = environment.getProperty("project-info.project-name");
+        String projectFinalName = environment.getProperty("project.project-name");
         // 项目版本
-        String projectVersion = environment.getProperty("project-info.project-version");
+        String projectVersion = environment.getProperty("project.project-version");
         // 项目路径
         String contextPath = environment.getProperty("server.servlet.context-path");
         // 项目端口

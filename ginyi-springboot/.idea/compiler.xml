@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ginyi-server-admin" />
+        <module name="ginyi-server-system" />
         <module name="ginyi-common-utils" />
         <module name="ginyi-common-swagger" />
         <module name="ginyi-common-result" />
@@ -31,8 +32,10 @@
       <module name="ginyi-common-swagger" options="-parameters" />
       <module name="ginyi-common-utils" options="-parameters" />
       <module name="ginyi-framework" options="-parameters" />
+      <module name="ginyi-server" options="" />
       <module name="ginyi-server-admin" options="-parameters" />
       <module name="ginyi-server-common" options="-parameters" />
+      <module name="ginyi-server-system" options="-parameters" />
       <module name="ginyi-server-web" options="-parameters" />
     </option>
   </component>
