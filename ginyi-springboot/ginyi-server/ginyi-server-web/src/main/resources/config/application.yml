@@ -32,6 +32,7 @@ server:
 
 # web端的配置
 swagger:
+  group-name: web
   # 接口文档url
   swagger-url: 写点什么呢~~~
   # 接口文档标题
@@ -92,7 +93,7 @@ mybatis-plus:
   # mapper.xml文件的位置
   mapper-locations: classpath:mapper/**/*Mapper.xml
   # 类型别名的位置
-  type-aliases-package: ginyi.server.**.dto
+  type-aliases-package: ginyi.**.dto
   configuration:
     # 控制台输出sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

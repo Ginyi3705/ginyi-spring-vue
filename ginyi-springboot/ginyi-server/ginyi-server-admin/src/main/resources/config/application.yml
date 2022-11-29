@@ -10,10 +10,9 @@ project:
   project-description: 随便写点什么儿~
 
 
-
-
 # admin端的配置
 swagger:
+  group-name: admin
   # 接口文档url
   swagger-url: 写点什么呢~~~
   # 接口文档标题
@@ -23,7 +22,7 @@ swagger:
   # 接口文档描述
   swagger-description: This is a api doc of Ginyi
   # 接口文档基本包
-  swagger-base-package: ginyi.server.web
+  swagger-base-package: ginyi.server.admin
   # 联系方式
   swagger-contact:
     name: Author Email is Ginyi@aliyun.com
@@ -98,7 +97,7 @@ mybatis-plus:
   # mapper.xml文件的位置
   mapper-locations: classpath:mapper/**/*Mapper.xml
   # 类型别名的位置
-  type-aliases-package: ginyi.server.**.dto
+  type-aliases-package: ginyi.**.entity
   configuration:
     # 控制台输出sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

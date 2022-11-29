@@ -10,13 +10,17 @@
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-utils/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-framework/ginyi-framework-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-framework/ginyi-framework-security/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-framework/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-framework/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-admin/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-system/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-web/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-system/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>

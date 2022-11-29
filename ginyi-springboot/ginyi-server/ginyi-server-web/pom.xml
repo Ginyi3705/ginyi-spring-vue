@@ -13,28 +13,6 @@
 
     <dependencies>
 
-        <!-- 通用配置类 -->
-        <dependency>
-            <groupId>com.ginyi</groupId>
-            <artifactId>ginyi-common-config</artifactId>
-            <version>${ginyi.version}</version>
-        </dependency>
-
-        <!-- 通用mysql -->
-        <dependency>
-            <groupId>com.ginyi</groupId>
-            <artifactId>ginyi-common-mysql</artifactId>
-            <version>${ginyi.version}</version>
-        </dependency>
-
-        <!-- 通用redis -->
-        <dependency>
-            <groupId>com.ginyi</groupId>
-            <artifactId>ginyi-common-redis</artifactId>
-            <version>${ginyi.version}</version>
-        </dependency>
-
-
         <!-- swagger2接口文档 -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -50,6 +28,7 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>

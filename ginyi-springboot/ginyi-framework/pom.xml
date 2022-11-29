@@ -10,4 +10,32 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ginyi-framework</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>ginyi-framework-core</module>
+        <module>ginyi-framework-security</module>
+    </modules>
+
+    <dependencies>
+
+        <!-- SpringBoot Web容器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--测试依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- 系统模块 -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-system</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+    </dependencies>
 </project>

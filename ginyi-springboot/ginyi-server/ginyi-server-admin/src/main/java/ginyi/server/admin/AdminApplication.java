@@ -8,12 +8,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.sql.DataSource;
 
 @Slf4j
-@SpringBootApplication(scanBasePackages = {"ginyi.server"})
-@MapperScan({"ginyi.server.**.mapper"})
+// 扫描系统服务的包以及自身所在模块的包
+@SpringBootApplication(scanBasePackages = {"ginyi.system", "ginyi.server.admin"})
+@MapperScan({"ginyi.system.**.mapper", "ginyi.server.admin.**.mapper"})
 public class AdminApplication {
 
     private static DataSource dataSource;

@@ -17,14 +17,14 @@
         <module>ginyi-server-web</module>
         <module>ginyi-server-admin</module>
         <module>ginyi-server-common</module>
-        <module>ginyi-server-system</module>
     </modules>
 
     <dependencies>
-        <!-- 参数校验工具 -->
+        <!-- 核心框架 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-framework</artifactId>
+            <version>${ginyi.version}</version>
         </dependency>
     </dependencies>
 
