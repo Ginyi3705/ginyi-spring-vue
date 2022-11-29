@@ -13,6 +13,12 @@
 
     <dependencies>
 
+        <!-- spring security 安全认证 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!-- 公用配置类 -->
         <dependency>
             <groupId>com.ginyi</groupId>
