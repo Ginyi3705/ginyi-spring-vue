@@ -9,6 +9,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/ginyi-common/ginyi-common-config/pom.xml" />
         <option value="$PROJECT_DIR$/ginyi-server/ginyi-server-system/pom.xml" />
       </set>
     </option>

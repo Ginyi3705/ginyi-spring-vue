@@ -48,6 +48,11 @@
         <jwt.version>0.9.1</jwt.version>
         <commons-pool2.version>2.9.0</commons-pool2.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
+        <bitwalker.version>1.21</bitwalker.version>
+        <fastjson.version>2.0.16</fastjson.version>
+        <redis.version>3.0.1</redis.version>
+
+
     </properties>
 
     <!-- 以下依赖 全局所有的模块都会引入  -->
@@ -132,6 +137,13 @@
                 <version>${jwt.version}</version>
             </dependency>
 
+            <!-- 解析客户端操作系统、浏览器等 -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${bitwalker.version}</version>
+            </dependency>
+
             <!-- spring security -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -212,6 +224,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${redis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
         </dependencies>

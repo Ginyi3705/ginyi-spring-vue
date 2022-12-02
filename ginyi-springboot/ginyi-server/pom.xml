@@ -20,12 +20,21 @@
     </modules>
 
     <dependencies>
+
         <!-- 核心框架 -->
         <dependency>
             <groupId>com.ginyi</groupId>
-            <artifactId>ginyi-framework</artifactId>
+            <artifactId>ginyi-framework-security</artifactId>
             <version>${ginyi.version}</version>
         </dependency>
+
+        <!-- 項目配置 -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-framework-core</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -66,7 +66,7 @@ spring:
     type: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3307/ginyi-spring-vue?serverTimezone=UTC
+      url: jdbc:mysql://127.0.0.1:3306/ginyi-spring-vue?serverTimezone=UTC
       username: root
       password: 123456
   # redis 配置
@@ -74,7 +74,7 @@ spring:
     # 地址
     host: localhost
     # 端口，默认为 6379
-    port: 6666
+    port: 6379
     # 数据库索引
     database: 0
     # 密码
@@ -95,9 +95,9 @@ spring:
 # MyBatis-plus配置
 mybatis-plus:
   # mapper.xml文件的位置
-  mapper-locations: classpath:mapper/**/*Mapper.xml
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
   # 类型别名的位置
-  type-aliases-package: ginyi.**.entity
+  type-aliases-package: ginyi.**.domain
   configuration:
     # 控制台输出sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -111,3 +111,12 @@ token:
   secret: abcdefghijklmnopqrstuvwxyz
   # 令牌有效期（默认30分钟）
   expireTime: 30
+
+
+# 用户配置
+user:
+  password:
+    # 密码最大错误次数
+    maxRetryCount: 5
+    # 密码锁定时间（默认10分钟）
+    lockTime: 10

@@ -1,12 +1,13 @@
 package ginyi.server.web;
 
-import ginyi.common.config.app.ApplicationInfo;
+import config.app.ApplicationInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
+
 import javax.sql.DataSource;
 
 @Slf4j

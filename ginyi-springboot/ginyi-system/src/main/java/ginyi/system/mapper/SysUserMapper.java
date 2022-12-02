@@ -1,20 +1,24 @@
 package ginyi.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import ginyi.system.entity.SysUser;
-import ginyi.system.entity.dto.params.SysUserParams;
-import ginyi.system.entity.dto.vo.SysUserVo;
-
-import java.util.List;
+import ginyi.system.domain.SysUser;
 
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
-     * 根据条件分页查询用户列表
+     * 修改用户信息
      *
      * @param user 用户信息
-     * @return 用户信息集合信息
+     * @return 结果
      */
-    public List<SysUserVo> selectUserList(SysUserParams user);
+    public int updateUser(SysUser user);
+
+    /**
+     * 通过用户名查询用户
+     *
+     * @param userName 用户名
+     * @return 用户对象信息
+     */
+    public SysUser selectUserByUserName(String userName);
 
 }

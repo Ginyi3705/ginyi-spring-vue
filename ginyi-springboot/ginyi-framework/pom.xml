@@ -18,24 +18,18 @@
 
     <dependencies>
 
-        <!-- SpringBoot Web容器 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!--测试依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!-- 系统模块 -->
         <dependency>
             <groupId>com.ginyi</groupId>
             <artifactId>ginyi-system</artifactId>
             <version>${ginyi.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-common-annotation</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

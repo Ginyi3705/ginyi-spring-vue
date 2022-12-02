@@ -13,13 +13,6 @@
 
     <dependencies>
 
-        <!-- security -->
-        <dependency>
-            <groupId>com.ginyi</groupId>
-            <artifactId>ginyi-framework-security</artifactId>
-            <version>${ginyi.version}</version>
-        </dependency>
-
         <!-- swagger2接口文档 -->
         <dependency>
             <groupId>io.springfox</groupId>
