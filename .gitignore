@@ -58,3 +58,6 @@ target/
 Thumbs.db
 Servers
 .metadata
+
+
+/**/*.idea/**
