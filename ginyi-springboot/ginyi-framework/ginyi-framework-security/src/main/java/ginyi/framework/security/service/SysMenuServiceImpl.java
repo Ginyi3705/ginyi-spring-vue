@@ -3,9 +3,9 @@ package ginyi.framework.security.service;
 import ginyi.common.utils.StringUtils;
 import ginyi.system.mapper.SysMenuMapper;
 import ginyi.system.service.ISysMenuService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.Set;
 @Service
 public class SysMenuServiceImpl implements ISysMenuService {
 
-    @Autowired
+    @Resource
     private SysMenuMapper menuMapper;
 
     /**

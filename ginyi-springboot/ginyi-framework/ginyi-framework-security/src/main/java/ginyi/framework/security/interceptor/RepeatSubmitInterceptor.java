@@ -1,10 +1,10 @@
 package ginyi.framework.security.interceptor;
 
 import com.alibaba.fastjson2.JSON;
-import ginyi.common.annotation.RepeatSubmit;
 import ginyi.common.result.CommonResult;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.ServletUtils;
+import ginyi.framework.core.annotation.RepeatSubmit;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;

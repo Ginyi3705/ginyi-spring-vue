@@ -1,4 +1,4 @@
-package ginyi.common.annotation;
+package ginyi.framework.core.annotation;
 
 import java.lang.annotation.*;
 

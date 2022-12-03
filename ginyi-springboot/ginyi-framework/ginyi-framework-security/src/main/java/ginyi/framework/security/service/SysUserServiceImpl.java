@@ -7,15 +7,16 @@ import ginyi.system.mapper.SysUserMapper;
 import ginyi.system.service.ISysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service
 public class SysUserServiceImpl implements ISysUserService {
 
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
-    @Autowired
+    @Resource
     private SysUserMapper userMapper;
 
     /**
@@ -57,8 +58,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 结果
      */
     @Override
-    public boolean registerUser(SysUser user)
-    {
+    public boolean registerUser(SysUser user) {
         return userMapper.insertUser(user) > 0;
     }
 }

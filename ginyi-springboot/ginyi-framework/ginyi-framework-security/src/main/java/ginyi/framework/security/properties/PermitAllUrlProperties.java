@@ -1,6 +1,6 @@
 package ginyi.framework.security.properties;
 
-import ginyi.common.annotation.Anonymous;
+import ginyi.framework.core.annotation.Anonymous;
 import org.apache.commons.lang3.RegExUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;

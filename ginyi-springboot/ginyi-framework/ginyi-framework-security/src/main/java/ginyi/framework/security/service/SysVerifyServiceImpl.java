@@ -12,9 +12,9 @@ import ginyi.common.result.StateCode;
 import ginyi.common.utils.constants.Constants;
 import ginyi.system.service.ISysConfigService;
 import ginyi.system.service.IVerifyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
@@ -22,13 +22,11 @@ import java.util.concurrent.TimeUnit;
 public class SysVerifyServiceImpl implements IVerifyService {
 
 
-    @Autowired
+    @Resource
     private HttpServletRequest request;
-
-    @Autowired
+    @Resource
     private RedisCache redisCache;
-
-    @Autowired
+    @Resource
     private ISysConfigService configService;
 
     /**

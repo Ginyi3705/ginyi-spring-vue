@@ -3,9 +3,9 @@ package ginyi.framework.security.service;
 import ginyi.system.domain.SysLogininfor;
 import ginyi.system.mapper.SysLogininforMapper;
 import ginyi.system.service.ISysLogininforService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class SysLogininforServiceImpl implements ISysLogininforService {
 
-    @Autowired
+    @Resource
     private SysLogininforMapper logininforMapper;
 
     /**

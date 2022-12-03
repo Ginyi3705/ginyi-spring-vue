@@ -5,31 +5,30 @@ import ginyi.common.result.MessageConstants;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.enums.UserStatus;
-import ginyi.system.domain.SysUser;
 import ginyi.system.domain.LoginUser;
+import ginyi.system.domain.SysUser;
 import ginyi.system.service.ISysPasswordService;
 import ginyi.system.service.ISysPermissionService;
 import ginyi.system.service.ISysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
-    @Autowired
+    @Resource
     private ISysUserService userService;
-
-    @Autowired
+    @Resource
     private ISysPasswordService passwordService;
-
-    @Autowired
+    @Resource
     private ISysPermissionService permissionService;
 
     @Override

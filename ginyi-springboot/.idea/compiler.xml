@@ -7,7 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ginyi-common-annotation" />
         <module name="ginyi-server-admin" />
         <module name="ginyi-common-utils" />
         <module name="ginyi-server-web" />
@@ -23,6 +22,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ginyi-common-annotation" target="8" />
       <module name="ginyi-common-config" target="1.8" />
       <module name="ginyi-server-system" target="1.8" />
     </bytecodeTargetLevel>

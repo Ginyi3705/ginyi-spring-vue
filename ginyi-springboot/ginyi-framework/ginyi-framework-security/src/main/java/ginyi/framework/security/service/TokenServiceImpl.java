@@ -2,22 +2,22 @@ package ginyi.framework.security.service;
 
 import eu.bitwalker.useragentutils.UserAgent;
 import ginyi.common.redis.cache.RedisCache;
+import ginyi.common.result.CacheConstants;
 import ginyi.common.utils.ServletUtils;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.constants.Constants;
 import ginyi.common.utils.ip.AddressUtils;
 import ginyi.common.utils.ip.IpUtils;
 import ginyi.common.utils.uuid.IdUtils;
-import ginyi.common.result.CacheConstants;
 import ginyi.system.domain.LoginUser;
 import ginyi.system.service.ITokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,18 +26,21 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class TokenServiceImpl implements ITokenService {
 
-    @Autowired
+    @Resource
     private RedisCache redisCache;
-
-    // 令牌自定义标识
+    /**
+     * 令牌自定义标识
+     */
     @Value("${token.header}")
     private String header;
-
-    // 令牌秘钥
+    /**
+     * 令牌秘钥
+     */
     @Value("${token.secret}")
     private String secret;
-
-    // 令牌有效期（默认30分钟）
+    /**
+     * 令牌有效期（默认30分钟）
+     */
     @Value("${token.expireTime}")
     private int expireTime;
 
@@ -68,6 +71,7 @@ public class TokenServiceImpl implements ITokenService {
      * @param loginUser 用户信息
      * @return 令牌
      */
+    @Override
     public String createToken(LoginUser loginUser) {
         String token = IdUtils.fastUUID();
         loginUser.setToken(token);

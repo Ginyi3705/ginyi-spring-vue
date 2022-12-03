@@ -5,7 +5,6 @@ import ginyi.system.domain.SysUser;
 import ginyi.system.service.ISysMenuService;
 import ginyi.system.service.ISysPermissionService;
 import ginyi.system.service.ISysRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,7 +17,6 @@ public class SysPermissionServiceImpl implements ISysPermissionService {
 
     @Resource
     private ISysRoleService roleService;
-
     @Resource
     private ISysMenuService menuService;
 

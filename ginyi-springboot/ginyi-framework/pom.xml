@@ -25,11 +25,5 @@
             <version>${ginyi.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.ginyi</groupId>
-            <artifactId>ginyi-common-annotation</artifactId>
-            <version>${ginyi.version}</version>
-        </dependency>
-
     </dependencies>
 </project>

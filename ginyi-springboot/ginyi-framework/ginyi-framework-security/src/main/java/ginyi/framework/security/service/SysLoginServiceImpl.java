@@ -8,7 +8,6 @@ import ginyi.common.result.MessageConstants;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.DateUtils;
 import ginyi.common.utils.ServletUtils;
-import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.constants.Constants;
 import ginyi.common.utils.constants.UserConstants;
 import ginyi.common.utils.ip.IpUtils;
@@ -16,9 +15,9 @@ import ginyi.framework.security.context.AuthenticationContextHolder;
 import ginyi.framework.security.manager.AsyncManager;
 import ginyi.framework.security.manager.factory.AsyncFactory;
 import ginyi.framework.security.utils.SecurityUtils;
+import ginyi.system.domain.LoginUser;
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.LoginDto;
-import ginyi.system.domain.LoginUser;
 import ginyi.system.domain.model.dto.RegisterDto;
 import ginyi.system.service.*;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,19 +33,14 @@ public class SysLoginServiceImpl implements ISysLoginService {
 
     @Resource
     private ISysConfigService configService;
-
     @Resource
     private RedisCache redisCache;
-
     @Resource
     private AuthenticationManager authenticationManager;
-
     @Resource
     private ISysUserService userService;
-
     @Resource
     private ITokenService tokenService;
-
     @Resource
     private IVerifyService verifyService;
 
@@ -75,6 +69,13 @@ public class SysLoginServiceImpl implements ISysLoginService {
             AuthenticationContextHolder.setContext(authenticationToken);
             // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
             authentication = authenticationManager.authenticate(authenticationToken);
+
+            // 登录成功
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
+            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+            recordLoginInfo(loginUser.getUserId());
+            // 生成token
+            return tokenService.createToken(loginUser);
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 // 账户被锁定
@@ -99,12 +100,8 @@ public class SysLoginServiceImpl implements ISysLoginService {
         } finally {
             AuthenticationContextHolder.clearContext();
         }
-        // 登录成功
-        AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        recordLoginInfo(loginUser.getUserId());
-        // 生成token
-        return tokenService.createToken(loginUser);
+        // 其他的未知异常
+        throw new BusinessException(StateCode.ERROR_SYSTEM, MessageConstants.SYS_ERROR);
     }
 
 

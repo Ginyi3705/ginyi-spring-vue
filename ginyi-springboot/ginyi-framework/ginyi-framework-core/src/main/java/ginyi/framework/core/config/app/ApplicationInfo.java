@@ -1,4 +1,4 @@
-package config.app;
+package ginyi.framework.core.config.app;
 
 import ginyi.common.utils.IpUtil;
 import lombok.extern.slf4j.Slf4j;

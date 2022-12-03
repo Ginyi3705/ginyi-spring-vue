@@ -9,22 +9,20 @@ import ginyi.framework.security.context.AuthenticationContextHolder;
 import ginyi.framework.security.utils.SecurityUtils;
 import ginyi.system.domain.SysUser;
 import ginyi.system.service.ISysPasswordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class SysPasswordServiceImpl implements ISysPasswordService {
 
-    @Autowired
+    @Resource
     private RedisCache redisCache;
-
     @Value(value = "${user.password.maxRetryCount}")
     private int maxRetryCount;
-
     @Value(value = "${user.password.lockTime}")
     private int lockTime;
 

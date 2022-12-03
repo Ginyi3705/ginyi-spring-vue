@@ -1,9 +1,9 @@
 package ginyi.framework.security.service;
 
 import ginyi.common.redis.cache.RedisCache;
+import ginyi.common.result.CacheConstants;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.text.Convert;
-import ginyi.common.result.CacheConstants;
 import ginyi.system.domain.SysConfig;
 import ginyi.system.mapper.SysConfigMapper;
 import ginyi.system.service.ISysConfigService;
@@ -16,7 +16,6 @@ public class SysConfigServiceImpl implements ISysConfigService {
 
     @Resource
     private RedisCache redisCache;
-
     @Resource
     private SysConfigMapper configMapper;
 

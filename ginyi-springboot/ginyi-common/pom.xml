@@ -18,7 +18,6 @@
         <module>ginyi-common-result</module>
         <module>ginyi-common-utils</module>
         <module>ginyi-common-swagger</module>
-        <module>ginyi-common-annotation</module>
     </modules>
 
 </project>
