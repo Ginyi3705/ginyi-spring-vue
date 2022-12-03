@@ -1,14 +1,16 @@
 package ginyi.system.service;
 
+import ginyi.system.domain.model.dto.LoginDto;
+import ginyi.system.domain.model.dto.RegisterDto;
+
 public interface ISysLoginService {
 
     /**
      * 登录验证
-     *
-     * @param username 用户名
-     * @param password 密码
-     * @param code 验证码
-     * @return 结果
+     * @param loginDto
+     * @return
      */
-    public String login(String username, String password, String code);
+    public String login(LoginDto loginDto);
+
+    public void register(RegisterDto registerDto);
 }

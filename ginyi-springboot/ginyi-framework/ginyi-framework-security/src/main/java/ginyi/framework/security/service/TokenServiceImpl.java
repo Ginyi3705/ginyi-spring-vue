@@ -9,7 +9,7 @@ import ginyi.common.utils.ip.AddressUtils;
 import ginyi.common.utils.ip.IpUtils;
 import ginyi.common.utils.uuid.IdUtils;
 import ginyi.common.result.CacheConstants;
-import ginyi.system.domain.model.LoginUser;
+import ginyi.system.domain.LoginUser;
 import ginyi.system.service.ITokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -105,6 +105,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public CommonResult ExceptionHandler(Exception e) {
         log.error("系统异常", e);
-        return CommonResult.error(StateCode.ERROR_SYSTEM);
+        return CommonResult.error(StateCode.ERROR_SYSTEM, MessageConstants.SYS_ERROR);
     }
 }

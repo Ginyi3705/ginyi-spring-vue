@@ -7,7 +7,7 @@ import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.constants.Constants;
 import ginyi.framework.security.manager.AsyncManager;
 import ginyi.framework.security.manager.factory.AsyncFactory;
-import ginyi.system.domain.model.LoginUser;
+import ginyi.system.domain.LoginUser;
 import ginyi.system.service.ITokenService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;

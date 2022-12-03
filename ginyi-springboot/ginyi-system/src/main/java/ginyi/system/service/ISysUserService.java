@@ -19,4 +19,20 @@ public interface ISysUserService {
      * @return 用户对象信息
      */
     public SysUser selectUserByUserName(String userName);
+
+    /**
+     * 校验用户名称是否唯一
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    public String checkUserNameUnique(SysUser user);
+
+    /**
+     * 注册用户信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    public boolean registerUser(SysUser user);
 }

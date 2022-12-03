@@ -28,4 +28,15 @@ public class SecurityUtils {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
+
+    /**
+     * 生成BCryptPasswordEncoder密码
+     *
+     * @param password 密码
+     * @return 加密字符串
+     */
+    public static String encryptPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
+    }
 }

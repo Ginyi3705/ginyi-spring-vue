@@ -6,7 +6,7 @@ import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.enums.UserStatus;
 import ginyi.system.domain.SysUser;
-import ginyi.system.domain.model.LoginUser;
+import ginyi.system.domain.LoginUser;
 import ginyi.system.service.ISysPasswordService;
 import ginyi.system.service.ISysPermissionService;
 import ginyi.system.service.ISysUserService;
@@ -47,7 +47,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         passwordService.validate(user);
-
         return createLoginUser(user);
     }
 

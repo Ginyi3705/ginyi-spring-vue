@@ -1,7 +1,6 @@
 package ginyi.system.service;
 
-import ginyi.system.domain.model.LoginUser;
-import io.jsonwebtoken.Claims;
+import ginyi.system.domain.LoginUser;
 
 import javax.servlet.http.HttpServletRequest;
 

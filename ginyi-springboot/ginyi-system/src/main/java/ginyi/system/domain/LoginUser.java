@@ -1,4 +1,4 @@
-package ginyi.system.domain.model;
+package ginyi.system.domain;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import ginyi.system.domain.SysUser;

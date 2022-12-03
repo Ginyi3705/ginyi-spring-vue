@@ -2,7 +2,7 @@ package ginyi.framework.security.filter;
 
 import ginyi.common.utils.StringUtils;
 import ginyi.framework.security.utils.SecurityUtils;
-import ginyi.system.domain.model.LoginUser;
+import ginyi.system.domain.LoginUser;
 import ginyi.system.service.ITokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
