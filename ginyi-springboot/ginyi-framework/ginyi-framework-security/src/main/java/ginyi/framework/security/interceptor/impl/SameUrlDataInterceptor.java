@@ -5,7 +5,7 @@ import ginyi.common.annotation.RepeatSubmit;
 import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.http.HttpHelper;
-import ginyi.framework.security.constants.CacheConstants;
+import ginyi.common.result.CacheConstants;
 import ginyi.framework.security.filter.RepeatedlyRequestWrapper;
 import ginyi.framework.security.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

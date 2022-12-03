@@ -1,27 +1,20 @@
 package ginyi.framework.security.service;
 
+import ginyi.common.exception.BusinessException;
+import ginyi.common.exception.UserPasswordNotMatchException;
 import ginyi.common.redis.cache.RedisCache;
+import ginyi.common.result.StateCode;
 import ginyi.common.utils.DateUtils;
 import ginyi.common.utils.MessageUtils;
 import ginyi.common.utils.ServletUtils;
-import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.constants.Constants;
 import ginyi.common.utils.ip.IpUtils;
-import ginyi.framework.security.constants.CacheConstants;
 import ginyi.framework.security.context.AuthenticationContextHolder;
-import ginyi.framework.security.exception.CaptchaException;
-import ginyi.framework.security.exception.CaptchaExpireException;
-import ginyi.framework.security.exception.ServiceException;
-import ginyi.framework.security.exception.UserPasswordNotMatchException;
 import ginyi.framework.security.manager.AsyncManager;
 import ginyi.framework.security.manager.factory.AsyncFactory;
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.LoginUser;
-import ginyi.system.service.ISysConfigService;
-import ginyi.system.service.ISysLoginService;
-import ginyi.system.service.ISysUserService;
-import ginyi.system.service.ITokenService;
-import org.springframework.beans.factory.annotation.Autowired;
+import ginyi.system.service.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,21 +41,23 @@ public class SysLoginServiceImpl implements ISysLoginService {
     @Resource
     private ITokenService tokenService;
 
+    @Resource
+    private IVerifyService verifyService;
+
     /**
      * 登录验证
      *
      * @param username 用户名
      * @param password 密码
      * @param code     验证码
-     * @param uuid     唯一标识
      * @return 结果
      */
     @Override
-    public String login(String username, String password, String code, String uuid) {
+    public String login(String username, String password, String code) {
         boolean captchaEnabled = configService.selectCaptchaEnabled();
-        // 验证码开关
+        // 图片验证码开关
         if (captchaEnabled) {
-            validateCaptcha(username, code, uuid);
+            verifyService.checkImgCode(code);
         }
         // 用户验证
         Authentication authentication = null;
@@ -77,7 +72,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
                 throw new UserPasswordNotMatchException();
             } else {
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, e.getMessage()));
-                throw new ServiceException(e.getMessage());
+                throw new BusinessException(StateCode.ERROR_SYSTEM);
             }
         } finally {
             AuthenticationContextHolder.clearContext();
@@ -89,27 +84,6 @@ public class SysLoginServiceImpl implements ISysLoginService {
         return tokenService.createToken(loginUser);
     }
 
-    /**
-     * 校验验证码
-     *
-     * @param username 用户名
-     * @param code     验证码
-     * @param uuid     唯一标识
-     * @return 结果
-     */
-    public void validateCaptcha(String username, String code, String uuid) {
-        String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
-        String captcha = redisCache.getCacheObject(verifyKey);
-        redisCache.deleteObject(verifyKey);
-        if (captcha == null) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
-            throw new CaptchaExpireException();
-        }
-        if (!code.equalsIgnoreCase(captcha)) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
-            throw new CaptchaException();
-        }
-    }
 
     /**
      * 记录登录信息

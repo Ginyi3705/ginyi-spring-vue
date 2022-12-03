@@ -1,7 +1,11 @@
-package ginyi.common.exception;
+package ginyi.common.exception.handler;
 
 import cn.hutool.json.JSONUtil;
+import ginyi.common.exception.BusinessException;
+import ginyi.common.exception.UserPasswordNotMatchException;
+import ginyi.common.exception.UserPasswordRetryLimitExceedException;
 import ginyi.common.result.CommonResult;
+import ginyi.common.result.MessageConstants;
 import ginyi.common.result.StateCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,43 +28,25 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     /**
-     * 自定义业务 ===> 处理数据异常处理
+     * 业务异常 ===> 处理数据异常处理
      *
      * @param e
      * @return
      */
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(HttpStatus.OK)
-    public CommonResult BusinessEcxeption(BusinessException e) {
+    public CommonResult BusinessEcxeptionHandler(BusinessException e) {
         return CommonResult.error(e.getState(), e.getData());
     }
 
-
     /**
-     * 捕获上传文件异常
-     *
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(MultipartException.class)
-    @ResponseStatus(HttpStatus.OK)
-    public CommonResult MultipartException(MultipartException e) {
-        if (e instanceof MaxUploadSizeExceededException) {
-            return CommonResult.error(StateCode.ERROR_MULTIPART, "单文件大小不得大于5MB，总文件大小不得大于50MB");
-        }
-        log.info("文件上传业务异常", e);
-        return CommonResult.error(StateCode.ERROR_MULTIPART, "文件上传业务异常");
-    }
-
-
-    /**
-     * 自定义异常 ===> 方法参数错误异常
+     * 参数校验 ===> 方法参数错误异常
      *
      * @param e
      * @return
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public CommonResult MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         List<String> errorList = new ArrayList<>();
         // 从异常对象中获取 ObjectError 对象
@@ -73,6 +59,41 @@ public class GlobalExceptionHandler {
         return CommonResult.error(StateCode.ERROR_PARAMS, errorList);
     }
 
+    /**
+     * 登录认证异常 ===> 用户名密码不匹配
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(UserPasswordNotMatchException.class)
+    public CommonResult UserPasswordNotMatchExceptionHandler(UserPasswordNotMatchException e){
+        return CommonResult.error(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_PASSWORD_NOT_MATCH);
+    }
+
+    /**
+     * 登录认证异常 ===> 用户登录失败次数超最大限制异常
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(UserPasswordRetryLimitExceedException.class)
+    public CommonResult UserPasswordRetryLimitExceedExceptionHandler(UserPasswordRetryLimitExceedException e){
+        return CommonResult.error(e.getState(), e.getData());
+    }
+
+
+    /**
+     * 捕获上传文件异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MultipartException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public CommonResult MultipartExceptionHandler(MultipartException e) {
+        if (e instanceof MaxUploadSizeExceededException) {
+            return CommonResult.error(StateCode.ERROR_MULTIPART, "单文件大小不得大于5MB，总文件大小不得大于50MB");
+        }
+        log.info("文件上传业务异常", e);
+        return CommonResult.error(StateCode.ERROR_MULTIPART, "文件上传业务异常");
+    }
+
 
     /**
      * 全局异常处理 ===> 处理其他所有未知异常
@@ -82,7 +103,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.OK)
-    public CommonResult Exception(Exception e) {
+    public CommonResult ExceptionHandler(Exception e) {
         log.error("系统异常", e);
         return CommonResult.error(StateCode.ERROR_SYSTEM);
     }

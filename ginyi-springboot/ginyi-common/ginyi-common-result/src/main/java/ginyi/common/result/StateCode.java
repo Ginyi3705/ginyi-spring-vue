@@ -4,6 +4,7 @@ package ginyi.common.result;
 public enum StateCode {
 
     SUCCESS(200, "操作成功"),
+
     ERROR_SYSTEM(5000, "系统异常"),
     ERROR_UNAUTHENTICATION(5001, "登陆授权异常"),
     ERROR_TIMEOUT_REQUEST(5002, "请求超时"),

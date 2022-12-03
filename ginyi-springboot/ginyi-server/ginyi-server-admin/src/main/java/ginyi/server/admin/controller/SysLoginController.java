@@ -1,7 +1,7 @@
 package ginyi.server.admin.controller;
 
 import ginyi.common.result.CommonResult;
-import ginyi.framework.security.constants.Constants;
+import ginyi.common.utils.constants.Constants;
 import ginyi.system.domain.model.LoginBody;
 import ginyi.system.service.ISysLoginService;
 import io.swagger.annotations.Api;
@@ -30,14 +30,12 @@ public class SysLoginController {
      */
     @ApiOperation("登录")
     @PostMapping("/login")
-    public CommonResult login(@RequestBody LoginBody loginBody)
-    {
+    public CommonResult login(@RequestBody LoginBody loginBody) {
         // 生成令牌
         String token = loginService.login(
                 loginBody.getUsername(),
                 loginBody.getPassword(),
-                loginBody.getCode(),
-                loginBody.getUuid());
+                loginBody.getCode());
         HashMap<String, String> map = new HashMap<>();
         map.put(Constants.TOKEN, token);
         return CommonResult.success(map);

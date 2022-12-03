@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 // 扫描系统服务的包以及自身所在模块的包
 @SpringBootApplication(scanBasePackages = {
         "ginyi.system",
-        "ginyi.common.redis",
+        "ginyi.common",
         "ginyi.framework.security",
         "ginyi.server.admin"
 })

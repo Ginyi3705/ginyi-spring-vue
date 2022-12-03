@@ -3,6 +3,9 @@ package ginyi.common.exception;
 import ginyi.common.result.StateCode;
 import lombok.Data;
 
+/**
+ * 业务异常处理
+ */
 @Data
 public class BusinessException extends RuntimeException{
 

@@ -1,4 +1,4 @@
-package ginyi.framework.security.constants;
+package ginyi.common.result;
 
 /**
  * 缓存的key 常量
