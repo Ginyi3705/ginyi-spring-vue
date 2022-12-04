@@ -1,10 +1,9 @@
 package ginyi.framework.security.config;
 
 
-import ginyi.common.utils.config.RuoYiConfig;
-import ginyi.common.utils.constants.Constants;
+import ginyi.framework.core.config.GinyiConfig;
+import ginyi.common.utils.Constants;
 import ginyi.framework.security.interceptor.RepeatSubmitInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
@@ -33,7 +32,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /** 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
-                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/");
+                .addResourceLocations("file:" + GinyiConfig.profile + "/");
 
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")

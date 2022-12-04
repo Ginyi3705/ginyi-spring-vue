@@ -1,8 +1,8 @@
 package ginyi.framework.security.interceptor.impl;
 
 import com.alibaba.fastjson2.JSON;
+import ginyi.common.constant.CacheConstants;
 import ginyi.common.redis.cache.RedisCache;
-import ginyi.common.result.CacheConstants;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.http.HttpHelper;
 import ginyi.framework.core.annotation.RepeatSubmit;

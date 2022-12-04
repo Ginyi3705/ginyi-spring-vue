@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ginyi-server-admin" />
+        <module name="ginyi-common-constants" />
         <module name="ginyi-common-utils" />
         <module name="ginyi-server-web" />
         <module name="ginyi-common-mysql" />
@@ -32,6 +33,7 @@
       <module name="ginyi-common" options="" />
       <module name="ginyi-common-annotation" options="-parameters" />
       <module name="ginyi-common-config" options="-parameters" />
+      <module name="ginyi-common-constants" options="-parameters" />
       <module name="ginyi-common-exception" options="-parameters" />
       <module name="ginyi-common-mysql" options="-parameters" />
       <module name="ginyi-common-redis" options="-parameters" />

@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import ginyi.common.result.CommonResult;
 import ginyi.common.utils.ServletUtils;
 import ginyi.common.utils.StringUtils;
-import ginyi.common.utils.constants.Constants;
+import ginyi.common.utils.Constants;
 import ginyi.framework.security.manager.AsyncManager;
 import ginyi.framework.security.manager.factory.AsyncFactory;
 import ginyi.system.domain.LoginUser;

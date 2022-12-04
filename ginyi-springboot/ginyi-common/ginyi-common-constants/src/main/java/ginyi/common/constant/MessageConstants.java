@@ -1,4 +1,4 @@
-package ginyi.common.result;
+package ginyi.common.constant;
 
 /**
  * 错误信息常量

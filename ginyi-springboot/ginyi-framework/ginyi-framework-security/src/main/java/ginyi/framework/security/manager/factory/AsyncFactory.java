@@ -4,7 +4,7 @@ import eu.bitwalker.useragentutils.UserAgent;
 import ginyi.common.utils.LogUtils;
 import ginyi.common.utils.ServletUtils;
 import ginyi.common.utils.StringUtils;
-import ginyi.common.utils.constants.Constants;
+import ginyi.common.utils.Constants;
 import ginyi.common.utils.ip.AddressUtils;
 import ginyi.common.utils.ip.IpUtils;
 import ginyi.common.utils.spring.SpringUtils;

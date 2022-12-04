@@ -1,4 +1,4 @@
-package ginyi.common.utils.constants;
+package ginyi.common.utils;
 
 /**
  * 通用常量信息

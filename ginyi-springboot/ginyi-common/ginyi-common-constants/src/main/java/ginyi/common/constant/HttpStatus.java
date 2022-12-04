@@ -1,4 +1,4 @@
-package ginyi.common.utils.constants;
+package ginyi.common.constant;
 
 /**
  * 返回状态码

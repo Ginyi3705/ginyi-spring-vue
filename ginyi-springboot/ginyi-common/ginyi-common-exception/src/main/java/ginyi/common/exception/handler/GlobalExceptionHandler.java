@@ -1,11 +1,11 @@
 package ginyi.common.exception.handler;
 
 import cn.hutool.json.JSONUtil;
+import ginyi.common.constant.MessageConstants;
 import ginyi.common.exception.BusinessException;
 import ginyi.common.exception.UserPasswordNotMatchException;
 import ginyi.common.exception.UserPasswordRetryLimitExceedException;
 import ginyi.common.result.CommonResult;
-import ginyi.common.result.MessageConstants;
 import ginyi.common.result.StateCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

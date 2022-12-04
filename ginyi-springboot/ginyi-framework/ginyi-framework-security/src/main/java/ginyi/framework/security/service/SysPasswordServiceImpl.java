@@ -1,9 +1,9 @@
 package ginyi.framework.security.service;
 
+import ginyi.common.constant.CacheConstants;
 import ginyi.common.exception.UserPasswordNotMatchException;
 import ginyi.common.exception.UserPasswordRetryLimitExceedException;
 import ginyi.common.redis.cache.RedisCache;
-import ginyi.common.result.CacheConstants;
 import ginyi.common.result.StateCode;
 import ginyi.framework.security.context.AuthenticationContextHolder;
 import ginyi.framework.security.utils.SecurityUtils;

@@ -1,12 +1,13 @@
 package ginyi.server.admin.controller;
 
 import ginyi.common.result.CommonResult;
-import ginyi.common.utils.constants.Constants;
+import ginyi.common.utils.Constants;
 import ginyi.system.domain.model.dto.LoginDto;
 import ginyi.system.domain.model.dto.RegisterDto;
 import ginyi.system.service.ISysLoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
 @Api(tags = "登录模块")
+@Slf4j
 public class SysLoginController {
 
     @Autowired
@@ -34,7 +37,9 @@ public class SysLoginController {
     @PostMapping("/login")
     public CommonResult login(@RequestBody @Validated LoginDto loginDto) {
         String token = loginService.login(loginDto);
-        return CommonResult.success(new HashMap<String, String>().put(Constants.TOKEN, token));
+        Map<String, String> map = new HashMap<>();
+        map.put(Constants.TOKEN, token);
+        return CommonResult.success(map);
     }
 
     /**

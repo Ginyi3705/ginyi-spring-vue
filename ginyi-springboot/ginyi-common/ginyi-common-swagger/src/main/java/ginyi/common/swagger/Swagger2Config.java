@@ -32,12 +32,6 @@ public class Swagger2Config {
     private String groupName;
 
     /**
-     * admin端 - 基本包
-     */
-    @Value("${swagger.swagger-base-package}")
-    private String basePackage;
-
-    /**
      * 描述
      */
     @Value("${swagger.swagger-description}")

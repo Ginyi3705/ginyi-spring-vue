@@ -4,12 +4,12 @@ import ginyi.common.exception.BusinessException;
 import ginyi.common.exception.UserPasswordNotMatchException;
 import ginyi.common.exception.UserPasswordRetryLimitExceedException;
 import ginyi.common.redis.cache.RedisCache;
-import ginyi.common.result.MessageConstants;
+import ginyi.common.constant.MessageConstants;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.DateUtils;
 import ginyi.common.utils.ServletUtils;
-import ginyi.common.utils.constants.Constants;
-import ginyi.common.utils.constants.UserConstants;
+import ginyi.common.utils.Constants;
+import ginyi.common.constant.UserConstants;
 import ginyi.common.utils.ip.IpUtils;
 import ginyi.framework.security.context.AuthenticationContextHolder;
 import ginyi.framework.security.manager.AsyncManager;
@@ -71,9 +71,9 @@ public class SysLoginServiceImpl implements ISysLoginService {
             authentication = authenticationManager.authenticate(authenticationToken);
 
             // 登录成功
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
             LoginUser loginUser = (LoginUser) authentication.getPrincipal();
             recordLoginInfo(loginUser.getUserId());
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
             // 生成token
             return tokenService.createToken(loginUser);
         } catch (Exception e) {

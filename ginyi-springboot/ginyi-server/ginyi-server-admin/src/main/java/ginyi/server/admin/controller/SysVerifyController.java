@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
@@ -18,7 +19,7 @@ import java.util.HashMap;
 @RequestMapping("/api/verify")
 public class SysVerifyController {
 
-    @Autowired
+    @Resource
     private IVerifyService verifyService;
 
     @ApiOperation("图片验证码")

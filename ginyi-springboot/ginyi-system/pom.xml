@@ -68,6 +68,13 @@
             <version>${ginyi.version}</version>
         </dependency>
 
+        <!-- 通用静态常量 -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-common-constants</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
         <!-- 参数校验工具 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

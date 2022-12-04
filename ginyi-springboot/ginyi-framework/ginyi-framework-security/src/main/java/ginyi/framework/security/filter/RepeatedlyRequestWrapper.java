@@ -1,6 +1,6 @@
 package ginyi.framework.security.filter;
 
-import ginyi.common.utils.constants.Constants;
+import ginyi.common.utils.Constants;
 import ginyi.common.utils.http.HttpHelper;
 
 import javax.servlet.ReadListener;

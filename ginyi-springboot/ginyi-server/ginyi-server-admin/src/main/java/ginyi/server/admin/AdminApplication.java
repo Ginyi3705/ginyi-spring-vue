@@ -1,7 +1,7 @@
 package ginyi.server.admin;
 
 
-import ginyi.framework.core.config.app.ApplicationInfo;
+import ginyi.framework.core.config.AppConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -31,15 +31,15 @@ public class AdminApplication {
 
     public static void main(String[] args) {
         try {
-            ApplicationInfo.beforeApplication();
+            AppConfig.beforeApplication();
             ConfigurableApplicationContext context = SpringApplication.run(AdminApplication.class, args);
             if(context != null){
                 log.info("正在进行服务连接...");
                 dataSource = (DataSource) context.getBean("dataSource");
                 redisTemplate = (RedisTemplate) context.getBean("redisTemplate");
-                ApplicationInfo.createMysqlConnection(dataSource);
-                ApplicationInfo.createRedisConnection(redisTemplate);
-                ApplicationInfo.afterApplication(context);
+                AppConfig.createMysqlConnection(dataSource);
+                AppConfig.createRedisConnection(redisTemplate);
+                AppConfig.afterApplication(context);
             }
         } catch (Exception e) {
             log.error("启动程序时发生异常 ===>>> " + e.getMessage());

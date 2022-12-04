@@ -1,7 +1,7 @@
 package ginyi.framework.security.service;
 
+import ginyi.common.constant.CacheConstants;
 import ginyi.common.redis.cache.RedisCache;
-import ginyi.common.result.CacheConstants;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.text.Convert;
 import ginyi.system.domain.SysConfig;

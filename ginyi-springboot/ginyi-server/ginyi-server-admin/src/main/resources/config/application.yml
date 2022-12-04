@@ -1,16 +1,18 @@
 # 项目应用配置
-project:
-  # 项目应用名称
-  project-name: ginyi-admin-demo
+ginyi:
   # 项目应用作者
   project-author: ginyi@aliyun.com
+  # 项目应用名称
+  project-name: ginyi-admin-demo
   # 项目应用版本
   project-version: 1.0.0
   # 项目应用描述
-  project-description: 随便写点什么儿~
+  project-description: 重构ruoyi，学习优质项目，加油~
+  # 文件路径 示例（ Windows配置D:/ginyi/uploadPath，Linux配置 /home/ginyi/uploadPath）
+  profile: D:/ginyi/uploadPath
 
 
-# admin端的配置
+# 接口文档的配置
 swagger:
   group-name: admin
   # 接口文档url
@@ -20,9 +22,7 @@ swagger:
   # 接口文档版本号
   swaggerversion: 1.0
   # 接口文档描述
-  swagger-description: This is a api doc of Ginyi
-  # 接口文档基本包
-  swagger-base-package: ginyi.server.admin
+  swagger-description: 这是swagger接口文档~
   # 联系方式
   swagger-contact:
     name: Author Email is Ginyi@aliyun.com
@@ -114,7 +114,7 @@ token:
   # 令牌自定义标识
   header: Authorization
   # 令牌密钥
-  secret: abcdefghijklmnopqrstuvwxyz
+  secret: da5519948e0ac1db0ac8da59bb0770a1
   # 令牌有效期（默认30分钟）
   expireTime: 30
 

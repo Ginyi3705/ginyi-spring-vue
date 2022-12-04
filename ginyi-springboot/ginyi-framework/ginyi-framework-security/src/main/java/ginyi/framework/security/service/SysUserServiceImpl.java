@@ -1,7 +1,7 @@
 package ginyi.framework.security.service;
 
 import ginyi.common.utils.StringUtils;
-import ginyi.common.utils.constants.UserConstants;
+import ginyi.common.constant.UserConstants;
 import ginyi.system.domain.SysUser;
 import ginyi.system.mapper.SysUserMapper;
 import ginyi.system.service.ISysUserService;

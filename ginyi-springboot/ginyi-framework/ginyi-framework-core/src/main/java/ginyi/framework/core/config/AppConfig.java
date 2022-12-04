@@ -1,20 +1,32 @@
-package ginyi.framework.core.config.app;
+package ginyi.framework.core.config;
 
 import ginyi.common.utils.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.fusesource.jansi.Ansi;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.data.redis.connection.RedisConnectionCommands;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Slf4j
-public class ApplicationInfo {
+public class AppConfig {
 
+    /**
+     * MySQL是否启动
+     */
     private static boolean mysqlConnection = false;
+
+    /**
+     * Redis是否启动
+     */
     private static boolean redisConnection = false;
 
     /**
@@ -38,7 +50,7 @@ public class ApplicationInfo {
     }
 
     /**
-     * 创建数据库连接
+     * 测试创建数据库连接
      */
     public static void createMysqlConnection(DataSource dataSource) throws SQLException {
         mysqlConnection = dataSource.getConnection() != null;
@@ -46,7 +58,7 @@ public class ApplicationInfo {
 
 
     /**
-     * 创建redis连接
+     * 测试创建redis连接
      */
     public static void createRedisConnection(RedisTemplate redisTemplate) {
         redisConnection = redisTemplate.execute(RedisConnectionCommands::ping) != null;
@@ -59,9 +71,9 @@ public class ApplicationInfo {
     public static void afterApplication(ConfigurableApplicationContext context) {
         ConfigurableEnvironment environment = context.getEnvironment();
         // 项目名称
-        String projectFinalName = environment.getProperty("project.project-name");
+        String projectFinalName = environment.getProperty("ginyi.project-name");
         // 项目版本
-        String projectVersion = environment.getProperty("project.project-version");
+        String projectVersion = environment.getProperty("ginyi.project-version");
         // 项目路径
         String contextPath = environment.getProperty("server.servlet.context-path");
         // 项目端口

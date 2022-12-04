@@ -1,6 +1,6 @@
 package ginyi.server.web;
 
-import ginyi.framework.core.config.app.ApplicationInfo;
+import ginyi.framework.core.config.AppConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -21,15 +21,15 @@ public class WebApplication {
 
     public static void main(String[] args) {
         try {
-            ApplicationInfo.beforeApplication();
+            AppConfig.beforeApplication();
             ConfigurableApplicationContext context = SpringApplication.run(WebApplication.class, args);
             if(context != null){
                 log.info("正在进行服务连接...");
                 dataSource = (DataSource) context.getBean("dataSource");
                 redisTemplate = (RedisTemplate) context.getBean("redisTemplate");
-                ApplicationInfo.createMysqlConnection(dataSource);
-                ApplicationInfo.createRedisConnection(redisTemplate);
-                ApplicationInfo.afterApplication(context);
+                AppConfig.createMysqlConnection(dataSource);
+                AppConfig.createRedisConnection(redisTemplate);
+                AppConfig.afterApplication(context);
 
             }
         } catch (Exception e) {

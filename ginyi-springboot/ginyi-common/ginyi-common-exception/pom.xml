@@ -25,6 +25,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- 通用的静态常量 -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-common-constants</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

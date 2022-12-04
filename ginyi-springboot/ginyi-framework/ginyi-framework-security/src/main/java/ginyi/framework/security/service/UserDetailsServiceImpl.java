@@ -1,7 +1,7 @@
 package ginyi.framework.security.service;
 
 import ginyi.common.exception.BusinessException;
-import ginyi.common.result.MessageConstants;
+import ginyi.common.constant.MessageConstants;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.enums.UserStatus;
