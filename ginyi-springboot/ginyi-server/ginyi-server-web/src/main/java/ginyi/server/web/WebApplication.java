@@ -12,8 +12,16 @@ import javax.sql.DataSource;
 
 @Slf4j
 // 扫描系统服务的包以及自身所在模块的包
-@SpringBootApplication(scanBasePackages = {"ginyi.system", "ginyi.server.web"})
-@MapperScan({"ginyi.system.**.mapper", "ginyi.server.web.**.mapper"})
+@SpringBootApplication(scanBasePackages = {
+        "ginyi.system",
+        "ginyi.common",
+        "ginyi.framework.security",
+        "ginyi.server.web"
+})
+@MapperScan({
+        "ginyi.system.**.mapper",
+        "ginyi.server.admin.**.mapper"
+})
 public class WebApplication {
 
     private static DataSource dataSource;
