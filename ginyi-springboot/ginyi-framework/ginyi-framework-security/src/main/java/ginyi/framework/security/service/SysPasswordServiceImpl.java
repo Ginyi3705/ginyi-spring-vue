@@ -32,7 +32,7 @@ public class SysPasswordServiceImpl implements ISysPasswordService {
         String username = usernamePasswordAuthenticationToken.getName();
         String password = usernamePasswordAuthenticationToken.getCredentials().toString();
 
-        Integer retryCount = redisCache.getCacheObject(getCacheKey(username));
+        Integer retryCount = redisCache.getCacheObject(getCacheKey(username), Integer.class);
 
         if (retryCount == null) {
             retryCount = 0;
@@ -70,7 +70,7 @@ public class SysPasswordServiceImpl implements ISysPasswordService {
 
     public void clearLoginRecordCache(String loginName) {
         if (redisCache.hasKey(getCacheKey(loginName))) {
-            redisCache.deleteObject(getCacheKey(loginName));
+            redisCache.removeCacheObject(getCacheKey(loginName));
         }
     }
 }

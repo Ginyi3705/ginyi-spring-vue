@@ -65,7 +65,7 @@ public class SysVerifyServiceImpl implements IVerifyService {
         String userAgent = ServletUtil.getHeader(request, "User-Agent", "utf-8");
 
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + SecureUtil.md5(clientIP + userAgent);
-        String captcha = redisCache.getCacheObject(verifyKey);
+        String captcha = redisCache.getCacheObject(verifyKey, String.class);
         // 验证码失效
         if (captcha == null) {
             throw new BusinessException(StateCode.ERROR_PARAMS_SERVICE, MessageConstants.VERIFY_EXPIRE);
@@ -74,7 +74,7 @@ public class SysVerifyServiceImpl implements IVerifyService {
             throw new BusinessException(StateCode.ERROR_PARAMS_SERVICE, MessageConstants.VERiFY_INCORRECT);
         } else {
             // 输入正确，删除该验证码
-            redisCache.deleteObject(verifyKey);
+            redisCache.removeCacheObject(verifyKey);
         }
     }
 

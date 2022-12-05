@@ -73,9 +73,10 @@ public class SysLoginServiceImpl implements ISysLoginService {
             // 登录成功
             LoginUser loginUser = (LoginUser) authentication.getPrincipal();
             recordLoginInfo(loginUser.getUserId());
+            String token = tokenService.createToken(loginUser);
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
             // 生成token
-            return tokenService.createToken(loginUser);
+            return token;
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 // 账户被锁定

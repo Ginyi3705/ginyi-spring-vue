@@ -14,6 +14,7 @@ import ginyi.system.service.ITokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class TokenServiceImpl implements ITokenService {
 
@@ -98,7 +100,7 @@ public class TokenServiceImpl implements ITokenService {
                 // 解析对应的权限以及用户信息
                 String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
                 String userKey = getTokenKey(uuid);
-                LoginUser user = redisCache.getCacheObject(userKey);
+                LoginUser user = redisCache.getCacheObject(userKey, LoginUser.class);
                 return user;
             } catch (Exception e) {
             }
@@ -113,7 +115,7 @@ public class TokenServiceImpl implements ITokenService {
     public void delLoginUser(String token) {
         if (StringUtils.isNotEmpty(token)) {
             String userKey = getTokenKey(token);
-            redisCache.deleteObject(userKey);
+            redisCache.removeCacheObject(userKey);
         }
     }
 
