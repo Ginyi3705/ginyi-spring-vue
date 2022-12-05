@@ -10,6 +10,7 @@ public enum StateCode {
     ERROR_TIMEOUT_REQUEST(5002, "请求超时"),
     ERROR_TIMEOUT_TOKEN(5003, "无效令牌"),
     ERROR_INVALID_SIGN(5004, "无效签名"),
+    ERROR_AUTHENTICATION_VALID(5005, "认证失败或令牌已过期"),
 
     ERROR_BUSINESS(6000,"业务逻辑异常"),
     ERROR_PARAMS(6001,"参数校验错误"),

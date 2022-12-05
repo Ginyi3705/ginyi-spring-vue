@@ -1,5 +1,8 @@
 package ginyi.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import ginyi.system.domain.SysMenu;
+
 import java.util.List;
 
 /**
@@ -7,8 +10,7 @@ import java.util.List;
  *
  * @author ruoyi
  */
-public interface SysMenuMapper
-{
+public interface SysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 根据用户ID查询权限
      *
@@ -19,7 +21,7 @@ public interface SysMenuMapper
 
     /**
      * 根据角色ID查询权限
-     * 
+     *
      * @param roleId 角色ID
      * @return 权限列表
      */

@@ -2,6 +2,7 @@ package ginyi.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 import java.util.Date;
@@ -66,7 +67,8 @@ public class SysUser extends BaseEntity {
     /**
      * 删除标志（0代表存在 2代表删除）
      */
-    private String delFlag;
+    @TableLogic
+    private String deleted;
 
     /**
      * 最后登录IP

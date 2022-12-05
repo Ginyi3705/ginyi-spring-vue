@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="menuCheckStrictly"  column="menu_check_strictly"   />
 		<result property="deptCheckStrictly"  column="dept_check_strictly"   />
 		<result property="status"             column="status"                />
-		<result property="delFlag"            column="del_flag"              />
+		<result property="deleted"            column="deleted"              />
 		<result property="createBy"           column="create_by"             />
 		<result property="createTime"         column="create_time"           />
 		<result property="updateBy"           column="update_by"             />
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<sql id="selectRoleVo">
 	    select distinct r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.menu_check_strictly, r.dept_check_strictly,
-            r.status, r.del_flag, r.create_time, r.remark 
+            r.status, r.deleted, r.create_time, r.remark
         from sys_role r
 	        left join sys_user_role ur on ur.role_id = r.role_id
 	        left join sys_user u on u.user_id = ur.user_id
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
 	<select id="selectRolePermissionByUserId" parameterType="Long" resultMap="SysRoleResult">
 		<include refid="selectRoleVo"/>
-		WHERE r.del_flag = '0' and ur.user_id = #{userId}
+		WHERE r.deleted = '0' and ur.user_id = #{userId}
 	</select>
 
  	

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -26,28 +27,33 @@ public class BaseEntity implements Serializable {
     /**
      * 创建者
      */
+    @ApiModelProperty("创建者")
     private String createBy;
 
     /**
      * 创建时间
      */
     @JsonFormat
+    @ApiModelProperty("创建时间")
     private Date createTime;
 
     /**
      * 更新者
      */
+    @ApiModelProperty("更新者")
     private String updateBy;
 
     /**
      * 更新时间
      */
     @JsonFormat
+    @ApiModelProperty("更新时间")
     private Date updateTime;
 
     /**
      * 备注
      */
+    @ApiModelProperty("备注")
     private String remark;
 
     /**

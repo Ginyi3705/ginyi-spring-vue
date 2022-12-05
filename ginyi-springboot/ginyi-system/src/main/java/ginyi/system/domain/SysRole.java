@@ -1,5 +1,6 @@
 package ginyi.system.domain;
 
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -13,6 +14,7 @@ import java.util.Set;
  *
  * @author ruoyi
  */
+@Data
 public class SysRole extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -64,7 +66,7 @@ public class SysRole extends BaseEntity {
     /**
      * 删除标志（0代表存在 2代表删除）
      */
-    private String delFlag;
+    private String deleted;
 
     /**
      * 用户是否存在此角色标识 默认不存在

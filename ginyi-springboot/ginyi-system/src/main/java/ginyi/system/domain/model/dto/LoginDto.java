@@ -1,7 +1,7 @@
 package ginyi.system.domain.model.dto;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
  * @author ruoyi
  */
 @Data
-@ApiOperation("登录用户参数")
+@ApiModel("登录用户参数")
 public class LoginDto {
     /**
      * 用户名

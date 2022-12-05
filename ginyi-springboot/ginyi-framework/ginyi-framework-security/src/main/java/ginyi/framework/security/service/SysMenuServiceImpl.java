@@ -1,6 +1,7 @@
 package ginyi.framework.security.service;
 
 import ginyi.common.utils.StringUtils;
+import ginyi.system.domain.SysMenu;
 import ginyi.system.mapper.SysMenuMapper;
 import ginyi.system.service.ISysMenuService;
 import org.springframework.stereotype.Service;
@@ -57,5 +58,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
             }
         }
         return permsSet;
+    }
+
+    /**
+     * 根据用户查询系统菜单列表
+     *
+     * @return 菜单列表
+     */
+    @Override
+    public List<SysMenu> selectMenuList() {
+        return menuMapper.selectList(null);
     }
 }

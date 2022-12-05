@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (StringUtils.isNull(user)) {
             // 不存在
             throw new BusinessException(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_NOT_EXIST);
-        } else if (UserStatus.DELETED.getCode().equals(user.getDelFlag())) {
+        } else if (UserStatus.DELETED.getCode().equals(user.getDeleted())) {
             // 被删除
             throw new BusinessException(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_IS_DELETED);
         } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {

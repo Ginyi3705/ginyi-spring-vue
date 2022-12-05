@@ -1,6 +1,7 @@
 package ginyi.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -9,6 +10,7 @@ import java.util.Date;
  *
  * @author ruoyi
  */
+@Data
 public class SysOperLog extends BaseEntity {
     private static final long serialVersionUID = 1L;
 

@@ -1,11 +1,10 @@
 package ginyi.framework.security.handle;
 
 import com.alibaba.fastjson2.JSON;
+import ginyi.common.constant.MessageConstants;
 import ginyi.common.result.CommonResult;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.ServletUtils;
-import ginyi.common.utils.StringUtils;
-import ginyi.common.constant.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -27,8 +26,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, S
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
             throws IOException {
-        int code = HttpStatus.UNAUTHORIZED;
-        String msg = StringUtils.format("请求访问：{}，认证失败，无法访问系统资源", request.getRequestURI());
-        ServletUtils.renderString(response, JSON.toJSONString(CommonResult.error(StateCode.ERROR_INVALID_SIGN, msg)));
+        ServletUtils.renderString(response, JSON.toJSONString(CommonResult.error(StateCode.ERROR_INVALID_SIGN, MessageConstants.SYS_AUTHENTICATION_VALID)));
     }
 }

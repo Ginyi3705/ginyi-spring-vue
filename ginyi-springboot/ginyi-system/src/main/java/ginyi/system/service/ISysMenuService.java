@@ -1,5 +1,8 @@
 package ginyi.system.service;
 
+import ginyi.system.domain.SysMenu;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,4 +26,11 @@ public interface ISysMenuService {
      * @return 权限列表
      */
     public Set<String> selectMenuPermsByUserId(Long userId);
+
+    /**
+     * 根据用户查询系统菜单列表
+     *
+     * @return 菜单列表
+     */
+    public List<SysMenu> selectMenuList();
 }
