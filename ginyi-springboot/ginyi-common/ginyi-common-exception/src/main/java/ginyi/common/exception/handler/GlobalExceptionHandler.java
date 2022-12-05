@@ -36,6 +36,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(HttpStatus.OK)
     public CommonResult BusinessEcxeptionHandler(BusinessException e) {
+        if(e.getState() == StateCode.ERROR_SYSTEM){
+            return CommonResult.error(e.getState(), MessageConstants.SYS_ERROR);
+        }
         return CommonResult.error(e.getState(), e.getData());
     }
 

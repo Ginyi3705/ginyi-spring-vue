@@ -78,13 +78,15 @@ public class SysLoginServiceImpl implements ISysLoginService {
             LoginUser loginUser = (LoginUser) authentication.getPrincipal();
             recordLoginInfo(loginUser.getUserId());
             String token = tokenService.createToken(loginUser);
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
 
             // 生成token
             LoginVo loginVo = new LoginVo();
             loginVo.setToken(token);
             loginVo.setTokenHeader(tokenHeader);
             loginVo.setTokenPrefix(tokenPrefix);
+
+            // 记录日志
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
             return loginVo;
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
@@ -111,7 +113,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
             AuthenticationContextHolder.clearContext();
         }
         // 其他的未知异常
-        throw new BusinessException(StateCode.ERROR_SYSTEM, MessageConstants.SYS_ERROR);
+        return null;
     }
 
 
@@ -139,7 +141,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
             sysUser.setPassword(SecurityUtils.encryptPassword(registerDto.getPassword()));
             boolean regFlag = userService.registerUser(sysUser);
             if (!regFlag) {
-                throw new BusinessException(StateCode.ERROR_SYSTEM, MessageConstants.SYS_ERROR);
+                throw new BusinessException(StateCode.ERROR_SYSTEM);
             } else {
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(registerDto.getUsername(), Constants.REGISTER, MessageConstants.REGISTER_SUCCESS));
             }

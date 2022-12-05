@@ -1,7 +1,6 @@
 package ginyi.common.redis.cache;
 
 import com.alibaba.fastjson.JSON;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
@@ -97,10 +96,10 @@ public class RedisCache {
     public <T> T getCacheObject(final String key, Class<T> clazz) {
         ValueOperations<String, Object> operation = redisTemplate.opsForValue();
         Object o = operation.get(key);
-        if(o == null){
+        if (o == null) {
             return null;
         }
-        return JSON.parseObject(String.valueOf(o), clazz);
+        return JSON.parseObject(JSON.toJSONString(o), clazz);
     }
 
     /**
