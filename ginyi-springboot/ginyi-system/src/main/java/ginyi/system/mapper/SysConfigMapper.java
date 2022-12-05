@@ -1,14 +1,8 @@
 package ginyi.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ginyi.system.domain.SysConfig;
 
-public interface SysConfigMapper {
+public interface SysConfigMapper extends BaseMapper<SysConfig> {
 
-    /**
-     * 查询参数配置信息
-     *
-     * @param config 参数配置信息
-     * @return 参数配置信息
-     */
-    public SysConfig selectConfig(SysConfig config);
 }

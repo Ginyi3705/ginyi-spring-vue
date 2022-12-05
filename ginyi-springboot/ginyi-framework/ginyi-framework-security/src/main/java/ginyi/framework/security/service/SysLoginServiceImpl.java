@@ -32,6 +32,11 @@ import javax.annotation.Resource;
 @Service
 public class SysLoginServiceImpl implements ISysLoginService {
 
+    @Value("${token.prefix}")
+    private String tokenPrefix;
+    @Value("${token.header}")
+    private String tokenHeader;
+
     @Resource
     private ISysConfigService configService;
     @Resource
@@ -42,10 +47,6 @@ public class SysLoginServiceImpl implements ISysLoginService {
     private ITokenService tokenService;
     @Resource
     private IVerifyService verifyService;
-    @Value("${token.prefix}")
-    private String tokenPrefix;
-    @Value("${token.header}")
-    private String tokenHeader;
 
     /**
      * 登录验证

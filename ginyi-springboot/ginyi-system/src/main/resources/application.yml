@@ -77,6 +77,10 @@ spring:
     basename: static/i18n/messages
   profiles:
     active: druid
+  # 全局配置 @JsonFormat 时间格式化
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 
 
 # MyBatis-plus配置
@@ -88,6 +92,10 @@ mybatis-plus:
   configuration:
     # 控制台输出sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 更改默认的 id 生成策略
+      id-type: assign_id
 
 
 # token配置

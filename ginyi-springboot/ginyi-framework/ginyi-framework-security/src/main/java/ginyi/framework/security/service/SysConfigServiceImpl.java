@@ -1,5 +1,6 @@
 package ginyi.framework.security.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import ginyi.common.constant.CacheConstants;
 import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.utils.StringUtils;
@@ -45,12 +46,12 @@ public class SysConfigServiceImpl implements ISysConfigService {
         if (StringUtils.isNotEmpty(configValue)) {
             return configValue;
         }
-        SysConfig config = new SysConfig();
-        config.setConfigKey(configKey);
-        SysConfig retConfig = configMapper.selectConfig(config);
-        if (StringUtils.isNotNull(retConfig)) {
-            redisCache.setCacheObject(getCacheKey(configKey), retConfig.getConfigValue());
-            return retConfig.getConfigValue();
+        LambdaQueryWrapper<SysConfig> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysConfig::getConfigKey, configKey);
+        SysConfig sysConfig = configMapper.selectOne(queryWrapper);
+        if (StringUtils.isNotNull(sysConfig)) {
+            redisCache.setCacheObject(getCacheKey(configKey), sysConfig.getConfigValue());
+            return sysConfig.getConfigValue();
         }
         return StringUtils.EMPTY;
     }
