@@ -11,7 +11,7 @@
         <result property="userName"     column="user_name"    />
         <result property="nickName"     column="nick_name"    />
         <result property="email"        column="email"        />
-        <result property="phonenumber"  column="phonenumber"  />
+        <result property="phoneNumber"  column="phone_number"  />
         <result property="sex"          column="sex"          />
         <result property="avatar"       column="avatar"       />
         <result property="password"     column="password"     />
@@ -48,7 +48,7 @@
     </resultMap>
 
     <sql id="selectUserVo">
-        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,
+        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phone_number, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,
                d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.status as dept_status,
                r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
         from sys_user u
@@ -64,7 +64,7 @@
             <if test="userName != null and userName != ''">user_name = #{userName},</if>
             <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
             <if test="email != null ">email = #{email},</if>
-            <if test="phonenumber != null ">phonenumber = #{phonenumber},</if>
+            <if test="phoneNumber != null ">phone_number = #{phoneNumber},</if>
             <if test="sex != null and sex != ''">sex = #{sex},</if>
             <if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
             <if test="password != null and password != ''">password = #{password},</if>
@@ -95,7 +95,7 @@
         <if test="nickName != null and nickName != ''">nick_name,</if>
         <if test="email != null and email != ''">email,</if>
         <if test="avatar != null and avatar != ''">avatar,</if>
-        <if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
+        <if test="phoneNumber != null and phoneNumber != ''">phone_number,</if>
         <if test="sex != null and sex != ''">sex,</if>
         <if test="password != null and password != ''">password,</if>
         <if test="status != null and status != ''">status,</if>
@@ -109,7 +109,7 @@
         <if test="nickName != null and nickName != ''">#{nickName},</if>
         <if test="email != null and email != ''">#{email},</if>
         <if test="avatar != null and avatar != ''">#{avatar},</if>
-        <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+        <if test="phoneNumber != null and phoneNumber != ''">#{phoneNumber},</if>
         <if test="sex != null and sex != ''">#{sex},</if>
         <if test="password != null and password != ''">#{password},</if>
         <if test="status != null and status != ''">#{status},</if>

@@ -3,6 +3,9 @@ package ginyi.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ginyi.system.domain.SysUser;
 
+/**
+ * 用户表
+ */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**

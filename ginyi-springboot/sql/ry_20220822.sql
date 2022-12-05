@@ -46,7 +46,7 @@ create table sys_user (
   nick_name         varchar(30)     not null                   comment '用户昵称',
   user_type         varchar(2)      default '00'               comment '用户类型（00系统用户）',
   email             varchar(50)     default ''                 comment '用户邮箱',
-  phonenumber       varchar(11)     default ''                 comment '手机号码',
+  phoneNumber       varchar(11)     default ''                 comment '手机号码',
   sex               char(1)         default '0'                comment '用户性别（0男 1女 2未知）',
   avatar            varchar(100)    default ''                 comment '头像地址',
   password          varchar(100)    default ''                 comment '密码',
