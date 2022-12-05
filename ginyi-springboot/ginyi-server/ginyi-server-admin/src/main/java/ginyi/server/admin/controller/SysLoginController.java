@@ -4,6 +4,7 @@ import ginyi.common.result.CommonResult;
 import ginyi.common.utils.Constants;
 import ginyi.system.domain.model.dto.LoginDto;
 import ginyi.system.domain.model.dto.RegisterDto;
+import ginyi.system.domain.model.vo.LoginVo;
 import ginyi.system.service.ISysLoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,11 +36,9 @@ public class SysLoginController {
      */
     @ApiOperation("用户登录")
     @PostMapping("/login")
-    public CommonResult login(@RequestBody @Validated LoginDto loginDto) {
-        String token = loginService.login(loginDto);
-        Map<String, String> map = new HashMap<>();
-        map.put(Constants.TOKEN, token);
-        return CommonResult.success(map);
+    public CommonResult<LoginVo> login(@RequestBody @Validated LoginDto loginDto) {
+        LoginVo loginVo = loginService.login(loginDto);
+        return CommonResult.success(loginVo);
     }
 
     /**

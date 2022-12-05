@@ -1,15 +1,14 @@
 package ginyi.framework.security.service;
 
+import ginyi.common.constant.MessageConstants;
+import ginyi.common.constant.UserConstants;
 import ginyi.common.exception.BusinessException;
 import ginyi.common.exception.UserPasswordNotMatchException;
 import ginyi.common.exception.UserPasswordRetryLimitExceedException;
-import ginyi.common.redis.cache.RedisCache;
-import ginyi.common.constant.MessageConstants;
 import ginyi.common.result.StateCode;
+import ginyi.common.utils.Constants;
 import ginyi.common.utils.DateUtils;
 import ginyi.common.utils.ServletUtils;
-import ginyi.common.utils.Constants;
-import ginyi.common.constant.UserConstants;
 import ginyi.common.utils.ip.IpUtils;
 import ginyi.framework.security.context.AuthenticationContextHolder;
 import ginyi.framework.security.manager.AsyncManager;
@@ -19,7 +18,9 @@ import ginyi.system.domain.LoginUser;
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.LoginDto;
 import ginyi.system.domain.model.dto.RegisterDto;
+import ginyi.system.domain.model.vo.LoginVo;
 import ginyi.system.service.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,8 +35,6 @@ public class SysLoginServiceImpl implements ISysLoginService {
     @Resource
     private ISysConfigService configService;
     @Resource
-    private RedisCache redisCache;
-    @Resource
     private AuthenticationManager authenticationManager;
     @Resource
     private ISysUserService userService;
@@ -43,6 +42,10 @@ public class SysLoginServiceImpl implements ISysLoginService {
     private ITokenService tokenService;
     @Resource
     private IVerifyService verifyService;
+    @Value("${token.prefix}")
+    private String tokenPrefix;
+    @Value("${token.header}")
+    private String tokenHeader;
 
     /**
      * 登录验证
@@ -51,7 +54,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
      * @return
      */
     @Override
-    public String login(LoginDto loginDto) {
+    public LoginVo login(LoginDto loginDto) {
 
         String username = loginDto.getUsername();
         String password = loginDto.getPassword();
@@ -75,8 +78,13 @@ public class SysLoginServiceImpl implements ISysLoginService {
             recordLoginInfo(loginUser.getUserId());
             String token = tokenService.createToken(loginUser);
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
+
             // 生成token
-            return token;
+            LoginVo loginVo = new LoginVo();
+            loginVo.setToken(token);
+            loginVo.setTokenHeader(tokenHeader);
+            loginVo.setTokenPrefix(tokenPrefix);
+            return loginVo;
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 // 账户被锁定

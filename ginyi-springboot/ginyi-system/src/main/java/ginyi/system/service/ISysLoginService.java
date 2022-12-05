@@ -2,6 +2,7 @@ package ginyi.system.service;
 
 import ginyi.system.domain.model.dto.LoginDto;
 import ginyi.system.domain.model.dto.RegisterDto;
+import ginyi.system.domain.model.vo.LoginVo;
 
 public interface ISysLoginService {
 
@@ -10,7 +11,7 @@ public interface ISysLoginService {
      * @param loginDto
      * @return
      */
-    public String login(LoginDto loginDto);
+    public LoginVo login(LoginDto loginDto);
 
     public void register(RegisterDto registerDto);
 }

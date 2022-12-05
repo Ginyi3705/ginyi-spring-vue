@@ -94,6 +94,8 @@ mybatis-plus:
 token:
   # 令牌自定义标识
   header: Authorization
+  # 令牌前缀
+  prefix: Bearer
   # 令牌密钥
   secret: da5519948e0ac1db0ac8da59bb0770a1
   # 令牌有效期（默认30分钟）
