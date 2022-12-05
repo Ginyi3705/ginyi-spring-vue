@@ -1,5 +1,7 @@
 package ginyi.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,6 +15,7 @@ public class SysUser extends BaseEntity {
     /**
      * 用户ID
      */
+    @TableId
     private Long userId;
 
     /**
@@ -78,26 +81,31 @@ public class SysUser extends BaseEntity {
     /**
      * 部门对象
      */
+    @TableField(exist = false, select = false)
     private SysDept dept;
 
     /**
      * 角色对象
      */
+    @TableField(exist = false, select = false)
     private List<SysRole> roles;
 
     /**
      * 角色组
      */
+    @TableField(exist = false, select = false)
     private Long[] roleIds;
 
     /**
      * 岗位组
      */
+    @TableField(exist = false, select = false)
     private Long[] postIds;
 
     /**
      * 角色ID
      */
+    @TableField(exist = false, select = false)
     private Long roleId;
 
 
