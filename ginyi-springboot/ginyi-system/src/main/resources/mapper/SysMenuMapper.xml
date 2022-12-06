@@ -27,25 +27,6 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-    <sql id="selectMenuVo">
-        select menu_id,
-               menu_name,
-               parent_id,
-               order_num,
-               path,
-               component,
-               `query`,
-               is_frame,
-               is_cache,
-               menu_type,
-               visible,
-               status,
-               ifnull(perms, '') as perms,
-               icon,
-               create_time
-        from sys_menu
-    </sql>
-
     <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
         select distinct m.perms
         from sys_menu m
@@ -65,7 +46,8 @@
           and rm.role_id = #{roleId}
     </select>
 
-    <select id="selectMenuListByUserId" parameterType="Long" resultMap="sysMenuResult">
+
+    <sql id="selectMenu">
         select sm.menu_id,
                sm.menu_name,
                sm.parent_id,
@@ -86,9 +68,13 @@
                sm.update_time,
                sm.remark
         from sys_menu as sm
-                 left join sys_role_menu srm on sm.menu_id = srm.menu_id
-                 left join sys_user_role sur on srm.role_id = sur.role_id
-                 left join sys_user su on su.user_id = sur.user_id
+    </sql>
+
+    <select id="selectMenuListByUserId" parameterType="Long" resultMap="sysMenuResult">
+        <include refid="selectMenu"/>
+        left join sys_role_menu srm on sm.menu_id = srm.menu_id
+        left join sys_user_role sur on srm.role_id = sur.role_id
+        left join sys_user su on su.user_id = sur.user_id
         where su.user_id = #{userId} and sm.menu_type != 'F'
     </select>
 

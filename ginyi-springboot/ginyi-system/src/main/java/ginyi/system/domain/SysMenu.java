@@ -1,7 +1,6 @@
 package ginyi.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -15,7 +14,6 @@ import java.util.List;
  * @author ruoyi
  */
 @Data
-@ApiModel("系统菜单")
 public class SysMenu extends BaseEntity {
     private static final long serialVersionUID = 1L;
 

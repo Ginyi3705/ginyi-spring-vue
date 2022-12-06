@@ -2,6 +2,7 @@ package ginyi.system.service;
 
 import ginyi.system.domain.SysMenu;
 import ginyi.system.domain.model.dto.MenuDto;
+import ginyi.system.domain.model.vo.MenuVo;
 
 import java.util.List;
 import java.util.Set;
@@ -33,5 +34,5 @@ public interface ISysMenuService {
      *
      * @return 菜单列表
      */
-    public List<SysMenu> selectMenuList(MenuDto menuDto);
+    public MenuVo selectMenuList(MenuDto menuDto);
 }
