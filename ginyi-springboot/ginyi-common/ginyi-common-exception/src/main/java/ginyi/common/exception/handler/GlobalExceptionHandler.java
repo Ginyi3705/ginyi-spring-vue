@@ -9,6 +9,7 @@ import ginyi.common.result.CommonResult;
 import ginyi.common.result.StateCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,7 +38,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(HttpStatus.OK)
     public CommonResult BusinessEcxeptionHandler(BusinessException e) {
-        if(e.getState() == StateCode.ERROR_SYSTEM){
+        if (e.getState() == StateCode.ERROR_SYSTEM) {
             return CommonResult.error(e.getState(), MessageConstants.SYS_ERROR);
         }
         return CommonResult.error(e.getState(), e.getData());
@@ -58,8 +60,19 @@ public class GlobalExceptionHandler {
                 errorList.add(error.getDefaultMessage());
             }
         }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("errorMessageList", errorList);
         log.info(String.valueOf(JSONUtil.toJsonStr(CommonResult.error(StateCode.ERROR_PARAMS, errorList))));
-        return CommonResult.error(StateCode.ERROR_PARAMS, errorList);
+        return CommonResult.error(StateCode.ERROR_PARAMS, map);
+    }
+
+    /**
+     * 参数校验 ===>>> 请求参数不合法
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public CommonResult HttpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
+        return CommonResult.error(StateCode.ERROR_REQUEST_PARAMS, MessageConstants.SYS_REQUEST_ILLEGAL);
     }
 
     /**
@@ -67,7 +80,7 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(UserPasswordNotMatchException.class)
-    public CommonResult UserPasswordNotMatchExceptionHandler(UserPasswordNotMatchException e){
+    public CommonResult UserPasswordNotMatchExceptionHandler(UserPasswordNotMatchException e) {
         return CommonResult.error(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_PASSWORD_NOT_MATCH);
     }
 
@@ -76,7 +89,7 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(UserPasswordRetryLimitExceedException.class)
-    public CommonResult UserPasswordRetryLimitExceedExceptionHandler(UserPasswordRetryLimitExceedException e){
+    public CommonResult UserPasswordRetryLimitExceedExceptionHandler(UserPasswordRetryLimitExceedException e) {
         return CommonResult.error(e.getState(), e.getData());
     }
 

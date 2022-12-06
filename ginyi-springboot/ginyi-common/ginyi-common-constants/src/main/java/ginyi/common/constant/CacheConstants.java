@@ -30,4 +30,9 @@ public class CacheConstants {
      * 防重提交 redis key
      */
     public static final String REPEAT_SUBMIT_KEY = "repeat_submit:";
+
+    /**
+     * 用户菜单
+     */
+    public static final String USER_MENU_KEY = "user_menus:";
 }

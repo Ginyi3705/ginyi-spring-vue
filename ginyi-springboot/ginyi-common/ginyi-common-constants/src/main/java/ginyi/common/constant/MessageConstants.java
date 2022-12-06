@@ -10,6 +10,7 @@ public class MessageConstants {
 
     public static final String SYS_ERROR = "请联系管理人员！";
     public static final String SYS_AUTHENTICATION_VALID = "权限不足，无法访问系统资源！";
+    public static final String SYS_REQUEST_ILLEGAL = "请求参数错误，请仔细检查！";
 
     public static final String VERIFY_EXPIRE = "验证码已失效";
     public static final String VERiFY_INCORRECT = "验证码错误";
@@ -20,4 +21,5 @@ public class MessageConstants {
     public static final String USER_IS_DELETED = "用户已被注销";
     public static final String USER_IS_FORBIDDEN = "用户已被停用";
     public static final String USER_IS_LOCKED = "用户已被停用";
+
 }

@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +28,6 @@ public class SysMenu extends BaseEntity {
     /**
      * 菜单名称
      */
-    @NotBlank(message = "菜单名称不能为空")
     @Size(min = 0, max = 50, message = "菜单名称长度不能超过50个字符")
     @ApiModelProperty("菜单名称")
     private String menuName;
@@ -51,7 +48,6 @@ public class SysMenu extends BaseEntity {
     /**
      * 显示顺序
      */
-    @NotNull(message = "显示顺序不能为空")
     @ApiModelProperty("显示顺序")
     private Integer orderNum;
 
@@ -90,7 +86,6 @@ public class SysMenu extends BaseEntity {
     /**
      * 类型（M目录 C菜单 F按钮）
      */
-    @NotBlank(message = "菜单类型不能为空")
     @ApiModelProperty("类型（M目录 C菜单 F按钮）")
     private String menuType;
 

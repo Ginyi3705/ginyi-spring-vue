@@ -90,6 +90,8 @@ mybatis-plus:
   # 类型别名的位置
   type-aliases-package: ginyi.**.domain
   configuration:
+    # 开启下划线转驼峰
+    map-underscore-to-camel-case: true
     # 控制台输出sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
@@ -98,8 +100,8 @@ mybatis-plus:
       id-type: assign_id
       # 逻辑删除
       logic-delete-field: deleted
-      logic-not-delete-value: 0
-      logic-delete-value: 1
+      logic-not-delete-value: 0  # 未删除
+      logic-delete-value: 1      # 已删除
 
 
 # token配置

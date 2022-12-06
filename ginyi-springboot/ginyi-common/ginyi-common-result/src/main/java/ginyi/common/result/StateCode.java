@@ -14,10 +14,11 @@ public enum StateCode {
 
     ERROR_BUSINESS(6000,"业务逻辑异常"),
     ERROR_PARAMS(6001,"参数校验错误"),
-    ERROR_PARAMS_SERVICE(6002,"参数逻辑校验错误"),
-    ERROR_DATA_FORMAT(6003, "数据格式错误"),
-    ERROR_EXIST(6004, "数据已存在"),
-    ERROR_NOT_EXIST(6005, "数据不存在"),
+    ERROR_REQUEST_PARAMS(6002,"请求参数异常"),
+    ERROR_PARAMS_SERVICE(6003,"参数逻辑校验错误"),
+    ERROR_DATA_FORMAT(6004, "数据格式错误"),
+    ERROR_EXIST(6005, "数据已存在"),
+    ERROR_NOT_EXIST(6006, "数据不存在"),
 
     ERROR_NOT_SUPPORT(7000, "不支持该文件类型"),
     ERROR_LIMIT_EXCEEDED(7001, "超出请求次数上限"),

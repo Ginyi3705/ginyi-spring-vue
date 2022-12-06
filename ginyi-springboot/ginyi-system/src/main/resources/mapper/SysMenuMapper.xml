@@ -1,51 +1,96 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ginyi.system.mapper.SysMenuMapper">
 
-	<resultMap type="SysMenu" id="SysMenuResult">
-		<id     property="menuId"         column="menu_id"        />
-		<result property="menuName"       column="menu_name"      />
-		<result property="parentName"     column="parent_name"    />
-		<result property="parentId"       column="parent_id"      />
-		<result property="orderNum"       column="order_num"      />
-		<result property="path"           column="path"           />
-		<result property="component"      column="component"      />
-		<result property="query"          column="query"          />
-		<result property="isFrame"        column="is_frame"       />
-		<result property="isCache"        column="is_cache"       />
-		<result property="menuType"       column="menu_type"      />
-		<result property="visible"        column="visible"        />
-		<result property="status"         column="status"         />
-		<result property="perms"          column="perms"          />
-		<result property="icon"           column="icon"           />
-		<result property="createBy"       column="create_by"      />
-		<result property="createTime"     column="create_time"    />
-		<result property="updateTime"     column="update_time"    />
-		<result property="updateBy"       column="update_by"      />
-		<result property="remark"         column="remark"         />
-	</resultMap>
+    <resultMap id="sysMenuResult" type="sysMenu">
+        <id property="menuId" column="menu_id"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="parentName" column="parent_name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="path" column="path"/>
+        <result property="component" column="component"/>
+        <result property="query" column="query"/>
+        <result property="isFrame" column="is_frame"/>
+        <result property="isCache" column="is_cache"/>
+        <result property="menuType" column="menu_type"/>
+        <result property="visible" column="visible"/>
+        <result property="status" column="status"/>
+        <result property="perms" column="perms"/>
+        <result property="icon" column="icon"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
 
-	<sql id="selectMenuVo">
-        select menu_id, menu_name, parent_id, order_num, path, component, `query`, is_frame, is_cache, menu_type, visible, status, ifnull(perms,'') as perms, icon, create_time 
-		from sys_menu
+    <sql id="selectMenuVo">
+        select menu_id,
+               menu_name,
+               parent_id,
+               order_num,
+               path,
+               component,
+               `query`,
+               is_frame,
+               is_cache,
+               menu_type,
+               visible,
+               status,
+               ifnull(perms, '') as perms,
+               icon,
+               create_time
+        from sys_menu
     </sql>
 
-	<select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
-		select distinct m.perms
-		from sys_menu m
-				 left join sys_role_menu rm on m.menu_id = rm.menu_id
-				 left join sys_user_role ur on rm.role_id = ur.role_id
-				 left join sys_role r on r.role_id = ur.role_id
-		where m.status = '0' and r.status = '0' and ur.user_id = #{userId}
-	</select>
+    <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
+        select distinct m.perms
+        from sys_menu m
+                 left join sys_role_menu rm on m.menu_id = rm.menu_id
+                 left join sys_user_role ur on rm.role_id = ur.role_id
+                 left join sys_role r on r.role_id = ur.role_id
+        where m.status = '0'
+          and r.status = '0'
+          and ur.user_id = #{userId}
+    </select>
 
-	<select id="selectMenuPermsByRoleId" parameterType="Long" resultType="String">
-		select distinct m.perms
-		from sys_menu m
-				 left join sys_role_menu rm on m.menu_id = rm.menu_id
-		where m.status = '0' and rm.role_id = #{roleId}
-	</select>
+    <select id="selectMenuPermsByRoleId" parameterType="Long" resultType="String">
+        select distinct m.perms
+        from sys_menu m
+                 left join sys_role_menu rm on m.menu_id = rm.menu_id
+        where m.status = '0'
+          and rm.role_id = #{roleId}
+    </select>
 
-</mapper> 
+    <select id="selectMenuListByUserId" parameterType="Long" resultMap="sysMenuResult">
+        select sm.menu_id,
+               sm.menu_name,
+               sm.parent_id,
+               sm.order_num,
+               sm.path,
+               sm.component,
+               sm.query,
+               sm.is_frame,
+               sm.is_cache,
+               sm.menu_type,
+               sm.visible,
+               sm.status,
+               sm.perms,
+               sm.icon,
+               sm.create_by,
+               sm.create_time,
+               sm.update_by,
+               sm.update_time,
+               sm.remark
+        from sys_menu as sm
+                 left join sys_role_menu srm on sm.menu_id = srm.menu_id
+                 left join sys_user_role sur on srm.role_id = sur.role_id
+                 left join sys_user su on su.user_id = sur.user_id
+        where su.user_id = #{userId} and sm.menu_type != 'F'
+    </select>
+
+
+</mapper>

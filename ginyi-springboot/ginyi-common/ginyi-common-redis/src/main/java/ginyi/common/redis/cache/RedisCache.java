@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -94,8 +93,7 @@ public class RedisCache {
      * @return 缓存键值对应的数据
      */
     public <T> T getCacheObject(final String key, Class<T> clazz) {
-        ValueOperations<String, Object> operation = redisTemplate.opsForValue();
-        Object o = operation.get(key);
+        Object o = redisTemplate.opsForValue().get(key);
         if (o == null) {
             return null;
         }
@@ -139,8 +137,14 @@ public class RedisCache {
      * @param key 缓存的键值
      * @return 缓存键值对应的数据
      */
-    public <T> List<T> getCacheList(final String key) {
-        return redisTemplate.opsForList().range(key, 0, -1);
+    public <T> List<T> getCacheList(final String key, Class<T> clazz) {
+        ArrayList<T> resultList = new ArrayList<>();
+        List list = redisTemplate.opsForList().range(key, 0, -1);
+        for (Object o : list) {
+            T t = JSON.parseObject(JSON.toJSONString(o), clazz);
+            resultList.add(t);
+        }
+        return resultList;
     }
 
     /**
