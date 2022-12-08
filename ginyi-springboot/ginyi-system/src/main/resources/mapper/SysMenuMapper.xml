@@ -47,7 +47,7 @@
     </select>
 
 
-    <sql id="selectMenu">
+    <sql id="selectMenuRef">
         select sm.menu_id,
                sm.menu_name,
                sm.parent_id,
@@ -70,13 +70,16 @@
         from sys_menu as sm
     </sql>
 
-    <select id="selectMenuListByUserId" parameterType="Long" resultMap="sysMenuResult">
-        <include refid="selectMenu"/>
+    <select id="selectMenuListByUserId" resultMap="sysMenuResult">
+        <include refid="selectMenuRef"/>
         left join sys_role_menu srm on sm.menu_id = srm.menu_id
         left join sys_user_role sur on srm.role_id = sur.role_id
         left join sys_user su on su.user_id = sur.user_id
         where su.user_id = #{userId} and sm.menu_type != 'F'
     </select>
 
+    <select id="selectMenuListByAdmin" resultMap="sysMenuResult">
+        <include refid="selectMenuRef"/>
+    </select>
 
 </mapper>

@@ -34,5 +34,12 @@ public interface ISysMenuService {
      *
      * @return 菜单列表
      */
-    public MenuVo selectMenuList(MenuDto menuDto);
+    public MenuVo selectMenuList();
+
+    /**
+     * 管理员查询系统菜单列表
+     *
+     * @return 菜单列表
+     */
+    public MenuVo selectMenuListByAdmin(MenuDto menuDto);
 }

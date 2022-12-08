@@ -23,9 +23,16 @@ public class SysMenuController {
     private ISysMenuService sysMenuService;
 
     @ApiOperation("菜单列表")
+    @PostMapping("/getMenuList")
+    public CommonResult<MenuVo> list() {
+        MenuVo menuVo = sysMenuService.selectMenuList();
+        return CommonResult.success(menuVo);
+    }
+
+    @ApiOperation("菜单列表 - admin")
     @PostMapping("/list")
     public CommonResult<MenuVo> list(@RequestBody @Validated MenuDto menuDto) {
-        MenuVo menuVo = sysMenuService.selectMenuList(menuDto);
+        MenuVo menuVo = sysMenuService.selectMenuListByAdmin(menuDto);
         return CommonResult.success(menuVo);
     }
 }

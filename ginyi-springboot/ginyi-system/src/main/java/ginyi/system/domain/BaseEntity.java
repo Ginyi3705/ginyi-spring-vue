@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 基础 entity
+ */
 @Data
 public class BaseEntity implements Serializable {
 

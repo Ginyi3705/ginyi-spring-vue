@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Size;
+
 @Data
 @ApiModel("系统菜单请求参数")
 public class MenuDto extends BaseEntity {
@@ -14,6 +16,7 @@ public class MenuDto extends BaseEntity {
     /**
      * 菜单名称
      */
+    @Size(max = 50, message = "菜单名称长度不能超过50个字符")
     @ApiModelProperty("菜单名称")
     private String menuName;
 
@@ -27,12 +30,14 @@ public class MenuDto extends BaseEntity {
      * 路由地址
      */
     @ApiModelProperty("路由地址")
+    @Size(max = 200, message = "路由地址长度不得超过200个字符")
     private String path;
 
     /**
      * 组件路径
      */
     @ApiModelProperty("组件路径")
+    @Size(max = 200, message = "组件路径长度不得超过200个字符")
     private String component;
 
     /**

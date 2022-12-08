@@ -1,10 +1,10 @@
 package ginyi.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,21 +26,20 @@ public class SysMenu extends BaseEntity {
     /**
      * 菜单名称
      */
-    @Size(min = 0, max = 50, message = "菜单名称长度不能超过50个字符")
     @ApiModelProperty("菜单名称")
     private String menuName;
 
     /**
      * 父菜单名称
      */
+    @ApiModelProperty("父级菜单名称")
     @TableField(exist = false, select = false)
-    @ApiModelProperty("父菜单名称")
     private String parentName;
 
     /**
      * 父菜单ID
      */
-    @ApiModelProperty("父菜单ID")
+    @ApiModelProperty("父级菜单ID")
     private Long parentId;
 
     /**
@@ -52,14 +51,13 @@ public class SysMenu extends BaseEntity {
     /**
      * 路由地址
      */
-    @Size(min = 0, max = 200, message = "路由地址不能超过200个字符")
     @ApiModelProperty("路由地址")
+    @TableField(value = "path")
     private String path;
 
     /**
      * 组件路径
      */
-    @Size(min = 0, max = 200, message = "组件路径不能超过255个字符")
     @ApiModelProperty("组件路径")
     private String component;
 
@@ -102,7 +100,6 @@ public class SysMenu extends BaseEntity {
     /**
      * 权限字符串
      */
-    @Size(min = 0, max = 100, message = "权限标识长度不能超过100个字符")
     @ApiModelProperty("权限字符串")
     private String perms;
 
@@ -115,8 +112,8 @@ public class SysMenu extends BaseEntity {
     /**
      * 子菜单
      */
-    @TableField(exist = false, select = false)
     @ApiModelProperty("子菜单")
+    @TableField(exist = false, select = false)
     private List<SysMenu> children = new ArrayList<SysMenu>();
 
 }

@@ -30,7 +30,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ginyi-common" options="-parameters" />
+      <module name="ginyi-common" options="" />
       <module name="ginyi-common-annotation" options="-parameters" />
       <module name="ginyi-common-config" options="-parameters" />
       <module name="ginyi-common-constants" options="-parameters" />

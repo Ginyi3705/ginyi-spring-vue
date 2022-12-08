@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * 基础 vo
+ */
 @Data
 public class BaseVo<T> {
     @ApiModelProperty("列表数据")

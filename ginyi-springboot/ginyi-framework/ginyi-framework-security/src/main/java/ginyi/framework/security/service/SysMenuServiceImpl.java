@@ -84,7 +84,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 菜单列表
      */
     @Override
-    public MenuVo selectMenuList(MenuDto menuDto) {
+    public MenuVo selectMenuList() {
         List<SysMenu> menuList;
         MenuVo menuVo = new MenuVo();
         LoginUser user = tokenService.getLoginUser(request);
@@ -97,13 +97,29 @@ public class SysMenuServiceImpl implements ISysMenuService {
         }
         boolean isAdmin = SysUser.isAdmin(user.getUserId());
         // 管理员返回全部，普通用户则对应的菜单
-        List<SysMenu> list = isAdmin ? menuMapper.selectList(null) : menuMapper.selectMenuListByUserId(menuDto, user.getUserId());
+        List<SysMenu> list = isAdmin ? menuMapper.selectList(null) : menuMapper.selectMenuListByUserId(user.getUserId());
         // 转成树
         menuList = list.stream()
                 .filter(menu -> menu.getParentId().equals(0L))
                 .map(menu -> convertToMenuTree(menu, list)).collect(Collectors.toList());
         redisCache.setCacheList(CacheConstants.USER_MENU_KEY + user.getUsername(), menuList);
 
+        menuVo.setList(menuList);
+        menuVo.setCount(menuList.size());
+        return menuVo;
+    }
+
+    /**
+     * 管理员查询（管理）菜单列表
+     *
+     * @param menuDto
+     * @return
+     */
+    @Override
+    public MenuVo selectMenuListByAdmin(MenuDto menuDto) {
+        List<SysMenu> list = menuMapper.selectMenuListByAdmin();
+        List<SysMenu> menuList = list.stream().filter(menu -> menu.getParentId().equals(0L)).map(menu -> convertToMenuTree(menu, list)).collect(Collectors.toList());
+        MenuVo menuVo = new MenuVo();
         menuVo.setList(menuList);
         menuVo.setCount(menuList.size());
         return menuVo;

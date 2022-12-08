@@ -26,6 +26,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, S
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
             throws IOException {
-        ServletUtils.renderString(response, JSON.toJSONString(CommonResult.error(StateCode.ERROR_INVALID_SIGN, MessageConstants.SYS_AUTHENTICATION_VALID)));
+        ServletUtils.renderString(response, JSON.toJSONString(CommonResult.error(StateCode.ERROR_AUTHENTICATION_VALID, MessageConstants.SYS_AUTHENTICATION_VALID)));
     }
 }
