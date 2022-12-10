@@ -15,6 +15,4 @@ public class LoginVo {
     @ApiModelProperty(value = "Token请求头Key", required = true)
     private String tokenHeader;
 
-    @ApiModelProperty(value = "Token令牌前缀", required = true)
-    private String tokenPrefix;
 }

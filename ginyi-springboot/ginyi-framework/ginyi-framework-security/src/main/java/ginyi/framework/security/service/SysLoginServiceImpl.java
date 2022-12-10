@@ -36,7 +36,6 @@ public class SysLoginServiceImpl implements ISysLoginService {
     private String tokenPrefix;
     @Value("${token.header}")
     private String tokenHeader;
-
     @Resource
     private ISysConfigService configService;
     @Resource
@@ -81,9 +80,8 @@ public class SysLoginServiceImpl implements ISysLoginService {
 
             // 生成token
             LoginVo loginVo = new LoginVo();
-            loginVo.setToken(token);
+            loginVo.setToken(tokenPrefix + " " +token);
             loginVo.setTokenHeader(tokenHeader);
-            loginVo.setTokenPrefix(tokenPrefix);
 
             // 记录日志
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
