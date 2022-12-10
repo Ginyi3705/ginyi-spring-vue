@@ -27,26 +27,6 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-    <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
-        select distinct m.perms
-        from sys_menu m
-                 left join sys_role_menu rm on m.menu_id = rm.menu_id
-                 left join sys_user_role ur on rm.role_id = ur.role_id
-                 left join sys_role r on r.role_id = ur.role_id
-        where m.status = '0'
-          and r.status = '0'
-          and ur.user_id = #{userId}
-    </select>
-
-    <select id="selectMenuPermsByRoleId" parameterType="Long" resultType="String">
-        select distinct m.perms
-        from sys_menu m
-                 left join sys_role_menu rm on m.menu_id = rm.menu_id
-        where m.status = '0'
-          and rm.role_id = #{roleId}
-    </select>
-
-
     <sql id="selectMenuRef">
         select sm.menu_id,
                sm.menu_name,
@@ -70,12 +50,32 @@
         from sys_menu as sm
     </sql>
 
+    <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
+        select distinct sm.perms
+        from sys_menu as sm
+                 left join sys_role_menu as srm on json_contains(srm.menu_id, json_array(sm.menu_id))
+                 left join sys_user_role as sur on json_contains(sur.role_id, json_array(srm.role_id))
+                 left join sys_role as sr on json_contains(sur.role_id, json_array(sr.role_id))
+        where sm.status = '0'
+          and sr.status = '0'
+          and sur.user_id = #{userId}
+    </select>
+
+    <select id="selectMenuPermsByRoleId" parameterType="Long" resultType="String">
+        select distinct sm.perms
+        from sys_menu as sm
+                 left join sys_role_menu as srm on json_contains(srm.menu_id, json_array(sm.menu_id))
+                 left join sys_role as sr on json_contains(srm.role_id, json_array(sr.role_id))
+        where sm.status = '0'
+          and sr.status = '0'
+          and srm.role_id = #{roleId}
+    </select>
+
     <select id="selectMenuListByUserId" resultMap="sysMenuResult">
         <include refid="selectMenuRef"/>
-        left join sys_role_menu srm on sm.menu_id = srm.menu_id
-        left join sys_user_role sur on srm.role_id = sur.role_id
-        left join sys_user su on su.user_id = sur.user_id
-        where su.user_id = #{userId} and sm.menu_type != 'F'
+        left join sys_role_menu as srm on json_contains(srm.menu_id, json_array(sm.menu_id))
+        left join sys_user_role as sur on json_contains(sur.role_id, json_array(srm.role_id))
+        where sur.user_id = #{userId} and sm.menu_type != 'F'
     </select>
 
     <select id="selectMenuListByAdmin" resultMap="sysMenuResult">

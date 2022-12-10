@@ -99,6 +99,12 @@ public class SysUser extends BaseEntity {
     private Long[] roleIds;
 
     /**
+     * 岗位对象
+     */
+    @TableField(exist = false, select = false)
+    private List<SysPost> posts;
+
+    /**
      * 岗位组
      */
     @TableField(exist = false, select = false)

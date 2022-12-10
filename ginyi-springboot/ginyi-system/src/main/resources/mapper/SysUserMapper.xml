@@ -6,56 +6,55 @@
 <mapper namespace="ginyi.system.mapper.SysUserMapper">
 
     <resultMap type="SysUser" id="SysUserResult">
-        <id     property="userId"       column="user_id"      />
-        <result property="deptId"       column="dept_id"      />
-        <result property="userName"     column="user_name"    />
-        <result property="nickName"     column="nick_name"    />
-        <result property="email"        column="email"        />
-        <result property="phoneNumber"  column="phone_number"  />
-        <result property="sex"          column="sex"          />
-        <result property="avatar"       column="avatar"       />
-        <result property="password"     column="password"     />
-        <result property="status"       column="status"       />
-        <result property="deleted"      column="deleted"     />
-        <result property="loginIp"      column="login_ip"     />
-        <result property="loginDate"    column="login_date"   />
-        <result property="createBy"     column="create_by"    />
-        <result property="createTime"   column="create_time"  />
-        <result property="updateBy"     column="update_by"    />
-        <result property="updateTime"   column="update_time"  />
-        <result property="remark"       column="remark"       />
-        <association property="dept"    column="dept_id" javaType="SysDept" resultMap="deptResult" />
-        <collection  property="roles"   javaType="java.util.List"           resultMap="RoleResult" />
+        <id property="userId" column="user_id"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="sex" column="sex"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <result property="deleted" column="deleted"/>
+        <result property="loginIp" column="login_ip"/>
+        <result property="loginDate" column="login_date"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+        <association property="dept" column="dept_id" javaType="SysDept" resultMap="deptResult"/>
+        <collection property="roles" javaType="java.util.List" resultMap="RoleResult"/>
+        <collection property="posts" javaType="java.util.List" resultMap="PostResultRef"/>
     </resultMap>
 
     <resultMap id="deptResult" type="SysDept">
-        <id     property="deptId"    column="dept_id"     />
-        <result property="parentId"  column="parent_id"   />
-        <result property="deptName"  column="dept_name"   />
-        <result property="ancestors" column="ancestors"   />
-        <result property="orderNum"  column="order_num"   />
-        <result property="leader"    column="leader"      />
-        <result property="status"    column="dept_status" />
+        <id property="deptId" column="dept_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="ancestors" column="ancestors"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="leader" column="leader"/>
+        <result property="status" column="dept_status"/>
     </resultMap>
 
     <resultMap id="RoleResult" type="SysRole">
-        <id     property="roleId"       column="role_id"        />
-        <result property="roleName"     column="role_name"      />
-        <result property="roleKey"      column="role_key"       />
-        <result property="roleSort"     column="role_sort"      />
-        <result property="dataScope"     column="data_scope"    />
-        <result property="status"       column="role_status"    />
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleKey" column="role_key"/>
+        <result property="roleSort" column="role_sort"/>
+        <result property="dataScope" column="data_scope"/>
+        <result property="status" column="role_status"/>
     </resultMap>
 
-    <sql id="selectUserVo">
-        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.phone_number, u.password, u.sex, u.status, u.deleted, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,
-               d.dept_id, d.parent_id, d.ancestors, d.dept_name, d.order_num, d.leader, d.status as dept_status,
-               r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
-        from sys_user u
-                 left join sys_dept d on u.dept_id = d.dept_id
-                 left join sys_user_role ur on u.user_id = ur.user_id
-                 left join sys_role r on r.role_id = ur.role_id
-    </sql>
+    <resultMap id="PostResultRef" type="sysPost">
+        <id property="postId" column="post_id"/>
+        <result property="postCode" column="post_code"/>
+        <result property="postName" column="post_name"/>
+        <result property="postSort" column="post_sort"/>
+        <result property="status" column="status"/>
+    </resultMap>
 
     <update id="updateUser" parameterType="SysUser">
         update sys_user
@@ -79,12 +78,56 @@
     </update>
 
     <select id="selectUserByUserName" parameterType="String" resultMap="SysUserResult">
-        <include refid="selectUserVo"/>
-        where u.user_name = #{userName} and u.deleted = '0'
+        select su.user_id,
+               su.dept_id,
+               su.user_name,
+               su.nick_name,
+               su.email,
+               su.avatar,
+               su.phone_number,
+               su.password,
+               su.sex,
+               su.status,
+               su.deleted,
+               su.login_ip,
+               su.login_date,
+               su.create_by,
+               su.create_time,
+               su.remark,
+               sd.dept_id,
+               sd.parent_id,
+               sd.ancestors,
+               sd.dept_name,
+               sd.order_num,
+               sd.leader,
+               sd.status as dept_status,
+               sr.role_id,
+               sr.role_name,
+               sr.role_key,
+               sr.role_sort,
+               sr.data_scope,
+               sr.status as role_status,
+               sp.post_id,
+               sp.post_code,
+               sp.post_name,
+               sp.post_sort,
+               sp.status as post_status
+        from sys_user as su
+                 left join sys_dept as sd on su.dept_id = sd.dept_id
+                 left join sys_user_role as sur on su.user_id = sur.user_id
+                 left join sys_role as sr on json_contains(sur.role_id, json_array(sr.role_id))
+                 left join sys_user_post as sup on sup.user_id = su.user_id
+                 left join sys_post as sp on json_contains(sup.post_id, json_array(sp.post_id))
+        where su.user_name = #{userName}
+          and su.deleted = '0'
     </select>
 
     <select id="checkUserNameUnique" parameterType="String" resultMap="SysUserResult">
-        select user_id, user_name from sys_user where user_name = #{userName} and deleted = '0' limit 1
+        select user_id, user_name
+        from sys_user
+        where user_name = #{userName}
+          and deleted = '0'
+        limit 1
     </select>
 
     <insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
