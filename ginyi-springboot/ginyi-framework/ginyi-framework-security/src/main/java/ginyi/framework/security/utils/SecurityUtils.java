@@ -1,5 +1,9 @@
 package ginyi.framework.security.utils;
 
+import ginyi.common.constant.MessageConstants;
+import ginyi.common.exception.BusinessException;
+import ginyi.common.result.StateCode;
+import ginyi.system.domain.LoginUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +19,17 @@ public class SecurityUtils {
      */
     public static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    /**
+     * 获取用户
+     **/
+    public static LoginUser getLoginUser() {
+        try {
+            return (LoginUser) getAuthentication().getPrincipal();
+        } catch (Exception e) {
+            throw new BusinessException(StateCode.ERROR_SYSTEM, MessageConstants.USER_NOT_FOUND);
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package ginyi.framework.security.service;
 import ginyi.common.constant.CacheConstants;
 import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.utils.StringUtils;
+import ginyi.framework.security.utils.SecurityUtils;
 import ginyi.system.domain.LoginUser;
 import ginyi.system.domain.SysMenu;
 import ginyi.system.domain.SysUser;
@@ -34,10 +35,6 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     @Resource
     private SysMenuMapper menuMapper;
-    @Resource
-    private HttpServletRequest request;
-    @Resource
-    private ITokenService tokenService;
     @Resource
     private RedisCache redisCache;
 
@@ -87,7 +84,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public MenuVo selectMenuList() {
         List<SysMenu> menuList;
         MenuVo menuVo = new MenuVo();
-        LoginUser user = tokenService.getLoginUser(request);
+        LoginUser user = SecurityUtils.getLoginUser();
         // 判断缓存是否有数据
         menuList = redisCache.getCacheList(CacheConstants.USER_MENU_KEY + user.getUsername(), SysMenu.class);
         if (menuList.size() > 0) {
