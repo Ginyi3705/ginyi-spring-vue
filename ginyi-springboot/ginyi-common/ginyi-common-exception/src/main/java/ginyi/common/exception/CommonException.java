@@ -4,20 +4,20 @@ import ginyi.common.result.StateCode;
 import lombok.Data;
 
 /**
- * 业务异常处理
+ * 通用的异常处理
  */
 @Data
-public class BusinessException extends RuntimeException{
+public class CommonException extends RuntimeException{
 
     private StateCode state;
     private Object data;
 
-    public BusinessException(StateCode state, Object data) {
+    public CommonException(StateCode state, Object data) {
         this.state = state;
         this.data = data;
     }
 
-    public BusinessException(StateCode state) {
+    public CommonException(StateCode state) {
         this.state = state;
         this.data = data;
     }

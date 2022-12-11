@@ -1,5 +1,6 @@
 package ginyi.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -16,6 +17,7 @@ public class SysConfig extends BaseEntity {
     /**
      * 参数主键
      */
+    @TableId
     private Long configId;
 
     /**

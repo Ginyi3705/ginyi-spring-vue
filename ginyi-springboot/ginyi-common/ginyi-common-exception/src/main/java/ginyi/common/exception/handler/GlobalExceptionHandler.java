@@ -2,7 +2,7 @@ package ginyi.common.exception.handler;
 
 import cn.hutool.json.JSONUtil;
 import ginyi.common.constant.MessageConstants;
-import ginyi.common.exception.BusinessException;
+import ginyi.common.exception.CommonException;
 import ginyi.common.exception.UserPasswordNotMatchException;
 import ginyi.common.exception.UserPasswordRetryLimitExceedException;
 import ginyi.common.result.CommonResult;
@@ -35,9 +35,9 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(BusinessException.class)
+    @ExceptionHandler(CommonException.class)
     @ResponseStatus(HttpStatus.OK)
-    public CommonResult BusinessEcxeptionHandler(BusinessException e) {
+    public CommonResult BusinessEcxeptionHandler(CommonException e) {
         if (e.getState() == StateCode.ERROR_SYSTEM) {
             return CommonResult.error(e.getState(), MessageConstants.SYS_ERROR);
         }

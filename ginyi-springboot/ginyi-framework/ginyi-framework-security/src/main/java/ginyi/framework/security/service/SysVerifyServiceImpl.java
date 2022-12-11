@@ -5,7 +5,7 @@ import cn.hutool.captcha.CircleCaptcha;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import ginyi.common.constant.CacheConstants;
-import ginyi.common.exception.BusinessException;
+import ginyi.common.exception.CommonException;
 import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.constant.MessageConstants;
 import ginyi.common.result.StateCode;
@@ -68,10 +68,10 @@ public class SysVerifyServiceImpl implements IVerifyService {
         String captcha = redisCache.getCacheObject(verifyKey, String.class);
         // 验证码失效
         if (captcha == null) {
-            throw new BusinessException(StateCode.ERROR_PARAMS_SERVICE, MessageConstants.VERIFY_EXPIRE);
+            throw new CommonException(StateCode.ERROR_PARAMS_SERVICE, MessageConstants.VERIFY_EXPIRE);
         }
         if (!code.equalsIgnoreCase(captcha)) {
-            throw new BusinessException(StateCode.ERROR_PARAMS_SERVICE, MessageConstants.VERiFY_INCORRECT);
+            throw new CommonException(StateCode.ERROR_PARAMS_SERVICE, MessageConstants.VERiFY_INCORRECT);
         } else {
             // 输入正确，删除该验证码
             redisCache.removeCacheObject(verifyKey);

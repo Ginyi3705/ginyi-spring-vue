@@ -1,7 +1,7 @@
 package ginyi.framework.security.utils;
 
 import ginyi.common.constant.MessageConstants;
-import ginyi.common.exception.BusinessException;
+import ginyi.common.exception.CommonException;
 import ginyi.common.result.StateCode;
 import ginyi.system.domain.LoginUser;
 import org.springframework.security.core.Authentication;
@@ -28,7 +28,7 @@ public class SecurityUtils {
         try {
             return (LoginUser) getAuthentication().getPrincipal();
         } catch (Exception e) {
-            throw new BusinessException(StateCode.ERROR_SYSTEM, MessageConstants.USER_NOT_FOUND);
+            throw new CommonException(StateCode.ERROR_SYSTEM, MessageConstants.USER_NOT_FOUND);
         }
     }
 

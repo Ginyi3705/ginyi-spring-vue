@@ -7,9 +7,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.data.redis.core.RedisTemplate;
 
-import javax.sql.DataSource;
+import java.net.UnknownHostException;
 
 // 扫描系统服务的包以及自身所在模块的包
 @SpringBootApplication(scanBasePackages = {
@@ -24,25 +23,8 @@ import javax.sql.DataSource;
 })
 @Slf4j
 public class AdminApplication {
-
-    private static DataSource dataSource;
-    private static RedisTemplate redisTemplate;
-
-
-    public static void main(String[] args) {
-        try {
-            AppConfig.beforeApplication();
-            ConfigurableApplicationContext context = SpringApplication.run(AdminApplication.class, args);
-            if(context != null){
-                log.info("正在进行服务连接...");
-                dataSource = (DataSource) context.getBean("dataSource");
-                redisTemplate = (RedisTemplate) context.getBean("redisTemplate");
-                AppConfig.createMysqlConnection(dataSource);
-                AppConfig.createRedisConnection(redisTemplate);
-                AppConfig.afterApplication(context);
-            }
-        } catch (Exception e) {
-            log.error("启动程序时发生异常 ===>>> " + e.getMessage());
-        }
+    public static void main(String[] args) throws UnknownHostException {
+        ConfigurableApplicationContext context = SpringApplication.run(AdminApplication.class, args);
+        AppConfig.printAppInfo(context);
     }
 }

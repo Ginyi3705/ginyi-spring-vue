@@ -1,6 +1,6 @@
 package ginyi.framework.security.service;
 
-import ginyi.common.exception.BusinessException;
+import ginyi.common.exception.CommonException;
 import ginyi.common.constant.MessageConstants;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
@@ -36,13 +36,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         SysUser user = userService.selectUserByUserName(username);
         if (StringUtils.isNull(user)) {
             // 不存在
-            throw new BusinessException(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_NOT_EXIST);
         } else if (UserStatus.DELETED.getCode().equals(user.getDeleted())) {
             // 被删除
-            throw new BusinessException(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_IS_DELETED);
+            throw new CommonException(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_IS_DELETED);
         } else if (UserStatus.DISABLE.getCode().equals(user.getStatus())) {
             // 被停用
-            throw new BusinessException(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_IS_FORBIDDEN);
+            throw new CommonException(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_IS_FORBIDDEN);
         }
 
         passwordService.validate(user);

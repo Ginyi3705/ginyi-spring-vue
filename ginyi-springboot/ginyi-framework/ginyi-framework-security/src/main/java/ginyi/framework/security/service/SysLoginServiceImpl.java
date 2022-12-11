@@ -2,7 +2,7 @@ package ginyi.framework.security.service;
 
 import ginyi.common.constant.MessageConstants;
 import ginyi.common.constant.UserConstants;
-import ginyi.common.exception.BusinessException;
+import ginyi.common.exception.CommonException;
 import ginyi.common.exception.UserPasswordNotMatchException;
 import ginyi.common.exception.UserPasswordRetryLimitExceedException;
 import ginyi.common.result.StateCode;
@@ -105,7 +105,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
             } else {
                 // 其他的未知异常
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, e.getMessage()));
-                throw new BusinessException(StateCode.ERROR_SYSTEM);
+                throw new CommonException(StateCode.ERROR_SYSTEM);
             }
         } finally {
             AuthenticationContextHolder.clearContext();
@@ -133,13 +133,13 @@ public class SysLoginServiceImpl implements ISysLoginService {
 
         // 当前注册的用户是否存在
         if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(sysUser))) {
-            throw new BusinessException(StateCode.ERROR_EXIST, MessageConstants.USER_EXIST);
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.USER_EXIST);
         } else {
             sysUser.setNickName(registerDto.getUsername());
             sysUser.setPassword(SecurityUtils.encryptPassword(registerDto.getPassword()));
             boolean regFlag = userService.registerUser(sysUser);
             if (!regFlag) {
-                throw new BusinessException(StateCode.ERROR_SYSTEM);
+                throw new CommonException(StateCode.ERROR_SYSTEM);
             } else {
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(registerDto.getUsername(), Constants.REGISTER, MessageConstants.REGISTER_SUCCESS));
             }

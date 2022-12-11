@@ -1,6 +1,7 @@
 package ginyi.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 菜单ID
      */
+    @TableId
     @ApiModelProperty("菜单ID")
     private Long menuId;
 
