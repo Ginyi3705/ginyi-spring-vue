@@ -2,6 +2,8 @@ package ginyi.server.admin.controller;
 
 import ginyi.common.result.CommonResult;
 import ginyi.common.utils.Constants;
+import ginyi.framework.core.annotation.Log;
+import ginyi.framework.core.enums.BusinessType;
 import ginyi.system.domain.model.dto.LoginDto;
 import ginyi.system.domain.model.dto.RegisterDto;
 import ginyi.system.domain.model.vo.LoginVo;

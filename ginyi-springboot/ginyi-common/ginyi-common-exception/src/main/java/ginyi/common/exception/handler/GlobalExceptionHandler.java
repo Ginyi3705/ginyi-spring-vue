@@ -3,6 +3,7 @@ package ginyi.common.exception.handler;
 import cn.hutool.json.JSONUtil;
 import ginyi.common.constant.MessageConstants;
 import ginyi.common.exception.CommonException;
+import ginyi.common.exception.UnPermissionException;
 import ginyi.common.exception.UserPasswordNotMatchException;
 import ginyi.common.exception.UserPasswordRetryLimitExceedException;
 import ginyi.common.result.CommonResult;
@@ -108,6 +109,18 @@ public class GlobalExceptionHandler {
         }
         log.info("文件上传业务异常", e);
         return CommonResult.error(StateCode.ERROR_MULTIPART, "文件上传业务异常");
+    }
+
+    /**
+     * 权限异常 ===> 访问接口无权限
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler({UnPermissionException.class})
+    @ResponseStatus(HttpStatus.OK)
+    public CommonResult UnPermissionExceptionHandler(UnPermissionException e) {
+        return CommonResult.error(StateCode.ERROR_NOT_PERMISSION, MessageConstants.SYS_ERROR);
     }
 
 

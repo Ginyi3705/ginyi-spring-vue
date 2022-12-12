@@ -1,5 +1,6 @@
 package ginyi.framework.security.manager.factory;
 
+import com.alibaba.fastjson.JSON;
 import eu.bitwalker.useragentutils.UserAgent;
 import ginyi.common.utils.LogUtils;
 import ginyi.common.utils.ServletUtils;
@@ -12,6 +13,7 @@ import ginyi.system.domain.SysLogininfor;
 import ginyi.system.domain.SysOperLog;
 import ginyi.system.service.ISysLogininforService;
 import ginyi.system.service.ISysOperLogService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,7 @@ import java.util.TimerTask;
  *
  * @author ruoyi
  */
+@Slf4j
 public class AsyncFactory {
     private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");
 
