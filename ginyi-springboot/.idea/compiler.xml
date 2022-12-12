@@ -40,7 +40,7 @@
       <module name="ginyi-common-result" options="-parameters" />
       <module name="ginyi-common-swagger" options="-parameters" />
       <module name="ginyi-common-utils" options="-parameters" />
-      <module name="ginyi-framework" options="-parameters" />
+      <module name="ginyi-framework" options="" />
       <module name="ginyi-framework-core" options="-parameters" />
       <module name="ginyi-framework-security" options="-parameters" />
       <module name="ginyi-server" options="" />

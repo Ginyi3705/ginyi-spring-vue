@@ -16,6 +16,7 @@ import ginyi.system.service.ISysOperLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.TimerTask;
 
@@ -72,6 +73,7 @@ public class AsyncFactory {
                 }
                 // 插入数据
                 SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(logininfor);
+                SpringUtils.getBean(MongoTemplate.class).save(logininfor);
             }
         };
     }
