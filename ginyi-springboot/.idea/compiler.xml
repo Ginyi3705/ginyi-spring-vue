@@ -18,6 +18,7 @@
         <module name="ginyi-common-swagger" />
         <module name="ginyi-common-result" />
         <module name="ginyi-framework-security" />
+        <module name="ginyi-framework-websocket" />
         <module name="ginyi-system" />
         <module name="ginyi-common-redis" />
       </profile>
@@ -43,6 +44,7 @@
       <module name="ginyi-framework" options="" />
       <module name="ginyi-framework-core" options="-parameters" />
       <module name="ginyi-framework-security" options="-parameters" />
+      <module name="ginyi-framework-websocket" options="-parameters" />
       <module name="ginyi-server" options="" />
       <module name="ginyi-server-admin" options="-parameters" />
       <module name="ginyi-server-common" options="-parameters" />

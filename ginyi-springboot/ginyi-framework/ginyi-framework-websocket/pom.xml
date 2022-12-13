@@ -3,28 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ginyi-springboot</artifactId>
+        <artifactId>ginyi-framework</artifactId>
         <groupId>com.ginyi</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ginyi-framework</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>ginyi-framework-core</module>
-        <module>ginyi-framework-security</module>
-        <module>ginyi-framework-websocket</module>
-    </modules>
+    <artifactId>ginyi-framework-websocket</artifactId>
 
     <dependencies>
-
-        <!-- 系统模块 -->
         <dependency>
-            <groupId>com.ginyi</groupId>
-            <artifactId>ginyi-system</artifactId>
-            <version>${ginyi.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
-
     </dependencies>
+
 </project>

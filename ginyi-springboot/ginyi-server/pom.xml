@@ -35,6 +35,13 @@
             <version>${ginyi.version}</version>
         </dependency>
 
+        <!-- websocket -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-framework-websocket</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

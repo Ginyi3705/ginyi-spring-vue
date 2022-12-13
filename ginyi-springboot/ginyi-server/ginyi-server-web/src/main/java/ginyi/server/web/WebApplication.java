@@ -16,6 +16,7 @@ import java.net.UnknownHostException;
 @SpringBootApplication(scanBasePackages = {
         "ginyi.system",
         "ginyi.common",
+        "ginyi.framework.websocket",
         "ginyi.framework.security",
         "ginyi.server.web"
 })
