@@ -42,4 +42,10 @@ public interface ISysMenuService {
      * @return 菜单列表
      */
     public MenuVo selectMenuListByAdmin(MenuDto menuDto);
+
+    /**
+     * 添加菜单
+     * @param menuDto
+     */
+    public void addMenu(MenuDto menuDto);
 }

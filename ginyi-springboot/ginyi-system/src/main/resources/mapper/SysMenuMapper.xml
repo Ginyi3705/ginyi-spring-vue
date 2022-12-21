@@ -82,4 +82,38 @@
         <include refid="selectMenuRef"/>
     </select>
 
+    <insert id="insertMenu">
+        insert into sys_menu (menu_name,
+        order_num,
+        menu_type,
+        visible,
+        status,
+        <if test="menuDto.component != null and menuDto.component != ''">component,</if>
+        <if test="menuDto.path != null and menuDto.path != ''">path,</if>
+        <if test="menuDto.query != null and menuDto.query != ''">query,</if>
+        <if test="menuDto.isFrame != null and menuDto.isFrame != ''">is_frame,</if>
+        <if test="menuDto.isCache != null and menuDto.isCache != ''">is_cache,</if>
+        <if test="menuDto.perms != null and menuDto.perms != ''">perms,</if>
+        <if test="menuDto.icon != null and menuDto.icon != ''">icon,</if>
+        parent_id
+        ) value (
+        #{menuDto.menuName},
+        #{menuDto.sort},
+        #{menuDto.menuType},
+        #{menuDto.visible},
+        #{menuDto.status},
+        <if test="menuDto.component != null and menuDto.component != ''">#{menuDto.component},</if>
+        <if test="menuDto.path != null and menuDto.path != ''">#{menuDto.path},</if>
+        <if test="menuDto.query != null and menuDto.query != ''">#{menuDto.query},</if>
+        <if test="menuDto.isFrame != null and menuDto.isFrame != ''">#{menuDto.isFrame},</if>
+        <if test="menuDto.isCache != null and menuDto.isCache != ''">#{menuDto.isCache},</if>
+        <if test="menuDto.perms != null and menuDto.perms != ''">#{menuDto.perms},</if>
+        <if test="menuDto.icon != null and menuDto.icon != ''">#{menuDto.icon},</if>
+        <choose>
+            <when test="menuDto.parentId == null or menuDto.parentId == ''">0</when>
+            <otherwise>#{menuDto.parentId}</otherwise>
+        </choose>
+        )
+    </insert>
+
 </mapper>

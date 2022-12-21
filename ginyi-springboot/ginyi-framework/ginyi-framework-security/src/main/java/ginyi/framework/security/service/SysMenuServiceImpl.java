@@ -1,7 +1,11 @@
 package ginyi.framework.security.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import ginyi.common.constant.CacheConstants;
+import ginyi.common.constant.MessageConstants;
+import ginyi.common.exception.CommonException;
 import ginyi.common.redis.cache.RedisCache;
+import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
 import ginyi.framework.security.utils.SecurityUtils;
 import ginyi.system.domain.LoginUser;
@@ -137,5 +141,34 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 .map(subMenu -> convertToMenuTree(subMenu, list)).collect(Collectors.toList());
         sysMenu.setChildren(children);
         return sysMenu;
+    }
+
+    /**
+     * 添加菜单
+     *
+     * @param menuDto
+     */
+    @Override
+    public void addMenu(MenuDto menuDto) {
+        // c 是菜单，其余的是目录或者按钮
+        if ("C".equalsIgnoreCase(menuDto.getMenuType())) {
+            if (menuDto.getComponent().isEmpty()) {
+                throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_COMPONENT_NOT_EXIST);
+            }
+            if (menuDto.getPath().isEmpty()) {
+                throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_PATH_NOT_EXIST);
+            }
+        }
+
+        // 判断是否已存在
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysMenu::getMenuName, menuDto.getMenuName());
+        SysMenu result = menuMapper.selectOne(queryWrapper);
+        if (result != null) {
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.MENU_EXIST);
+        }
+
+        menuMapper.insertMenu(menuDto);
+
     }
 }

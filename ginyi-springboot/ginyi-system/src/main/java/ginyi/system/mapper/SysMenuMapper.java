@@ -42,4 +42,11 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      */
     public List<SysMenu> selectMenuListByAdmin();
 
+    /**
+     * 添加菜单
+     * @param menuDto
+     * @return
+     */
+    public boolean insertMenu(@Param("menuDto") MenuDto menuDto);
+
 }
