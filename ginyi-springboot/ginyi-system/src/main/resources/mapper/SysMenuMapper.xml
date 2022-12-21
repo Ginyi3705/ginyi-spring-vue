@@ -83,7 +83,8 @@
     </select>
 
     <insert id="insertMenu">
-        insert into sys_menu (menu_name,
+        insert into sys_menu (
+        menu_name,
         order_num,
         menu_type,
         visible,
@@ -95,6 +96,10 @@
         <if test="menuDto.isCache != null and menuDto.isCache != ''">is_cache,</if>
         <if test="menuDto.perms != null and menuDto.perms != ''">perms,</if>
         <if test="menuDto.icon != null and menuDto.icon != ''">icon,</if>
+        <if test="menuDto.createBy != null and menuDto.createBy != ''">create_by,</if>
+        <if test="menuDto.createTime != null">create_time,</if>
+        <if test="menuDto.updateBy != null and menuDto.updateBy != ''">update_by,</if>
+        <if test="menuDto.updateTime != null">update_time,</if>
         parent_id
         ) value (
         #{menuDto.menuName},
@@ -109,6 +114,10 @@
         <if test="menuDto.isCache != null and menuDto.isCache != ''">#{menuDto.isCache},</if>
         <if test="menuDto.perms != null and menuDto.perms != ''">#{menuDto.perms},</if>
         <if test="menuDto.icon != null and menuDto.icon != ''">#{menuDto.icon},</if>
+        <if test="menuDto.createBy != null and menuDto.createBy != ''">#{menuDto.createBy},</if>
+        <if test="menuDto.createTime != null">#{menuDto.createTime},</if>
+        <if test="menuDto.updateBy != null and menuDto.updateBy != ''">#{menuDto.updateBy},</if>
+        <if test="menuDto.updateTime != null">#{menuDto.updateTime},</if>
         <choose>
             <when test="menuDto.parentId == null or menuDto.parentId == ''">0</when>
             <otherwise>#{menuDto.parentId}</otherwise>

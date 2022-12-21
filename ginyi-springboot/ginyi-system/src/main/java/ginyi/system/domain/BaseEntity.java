@@ -1,9 +1,14 @@
 package ginyi.system.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import ginyi.common.mysql.annotation.CreateBy;
+import ginyi.common.mysql.annotation.CreateTime;
+import ginyi.common.mysql.annotation.UpdateBy;
+import ginyi.common.mysql.annotation.UpdateTime;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -31,6 +36,7 @@ public class BaseEntity implements Serializable {
      * 创建者
      */
     @ApiModelProperty("创建者")
+    @CreateBy
     private String createBy;
 
     /**
@@ -38,12 +44,14 @@ public class BaseEntity implements Serializable {
      */
     @JsonFormat
     @ApiModelProperty("创建时间")
+    @CreateTime
     private Date createTime;
 
     /**
      * 更新者
      */
     @ApiModelProperty("更新者")
+    @UpdateBy
     private String updateBy;
 
     /**
@@ -51,6 +59,7 @@ public class BaseEntity implements Serializable {
      */
     @JsonFormat
     @ApiModelProperty("更新时间")
+    @UpdateTime
     private Date updateTime;
 
     /**

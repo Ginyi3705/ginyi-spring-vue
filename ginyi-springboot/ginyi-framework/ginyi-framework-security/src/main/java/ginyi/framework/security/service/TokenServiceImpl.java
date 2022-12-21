@@ -2,6 +2,7 @@ package ginyi.framework.security.service;
 
 import eu.bitwalker.useragentutils.UserAgent;
 import ginyi.common.constant.CacheConstants;
+import ginyi.common.constant.UserConstants;
 import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.utils.ServletUtils;
 import ginyi.common.utils.StringUtils;
@@ -30,6 +31,8 @@ public class TokenServiceImpl implements ITokenService {
 
     @Resource
     private RedisCache redisCache;
+    @Resource
+    private HttpServletRequest request;
     /**
      * 令牌自定义标识
      */
@@ -101,6 +104,7 @@ public class TokenServiceImpl implements ITokenService {
                 String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
                 String userKey = getTokenKey(uuid);
                 LoginUser user = redisCache.getCacheObject(userKey, LoginUser.class);
+                request.setAttribute(UserConstants.CURRENT_USER, user.getUsername());
                 return user;
             } catch (Exception e) {
             }

@@ -2,11 +2,10 @@ package ginyi.common.utils;
 
 /**
  * 通用常量信息
- * 
+ *
  * @author ruoyi
  */
-public class Constants
-{
+public class Constants {
     /**
      * UTF-8 字符集
      */
@@ -46,7 +45,7 @@ public class Constants
      * 登录失败
      */
     public static final String LOGIN_FAIL = "Error";
- 
+
 
     /**
      * 令牌前缀

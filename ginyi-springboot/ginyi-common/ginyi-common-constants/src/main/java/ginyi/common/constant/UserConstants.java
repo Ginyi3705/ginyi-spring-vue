@@ -12,6 +12,11 @@ public class UserConstants {
     public static final String SYS_USER = "SYS_USER";
 
     /**
+     * 当前线程上的用户
+     */
+    public static final String CURRENT_USER = "CURRENT_USER";
+
+    /**
      * 正常状态
      */
     public static final String NORMAL = "0";
