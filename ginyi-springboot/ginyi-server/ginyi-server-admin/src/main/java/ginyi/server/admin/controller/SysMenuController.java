@@ -24,7 +24,7 @@ public class SysMenuController {
     private ISysMenuService sysMenuService;
 
     @ApiOperation("路由菜单列表")
-    @GetMapping("/getMenuList")
+    @GetMapping("/getRouterList")
     public CommonResult<MenuVo> list() {
         MenuVo menuVo = sysMenuService.selectMenuList();
         return CommonResult.success(menuVo);
@@ -40,6 +40,7 @@ public class SysMenuController {
     }
 
     @ApiOperation("添加菜单")
+    @Log(title = "菜单模块", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     public CommonResult add(@RequestBody @Validated({AddGroup.class}) MenuDto menuDto){
         sysMenuService.addMenu(menuDto);

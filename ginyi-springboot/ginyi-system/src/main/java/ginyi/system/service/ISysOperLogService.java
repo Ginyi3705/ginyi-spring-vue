@@ -1,6 +1,6 @@
 package ginyi.system.service;
 
-import ginyi.system.domain.SysOperLog;
+import ginyi.system.domain.SysLogOperation;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface ISysOperLogService {
      *
      * @param operLog 操作日志对象
      */
-    public void insertOperlog(SysOperLog operLog);
+    public void insertOperlog(SysLogOperation operLog);
 
     /**
      * 查询系统操作日志集合
@@ -23,7 +23,7 @@ public interface ISysOperLogService {
      * @param operLog 操作日志对象
      * @return 操作日志集合
      */
-    public List<SysOperLog> selectOperLogList(SysOperLog operLog);
+    public List<SysLogOperation> selectOperLogList(SysLogOperation operLog);
 
     /**
      * 批量删除系统操作日志
@@ -39,7 +39,7 @@ public interface ISysOperLogService {
      * @param operId 操作ID
      * @return 操作日志对象
      */
-    public SysOperLog selectOperLogById(Long operId);
+    public SysLogOperation selectOperLogById(Long operId);
 
     /**
      * 清空操作日志

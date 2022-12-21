@@ -2,22 +2,26 @@ package ginyi.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
 /**
- * 操作日志记录表 oper_log
+ * 操作日志记录表 operation_log
  *
  * @author ruoyi
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class SysOperLog extends BaseEntity {
+@Document("sys_log_operation")
+public class SysLogOperation extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 日志主键
      */
-    private Long operId;
+    private Long Id;
 
     /**
      * 操作模块
@@ -52,7 +56,7 @@ public class SysOperLog extends BaseEntity {
     /**
      * 操作人员
      */
-    private String operName;
+    private String operationName;
 
     /**
      * 部门名称
@@ -62,22 +66,22 @@ public class SysOperLog extends BaseEntity {
     /**
      * 请求url
      */
-    private String operUrl;
+    private String operationUrl;
 
     /**
      * 操作地址
      */
-    private String operIp;
+    private String operationIp;
 
     /**
      * 操作地点
      */
-    private String operLocation;
+    private String operationLocation;
 
     /**
      * 请求参数
      */
-    private String operParam;
+    private String operationParam;
 
     /**
      * 返回参数
@@ -98,6 +102,6 @@ public class SysOperLog extends BaseEntity {
      * 操作时间
      */
     @JsonFormat
-    private Date operTime;
+    private Date operationTime;
 
 }

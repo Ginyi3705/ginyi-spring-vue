@@ -33,7 +33,7 @@ db.getCollection("sys_log_login").insert([ {
     browser: "Chrome 10",
     os: "Windows 10",
     msg: "登录成功",
-    _class: "ginyi.system.domain.SysLogininfor"
+    _class: "ginyi.system.domain.SysLogLogin"
 } ]);
 db.getCollection("sys_log_login").insert([ {
     _id: ObjectId("63974c9a04828c5162cd4e47"),
@@ -44,7 +44,7 @@ db.getCollection("sys_log_login").insert([ {
     browser: "Chrome 10",
     os: "Windows 10",
     msg: "用户名密码不匹配",
-    _class: "ginyi.system.domain.SysLogininfor"
+    _class: "ginyi.system.domain.SysLogLogin"
 } ]);
 db.getCollection("sys_log_login").insert([ {
     _id: ObjectId("63974d0e04828c5162cd4e48"),
@@ -55,7 +55,7 @@ db.getCollection("sys_log_login").insert([ {
     browser: "Chrome 10",
     os: "Windows 10",
     msg: "登录成功",
-    _class: "ginyi.system.domain.SysLogininfor"
+    _class: "ginyi.system.domain.SysLogLogin"
 } ]);
 
 // ----------------------------

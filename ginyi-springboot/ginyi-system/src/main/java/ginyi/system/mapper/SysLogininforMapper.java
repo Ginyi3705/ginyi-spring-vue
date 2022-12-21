@@ -1,6 +1,6 @@
 package ginyi.system.mapper;
 
-import ginyi.system.domain.SysLogininfor;
+import ginyi.system.domain.SysLogLogin;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface SysLogininforMapper {
      *
      * @param logininfor 访问日志对象
      */
-    public void insertLogininfor(SysLogininfor logininfor);
+    public void insertLogininfor(SysLogLogin logininfor);
 
     /**
      * 查询系统登录日志集合
@@ -23,7 +23,7 @@ public interface SysLogininforMapper {
      * @param logininfor 访问日志对象
      * @return 登录记录集合
      */
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor);
+    public List<SysLogLogin> selectLogininforList(SysLogLogin logininfor);
 
     /**
      * 批量删除系统登录日志

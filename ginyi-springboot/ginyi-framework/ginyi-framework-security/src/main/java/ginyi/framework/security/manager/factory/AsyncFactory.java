@@ -1,6 +1,5 @@
 package ginyi.framework.security.manager.factory;
 
-import com.alibaba.fastjson.JSON;
 import eu.bitwalker.useragentutils.UserAgent;
 import ginyi.common.utils.LogUtils;
 import ginyi.common.utils.ServletUtils;
@@ -9,15 +8,14 @@ import ginyi.common.utils.Constants;
 import ginyi.common.utils.ip.AddressUtils;
 import ginyi.common.utils.ip.IpUtils;
 import ginyi.common.utils.spring.SpringUtils;
-import ginyi.system.domain.SysLogininfor;
-import ginyi.system.domain.SysOperLog;
-import ginyi.system.service.ISysLogininforService;
-import ginyi.system.service.ISysOperLogService;
+import ginyi.system.domain.SysLogLogin;
+import ginyi.system.domain.SysLogOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import java.util.Date;
 import java.util.TimerTask;
 
 /**
@@ -58,21 +56,21 @@ public class AsyncFactory {
                 // 获取客户端浏览器
                 String browser = userAgent.getBrowser().getName();
                 // 封装对象
-                SysLogininfor logininfor = new SysLogininfor();
+                SysLogLogin logininfor = new SysLogLogin();
                 logininfor.setUserName(username);
                 logininfor.setIpaddr(ip);
                 logininfor.setLoginLocation(address);
                 logininfor.setBrowser(browser);
                 logininfor.setOs(os);
                 logininfor.setMsg(message);
+                logininfor.setCreateTime(new Date());
                 // 日志状态
                 if (StringUtils.equalsAny(status, Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER)) {
                     logininfor.setStatus(Constants.SUCCESS);
                 } else if (Constants.LOGIN_FAIL.equals(status)) {
                     logininfor.setStatus(Constants.FAIL);
                 }
-                // 插入数据
-                SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(logininfor);
+                // 保存到mongo
                 SpringUtils.getBean(MongoTemplate.class).save(logininfor);
             }
         };
@@ -84,13 +82,13 @@ public class AsyncFactory {
      * @param operLog 操作日志信息
      * @return 任务task
      */
-    public static TimerTask recordOper(final SysOperLog operLog) {
+    public static TimerTask recordOper(final SysLogOperation operLog) {
         return new TimerTask() {
             @Override
             public void run() {
                 // 远程查询操作地点
-                operLog.setOperLocation(AddressUtils.getRealAddressByIP(operLog.getOperIp()));
-                SpringUtils.getBean(ISysOperLogService.class).insertOperlog(operLog);
+                operLog.setOperationLocation(AddressUtils.getRealAddressByIP(operLog.getOperationIp()));
+                SpringUtils.getBean(MongoTemplate.class).save(operLog);
             }
         };
     }

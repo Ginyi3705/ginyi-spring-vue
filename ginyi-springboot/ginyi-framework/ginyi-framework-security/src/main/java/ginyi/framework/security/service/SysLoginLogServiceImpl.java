@@ -1,11 +1,9 @@
 package ginyi.framework.security.service;
 
-import ginyi.system.domain.SysLogininfor;
-import ginyi.system.mapper.SysLogininforMapper;
+import ginyi.system.domain.SysLogLogin;
 import ginyi.system.service.ISysLogininforService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -14,10 +12,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Service
-public class SysLogininforServiceImpl implements ISysLogininforService {
-
-    @Resource
-    private SysLogininforMapper logininforMapper;
+public class SysLoginLogServiceImpl implements ISysLogininforService {
 
     /**
      * 新增系统登录日志
@@ -25,8 +20,8 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
      * @param logininfor 访问日志对象
      */
     @Override
-    public void insertLogininfor(SysLogininfor logininfor) {
-        logininforMapper.insertLogininfor(logininfor);
+    public void insertLogininfor(SysLogLogin logininfor) {
+        // todo 待写~
     }
 
     /**
@@ -36,8 +31,9 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
      * @return 登录记录集合
      */
     @Override
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor) {
-        return logininforMapper.selectLogininforList(logininfor);
+    public List<SysLogLogin> selectLogininforList(SysLogLogin logininfor) {
+        // todo 待写~
+        return null;
     }
 
     /**
@@ -48,7 +44,8 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
      */
     @Override
     public int deleteLogininforByIds(Long[] infoIds) {
-        return logininforMapper.deleteLogininforByIds(infoIds);
+        // todo 待写~
+        return 0;
     }
 
     /**
@@ -56,6 +53,6 @@ public class SysLogininforServiceImpl implements ISysLogininforService {
      */
     @Override
     public void cleanLogininfor() {
-        logininforMapper.cleanLogininfor();
+        // todo 待写~
     }
 }

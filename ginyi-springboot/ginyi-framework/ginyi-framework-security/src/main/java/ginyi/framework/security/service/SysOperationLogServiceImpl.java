@@ -1,12 +1,9 @@
 package ginyi.framework.security.service;
 
-import ginyi.system.domain.SysOperLog;
-import ginyi.system.mapper.SysOperLogMapper;
+import ginyi.system.domain.SysLogOperation;
 import ginyi.system.service.ISysOperLogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -15,9 +12,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Service
-public class SysOperLogServiceImpl implements ISysOperLogService {
-    @Resource
-    private SysOperLogMapper operLogMapper;
+public class SysOperationLogServiceImpl implements ISysOperLogService {
 
     /**
      * 新增操作日志
@@ -25,8 +20,8 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      * @param operLog 操作日志对象
      */
     @Override
-    public void insertOperlog(SysOperLog operLog) {
-        operLogMapper.insertOperlog(operLog);
+    public void insertOperlog(SysLogOperation operLog) {
+        // todo 待写~
     }
 
     /**
@@ -36,8 +31,9 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      * @return 操作日志集合
      */
     @Override
-    public List<SysOperLog> selectOperLogList(SysOperLog operLog) {
-        return operLogMapper.selectOperLogList(operLog);
+    public List<SysLogOperation> selectOperLogList(SysLogOperation operLog) {
+        // todo 待写~
+        return null;
     }
 
     /**
@@ -48,7 +44,8 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      */
     @Override
     public int deleteOperLogByIds(Long[] operIds) {
-        return operLogMapper.deleteOperLogByIds(operIds);
+        // todo 待写~
+        return 0;
     }
 
     /**
@@ -58,8 +55,9 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      * @return 操作日志对象
      */
     @Override
-    public SysOperLog selectOperLogById(Long operId) {
-        return operLogMapper.selectOperLogById(operId);
+    public SysLogOperation selectOperLogById(Long operId) {
+        // todo 待写~
+        return null;
     }
 
     /**
@@ -67,6 +65,6 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      */
     @Override
     public void cleanOperLog() {
-        operLogMapper.cleanOperLog();
+        // todo 待写~
     }
 }
