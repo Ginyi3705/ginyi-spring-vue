@@ -1,14 +1,13 @@
 package ginyi.system.domain;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import ginyi.common.mysql.annotation.CreateBy;
-import ginyi.common.mysql.annotation.CreateTime;
-import ginyi.common.mysql.annotation.UpdateBy;
-import ginyi.common.mysql.annotation.UpdateTime;
+import ginyi.common.annotation.CreateBy;
+import ginyi.common.annotation.CreateTime;
+import ginyi.common.annotation.UpdateBy;
+import ginyi.common.annotation.UpdateTime;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

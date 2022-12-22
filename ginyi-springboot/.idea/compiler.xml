@@ -7,8 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="ginyi-common-annotation" />
         <module name="ginyi-server-admin" />
         <module name="ginyi-common-constants" />
+        <module name="ginyi-common-enums" />
         <module name="ginyi-common-utils" />
         <module name="ginyi-server-web" />
         <module name="ginyi-common-mysql" />
@@ -24,7 +26,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ginyi-common-annotation" target="8" />
       <module name="ginyi-common-config" target="1.8" />
       <module name="ginyi-server-system" target="1.8" />
     </bytecodeTargetLevel>
@@ -35,6 +36,7 @@
       <module name="ginyi-common-annotation" options="-parameters" />
       <module name="ginyi-common-config" options="-parameters" />
       <module name="ginyi-common-constants" options="-parameters" />
+      <module name="ginyi-common-enums" options="-parameters" />
       <module name="ginyi-common-exception" options="-parameters" />
       <module name="ginyi-common-mysql" options="-parameters" />
       <module name="ginyi-common-redis" options="-parameters" />

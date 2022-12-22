@@ -1,7 +1,7 @@
-package ginyi.framework.core.annotation;
+package ginyi.common.annotation;
 
-import ginyi.framework.core.enums.BusinessType;
-import ginyi.framework.core.enums.OperatorType;
+import ginyi.common.enums.BusinessType;
+import ginyi.common.enums.OperatorType;
 
 import java.lang.annotation.*;
 

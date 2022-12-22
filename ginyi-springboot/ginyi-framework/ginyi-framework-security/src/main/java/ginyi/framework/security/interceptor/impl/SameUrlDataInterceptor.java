@@ -1,11 +1,11 @@
 package ginyi.framework.security.interceptor.impl;
 
 import com.alibaba.fastjson2.JSON;
+import ginyi.common.annotation.RepeatSubmit;
 import ginyi.common.constant.CacheConstants;
 import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.http.HttpHelper;
-import ginyi.framework.core.annotation.RepeatSubmit;
 import ginyi.framework.security.filter.RepeatedlyRequestWrapper;
 import ginyi.framework.security.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

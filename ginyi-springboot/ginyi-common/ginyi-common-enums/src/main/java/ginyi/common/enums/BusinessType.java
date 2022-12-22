@@ -1,4 +1,4 @@
-package ginyi.framework.core.enums;
+package ginyi.common.enums;
 
 /**
  * 业务操作类型

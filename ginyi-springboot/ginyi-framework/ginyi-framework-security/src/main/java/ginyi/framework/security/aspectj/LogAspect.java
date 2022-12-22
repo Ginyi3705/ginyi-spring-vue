@@ -1,12 +1,12 @@
 package ginyi.framework.security.aspectj;
 
 import com.alibaba.fastjson2.JSON;
+import ginyi.common.annotation.Log;
+import ginyi.common.enums.BusinessStatus;
+import ginyi.common.enums.HttpMethod;
 import ginyi.common.utils.ServletUtils;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.ip.IpUtils;
-import ginyi.framework.core.annotation.Log;
-import ginyi.framework.core.enums.BusinessStatus;
-import ginyi.framework.core.enums.HttpMethod;
 import ginyi.framework.security.filter.PropertyPreExcludeFilter;
 import ginyi.framework.security.manager.AsyncManager;
 import ginyi.framework.security.manager.factory.AsyncFactory;

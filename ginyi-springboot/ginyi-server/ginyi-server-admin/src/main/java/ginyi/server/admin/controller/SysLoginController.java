@@ -1,9 +1,6 @@
 package ginyi.server.admin.controller;
 
 import ginyi.common.result.CommonResult;
-import ginyi.common.utils.Constants;
-import ginyi.framework.core.annotation.Log;
-import ginyi.framework.core.enums.BusinessType;
 import ginyi.system.domain.model.dto.LoginDto;
 import ginyi.system.domain.model.dto.RegisterDto;
 import ginyi.system.domain.model.vo.LoginVo;
@@ -17,9 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")

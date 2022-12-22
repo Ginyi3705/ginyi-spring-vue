@@ -40,10 +40,16 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-
+        <!-- 公用常量包 -->
         <dependency>
             <groupId>com.ginyi</groupId>
             <artifactId>ginyi-common-constants</artifactId>
+            <version>${ginyi.version}</version>
+        </dependency>
+        <!-- 公用注解包 -->
+        <dependency>
+            <groupId>com.ginyi</groupId>
+            <artifactId>ginyi-common-annotation</artifactId>
             <version>${ginyi.version}</version>
         </dependency>
     </dependencies>

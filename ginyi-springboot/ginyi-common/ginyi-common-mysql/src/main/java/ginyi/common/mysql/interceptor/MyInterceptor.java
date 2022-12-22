@@ -1,10 +1,10 @@
 package ginyi.common.mysql.interceptor;
 
+import ginyi.common.annotation.CreateBy;
+import ginyi.common.annotation.CreateTime;
+import ginyi.common.annotation.UpdateBy;
+import ginyi.common.annotation.UpdateTime;
 import ginyi.common.constant.UserConstants;
-import ginyi.common.mysql.annotation.CreateBy;
-import ginyi.common.mysql.annotation.CreateTime;
-import ginyi.common.mysql.annotation.UpdateBy;
-import ginyi.common.mysql.annotation.UpdateTime;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -14,12 +14,10 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**

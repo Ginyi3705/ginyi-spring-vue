@@ -1,9 +1,9 @@
 package ginyi.server.admin.controller;
 
+import ginyi.common.annotation.Log;
+import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
-import ginyi.framework.core.annotation.Log;
-import ginyi.framework.core.enums.BusinessType;
 import ginyi.system.domain.model.dto.MenuDto;
 import ginyi.system.domain.model.vo.MenuVo;
 import ginyi.system.service.ISysMenuService;

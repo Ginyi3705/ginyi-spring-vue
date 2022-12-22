@@ -7,11 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-/**
- * 操作日志记录表 operation_log
- *
- * @author ruoyi
- */
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Document("sys_log_operation")

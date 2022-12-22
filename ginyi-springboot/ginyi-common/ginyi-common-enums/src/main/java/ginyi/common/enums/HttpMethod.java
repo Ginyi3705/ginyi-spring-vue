@@ -1,4 +1,4 @@
-package ginyi.framework.core.enums;
+package ginyi.common.enums;
 
 import org.springframework.lang.Nullable;
 
