@@ -23,7 +23,7 @@ public class MenuDto extends BaseEntity {
      * 菜单id
      */
     @ApiModelProperty("菜单id")
-    @NotBlank(groups = UpdateGroup.class, message = "菜单id不能为空")
+    @NotNull(groups = UpdateGroup.class, message = "菜单id不能为空")
     private Long menuId;
 
     /**

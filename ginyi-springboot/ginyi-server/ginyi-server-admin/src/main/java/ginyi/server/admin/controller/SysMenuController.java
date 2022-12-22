@@ -4,6 +4,7 @@ import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
+import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.SysMenu;
 import ginyi.system.domain.model.dto.MenuDto;
 import ginyi.system.domain.model.vo.MenuVo;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.groups.Default;
 
 @Api(tags = "菜单模块")
 @RestController
@@ -49,10 +51,20 @@ public class SysMenuController {
         return CommonResult.success();
     }
 
-    @ApiOperation("获取菜单详情")
+    @ApiOperation("菜单详情")
     @GetMapping("/getMenuById/{menuId}")
+    @PreAuthorize("@ss.hasPermission('system:menu:edit')")
     public CommonResult getMenuById(@PathVariable("menuId") Long menuId){
         SysMenu menu = sysMenuService.getMenuById(menuId);
         return CommonResult.success(menu);
+    }
+
+    @ApiOperation("更新菜单")
+    @PostMapping("/update")
+    @PreAuthorize("@ss.hasPermission('system:menu:edit')")
+    @Log(title = "菜单模块", businessType = BusinessType.UPDATE)
+    public CommonResult update(@RequestBody @Validated({UpdateGroup.class}) MenuDto menuDto){
+        sysMenuService.updateMenu(menuDto);
+        return CommonResult.success();
     }
 }

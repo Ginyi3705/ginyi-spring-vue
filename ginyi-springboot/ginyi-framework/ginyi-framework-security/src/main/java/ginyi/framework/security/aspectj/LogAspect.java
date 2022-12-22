@@ -4,6 +4,8 @@ import com.alibaba.fastjson2.JSON;
 import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessStatus;
 import ginyi.common.enums.HttpMethod;
+import ginyi.common.exception.CommonException;
+import ginyi.common.result.CommonResult;
 import ginyi.common.utils.ServletUtils;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.ip.IpUtils;
@@ -26,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -69,34 +72,39 @@ public class LogAspect {
             // 获取当前的用户
             LoginUser loginUser = SecurityUtils.getLoginUser();
 
-            // *========数据库日志=========*//
-            SysLogOperation operLog = new SysLogOperation();
-            operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
+            // 数据库日志
+            SysLogOperation operationLog = new SysLogOperation();
+            operationLog.setStatus(BusinessStatus.SUCCESS.ordinal());
             // 请求的地址
             String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
-            operLog.setOperationIp(ip);
-            operLog.setOperationUrl(StringUtils.substring(ServletUtils.getRequest().getRequestURI(), 0, 255));
+            operationLog.setOperationIp(ip);
+            operationLog.setOperationUrl(StringUtils.substring(ServletUtils.getRequest().getRequestURI(), 0, 255));
             if (loginUser != null) {
-                operLog.setOperationName(loginUser.getUsername());
+                operationLog.setOperationName(loginUser.getUsername());
             }
 
             if (e != null) {
-                operLog.setStatus(BusinessStatus.FAIL.ordinal());
-                operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
+                // 只处理了 CommonException 异常
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("code", ((CommonException) e).getState().getCode());
+                map.put("msg", ((CommonException) e).getState().getMessage());
+                map.put("data", ((CommonException) e).getData());
+                operationLog.setStatus(BusinessStatus.FAIL.ordinal());
+                operationLog.setErrorMsg(JSON.toJSONString(map));
             }
             // 设置方法名称
             String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
-            operLog.setMethod(className + "." + methodName + "()");
+            operationLog.setMethod(className + "." + methodName + "()");
             // 设置请求方式
-            operLog.setRequestMethod(ServletUtils.getRequest().getMethod());
+            operationLog.setRequestMethod(ServletUtils.getRequest().getMethod());
             // 处理设置注解上的参数
-            getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
+            getControllerMethodDescription(joinPoint, controllerLog, operationLog, jsonResult);
             // 保存数据库
-            AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
+            AsyncManager.me().execute(AsyncFactory.recordOper(operationLog));
         } catch (Exception exp) {
             // 记录本地异常日志
-            log.error("异常信息:{}", exp.getMessage());
+            log.error("记录本地日志时发生异常，异常信息:{}", exp.getMessage());
             exp.printStackTrace();
         }
     }
@@ -105,41 +113,41 @@ public class LogAspect {
      * 获取注解中对方法的描述信息 用于Controller层注解
      *
      * @param log     日志
-     * @param operLog 操作日志
+     * @param operationLog 操作日志
      * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysLogOperation operLog, Object jsonResult) throws Exception {
+    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysLogOperation operationLog, Object jsonResult) throws Exception {
         // 设置action动作
-        operLog.setBusinessType(log.businessType().ordinal());
+        operationLog.setBusinessType(log.businessType().ordinal());
         // 设置标题
-        operLog.setTitle(log.title());
+        operationLog.setTitle(log.title());
         // 设置操作人类别
-        operLog.setOperatorType(log.operatorType().ordinal());
+        operationLog.setOperatorType(log.operatorType().ordinal());
         // 是否需要保存request，参数和值
         if (log.isSaveRequestData()) {
             // 获取参数的信息，传入到数据库中。
-            setRequestValue(joinPoint, operLog);
+            setRequestValue(joinPoint, operationLog);
         }
         // 是否需要保存response，参数和值
         if (log.isSaveResponseData() && StringUtils.isNotNull(jsonResult)) {
-            operLog.setJsonResult(JSON.toJSONString(jsonResult));
+            operationLog.setJsonResult(JSON.toJSONString(jsonResult));
         }
     }
 
     /**
      * 获取请求的参数，放到log中
      *
-     * @param operLog 操作日志
+     * @param operationLog 操作日志
      * @throws Exception 异常
      */
-    private void setRequestValue(JoinPoint joinPoint, SysLogOperation operLog) throws Exception {
-        String requestMethod = operLog.getRequestMethod();
+    private void setRequestValue(JoinPoint joinPoint, SysLogOperation operationLog) throws Exception {
+        String requestMethod = operationLog.getRequestMethod();
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());
-            operLog.setOperationParam(params);
+            operationLog.setOperationParam(params);
         } else {
             Map<?, ?> paramsMap = ServletUtils.getParamMap(ServletUtils.getRequest());
-            operLog.setOperationParam(StringUtils.substring(JSON.toJSONString(paramsMap, excludePropertyPreFilter()), 0, 2000));
+            operationLog.setOperationParam(StringUtils.substring(JSON.toJSONString(paramsMap, excludePropertyPreFilter()), 0, 2000));
         }
     }
 

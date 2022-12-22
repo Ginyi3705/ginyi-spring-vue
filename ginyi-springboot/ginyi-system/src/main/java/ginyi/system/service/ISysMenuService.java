@@ -55,4 +55,10 @@ public interface ISysMenuService {
      * @return
      */
     public SysMenu getMenuById(Long menuId);
+
+    /**
+     * 更新菜单
+     * @param menuDto
+     */
+    public void updateMenu(MenuDto menuDto);
 }

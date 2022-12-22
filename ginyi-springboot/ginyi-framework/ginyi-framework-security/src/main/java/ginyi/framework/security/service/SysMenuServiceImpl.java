@@ -207,4 +207,33 @@ public class SysMenuServiceImpl implements ISysMenuService {
         redisCache.setCacheObject(CacheConstants.MENU_DETAILS_BY_ID_KEY + menuId, menu);
         return menu;
     }
+
+    /**
+     * 更新菜单
+     * @param menuDto
+     */
+    @Override
+    public void updateMenu(MenuDto menuDto) {
+        // c 是菜单，其余的是目录或者按钮
+        if ("C".equalsIgnoreCase(menuDto.getMenuType())) {
+            if (menuDto.getComponent().isEmpty()) {
+                throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_COMPONENT_NOT_EXIST);
+            }
+            if (menuDto.getPath().isEmpty()) {
+                throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_PATH_NOT_EXIST);
+            }
+        }
+
+        // 判断menuId是否存在
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysMenu::getMenuId, menuDto.getMenuId());
+        SysMenu result = menuMapper.selectOne(queryWrapper);
+        if (result == null) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+        }
+
+        menuMapper.updateMenu(menuDto);
+        // 清除menu的相关缓存
+        redisCache.removeCacheObject(CacheConstants.MENU_KEY_PREFIX);
+    }
 }

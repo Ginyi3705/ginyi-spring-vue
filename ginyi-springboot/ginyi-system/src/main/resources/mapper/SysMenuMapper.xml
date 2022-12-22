@@ -9,7 +9,7 @@
         <result property="menuName" column="menu_name"/>
         <result property="parentName" column="parent_name"/>
         <result property="parentId" column="parent_id"/>
-        <result property="orderNum" column="order_num"/>
+        <result property="sort" column="sort"/>
         <result property="path" column="path"/>
         <result property="component" column="component"/>
         <result property="query" column="query"/>
@@ -27,11 +27,12 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
+    <!-- 公用sql片段 -->
     <sql id="selectMenuRef">
         select sm.menu_id,
                sm.menu_name,
                sm.parent_id,
-               sm.order_num,
+               sm.sort,
                sm.path,
                sm.component,
                sm.query,
@@ -50,6 +51,7 @@
         from sys_menu as sm
     </sql>
 
+    <!-- 根据userId查询用户菜单权限 -->
     <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
         select distinct sm.perms
         from sys_menu as sm
@@ -61,6 +63,7 @@
           and sur.user_id = #{userId}
     </select>
 
+    <!-- 根据roleId查询菜单 -->
     <select id="selectMenuPermsByRoleId" parameterType="Long" resultType="String">
         select distinct sm.perms
         from sys_menu as sm
@@ -71,6 +74,7 @@
           and srm.role_id = #{roleId}
     </select>
 
+    <!-- 根据userId查询菜单 -->
     <select id="selectMenuListByUserId" resultMap="sysMenuResult">
         <include refid="selectMenuRef"/>
         left join sys_role_menu as srm on json_contains(srm.menu_id, json_array(sm.menu_id))
@@ -78,14 +82,16 @@
         where sur.user_id = #{userId} and sm.menu_type != 'F'
     </select>
 
+    <!-- 查询菜单 - admin -->
     <select id="selectMenuListByAdmin" resultMap="sysMenuResult">
         <include refid="selectMenuRef"/>
     </select>
 
+    <!-- 新增菜单 -->
     <insert id="insertMenu">
         insert into sys_menu (
         menu_name,
-        order_num,
+        sort,
         menu_type,
         visible,
         status,
@@ -124,5 +130,32 @@
         </choose>
         )
     </insert>
+
+    <!-- 更新菜单 -->
+    <update id="updateMenu">
+        update sys_menu
+        <set>
+            <if test="menuDto.menuName != null and menuDto.menuName != ''">menu_name = #{menuDto.menuName},</if>
+            <if test="menuDto.parentId != null and menuDto.parentId != ''">parent_id = #{menuDto.parentId},</if>
+            <if test="menuDto.sort != null and menuDto.sort != ''">sort = #{menuDto.sort},</if>
+            <if test="menuDto.path != null and menuDto.path != ''">`path` = #{menuDto.path},</if>
+            <if test="menuDto.component != null and menuDto.component != ''">component = #{menuDto.component},</if>
+            <if test="menuDto.query != null and menuDto.query != ''">`query` = #{menuDto.query},</if>
+            <if test="menuDto.isFrame != null and menuDto.isFrame != ''">is_frame = #{menuDto.isFrame},</if>
+            <if test="menuDto.isCache != null and menuDto.isCache != ''">is_cache = #{menuDto.isCache},</if>
+            <if test="menuDto.menuType != null and menuDto.menuType != ''">menu_type = #{menuDto.menuType},</if>
+            <if test="menuDto.visible != null and menuDto.visible != ''">`visible` = #{menuDto.visible},</if>
+            <if test="menuDto.status != null and menuDto.status != ''">`status` = #{menuDto.status},</if>
+            <if test="menuDto.perms != null and menuDto.perms != ''">perms = #{menuDto.perms},</if>
+            <if test="menuDto.icon != null and menuDto.icon != ''">icon = #{menuDto.icon},</if>
+            <if test="menuDto.createBy != null and menuDto.createBy != ''">create_by = #{menuDto.createBy},</if>
+            <if test="menuDto.createTime != null">create_time = #{menuDto.createTime},</if>
+            <if test="menuDto.updateBy != null and menuDto.updateBy != ''">update_by = #{menuDto.updateBy},</if>
+            <if test="menuDto.updateTime != null">update_time = #{menuDto.updateTime},</if>
+            <if test="menuDto.remark != null and menuDto.remark != ''">remark = #{menuDto.remark},</if>
+        </set>
+        where menu_id = #{menuDto.menuId}
+    </update>
+
 
 </mapper>

@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 22/12/2022 11:52:04
+ Date: 22/12/2022 14:55:02
 */
 
 SET NAMES utf8mb4;
@@ -289,7 +289,7 @@ CREATE TABLE `sys_menu`  (
   `menu_id` bigint NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
   `menu_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单名称',
   `parent_id` bigint NULL DEFAULT 0 COMMENT '父菜单ID',
-  `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
+  `sort` int NULL DEFAULT 0 COMMENT '显示顺序',
   `path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '路由地址',
   `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '组件路径',
   `query` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '路由参数',
@@ -306,7 +306,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2003 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2029 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -404,6 +404,8 @@ INSERT INTO `sys_menu` VALUES (2019, '测试菜单的子菜单11', 2000, 0, '/te
 INSERT INTO `sys_menu` VALUES (2020, '测试菜单的子菜单121', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-21 13:27:15', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2021, '测试菜单的子菜单121ww', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-21 13:47:28', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (2022, '测试菜单的子菜单eee', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-21 13:59:14', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2023, '测试菜单的子菜单eeefff', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-22 04:34:47', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2024, '测试菜单的子菜单哈2哈', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-22 04:35:42', 'ginyi', '2022-12-22 06:50:33', '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -546,7 +548,7 @@ CREATE TABLE `sys_user`  (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.100', '2022-12-21 11:21:22', 'admin', '2022-12-03 07:21:32', '', '2022-12-21 11:21:20', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'ginyi', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.100', '2022-12-21 13:58:54', 'admin', '2022-12-03 07:21:32', 'ginyi', '2022-12-21 13:58:52', '测试员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ginyi', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.100', '2022-12-22 06:41:15', 'admin', '2022-12-03 07:21:32', 'ginyi', '2022-12-22 06:41:14', '测试员');
 
 -- ----------------------------
 -- Table structure for sys_user_post
