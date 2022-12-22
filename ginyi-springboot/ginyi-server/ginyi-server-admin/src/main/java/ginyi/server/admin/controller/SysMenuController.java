@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.groups.Default;
 
 @Api(tags = "菜单模块")
 @RestController
@@ -65,6 +64,15 @@ public class SysMenuController {
     @Log(title = "菜单模块", businessType = BusinessType.UPDATE)
     public CommonResult update(@RequestBody @Validated({UpdateGroup.class}) MenuDto menuDto){
         sysMenuService.updateMenu(menuDto);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("删除菜单")
+    @PostMapping("/delete/{menuId}")
+    @PreAuthorize("@ss.hasPermission('system:menu:remove')")
+    @Log(title = "菜单模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@PathVariable("menuId") Long menuId){
+        sysMenuService.removeMenuById(menuId);
         return CommonResult.success();
     }
 }

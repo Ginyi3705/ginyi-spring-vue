@@ -61,4 +61,10 @@ public interface ISysMenuService {
      * @param menuDto
      */
     public void updateMenu(MenuDto menuDto);
+
+    /**
+     * 根据菜单id删除
+     * @param menuId
+     */
+    public void removeMenuById(Long menuId);
 }

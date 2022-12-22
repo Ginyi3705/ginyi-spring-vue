@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 菜单 业务层处理
@@ -210,6 +209,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     /**
      * 更新菜单
+     *
      * @param menuDto
      */
     @Override
@@ -234,6 +234,32 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
         menuMapper.updateMenu(menuDto);
         // 清除menu的相关缓存
+        redisCache.removeCacheObject(CacheConstants.MENU_KEY_PREFIX);
+    }
+
+    /**
+     * 根据菜单id删除
+     *
+     * @param menuId
+     */
+    @Override
+    public void removeMenuById(Long menuId) {
+        // 缓存中是否标记空id
+        if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+        }
+
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysMenu::getMenuId, menuId);
+        SysMenu menu = menuMapper.selectOne(queryWrapper);
+
+        // 数据不存在
+        if (menu == null) {
+            redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+        }
+
+        menuMapper.deleteById(menuId);
         redisCache.removeCacheObject(CacheConstants.MENU_KEY_PREFIX);
     }
 }
