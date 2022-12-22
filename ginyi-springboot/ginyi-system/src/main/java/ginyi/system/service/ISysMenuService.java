@@ -67,4 +67,10 @@ public interface ISysMenuService {
      * @param menuId
      */
     public void removeMenuById(Long menuId);
+
+    /**
+     * 根据ids批量删除菜单
+     * @param ids
+     */
+    public void delete(Set<Long> ids);
 }

@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 @Api(tags = "菜单模块")
 @RestController
@@ -45,7 +46,7 @@ public class SysMenuController {
     @PostMapping("/add")
     @Log(title = "菜单模块", businessType = BusinessType.INSERT)
     @PreAuthorize("@ss.hasPermission('system:menu:add')")
-    public CommonResult add(@RequestBody @Validated({AddGroup.class}) MenuDto menuDto){
+    public CommonResult add(@RequestBody @Validated({AddGroup.class}) MenuDto menuDto) {
         sysMenuService.addMenu(menuDto);
         return CommonResult.success();
     }
@@ -53,7 +54,7 @@ public class SysMenuController {
     @ApiOperation("菜单详情")
     @GetMapping("/getMenuById/{menuId}")
     @PreAuthorize("@ss.hasPermission('system:menu:edit')")
-    public CommonResult getMenuById(@PathVariable("menuId") Long menuId){
+    public CommonResult getMenuById(@PathVariable("menuId") Long menuId) {
         SysMenu menu = sysMenuService.getMenuById(menuId);
         return CommonResult.success(menu);
     }
@@ -62,7 +63,7 @@ public class SysMenuController {
     @PostMapping("/update")
     @PreAuthorize("@ss.hasPermission('system:menu:edit')")
     @Log(title = "菜单模块", businessType = BusinessType.UPDATE)
-    public CommonResult update(@RequestBody @Validated({UpdateGroup.class}) MenuDto menuDto){
+    public CommonResult update(@RequestBody @Validated({UpdateGroup.class}) MenuDto menuDto) {
         sysMenuService.updateMenu(menuDto);
         return CommonResult.success();
     }
@@ -71,8 +72,17 @@ public class SysMenuController {
     @PostMapping("/delete/{menuId}")
     @PreAuthorize("@ss.hasPermission('system:menu:remove')")
     @Log(title = "菜单模块", businessType = BusinessType.DELETE)
-    public CommonResult delete(@PathVariable("menuId") Long menuId){
+    public CommonResult delete(@PathVariable("menuId") Long menuId) {
         sysMenuService.removeMenuById(menuId);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("批量删除菜单")
+    @PostMapping("/delete")
+    @PreAuthorize("@ss.hasPermission('system:menu:remove')")
+    @Log(title = "菜单模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@RequestBody Set<Long> ids) {
+        sysMenuService.delete(ids);
         return CommonResult.success();
     }
 }

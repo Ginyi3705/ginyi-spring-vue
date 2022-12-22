@@ -18,6 +18,7 @@ import ginyi.system.service.ISysMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -261,5 +262,23 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
         menuMapper.deleteById(menuId);
         redisCache.removeCacheObject(CacheConstants.MENU_KEY_PREFIX);
+    }
+
+    /**
+     * 根据ids批量删除菜单
+     * @param ids
+     */
+    @Override
+    @Transactional
+    public void delete(Set<Long> ids) {
+        for (Long menuId : ids) {
+            // 缓存中是否标记空id
+            if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
+                throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_IDS_NOT_EXIST);
+            }
+        }
+        menuMapper.deleteBatchIds(ids);
+        redisCache.removeCacheObject(CacheConstants.MENU_KEY_PREFIX);
+
     }
 }
