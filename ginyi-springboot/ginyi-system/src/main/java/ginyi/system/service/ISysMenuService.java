@@ -48,4 +48,11 @@ public interface ISysMenuService {
      * @param menuDto
      */
     public void addMenu(MenuDto menuDto);
+
+    /**
+     * 根据id获取菜单详情
+     * @param menuId
+     * @return
+     */
+    public SysMenu getMenuById(Long menuId);
 }

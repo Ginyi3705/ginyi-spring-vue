@@ -15,18 +15,17 @@ import ginyi.system.domain.model.dto.MenuDto;
 import ginyi.system.domain.model.vo.MenuVo;
 import ginyi.system.mapper.SysMenuMapper;
 import ginyi.system.service.ISysMenuService;
-import ginyi.system.service.ITokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 菜单 业务层处理
@@ -90,7 +89,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         MenuVo menuVo = new MenuVo();
         LoginUser user = SecurityUtils.getLoginUser();
         // 判断缓存是否有数据
-        menuList = redisCache.getCacheList(CacheConstants.USER_MENU_KEY + user.getUsername(), SysMenu.class);
+        menuList = redisCache.getCacheList(CacheConstants.MENU_USER_LIST_KEY + user.getUsername(), SysMenu.class);
         if (menuList.size() > 0) {
             menuVo.setList(menuList);
             menuVo.setCount(menuList.size());
@@ -103,7 +102,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         menuList = list.stream()
                 .filter(menu -> menu.getParentId().equals(0L))
                 .map(menu -> convertToMenuTree(menu, list)).collect(Collectors.toList());
-        redisCache.setCacheList(CacheConstants.USER_MENU_KEY + user.getUsername(), menuList);
+        redisCache.setCacheList(CacheConstants.MENU_USER_LIST_KEY + user.getUsername(), menuList);
 
         menuVo.setList(menuList);
         menuVo.setCount(menuList.size());
@@ -119,7 +118,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public MenuVo selectMenuListByAdmin(MenuDto menuDto) {
         List<SysMenu> list = menuMapper.selectMenuListByAdmin();
-        List<SysMenu> menuList = list.stream().filter(menu -> menu.getParentId().equals(0L)).map(menu -> convertToMenuTree(menu, list)).collect(Collectors.toList());
+        List<SysMenu> menuList = list.stream()
+                .filter(menu -> menu.getParentId().equals(0L))
+                .map(menu -> convertToMenuTree(menu, list)).collect(Collectors.toList());
         MenuVo menuVo = new MenuVo();
         menuVo.setList(menuList);
         menuVo.setCount(menuList.size());
@@ -165,10 +166,45 @@ public class SysMenuServiceImpl implements ISysMenuService {
         queryWrapper.eq(SysMenu::getMenuName, menuDto.getMenuName());
         SysMenu result = menuMapper.selectOne(queryWrapper);
         if (result != null) {
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.MENU_EXIST);
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.MENU_NAME_USED);
         }
 
         menuMapper.insertMenu(menuDto);
+        // 清除menu的相关缓存
+        redisCache.removeCacheObject(CacheConstants.MENU_KEY_PREFIX);
+    }
 
+    /**
+     * 根据id获取菜单详情
+     *
+     * @param menuId
+     * @return
+     */
+    @Override
+    public SysMenu getMenuById(Long menuId) {
+        SysMenu menu;
+
+        // 判断是否是无效id
+        if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+        }
+        // 查看缓存中是否有
+        menu = redisCache.getCacheObject(CacheConstants.MENU_DETAILS_BY_ID_KEY + menuId, SysMenu.class);
+        if (menu != null) {
+            return menu;
+        }
+
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysMenu::getMenuId, menuId);
+        menu = menuMapper.selectOne(queryWrapper);
+
+        if (menu == null) {
+            // 存储不存在的key
+            redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+        }
+        // 存入缓存
+        redisCache.setCacheObject(CacheConstants.MENU_DETAILS_BY_ID_KEY + menuId, menu);
+        return menu;
     }
 }

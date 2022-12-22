@@ -26,6 +26,7 @@ public class MessageConstants {
 
     public  static final String MENU_COMPONENT_NOT_EXIST = "组件路径不存在";
     public  static final String MENU_PATH_NOT_EXIST = "路由地址不存在";
-    public  static final String MENU_EXIST = "菜单名称已被使用！";
+    public  static final String MENU_NAME_USED = "菜单名称已被使用！";
+    public  static final String MENU_NOT_EXIST = "菜单不存在！";
 
 }

@@ -4,6 +4,7 @@ import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
+import ginyi.system.domain.SysMenu;
 import ginyi.system.domain.model.dto.MenuDto;
 import ginyi.system.domain.model.vo.MenuVo;
 import ginyi.system.service.ISysMenuService;
@@ -31,19 +32,27 @@ public class SysMenuController {
     }
 
     @ApiOperation("菜单列表")
+    @PostMapping("/list")
     @PreAuthorize("@ss.hasPermission('system:menu:list')")
     @Log(title = "菜单模块", businessType = BusinessType.OTHER)
-    @PostMapping("/list")
     public CommonResult<MenuVo> list(@RequestBody @Validated MenuDto menuDto) {
         MenuVo menuVo = sysMenuService.selectMenuListByAdmin(menuDto);
         return CommonResult.success(menuVo);
     }
 
     @ApiOperation("添加菜单")
-    @Log(title = "菜单模块", businessType = BusinessType.INSERT)
     @PostMapping("/add")
+    @Log(title = "菜单模块", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermission('system:menu:add')")
     public CommonResult add(@RequestBody @Validated({AddGroup.class}) MenuDto menuDto){
         sysMenuService.addMenu(menuDto);
         return CommonResult.success();
+    }
+
+    @ApiOperation("获取菜单详情")
+    @GetMapping("/getMenuById/{menuId}")
+    public CommonResult getMenuById(@PathVariable("menuId") Long menuId){
+        SysMenu menu = sysMenuService.getMenuById(menuId);
+        return CommonResult.success(menu);
     }
 }

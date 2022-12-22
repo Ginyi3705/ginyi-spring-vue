@@ -22,13 +22,13 @@ public class RedisCache {
     public RedisTemplate redisTemplate;
 
     /**
-     * 缓存基本的对象，Integer、String、实体类等
+     * 缓存基本的对象，Integer、String、实体类等，时间为30分钟
      *
      * @param key   缓存的键值
      * @param value 缓存的值
      */
     public <T> void setCacheObject(final String key, final T value) {
-        redisTemplate.opsForValue().set(key, value);
+        redisTemplate.opsForValue().set(key, value, 30, TimeUnit.MINUTES);
     }
 
     /**
@@ -106,7 +106,8 @@ public class RedisCache {
      * @param key
      */
     public boolean removeCacheObject(final String key) {
-        return redisTemplate.delete(key);
+        Set<String> keys = redisTemplate.keys(key);
+        return redisTemplate.delete(keys) > 0;
     }
 
     /**
