@@ -81,6 +81,11 @@ public class SysUser extends BaseEntity {
     private Date loginDate;
 
     /**
+     * 备注
+     */
+    private String remark;
+
+    /**
      * 部门对象
      */
     @TableField(exist = false, select = false)

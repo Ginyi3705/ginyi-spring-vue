@@ -1,5 +1,6 @@
 package ginyi.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ginyi.system.domain.SysRole;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * @author ruoyi
  */
-public interface SysRoleMapper {
+public interface SysRoleMapper extends BaseMapper<SysRole> {
 
 
     /**

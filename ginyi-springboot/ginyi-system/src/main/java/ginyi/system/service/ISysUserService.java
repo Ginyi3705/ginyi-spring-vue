@@ -1,6 +1,7 @@
 package ginyi.system.service;
 
 import ginyi.system.domain.SysUser;
+import ginyi.system.domain.model.dto.UserDto;
 
 public interface ISysUserService {
 
@@ -35,4 +36,10 @@ public interface ISysUserService {
      * @return 结果
      */
     public boolean registerUser(SysUser user);
+
+    /**
+     * 新增用户
+     * @param userDto
+     */
+    public void addUser(UserDto userDto);
 }

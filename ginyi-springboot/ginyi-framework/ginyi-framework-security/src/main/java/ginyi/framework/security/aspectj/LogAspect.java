@@ -5,7 +5,6 @@ import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessStatus;
 import ginyi.common.enums.HttpMethod;
 import ginyi.common.exception.CommonException;
-import ginyi.common.result.CommonResult;
 import ginyi.common.utils.ServletUtils;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.ip.IpUtils;
@@ -86,9 +85,11 @@ public class LogAspect {
             if (e != null) {
                 // 只处理了 CommonException 异常
                 HashMap<String, Object> map = new HashMap<>();
-                map.put("code", ((CommonException) e).getState().getCode());
-                map.put("msg", ((CommonException) e).getState().getMessage());
-                map.put("data", ((CommonException) e).getData());
+                if (e instanceof CommonException) {
+                    map.put("code", ((CommonException) e).getState().getCode());
+                    map.put("msg", ((CommonException) e).getState().getMessage());
+                    map.put("data", ((CommonException) e).getData());
+                }
                 operationLog.setStatus(BusinessStatus.FAIL.ordinal());
                 operationLog.setErrorMsg(JSON.toJSONString(map));
             }
@@ -112,7 +113,7 @@ public class LogAspect {
     /**
      * 获取注解中对方法的描述信息 用于Controller层注解
      *
-     * @param log     日志
+     * @param log          日志
      * @param operationLog 操作日志
      * @throws Exception
      */

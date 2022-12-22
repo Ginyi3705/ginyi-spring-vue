@@ -66,8 +66,8 @@
             <if test="phoneNumber != null ">phone_number = #{phoneNumber},</if>
             <if test="sex != null and sex != ''">sex = #{sex},</if>
             <if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
-            <if test="password != null and password != ''">password = #{password},</if>
-            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="password != null and password != ''">`password` = #{password},</if>
+            <if test="status != null and status != ''">`status` = #{status},</if>
             <if test="loginIp != null and loginIp != ''">login_ip = #{loginIp},</if>
             <if test="loginDate != null">login_date = #{loginDate},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
@@ -130,36 +130,79 @@
         limit 1
     </select>
 
-    <insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
-        insert into sys_user(
-        <if test="userId != null and userId != 0">user_id,</if>
-        <if test="deptId != null and deptId != 0">dept_id,</if>
-        <if test="userName != null and userName != ''">user_name,</if>
-        <if test="nickName != null and nickName != ''">nick_name,</if>
-        <if test="email != null and email != ''">email,</if>
-        <if test="avatar != null and avatar != ''">avatar,</if>
-        <if test="phoneNumber != null and phoneNumber != ''">phone_number,</if>
-        <if test="sex != null and sex != ''">sex,</if>
-        <if test="password != null and password != ''">password,</if>
-        <if test="status != null and status != ''">status,</if>
-        <if test="createBy != null and createBy != ''">create_by,</if>
-        <if test="remark != null and remark != ''">remark,</if>
-        create_time
-        )values(
-        <if test="userId != null and userId != ''">#{userId},</if>
-        <if test="deptId != null and deptId != ''">#{deptId},</if>
-        <if test="userName != null and userName != ''">#{userName},</if>
-        <if test="nickName != null and nickName != ''">#{nickName},</if>
-        <if test="email != null and email != ''">#{email},</if>
-        <if test="avatar != null and avatar != ''">#{avatar},</if>
-        <if test="phoneNumber != null and phoneNumber != ''">#{phoneNumber},</if>
-        <if test="sex != null and sex != ''">#{sex},</if>
-        <if test="password != null and password != ''">#{password},</if>
-        <if test="status != null and status != ''">#{status},</if>
-        <if test="createBy != null and createBy != ''">#{createBy},</if>
-        <if test="remark != null and remark != ''">#{remark},</if>
-        sysdate()
-        )
+    <!-- 插入新用户 -->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userDto.userId != null and userDto.userId != 0">user_id,</if>
+            <if test="userDto.deptId != null and userDto.deptId != 0">dept_id,</if>
+            <if test="userDto.userName != null and userDto.userName != ''">user_name,</if>
+            <if test="userDto.nickName != null and userDto.nickName != ''">nick_name,</if>
+            <if test="userDto.email != null and userDto.email != ''">email,</if>
+            <if test="userDto.avatar != null and userDto.avatar != ''">avatar,</if>
+            <if test="userDto.phoneNumber != null and userDto.phoneNumber != ''">phone_number,</if>
+            <if test="userDto.sex != null and userDto.sex != ''">sex,</if>
+            <if test="userDto.password != null and userDto.password != ''">password,</if>
+            <if test="userDto.status != null and userDto.status != ''">status,</if>
+            <if test="userDto.createBy != null and userDto.createBy != ''">create_by,</if>
+            <if test="userDto.createTime != null">create_time,</if>
+            <if test="userDto.updateBy != null and userDto.updateBy != ''">update_by,</if>
+            <if test="userDto.updateTime != null">update_time,</if>
+            <if test="userDto.remark != null and userDto.remark != ''">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userDto.userId != null and userDto.userId != ''">#{userDto.userId},</if>
+            <if test="userDto.deptId != null and userDto.deptId != ''">#{userDto.deptId},</if>
+            <if test="userDto.userName != null and userDto.userName != ''">#{userDto.userName},</if>
+            <if test="userDto.nickName != null and userDto.nickName != ''">#{userDto.nickName},</if>
+            <if test="userDto.email != null and userDto.email != ''">#{userDto.email},</if>
+            <if test="userDto.avatar != null and userDto.avatar != ''">#{userDto.avatar},</if>
+            <if test="userDto.phoneNumber != null and userDto.phoneNumber != ''">#{userDto.phoneNumber},</if>
+            <if test="userDto.sex != null and userDto.sex != ''">#{userDto.sex},</if>
+            <if test="userDto.password != null and userDto.password != ''">#{userDto.password},</if>
+            <if test="userDto.status != null and userDto.status != ''">#{userDto.status},</if>
+            <if test="userDto.createBy != null and userDto.createBy != ''">#{userDto.createBy},</if>
+            <if test="userDto.createTime != null">#{userDto.createTime},</if>
+            <if test="userDto.updateBy != null and userDto.updateBy != ''">#{userDto.updateBy},</if>
+            <if test="userDto.updateTime != null">#{userDto.updateTime},</if>
+            <if test="userDto.remark != null and userDto.remark != ''">#{userDto.remark},</if>
+        </trim>
+    </insert>
+
+    <!-- 用户岗位中间表，插入用户对应的岗位信息 -->
+    <insert id="insertUserPostIds">
+        insert into sys_user_post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userDto.userId != null and userDto.userId != ''">user_id,</if>
+            <if test="userDto.postIds != null">post_id</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userDto.userId != null and userDto.userId != ''">#{userDto.userId},</if>
+            <if test="userDto.postIds != null and userDto.postIds.length > 0">
+                json_array
+                <foreach collection="userDto.postIds" item="postId" open="(" close=")" separator=",">
+                    #{postId}
+                </foreach>
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 用户角色中间表，插入用户对应的岗位信息 -->
+    <insert id="insertUserRoleIds">
+        insert into sys_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userDto.userId != null and userDto.userId != ''">user_id,</if>
+            <if test="userDto.roleIds != null">role_id</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userDto.userId != null and userDto.userId != ''">#{userDto.userId},</if>
+            <if test="userDto.roleIds != null and userDto.roleIds.length > 0">
+                json_array
+                <foreach collection="userDto.roleIds" item="roleId" open="(" close=")" separator=",">
+                    #{roleId}
+                </foreach>
+            </if>
+        </trim>
     </insert>
 
 

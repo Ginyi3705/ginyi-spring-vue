@@ -24,12 +24,12 @@ import java.util.Set;
 public class SysMenuController {
 
     @Resource
-    private ISysMenuService sysMenuService;
+    private ISysMenuService menuService;
 
     @ApiOperation("路由菜单列表")
     @GetMapping("/getRouterList")
     public CommonResult<MenuVo> list() {
-        MenuVo menuVo = sysMenuService.selectMenuList();
+        MenuVo menuVo = menuService.selectMenuList();
         return CommonResult.success(menuVo);
     }
 
@@ -38,7 +38,7 @@ public class SysMenuController {
     @PreAuthorize("@ss.hasPermission('system:menu:list')")
     @Log(title = "菜单模块", businessType = BusinessType.OTHER)
     public CommonResult<MenuVo> list(@RequestBody @Validated MenuDto menuDto) {
-        MenuVo menuVo = sysMenuService.selectMenuListByAdmin(menuDto);
+        MenuVo menuVo = menuService.selectMenuListByAdmin(menuDto);
         return CommonResult.success(menuVo);
     }
 
@@ -47,7 +47,7 @@ public class SysMenuController {
     @Log(title = "菜单模块", businessType = BusinessType.INSERT)
     @PreAuthorize("@ss.hasPermission('system:menu:add')")
     public CommonResult add(@RequestBody @Validated({AddGroup.class}) MenuDto menuDto) {
-        sysMenuService.addMenu(menuDto);
+        menuService.addMenu(menuDto);
         return CommonResult.success();
     }
 
@@ -55,7 +55,7 @@ public class SysMenuController {
     @GetMapping("/getMenuById/{menuId}")
     @PreAuthorize("@ss.hasPermission('system:menu:edit')")
     public CommonResult getMenuById(@PathVariable("menuId") Long menuId) {
-        SysMenu menu = sysMenuService.getMenuById(menuId);
+        SysMenu menu = menuService.getMenuById(menuId);
         return CommonResult.success(menu);
     }
 
@@ -64,7 +64,7 @@ public class SysMenuController {
     @PreAuthorize("@ss.hasPermission('system:menu:edit')")
     @Log(title = "菜单模块", businessType = BusinessType.UPDATE)
     public CommonResult update(@RequestBody @Validated({UpdateGroup.class}) MenuDto menuDto) {
-        sysMenuService.updateMenu(menuDto);
+        menuService.updateMenu(menuDto);
         return CommonResult.success();
     }
 
@@ -73,7 +73,7 @@ public class SysMenuController {
     @PreAuthorize("@ss.hasPermission('system:menu:remove')")
     @Log(title = "菜单模块", businessType = BusinessType.DELETE)
     public CommonResult delete(@PathVariable("menuId") Long menuId) {
-        sysMenuService.removeMenuById(menuId);
+        menuService.removeMenuById(menuId);
         return CommonResult.success();
     }
 
@@ -82,7 +82,7 @@ public class SysMenuController {
     @PreAuthorize("@ss.hasPermission('system:menu:remove')")
     @Log(title = "菜单模块", businessType = BusinessType.DELETE)
     public CommonResult delete(@RequestBody Set<Long> ids) {
-        sysMenuService.delete(ids);
+        menuService.delete(ids);
         return CommonResult.success();
     }
 }

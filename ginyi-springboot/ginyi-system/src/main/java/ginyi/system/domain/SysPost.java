@@ -1,6 +1,8 @@
 package ginyi.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 岗位表 sys_post
@@ -39,6 +41,7 @@ public class SysPost extends BaseEntity {
     /**
      * 用户是否存在此岗位标识 默认不存在
      */
+    @TableField(select = false, exist = false)
     private boolean flag = false;
 
 }

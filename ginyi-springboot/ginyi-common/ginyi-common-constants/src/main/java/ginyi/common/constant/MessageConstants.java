@@ -21,6 +21,7 @@ public class MessageConstants {
     public static final String USER_IS_DELETED = "用户已被注销！";
     public static final String USER_IS_FORBIDDEN = "用户已被停用！";
     public static final String USER_IS_LOCKED = "用户已被停用！";
+    public static final String USER_NAME_USED = "用户已被停用！";
     public static final String USER_NOT_FOUND = "请求参数错误，请仔细检查！";
 
 
@@ -29,5 +30,14 @@ public class MessageConstants {
     public  static final String MENU_NAME_USED = "菜单名称已被使用！";
     public  static final String MENU_NOT_EXIST = "菜单不存在！";
     public  static final String MENU_IDS_NOT_EXIST = "批量删除中存在不匹配的ID！";
+
+
+    public static final String POST_NOT_EXIST = "岗位不存在！";
+
+
+    public static final String ROLE_NOT_EXIST = "角色不存在！";
+
+
+    public static final String DEPT_NOT_EXIST = "部门不存在！";
 
 }
