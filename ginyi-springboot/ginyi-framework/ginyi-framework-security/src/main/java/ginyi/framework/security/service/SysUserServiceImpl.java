@@ -6,6 +6,7 @@ import ginyi.common.constant.UserConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
+import ginyi.framework.security.utils.SecurityUtils;
 import ginyi.system.domain.SysDept;
 import ginyi.system.domain.SysPost;
 import ginyi.system.domain.SysRole;
@@ -16,8 +17,6 @@ import ginyi.system.mapper.SysPostMapper;
 import ginyi.system.mapper.SysRoleMapper;
 import ginyi.system.mapper.SysUserMapper;
 import ginyi.system.service.ISysUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,6 +103,11 @@ public class SysUserServiceImpl implements ISysUserService {
         if (user != null) {
             throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.USER_NAME_USED);
         }
+        // todo 为空时，设置为 sys_config 表的默认密码
+        // 密码加密
+        if (StringUtils.isNotBlank(userDto.getPassword())) {
+            userDto.setPassword(SecurityUtils.encryptPassword(userDto.getPassword()));
+        }
         userMapper.insertUser(userDto);
 
         // 判断插入的岗位id是否存在
@@ -120,8 +124,8 @@ public class SysUserServiceImpl implements ISysUserService {
             userMapper.insertUserPostIds(userDto);
         }
 
+        // 判断插入的角色id是否存在
         if (userDto.getRoleIds().length > 0) {
-            // 判断插入的角色id是否存在
             SysRole sysRole;
             for (Long roleId : userDto.getRoleIds()) {
                 LambdaQueryWrapper<SysRole> roleQueryWrapper = new LambdaQueryWrapper<>();
