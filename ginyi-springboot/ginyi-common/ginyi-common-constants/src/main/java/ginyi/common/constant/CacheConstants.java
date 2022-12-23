@@ -31,6 +31,8 @@ public class CacheConstants {
      */
     public static final String REPEAT_SUBMIT_KEY = "repeat_submit:";
 
+
+
     /** 菜单前缀，用于批量删除 */
     public static final String MENU_KEY_PREFIX = "menu_*";
     /** 用户菜单的菜单列表 */
@@ -39,4 +41,11 @@ public class CacheConstants {
     public static final String MENU_NOT_EXIST_KEY = "menu_not_exist:";
     /** 菜单详情 */
     public static final String MENU_DETAILS_BY_ID_KEY = "menu_details_by_id:";
+
+    /** 用户前缀，用户批量删除 */
+    public static final String USER_KEY_PREFIX = "user_*";
+    /** 用户不存在的key */
+    public static final String USER_NOT_EXIST_KEY = "user_not_exist:";
+    /** 用户详情 */
+    public static final  String USER_DETAILS_BY_USERID_KEY = "user_details_by_userId:";
 }

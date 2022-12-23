@@ -3,6 +3,7 @@ package ginyi.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.UserDto;
+import ginyi.system.domain.model.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -71,4 +72,10 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      */
     public int updateUserRoleIds(@Param("userDto") UserDto userDto);
 
+    /**
+     * 根据用户id查询用户
+     * @param userId
+     * @return
+     */
+    public UserVo selectUserByUserId(String userId);
 }

@@ -1,9 +1,11 @@
 package ginyi.framework.security.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import ginyi.common.constant.CacheConstants;
 import ginyi.common.constant.MessageConstants;
 import ginyi.common.constant.UserConstants;
 import ginyi.common.exception.CommonException;
+import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
 import ginyi.system.domain.SysDept;
@@ -11,6 +13,7 @@ import ginyi.system.domain.SysPost;
 import ginyi.system.domain.SysRole;
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.UserDto;
+import ginyi.system.domain.model.vo.UserVo;
 import ginyi.system.mapper.SysDeptMapper;
 import ginyi.system.mapper.SysPostMapper;
 import ginyi.system.mapper.SysRoleMapper;
@@ -33,6 +36,8 @@ public class SysUserServiceImpl implements ISysUserService {
     private SysRoleMapper roleMapper;
     @Resource
     private SysDeptMapper deptMapper;
+    @Resource
+    private RedisCache redisCache;
 
     /**
      * 修改用户基本信息
@@ -51,6 +56,8 @@ public class SysUserServiceImpl implements ISysUserService {
             if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().size() > 0) {
                 userMapper.updateUserRoleIds(userDto);
             }
+            // 清除缓存
+            redisCache.removeCacheObject(CacheConstants.USER_KEY_PREFIX);
         }
     }
 
@@ -71,9 +78,37 @@ public class SysUserServiceImpl implements ISysUserService {
             if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().size() > 0) {
                 userMapper.insertUserRoleIds(userDto);
             }
+            // 清除缓存
+            redisCache.removeCacheObject(CacheConstants.USER_KEY_PREFIX);
         }
     }
 
+    /**
+     * 根据用户id查询用户
+     *
+     * @param userId
+     */
+    @Override
+    public UserVo getUserByUserId(String userId) {
+        // 检查缓存中是否记录着空的userId
+        if (redisCache.hasKey(CacheConstants.USER_NOT_EXIST_KEY + userId)) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.USER_NOT_EXIST);
+        }
+        UserVo user;
+        // 检查缓存中是否有该user
+        user = redisCache.getCacheObject(CacheConstants.USER_DETAILS_BY_USERID_KEY + userId, UserVo.class);
+        if (StringUtils.isNotNull(user)) {
+            return user;
+        }
+        user = userMapper.selectUserByUserId(userId);
+        if (StringUtils.isNull(user)) {
+            redisCache.setCacheObject(CacheConstants.USER_NOT_EXIST_KEY + userId, null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.USER_NOT_EXIST);
+        }
+        // 存入缓存
+        redisCache.setCacheObject(CacheConstants.USER_DETAILS_BY_USERID_KEY + userId, user);
+        return user;
+    }
 
     /**
      * 校验逻辑

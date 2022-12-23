@@ -2,6 +2,7 @@ package ginyi.system.service;
 
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.UserDto;
+import ginyi.system.domain.model.vo.UserVo;
 
 public interface ISysUserService {
 
@@ -43,4 +44,10 @@ public interface ISysUserService {
      * @param userDto
      */
     public void addUser(UserDto userDto);
+
+    /**
+     * 根据用户id查询用户
+     * @param userId
+     */
+    public UserVo getUserByUserId(String userId);
 }

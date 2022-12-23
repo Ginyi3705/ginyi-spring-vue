@@ -8,6 +8,7 @@ import ginyi.common.swagger.AddGroup;
 import ginyi.common.swagger.UpdateGroup;
 import ginyi.framework.security.service.SysUserServiceImpl;
 import ginyi.system.domain.model.dto.UserDto;
+import ginyi.system.domain.model.vo.UserVo;
 import ginyi.system.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,8 +49,10 @@ public class SysUserController {
 
     @ApiOperation("用户详情")
     @GetMapping("/getUserByUserId/{userId}")
-    public CommonResult getUserByUserId(@PathVariable("userId") String userId){
-        return CommonResult.success();
+    @PreAuthorize("@ss.hasPermission('system:user:edit')")
+    public CommonResult<UserVo> getUserByUserId(@PathVariable("userId") String userId){
+        UserVo user = userService.getUserByUserId(userId);
+        return CommonResult.success(user);
     }
 
 

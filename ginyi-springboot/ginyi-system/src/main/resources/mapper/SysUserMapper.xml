@@ -56,6 +56,25 @@
         <result property="status" column="status"/>
     </resultMap>
 
+    <resultMap id="UserVoResultRef" type="ginyi.system.domain.model.vo.UserVo">
+        <id property="userId" column="user_id"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="sex" column="sex"/>
+        <result property="avatar" column="avatar"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="postIds" column="post_id" javaType="Long"
+                typeHandler="ginyi.common.mysql.handler.JacksonArrayTypeHandler"/>
+        <result property="roleIds" column="role_id" javaType="Long"
+                typeHandler="ginyi.common.mysql.handler.JacksonArrayTypeHandler"/>
+    </resultMap>
+
     <!-- 更新用户 -->
     <update id="updateUser">
         update sys_user
@@ -131,6 +150,28 @@
         where user_name = #{userName}
           and deleted = '0'
         limit 1
+    </select>
+
+    <!-- 根据用户id查询用户 -->
+    <select id="selectUserByUserId" resultMap="UserVoResultRef">
+        select su.user_id,
+               su.dept_id,
+               su.user_name,
+               su.nick_name,
+               su.email,
+               su.phone_number,
+               su.sex,
+               su.avatar,
+               su.status,
+               su.remark,
+               su.create_time,
+               su.create_by,
+               sup.post_id,
+               sur.role_id
+        from sys_user as su
+                 left join sys_user_post as sup on su.user_id = sup.user_id
+                 left join sys_user_role sur on su.user_id = sur.user_id
+        where su.user_id = #{userId}
     </select>
 
     <!-- 插入新用户 -->
