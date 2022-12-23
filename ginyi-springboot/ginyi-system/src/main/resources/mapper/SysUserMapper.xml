@@ -56,25 +56,28 @@
         <result property="status" column="status"/>
     </resultMap>
 
-    <update id="updateUser" parameterType="SysUser">
+    <!-- 更新用户 -->
+    <update id="updateUser">
         update sys_user
         <set>
-            <if test="deptId != null and deptId != 0">dept_id = #{deptId},</if>
-            <if test="userName != null and userName != ''">user_name = #{userName},</if>
-            <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
-            <if test="email != null ">email = #{email},</if>
-            <if test="phoneNumber != null ">phone_number = #{phoneNumber},</if>
-            <if test="sex != null and sex != ''">sex = #{sex},</if>
-            <if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
-            <if test="password != null and password != ''">`password` = #{password},</if>
-            <if test="status != null and status != ''">`status` = #{status},</if>
-            <if test="loginIp != null and loginIp != ''">login_ip = #{loginIp},</if>
-            <if test="loginDate != null">login_date = #{loginDate},</if>
-            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-            <if test="remark != null">remark = #{remark},</if>
-            update_time = sysdate()
+            <if test="userDto.deptId != null and userDto.deptId != 0">dept_id = #{userDto.deptId},</if>
+            <if test="userDto.userName != null and userDto.userName != ''">user_name = #{userDto.userName},</if>
+            <if test="userDto.nickName != null and userDto.nickName != ''">nick_name = #{userDto.nickName},</if>
+            <if test="userDto.email != null ">email = #{userDto.email},</if>
+            <if test="userDto.phoneNumber != null ">phone_number = #{userDto.phoneNumber},</if>
+            <if test="userDto.sex != null and userDto.sex != ''">sex = #{userDto.sex},</if>
+            <if test="userDto.avatar != null and userDto.avatar != ''">avatar = #{userDto.avatar},</if>
+            <if test="userDto.password != null and userDto.password != ''">`password` = #{userDto.password},</if>
+            <if test="userDto.status != null and userDto.status != ''">`status` = #{userDto.status},</if>
+            <if test="userDto.loginIp != null and userDto.loginIp != ''">login_ip = #{userDto.loginIp},</if>
+            <if test="userDto.loginDate != null">login_date = #{userDto.loginDate},</if>
+            <if test="userDto.createBy != null and userDto.createBy != ''">create_by = #{userDto.createBy},</if>
+            <if test="userDto.createTime != null">create_time = #{userDto.createTime},</if>
+            <if test="userDto.updateBy != null and userDto.updateBy != ''">update_by = #{userDto.updateBy},</if>
+            <if test="userDto.updateTime != null">update_time = #{userDto.updateTime},</if>
+            <if test="userDto.remark != null">remark = #{userDto.remark},</if>
         </set>
-        where user_id = #{userId}
+        where user_id = #{userDto.userId}
     </update>
 
     <select id="selectUserByUserName" parameterType="String" resultMap="SysUserResult">
@@ -204,6 +207,33 @@
             </if>
         </trim>
     </insert>
+
+
+    <!-- 更新用户岗位中间表, 更新用户对应的岗位信息 -->
+    <update id="updateUserPostIds">
+        update sys_user_post
+        <set>
+            <if test="userDto.postIds != null and userDto.postIds.length > 0">post_id = json_array
+                <foreach collection="userDto.postIds" item="postId" open="(" close=")" separator=",">
+                    #{postId}
+                </foreach>
+            </if>
+        </set>
+        where user_id = #{userDto.userId}
+    </update>
+
+    <!-- 更新用户角色中间表, 更新用户对应的角色信息 -->
+    <update id="updateUserRoleIds">
+        update sys_user_role
+        <set>
+            <if test="userDto.roleIds != null and userDto.roleIds.length > 0">role_id = json_array
+                <foreach collection="userDto.roleIds" item="roleId" open="(" close=")" separator=",">
+                    #{roleId}
+                </foreach>
+            </if>
+        </set>
+        where user_id = #{userDto.userId}
+    </update>
 
 
 </mapper>

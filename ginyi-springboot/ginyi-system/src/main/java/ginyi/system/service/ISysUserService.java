@@ -8,10 +8,10 @@ public interface ISysUserService {
     /**
      * 修改用户基本信息
      *
-     * @param user 用户信息
+     * @param userDto 用户信息
      * @return 结果
      */
-    public int updateUserProfile(SysUser user);
+    public void updateUser(UserDto userDto);
 
     /**
      * 通过用户名查询用户
@@ -39,6 +39,7 @@ public interface ISysUserService {
 
     /**
      * 新增用户
+     *
      * @param userDto
      */
     public void addUser(UserDto userDto);

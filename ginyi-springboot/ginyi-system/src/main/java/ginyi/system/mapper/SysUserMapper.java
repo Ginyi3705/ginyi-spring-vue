@@ -10,13 +10,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
-    /**
-     * 修改用户信息
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
-    public int updateUser(SysUser user);
 
     /**
      * 通过用户名查询用户
@@ -55,5 +48,27 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return
      */
     public int insertUserRoleIds(@Param("userDto") UserDto userDto);
+
+    /**
+     * 修改用户信息
+     *
+     * @param userDto 用户信息
+     * @return 结果
+     */
+    public int updateUser(@Param("userDto") UserDto userDto);
+
+    /**
+     * 更新用户岗位中间表, 更新用户对应的岗位信息
+     * @param userDto
+     * @return
+     */
+    public int updateUserPostIds(@Param("userDto") UserDto userDto);
+
+    /**
+     * 更新用户角色中间表, 更新用户对应的角色信息
+     * @param userDto
+     * @return
+     */
+    public int updateUserRoleIds(@Param("userDto") UserDto userDto);
 
 }

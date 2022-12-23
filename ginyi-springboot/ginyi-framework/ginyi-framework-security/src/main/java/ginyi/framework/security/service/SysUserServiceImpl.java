@@ -6,7 +6,6 @@ import ginyi.common.constant.UserConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
-import ginyi.framework.security.utils.SecurityUtils;
 import ginyi.system.domain.SysDept;
 import ginyi.system.domain.SysPost;
 import ginyi.system.domain.SysRole;
@@ -38,12 +37,110 @@ public class SysUserServiceImpl implements ISysUserService {
     /**
      * 修改用户基本信息
      *
+     * @param userDto 用户信息
+     * @return 结果
+     */
+    @Override
+    @Transactional
+    public void updateUser(UserDto userDto) {
+        if (checkLogic(userDto)) {
+            userMapper.updateUser(userDto);
+            if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().length > 0) {
+                userMapper.updateUserPostIds(userDto);
+            }
+            if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().length > 0) {
+                userMapper.updateUserRoleIds(userDto);
+            }
+        }
+    }
+
+
+    /**
+     * 新增用户
+     *
+     * @param userDto
+     */
+    @Override
+    @Transactional
+    public void addUser(UserDto userDto) {
+        if (checkLogic(userDto)) {
+            userMapper.insertUser(userDto);
+            if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().length > 0) {
+                userMapper.insertUserPostIds(userDto);
+            }
+            if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().length > 0) {
+                userMapper.insertUserRoleIds(userDto);
+            }
+        }
+    }
+
+
+    /**
+     * 校验逻辑
+     *
+     * @param userDto
+     */
+    public boolean checkLogic(UserDto userDto) {
+        // 判断部门是否存在
+        if (StringUtils.isNotNull(userDto.getDeptId())) {
+            SysDept sysDept;
+            LambdaQueryWrapper<SysDept> deptQueryWrapper = new LambdaQueryWrapper<>();
+            deptQueryWrapper.eq(SysDept::getDeptId, userDto.getDeptId());
+            sysDept = deptMapper.selectOne(deptQueryWrapper);
+            if (sysDept == null) {
+                throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.DEPT_NOT_EXIST);
+            }
+        }
+
+        // 用户名是否被占用（插入时）
+        if (StringUtils.isNotBlank(userDto.getUserName()) && StringUtils.isNull(userDto.getUserId())) {
+            LambdaQueryWrapper<SysUser> userQueryWrapper = new LambdaQueryWrapper<>();
+            userQueryWrapper.eq(SysUser::getUserName, userDto.getUserName());
+            SysUser user = userMapper.selectOne(userQueryWrapper);
+            if (user != null) {
+                throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.USER_NAME_USED);
+            }
+        }
+
+        // 判断插入的岗位id是否存在
+        if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().length > 0) {
+            SysPost sysPost;
+            for (Long postId : userDto.getPostIds()) {
+                LambdaQueryWrapper<SysPost> postQueryWrapper = new LambdaQueryWrapper<>();
+                postQueryWrapper.eq(SysPost::getPostId, postId);
+                sysPost = postMapper.selectOne(postQueryWrapper);
+                if (sysPost == null) {
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.POST_NOT_EXIST);
+                }
+            }
+        }
+
+        // 判断插入的角色id是否存在
+        if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().length > 0) {
+            SysRole sysRole;
+            for (Long roleId : userDto.getRoleIds()) {
+                LambdaQueryWrapper<SysRole> roleQueryWrapper = new LambdaQueryWrapper<>();
+                roleQueryWrapper.eq(SysRole::getRoleId, roleId);
+                sysRole = roleMapper.selectOne(roleQueryWrapper);
+                if (sysRole == null) {
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.ROLE_NOT_EXIST);
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 注册用户信息
+     *
      * @param user 用户信息
      * @return 结果
      */
     @Override
-    public int updateUserProfile(SysUser user) {
-        return userMapper.updateUser(user);
+    public boolean registerUser(SysUser user) {
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(user, userDto);
+        return userMapper.insertUser(userDto) > 0;
     }
 
     @Override
@@ -65,78 +162,5 @@ public class SysUserServiceImpl implements ISysUserService {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
-    }
-
-    /**
-     * 注册用户信息
-     *
-     * @param user 用户信息
-     * @return 结果
-     */
-    @Override
-    public boolean registerUser(SysUser user) {
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(user, userDto);
-        return userMapper.insertUser(userDto) > 0;
-    }
-
-    /**
-     * 新增用户
-     *
-     * @param userDto
-     */
-    @Override
-    @Transactional
-    public void addUser(UserDto userDto) {
-        // 判断部门是否存在
-        SysDept sysDept;
-        LambdaQueryWrapper<SysDept> deptQueryWrapper = new LambdaQueryWrapper<>();
-        deptQueryWrapper.eq(SysDept::getDeptId, userDto.getDeptId());
-        sysDept = deptMapper.selectOne(deptQueryWrapper);
-        if (sysDept == null) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.DEPT_NOT_EXIST);
-        }
-
-        LambdaQueryWrapper<SysUser> userQueryWrapper = new LambdaQueryWrapper<>();
-        userQueryWrapper.eq(SysUser::getUserName, userDto.getUserName());
-        SysUser user = userMapper.selectOne(userQueryWrapper);
-        if (user != null) {
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.USER_NAME_USED);
-        }
-        // todo 为空时，设置为 sys_config 表的默认密码
-        // 密码加密
-        if (StringUtils.isNotBlank(userDto.getPassword())) {
-            userDto.setPassword(SecurityUtils.encryptPassword(userDto.getPassword()));
-        }
-        userMapper.insertUser(userDto);
-
-        // 判断插入的岗位id是否存在
-        if (userDto.getPostIds().length > 0) {
-            SysPost sysPost;
-            for (Long postId : userDto.getPostIds()) {
-                LambdaQueryWrapper<SysPost> postQueryWrapper = new LambdaQueryWrapper<>();
-                postQueryWrapper.eq(SysPost::getPostId, postId);
-                sysPost = postMapper.selectOne(postQueryWrapper);
-                if (sysPost == null) {
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.POST_NOT_EXIST);
-                }
-            }
-            userMapper.insertUserPostIds(userDto);
-        }
-
-        // 判断插入的角色id是否存在
-        if (userDto.getRoleIds().length > 0) {
-            SysRole sysRole;
-            for (Long roleId : userDto.getRoleIds()) {
-                LambdaQueryWrapper<SysRole> roleQueryWrapper = new LambdaQueryWrapper<>();
-                roleQueryWrapper.eq(SysRole::getRoleId, roleId);
-                sysRole = roleMapper.selectOne(roleQueryWrapper);
-                if (sysRole == null) {
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.ROLE_NOT_EXIST);
-                }
-            }
-            userMapper.insertUserRoleIds(userDto);
-        }
-
     }
 }

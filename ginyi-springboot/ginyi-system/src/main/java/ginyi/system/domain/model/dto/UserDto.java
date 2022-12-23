@@ -1,5 +1,6 @@
 package ginyi.system.domain.model.dto;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import ginyi.common.swagger.AddGroup;
 import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.BaseEntity;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.*;
+import java.util.Date;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -83,6 +85,22 @@ public class UserDto extends BaseEntity {
      */
     @ApiModelProperty("状态（0正常 1停用）")
     private String status;
+
+    /**
+     * 最后登录IP
+     */
+    private String loginIp;
+
+    /**
+     * 最后登录时间
+     */
+    private Date loginDate;
+
+    /**
+     * 删除标志（0代表存在 2代表删除）
+     */
+    @TableLogic
+    private String deleted;
 
     /**
      * 备注

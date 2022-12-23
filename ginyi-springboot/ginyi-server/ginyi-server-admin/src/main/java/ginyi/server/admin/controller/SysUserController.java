@@ -5,6 +5,7 @@ import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
+import ginyi.common.swagger.UpdateGroup;
 import ginyi.framework.security.service.SysUserServiceImpl;
 import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.service.ISysUserService;
@@ -35,6 +36,15 @@ public class SysUserController {
     @Log(title = "用户模块", businessType = BusinessType.INSERT)
     public CommonResult add(@RequestBody @Validated(AddGroup.class) UserDto userDto){
         userService.addUser(userDto);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("更新用户")
+    @PostMapping("/update")
+    @PreAuthorize("@ss.hasPermission('system:user:edit')")
+    @Log(title = "用户模块", businessType = BusinessType.UPDATE)
+    public CommonResult update(@RequestBody @Validated(UpdateGroup.class) UserDto userDto){
+        userService.updateUser(userDto);
         return CommonResult.success();
     }
 

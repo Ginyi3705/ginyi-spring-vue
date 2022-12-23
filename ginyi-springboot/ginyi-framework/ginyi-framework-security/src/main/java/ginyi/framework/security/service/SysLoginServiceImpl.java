@@ -18,6 +18,7 @@ import ginyi.system.domain.LoginUser;
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.LoginDto;
 import ginyi.system.domain.model.dto.RegisterDto;
+import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.LoginVo;
 import ginyi.system.service.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -153,10 +154,10 @@ public class SysLoginServiceImpl implements ISysLoginService {
      * @param userId 用户ID
      */
     public void recordLoginInfo(Long userId) {
-        SysUser sysUser = new SysUser();
-        sysUser.setUserId(userId);
-        sysUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
-        sysUser.setLoginDate(DateUtils.getNowDate());
-        userService.updateUserProfile(sysUser);
+        UserDto userDto = new UserDto();
+        userDto.setUserId(userId);
+        userDto.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
+        userDto.setLoginDate(DateUtils.getNowDate());
+        userService.updateUser(userDto);
     }
 }
