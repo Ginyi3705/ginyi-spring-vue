@@ -12,12 +12,10 @@ import ginyi.system.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.apache.bcel.generic.RET;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -45,6 +43,12 @@ public class SysUserController {
     @Log(title = "用户模块", businessType = BusinessType.UPDATE)
     public CommonResult update(@RequestBody @Validated(UpdateGroup.class) UserDto userDto){
         userService.updateUser(userDto);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("用户详情")
+    @GetMapping("/getUserByUserId/{userId}")
+    public CommonResult getUserByUserId(@PathVariable("userId") String userId){
         return CommonResult.success();
     }
 

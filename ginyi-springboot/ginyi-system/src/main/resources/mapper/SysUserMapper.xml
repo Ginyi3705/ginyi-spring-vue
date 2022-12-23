@@ -181,7 +181,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userDto.userId != null and userDto.userId != ''">#{userDto.userId},</if>
-            <if test="userDto.postIds != null and userDto.postIds.length > 0">
+            <if test="userDto.postIds != null and userDto.postIds.size() > 0">
                 json_array
                 <foreach collection="userDto.postIds" item="postId" open="(" close=")" separator=",">
                     #{postId}
@@ -199,7 +199,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userDto.userId != null and userDto.userId != ''">#{userDto.userId},</if>
-            <if test="userDto.roleIds != null and userDto.roleIds.length > 0">
+            <if test="userDto.roleIds != null and userDto.roleIds.size() > 0">
                 json_array
                 <foreach collection="userDto.roleIds" item="roleId" open="(" close=")" separator=",">
                     #{roleId}
@@ -213,7 +213,7 @@
     <update id="updateUserPostIds">
         update sys_user_post
         <set>
-            <if test="userDto.postIds != null and userDto.postIds.length > 0">post_id = json_array
+            <if test="userDto.postIds != null and userDto.postIds.size() > 0">post_id = json_array
                 <foreach collection="userDto.postIds" item="postId" open="(" close=")" separator=",">
                     #{postId}
                 </foreach>
@@ -226,7 +226,7 @@
     <update id="updateUserRoleIds">
         update sys_user_role
         <set>
-            <if test="userDto.roleIds != null and userDto.roleIds.length > 0">role_id = json_array
+            <if test="userDto.roleIds != null and userDto.roleIds.size() > 0">role_id = json_array
                 <foreach collection="userDto.roleIds" item="roleId" open="(" close=")" separator=",">
                     #{roleId}
                 </foreach>

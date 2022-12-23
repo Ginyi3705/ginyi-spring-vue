@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -113,12 +114,12 @@ public class UserDto extends BaseEntity {
      * 岗位ID
      */
     @ApiModelProperty("岗位id")
-    private Long[] postIds;
+    private List<Long> postIds;
 
     /**
      * 角色ID
      */
     @ApiModelProperty("角色id")
-    private Long[] roleIds;
+    private List<Long> roleIds;
 
 }

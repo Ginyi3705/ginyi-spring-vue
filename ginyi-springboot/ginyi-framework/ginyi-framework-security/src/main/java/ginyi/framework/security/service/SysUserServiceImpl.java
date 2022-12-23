@@ -45,10 +45,10 @@ public class SysUserServiceImpl implements ISysUserService {
     public void updateUser(UserDto userDto) {
         if (checkLogic(userDto)) {
             userMapper.updateUser(userDto);
-            if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().length > 0) {
+            if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().size() > 0) {
                 userMapper.updateUserPostIds(userDto);
             }
-            if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().length > 0) {
+            if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().size() > 0) {
                 userMapper.updateUserRoleIds(userDto);
             }
         }
@@ -65,10 +65,10 @@ public class SysUserServiceImpl implements ISysUserService {
     public void addUser(UserDto userDto) {
         if (checkLogic(userDto)) {
             userMapper.insertUser(userDto);
-            if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().length > 0) {
+            if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().size() > 0) {
                 userMapper.insertUserPostIds(userDto);
             }
-            if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().length > 0) {
+            if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().size() > 0) {
                 userMapper.insertUserRoleIds(userDto);
             }
         }
@@ -103,7 +103,7 @@ public class SysUserServiceImpl implements ISysUserService {
         }
 
         // 判断插入的岗位id是否存在
-        if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().length > 0) {
+        if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().size() > 0) {
             SysPost sysPost;
             for (Long postId : userDto.getPostIds()) {
                 LambdaQueryWrapper<SysPost> postQueryWrapper = new LambdaQueryWrapper<>();
@@ -116,7 +116,7 @@ public class SysUserServiceImpl implements ISysUserService {
         }
 
         // 判断插入的角色id是否存在
-        if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().length > 0) {
+        if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().size() > 0) {
             SysRole sysRole;
             for (Long roleId : userDto.getRoleIds()) {
                 LambdaQueryWrapper<SysRole> roleQueryWrapper = new LambdaQueryWrapper<>();
