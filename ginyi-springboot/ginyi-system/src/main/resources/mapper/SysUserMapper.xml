@@ -172,6 +172,64 @@
                  left join sys_user_post as sup on su.user_id = sup.user_id
                  left join sys_user_role sur on su.user_id = sur.user_id
         where su.user_id = #{userId}
+          and su.deleted = '0'
+    </select>
+
+    <!-- 查询用户列表(不包含admin) -->
+    <select id="list" resultMap="UserVoResultRef">
+        select
+        su.user_id,
+        su.dept_id,
+        su.user_name,
+        su.nick_name,
+        su.email,
+        su.phone_number,
+        su.sex,
+        su.avatar,
+        su.status,
+        su.remark,
+        su.create_time,
+        su.create_by,
+        sup.post_id,
+        sur.role_id
+        from sys_user as su
+        left join sys_user_post as sup on su.user_id = sup.user_id
+        left join sys_user_role sur on su.user_id = sur.user_id
+        <where>
+            su.deleted = '0' and su.user_id != 1
+            <if test="userDto.userName != null and userDto.userName != ''">
+                and su.user_name like concat('%', #{userDto.userName}, '%')
+            </if>
+            <if test="userDto.nickName != null and userDto.nickName != ''">
+                and su.nick_name like concat('%',#{userDto.nickName}, '%')
+            </if>
+            <if test="userDto.phoneNumber != null and userDto.phoneNumber != ''">
+                and su.phone_number like concat('%',#{userDto.phoneNumber}, '%')
+            </if>
+            <if test="userDto.email != null and userDto.email != ''">
+                and su.email like concat('%', #{userDto.email}, '%')
+            </if>
+            <if test="userDto.remark != null and userDto.remark != ''">
+                and su.remark like concat('%', #{userDto.remark}, '%')
+            </if>
+            <if test="userDto.sex != null and userDto.sex != ''">
+                and su.sex = #{userDto.sex}
+            </if>
+            <if test="userDto.status != null and userDto.status != ''">
+                and su.status = #{userDto.status}
+            </if>
+            <if test="userDto.createBy != null and userDto.createBy != ''">
+                and su.createBy like concat('%', #{userDto.createBy}, '%')
+            </if>
+            <choose>
+                <when test="userDto.beginTime != null and userDto.endTime == null">
+                    and su.create_time > #{userDto.beginTime}
+                </when>
+                <when test="userDto.beginTime != null and userDto.endTime != null">
+                    and su.create_time between #{userDto.beginTime} and #{userDto.endTime}
+                </when>
+            </choose>
+        </where>
     </select>
 
     <!-- 插入新用户 -->

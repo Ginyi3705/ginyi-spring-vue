@@ -98,6 +98,18 @@ public class UserDto extends BaseEntity {
     private Date loginDate;
 
     /**
+     * 创建时间，开始时间
+     */
+    @ApiModelProperty("创建时间，开始时间")
+    private Date beginTime;
+
+    /**
+     * 创建时间，结束时间
+     */
+    @ApiModelProperty("创建时间，结束时间")
+    private Date endTime;
+
+    /**
      * 删除标志（0代表存在 2代表删除）
      */
     @TableLogic

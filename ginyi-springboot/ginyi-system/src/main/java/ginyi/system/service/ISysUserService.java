@@ -2,7 +2,10 @@ package ginyi.system.service;
 
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.UserDto;
+import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.UserVo;
+
+import java.util.List;
 
 public interface ISysUserService {
 
@@ -50,4 +53,13 @@ public interface ISysUserService {
      * @param userId
      */
     public UserVo getUserByUserId(String userId);
+
+    /**
+     * 查询用户列表（不含admin）
+     * @param userDto
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public BaseVo<UserVo> list(UserDto userDto, Long page, Long pageSize);
 }

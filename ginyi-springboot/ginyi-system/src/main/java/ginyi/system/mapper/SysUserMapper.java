@@ -1,6 +1,8 @@
 package ginyi.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.UserVo;
@@ -78,4 +80,12 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return
      */
     public UserVo selectUserByUserId(String userId);
+
+    /**
+     * 查询用户列表(不含admin)
+     * @param userDto
+     * @param page
+     * @return
+     */
+    IPage<UserVo> list(@Param("userDto") UserDto userDto, Page page);
 }

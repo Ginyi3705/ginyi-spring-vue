@@ -1,10 +1,12 @@
 package ginyi.framework.security.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import ginyi.common.constant.CacheConstants;
 import ginyi.common.constant.MessageConstants;
 import ginyi.common.constant.UserConstants;
 import ginyi.common.exception.CommonException;
+import ginyi.common.mysql.MyPage;
 import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
@@ -13,6 +15,7 @@ import ginyi.system.domain.SysPost;
 import ginyi.system.domain.SysRole;
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.UserDto;
+import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.UserVo;
 import ginyi.system.mapper.SysDeptMapper;
 import ginyi.system.mapper.SysPostMapper;
@@ -108,6 +111,23 @@ public class SysUserServiceImpl implements ISysUserService {
         // 存入缓存
         redisCache.setCacheObject(CacheConstants.USER_DETAILS_BY_USERID_KEY + userId, user);
         return user;
+    }
+
+
+    /**
+     * 获取用户列表(不含admin)
+     *
+     * @param userDto
+     * @param page
+     * @param pageSize
+     */
+    @Override
+    public BaseVo<UserVo> list(UserDto userDto, Long page, Long pageSize) {
+        IPage<UserVo> list = userMapper.list(userDto, new MyPage(page, pageSize).getPage());
+        BaseVo<UserVo> baseVo = new BaseVo<>();
+        baseVo.setList(list.getRecords());
+        baseVo.setCount((int) list.getTotal());
+        return baseVo;
     }
 
     /**
