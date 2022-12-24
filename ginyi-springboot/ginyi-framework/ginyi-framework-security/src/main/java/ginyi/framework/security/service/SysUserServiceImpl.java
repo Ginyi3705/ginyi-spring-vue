@@ -184,6 +184,34 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     /**
+     * 更改用户状态（正常 or 停用）
+     *
+     * @param userDto
+     */
+    @Override
+    public void disable(UserDto userDto) {
+        if (StringUtils.isNull(userDto.getUserId())) {
+            throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.USER_ID_NOT_FOUND);
+        }
+        // 状态参数是否合法
+        if (!("0".equals(userDto.getStatus()) || "1".equals(userDto.getStatus()))) {
+            throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.USER_STATUS_ILLEGAL);
+        }
+        // 检查缓存中是否标记着空id
+        if (redisCache.hasKey(CacheConstants.USER_NOT_EXIST_KEY + userDto.getUserId())) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, userDto.getUserId() + MessageConstants.USER_NOT_EXIST);
+        }
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getUserId, userDto.getUserId());
+        SysUser user = userMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(user)) {
+            redisCache.setCacheObject(CacheConstants.USER_NOT_EXIST_KEY + userDto.getUserId(), null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, userDto.getUserId() + MessageConstants.USER_NOT_EXIST);
+        }
+        userMapper.updateUserStatus(userDto);
+    }
+
+    /**
      * 校验逻辑
      *
      * @param userDto

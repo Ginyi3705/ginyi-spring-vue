@@ -85,6 +85,7 @@ public class UserDto extends BaseEntity {
      * 帐号状态（0正常 1停用）
      */
     @ApiModelProperty("状态（0正常 1停用）")
+    @Size(min = 0, max = 1, message = "状态不合法")
     private String status;
 
     /**

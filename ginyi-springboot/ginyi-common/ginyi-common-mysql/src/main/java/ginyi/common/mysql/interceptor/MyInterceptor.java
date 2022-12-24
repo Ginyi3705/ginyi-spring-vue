@@ -14,6 +14,7 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.springframework.stereotype.Component;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
@@ -50,7 +51,9 @@ public class MyInterceptor implements Interceptor {
                 MapperMethod.ParamMap map = (MapperMethod.ParamMap) parameter;
                 Set keys = map.keySet();
                 for (Object key : keys) {
-                    setParameter(map.get(key), sqlCommandType);
+                    if (map.get(key) != null) {
+                        setParameter(map.get(key), sqlCommandType);
+                    }
                 }
             } else {
                 setParameter(parameter, sqlCommandType);

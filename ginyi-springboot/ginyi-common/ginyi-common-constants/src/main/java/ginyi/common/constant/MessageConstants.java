@@ -23,6 +23,8 @@ public class MessageConstants {
     public static final String USER_IS_LOCKED = "用户已被停用！";
     public static final String USER_NAME_USED = "用户名已被占用！";
     public static final String USER_NOT_FOUND = "请求参数错误，请仔细检查！";
+    public static final String USER_ID_NOT_FOUND = "请求参数错误，用户ID不能为空！";
+    public static final String USER_STATUS_ILLEGAL = "请求参数错误，用户状态不合法！";
 
 
     public  static final String MENU_COMPONENT_NOT_EXIST = "组件路径不存在！";

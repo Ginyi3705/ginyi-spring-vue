@@ -1,5 +1,6 @@
 package ginyi.system.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,6 +37,7 @@ public class BaseEntity implements Serializable {
      */
     @ApiModelProperty("创建者")
     @CreateBy
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /**
@@ -44,6 +46,7 @@ public class BaseEntity implements Serializable {
     @JsonFormat
     @ApiModelProperty("创建时间")
     @CreateTime
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
@@ -51,6 +54,7 @@ public class BaseEntity implements Serializable {
      */
     @ApiModelProperty("更新者")
     @UpdateBy
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
 
     /**
@@ -59,6 +63,7 @@ public class BaseEntity implements Serializable {
     @JsonFormat
     @ApiModelProperty("更新时间")
     @UpdateTime
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     /**

@@ -82,5 +82,14 @@ public class SysUserController {
         return CommonResult.success();
     }
 
+    @ApiOperation("禁用用户")
+    @PostMapping("/disable")
+    @PreAuthorize("@ss.hasPermission('system:user:edit')")
+    @Log(title = "用户模块", businessType = BusinessType.UPDATE)
+    public CommonResult disable(@RequestBody UserDto userDto){
+        userService.disable(userDto);
+        return CommonResult.success();
+    }
+
 
 }

@@ -88,4 +88,10 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return
      */
     IPage<UserVo> list(@Param("userDto") UserDto userDto, Page page);
+
+    /**
+     * 更新用户状态
+     * @param userDto
+     */
+    public void updateUserStatus(@Param("userDto") UserDto userDto);
 }

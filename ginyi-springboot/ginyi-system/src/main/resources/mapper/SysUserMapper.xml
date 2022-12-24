@@ -334,5 +334,16 @@
         where user_id = #{userDto.userId}
     </update>
 
+    <!-- 更新用户状态 -->
+    <update id="updateUserStatus">
+        update sys_user
+        <set>
+            `status` = #{userDto.status},
+            <if test="userDto.updateBy != null and userDto.updateBy != ''">update_by = #{userDto.updateBy},</if>
+            <if test="userDto.updateTime != null">update_time = #{userDto.updateTime},</if>
+        </set>
+        where user_id = #{userDto.userId} and deleted = '0'
+    </update>
+
 
 </mapper>

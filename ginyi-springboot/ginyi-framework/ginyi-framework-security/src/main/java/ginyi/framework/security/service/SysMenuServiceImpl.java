@@ -277,7 +277,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
             for (Long menuId : ids) {
                 // 缓存中是否标记空id
                 if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_IDS_NOT_EXIST);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_NOT_EXIST);
                 }
                 LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
                 queryWrapper.eq(SysMenu::getMenuId, menuId);
