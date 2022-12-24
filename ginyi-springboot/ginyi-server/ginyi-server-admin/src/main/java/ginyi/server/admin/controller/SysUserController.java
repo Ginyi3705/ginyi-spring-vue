@@ -63,5 +63,14 @@ public class SysUserController {
         return CommonResult.success(baseVo);
     }
 
+    @ApiOperation("删除用户")
+    @PostMapping("/delete/{userId}")
+    @PreAuthorize("@ss.hasPermission('system:user:remove')")
+    @Log(title = "用户模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@PathVariable("userId") Long userId){
+        userService.removeById(userId);
+        return CommonResult.success();
+    }
+
 
 }

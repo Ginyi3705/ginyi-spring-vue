@@ -130,6 +130,23 @@ public class SysUserServiceImpl implements ISysUserService {
         return baseVo;
     }
 
+
+    /**
+     * 根据用户id删除用户
+     *
+     * @param userId
+     */
+    @Override
+    public void removeById(Long userId) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getUserId, userId);
+        SysUser user = userMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(user)) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.USER_NOT_EXIST);
+        }
+        userMapper.deleteById(userId);
+    }
+
     /**
      * 校验逻辑
      *

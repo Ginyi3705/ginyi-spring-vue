@@ -4,7 +4,6 @@ import ginyi.system.domain.SysMenu;
 import ginyi.system.domain.model.dto.MenuDto;
 import ginyi.system.domain.model.vo.MenuVo;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -72,5 +71,5 @@ public interface ISysMenuService {
      * 根据ids批量删除菜单
      * @param ids
      */
-    public void delete(Set<Long> ids);
+    public void removeMenuByIds(Set<Long> ids);
 }

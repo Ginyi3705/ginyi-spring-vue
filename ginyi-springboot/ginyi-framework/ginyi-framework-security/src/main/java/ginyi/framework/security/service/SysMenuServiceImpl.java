@@ -165,7 +165,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysMenu::getMenuName, menuDto.getMenuName());
         SysMenu result = menuMapper.selectOne(queryWrapper);
-        if (result != null) {
+        if (StringUtils.isNotNull(result)) {
             throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.MENU_NAME_USED);
         }
 
@@ -190,7 +190,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         }
         // 查看缓存中是否有
         menu = redisCache.getCacheObject(CacheConstants.MENU_DETAILS_BY_ID_KEY + menuId, SysMenu.class);
-        if (menu != null) {
+        if (StringUtils.isNotNull(menu)) {
             return menu;
         }
 
@@ -198,7 +198,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         queryWrapper.eq(SysMenu::getMenuId, menuId);
         menu = menuMapper.selectOne(queryWrapper);
 
-        if (menu == null) {
+        if (StringUtils.isNull(menu)) {
             // 存储不存在的key
             redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
             throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
@@ -229,7 +229,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysMenu::getMenuId, menuDto.getMenuId());
         SysMenu result = menuMapper.selectOne(queryWrapper);
-        if (result == null) {
+        if (StringUtils.isNull(result)) {
             throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
         }
 
@@ -255,7 +255,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         SysMenu menu = menuMapper.selectOne(queryWrapper);
 
         // 数据不存在
-        if (menu == null) {
+        if (StringUtils.isNull(menu)) {
             redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
             throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
         }
@@ -270,7 +270,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      */
     @Override
     @Transactional
-    public void delete(Set<Long> ids) {
+    public void removeMenuByIds(Set<Long> ids) {
         for (Long menuId : ids) {
             // 缓存中是否标记空id
             if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {

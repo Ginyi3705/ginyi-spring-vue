@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,6 +79,7 @@ public class LogAspect {
             String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
             operationLog.setOperationIp(ip);
             operationLog.setOperationUrl(StringUtils.substring(ServletUtils.getRequest().getRequestURI(), 0, 255));
+            operationLog.setCreateTime(new Date());
             if (loginUser != null) {
                 operationLog.setOperationName(loginUser.getUsername());
             }

@@ -82,7 +82,7 @@ public class SysMenuController {
     @PreAuthorize("@ss.hasPermission('system:menu:remove')")
     @Log(title = "菜单模块", businessType = BusinessType.DELETE)
     public CommonResult delete(@RequestBody Set<Long> ids) {
-        menuService.delete(ids);
+        menuService.removeMenuByIds(ids);
         return CommonResult.success();
     }
 }

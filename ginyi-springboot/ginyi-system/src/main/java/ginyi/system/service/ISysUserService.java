@@ -62,4 +62,10 @@ public interface ISysUserService {
      * @return
      */
     public BaseVo<UserVo> list(UserDto userDto, Long page, Long pageSize);
+
+    /**
+     * 根据用户id删除用户
+     * @param userId
+     */
+    public void removeById(Long userId);
 }
