@@ -247,7 +247,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public void removeMenuById(Long menuId) {
         // 缓存中是否标记空id
         if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_NOT_EXIST);
         }
 
         LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
@@ -257,7 +257,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         // 数据不存在
         if (StringUtils.isNull(menu)) {
             redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_NOT_EXIST);
         }
 
         menuMapper.deleteById(menuId);
@@ -266,19 +266,31 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
     /**
      * 根据ids批量删除菜单
+     *
      * @param ids
      */
     @Override
     @Transactional
     public void removeMenuByIds(Set<Long> ids) {
-        for (Long menuId : ids) {
-            // 缓存中是否标记空id
-            if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
-                throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_IDS_NOT_EXIST);
+        if (ids.size() > 0) {
+            SysMenu menu;
+            for (Long menuId : ids) {
+                // 缓存中是否标记空id
+                if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_IDS_NOT_EXIST);
+                }
+                LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(SysMenu::getMenuId, menuId);
+                menu = menuMapper.selectOne(queryWrapper);
+                if (StringUtils.isNull(menu)) {
+                    redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_NOT_EXIST);
+                }
             }
+            menuMapper.deleteBatchIds(ids);
+            redisCache.removeCacheObject(CacheConstants.MENU_KEY_PREFIX);
+        } else {
+            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, MessageConstants.SYS_REQUEST_ILLEGAL);
         }
-        menuMapper.deleteBatchIds(ids);
-        redisCache.removeCacheObject(CacheConstants.MENU_KEY_PREFIX);
-
     }
 }

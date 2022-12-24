@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 @Api(tags = "用户模块")
 @RestController
@@ -69,6 +70,15 @@ public class SysUserController {
     @Log(title = "用户模块", businessType = BusinessType.DELETE)
     public CommonResult delete(@PathVariable("userId") Long userId){
         userService.removeById(userId);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("批量删除用户")
+    @PostMapping("/delete")
+    @PreAuthorize("@ss.hasPermission('system:user:remove')")
+    @Log(title = "用户模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@RequestBody Set<Long> ids){
+        userService.removeUserByIds(ids);
         return CommonResult.success();
     }
 

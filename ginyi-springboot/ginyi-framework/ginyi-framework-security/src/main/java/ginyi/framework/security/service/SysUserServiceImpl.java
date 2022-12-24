@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 @Service
 public class SysUserServiceImpl implements ISysUserService {
@@ -138,13 +139,48 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     @Override
     public void removeById(Long userId) {
+        // 检查缓存中是否标记着空id
+        if (redisCache.hasKey(CacheConstants.USER_NOT_EXIST_KEY + userId)) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, userId + MessageConstants.USER_NOT_EXIST);
+        }
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUser::getUserId, userId);
         SysUser user = userMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(user)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.USER_NOT_EXIST);
+            redisCache.setCacheObject(CacheConstants.USER_NOT_EXIST_KEY + userId, null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, userId + MessageConstants.USER_NOT_EXIST);
         }
         userMapper.deleteById(userId);
+    }
+
+    /**
+     * 批量删除用户
+     *
+     * @param ids
+     */
+    @Override
+    @Transactional
+    public void removeUserByIds(Set<Long> ids) {
+        if (ids.size() > 0) {
+            SysUser user;
+            for (Long userId : ids) {
+                // 检查缓存中是否标记着空id
+                if (redisCache.hasKey(CacheConstants.USER_NOT_EXIST_KEY + userId)) {
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, userId + MessageConstants.USER_NOT_EXIST);
+                }
+                LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(SysUser::getUserId, userId);
+                user = userMapper.selectOne(queryWrapper);
+                if (StringUtils.isNull(user)) {
+                    redisCache.setCacheObject(CacheConstants.USER_NOT_EXIST_KEY + userId, null);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, userId + MessageConstants.USER_NOT_EXIST);
+                }
+            }
+            userMapper.deleteBatchIds(ids);
+            redisCache.removeCacheObject(CacheConstants.USER_KEY_PREFIX);
+        } else {
+            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, MessageConstants.SYS_REQUEST_ILLEGAL);
+        }
     }
 
     /**

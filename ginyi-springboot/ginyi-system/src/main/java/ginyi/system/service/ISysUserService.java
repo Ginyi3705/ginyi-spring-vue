@@ -5,7 +5,7 @@ import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.UserVo;
 
-import java.util.List;
+import java.util.Set;
 
 public interface ISysUserService {
 
@@ -68,4 +68,10 @@ public interface ISysUserService {
      * @param userId
      */
     public void removeById(Long userId);
+
+    /**
+     * 根据userId批量删除用户
+     * @param ids
+     */
+    public void removeUserByIds(Set<Long> ids);
 }
