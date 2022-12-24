@@ -13,5 +13,9 @@ public interface ISysLoginService {
      */
     public LoginVo login(LoginDto loginDto);
 
+    /**
+     * 用户注册
+     * @param registerDto
+     */
     public void register(RegisterDto registerDto);
 }

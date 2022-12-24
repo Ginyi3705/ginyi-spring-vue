@@ -103,6 +103,12 @@ public class SysLoginServiceImpl implements ISysLoginService {
                     AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageConstants.USER_PASSWORD_NOT_MATCH));
                     throw new UserPasswordNotMatchException();
                 }
+                // 其他异常（被禁用、被删除、被停用）
+                if(e.getCause() instanceof CommonException){
+                    CommonException commonException = (CommonException) e.getCause();
+                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, String.valueOf(commonException.getData())));
+                    throw new CommonException(commonException.getState(), commonException.getData());
+                }
             } else {
                 // 其他的未知异常
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, e.getMessage()));
