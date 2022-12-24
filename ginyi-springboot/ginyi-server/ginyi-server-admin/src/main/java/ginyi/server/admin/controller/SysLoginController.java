@@ -49,4 +49,15 @@ public class SysLoginController {
         loginService.register(registerDto);
         return CommonResult.success();
     }
+
+    /**
+     * 退出登录
+     *
+     * @return
+     */
+    @ApiOperation("退出登录")
+    @PostMapping("/logout")
+    public CommonResult logout() {
+        return CommonResult.success();
+    }
 }
