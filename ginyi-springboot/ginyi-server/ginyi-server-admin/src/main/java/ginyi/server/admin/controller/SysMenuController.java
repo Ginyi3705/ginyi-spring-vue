@@ -7,7 +7,7 @@ import ginyi.common.swagger.AddGroup;
 import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.SysMenu;
 import ginyi.system.domain.model.dto.MenuDto;
-import ginyi.system.domain.model.vo.MenuVo;
+import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.service.ISysMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,18 +28,18 @@ public class SysMenuController {
 
     @ApiOperation("路由菜单列表")
     @GetMapping("/getRouterList")
-    public CommonResult<MenuVo> list() {
-        MenuVo menuVo = menuService.selectMenuList();
-        return CommonResult.success(menuVo);
+    public CommonResult<BaseVo<SysMenu>> list() {
+        BaseVo<SysMenu> baseVo = menuService.selectMenuList();
+        return CommonResult.success(baseVo);
     }
 
     @ApiOperation("菜单列表")
     @PostMapping("/list")
     @PreAuthorize("@ss.hasPermission('system:menu:list')")
     @Log(title = "菜单模块", businessType = BusinessType.OTHER)
-    public CommonResult<MenuVo> list(@RequestBody @Validated MenuDto menuDto) {
-        MenuVo menuVo = menuService.selectMenuListByAdmin(menuDto);
-        return CommonResult.success(menuVo);
+    public CommonResult<BaseVo<SysMenu>> list(@RequestBody @Validated MenuDto menuDto) {
+        BaseVo<SysMenu> baseVo = menuService.selectMenuListByAdmin(menuDto);
+        return CommonResult.success(baseVo);
     }
 
     @ApiOperation("添加菜单")

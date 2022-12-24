@@ -12,7 +12,7 @@ import ginyi.system.domain.LoginUser;
 import ginyi.system.domain.SysMenu;
 import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.MenuDto;
-import ginyi.system.domain.model.vo.MenuVo;
+import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.mapper.SysMenuMapper;
 import ginyi.system.service.ISysMenuService;
 import lombok.extern.slf4j.Slf4j;
@@ -84,16 +84,16 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 菜单列表
      */
     @Override
-    public MenuVo selectMenuList() {
+    public BaseVo<SysMenu> selectMenuList() {
         List<SysMenu> menuList;
-        MenuVo menuVo = new MenuVo();
+        BaseVo<SysMenu> baseVo = new BaseVo<>();
         LoginUser user = SecurityUtils.getLoginUser();
         // 判断缓存是否有数据
         menuList = redisCache.getCacheList(CacheConstants.MENU_USER_LIST_KEY + user.getUsername(), SysMenu.class);
         if (menuList.size() > 0) {
-            menuVo.setList(menuList);
-            menuVo.setCount(menuList.size());
-            return menuVo;
+            baseVo.setList(menuList);
+            baseVo.setCount(menuList.size());
+            return baseVo;
         }
         boolean isAdmin = SysUser.isAdmin(user.getUserId());
         // 管理员返回全部，普通用户则对应的菜单
@@ -104,9 +104,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
                 .map(menu -> convertToMenuTree(menu, list)).collect(Collectors.toList());
         redisCache.setCacheList(CacheConstants.MENU_USER_LIST_KEY + user.getUsername(), menuList);
 
-        menuVo.setList(menuList);
-        menuVo.setCount(menuList.size());
-        return menuVo;
+        baseVo.setList(menuList);
+        baseVo.setCount(menuList.size());
+        return baseVo;
     }
 
     /**
@@ -116,15 +116,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return
      */
     @Override
-    public MenuVo selectMenuListByAdmin(MenuDto menuDto) {
+    public BaseVo<SysMenu> selectMenuListByAdmin(MenuDto menuDto) {
         List<SysMenu> list = menuMapper.selectMenuListByAdmin();
         List<SysMenu> menuList = list.stream()
                 .filter(menu -> menu.getParentId().equals(0L))
                 .map(menu -> convertToMenuTree(menu, list)).collect(Collectors.toList());
-        MenuVo menuVo = new MenuVo();
-        menuVo.setList(menuList);
-        menuVo.setCount(menuList.size());
-        return menuVo;
+        BaseVo<SysMenu> baseVo = new BaseVo<>();
+        baseVo.setList(menuList);
+        baseVo.setCount(menuList.size());
+        return baseVo;
     }
 
     /**
