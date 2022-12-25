@@ -32,6 +32,7 @@ public class MessageConstants {
     public  static final String MENU_NAME_USED = "菜单名称已被使用！";
     public  static final String MENU_NOT_EXIST = "菜单不存在！";
     public  static final String MENU_IDS_NOT_EXIST = "批量删除中存在不匹配的ID！";
+    public  static final String MENU_PARENT_NOT_EXIST = "上级菜单不存在！";
 
 
     public static final String POST_NOT_EXIST = "岗位不存在！";
@@ -42,5 +43,6 @@ public class MessageConstants {
 
     public static final String DEPT_NOT_EXIST = "部门不存在！";
     public static final String DEPT_NAME_USED = "同分支下部门名称已被使用！";
+    public static final String DEPT_PARENT_NOT_EXIST = "上级部门不存在！";
 
 }

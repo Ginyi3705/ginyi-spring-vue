@@ -4,6 +4,7 @@ import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
+import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.SysDept;
 import ginyi.system.domain.model.dto.DeptDto;
 import ginyi.system.domain.model.vo.BaseVo;
@@ -49,6 +50,15 @@ public class SysDeptController {
     @Log(title = "部门模块", businessType = BusinessType.INSERT)
     public CommonResult addDept(@RequestBody @Validated(AddGroup.class) DeptDto deptDto){
         deptService.addDept(deptDto);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("更新部门")
+    @PostMapping("/update")
+    @PreAuthorize("@ss.hasPermission('system:dept:edit')")
+    @Log(title = "部门模块", businessType = BusinessType.UPDATE)
+    public CommonResult update(@RequestBody @Validated(UpdateGroup.class) DeptDto deptDto){
+        deptService.updateDept(deptDto);
         return CommonResult.success();
     }
 

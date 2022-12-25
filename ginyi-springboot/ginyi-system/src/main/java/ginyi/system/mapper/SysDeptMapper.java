@@ -11,6 +11,7 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
 
     /**
      * 查询部门列表
+     *
      * @param deptDto
      * @param page
      */
@@ -18,7 +19,15 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
 
     /**
      * 新增部门
+     *
      * @param deptDto
      */
     public void insertDept(@Param("deptDto") DeptDto deptDto);
+
+    /**
+     * 更新部门
+     *
+     * @param deptDto
+     */
+    public void updateDept(@Param("deptDto") DeptDto deptDto);
 }

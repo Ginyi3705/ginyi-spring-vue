@@ -217,10 +217,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public void updateMenu(MenuDto menuDto) {
         // c 是菜单，其余的是目录或者按钮
         if ("C".equalsIgnoreCase(menuDto.getMenuType())) {
-            if (menuDto.getComponent().isEmpty()) {
+            if (StringUtils.isNull(menuDto.getComponent()) || menuDto.getComponent().isEmpty()) {
                 throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_COMPONENT_NOT_EXIST);
             }
-            if (menuDto.getPath().isEmpty()) {
+            if (StringUtils.isNull(menuDto.getPath()) || menuDto.getPath().isEmpty()) {
                 throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_PATH_NOT_EXIST);
             }
         }
@@ -231,6 +231,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
         SysMenu result = menuMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(result)) {
             throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+        }
+
+        // 判断上级菜单是否存在
+        Long parentId = StringUtils.isNull(menuDto.getParentId()) ? 0L : menuDto.getParentId();
+        queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(parentId != 0L, SysMenu::getMenuId, parentId);
+        List<SysMenu> menuList = menuMapper.selectList(queryWrapper);
+        if (menuList.size() == 0) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_PARENT_NOT_EXIST);
         }
 
         menuMapper.updateMenu(menuDto);

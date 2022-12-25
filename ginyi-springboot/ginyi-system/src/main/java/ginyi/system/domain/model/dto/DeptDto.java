@@ -89,10 +89,4 @@ public class DeptDto extends BaseEntity {
     @ApiModelProperty("创建时间，结束时间")
     private Date endTime;
 
-
-    /**
-     * 备注
-     */
-    @ApiModelProperty("备注")
-    private String remark;
 }

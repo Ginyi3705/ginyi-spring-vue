@@ -30,4 +30,10 @@ public interface ISysDeptService {
      * @param deptDto
      */
     public void addDept(DeptDto deptDto);
+
+    /**
+     * 更新部门
+     * @param deptDto
+     */
+    public void updateDept(DeptDto deptDto);
 }

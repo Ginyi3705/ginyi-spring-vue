@@ -37,7 +37,10 @@
             <if test="deptDto.updateTime != null">update_time,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="deptDto.parentId != null and deptDto.parentId != ''">#{deptDto.parentId},</if>
+            <choose>
+                <when test="deptDto.parentId == null or deptDto.parentId == ''">0</when>
+                <otherwise>#{deptDto.parentId}</otherwise>
+            </choose>
             <if test="deptDto.deptName != null and deptDto.deptName != ''">#{deptDto.deptName},</if>
             <if test="deptDto.sort != null and deptDto.sort != ''">#{deptDto.sort},</if>
             <if test="deptDto.leader != null and deptDto.leader != ''">#{deptDto.leader},</if>
@@ -52,6 +55,26 @@
 
 
     </insert>
+
+    <!-- 更新部门 -->
+    <update id="updateDept">
+        update sys_dept
+        <set>
+            <if test="deptDto.parentId != null">parent_id = #{deptDto.parentId},</if>
+            <if test="deptDto.deptName != null and deptDto.deptName != ''">dept_name = #{deptDto.deptName},</if>
+            <if test="deptDto.sort != null and deptDto.sort != ''">sort = #{deptDto.sort},</if>
+            <if test="deptDto.leader != null and deptDto.leader != ''">leader = #{deptDto.leader},</if>
+            <if test="deptDto.phone != null and deptDto.phone != ''">phone = #{deptDto.phone},</if>
+            <if test="deptDto.email != null and deptDto.email != ''">email = #{deptDto.email},</if>
+            <if test="deptDto.status != null and deptDto.status != ''">`status` = #{deptDto.status},</if>
+            <if test="deptDto.createBy != null and deptDto.createBy != ''">create_by = #{deptDto.createBy},</if>
+            <if test="deptDto.createTime != null">create_time = #{deptDto.createTime},</if>
+            <if test="deptDto.updateBy != null and deptDto.updateBy != ''">update_by = #{deptDto.updateBy},</if>
+            <if test="deptDto.updateTime != null">update_time = #{deptDto.updateTime},</if>
+            <if test="deptDto.remark != null and deptDto.remark != ''">remark = #{deptDto.remark},</if>
+        </set>
+        where dept_id = #{deptDto.deptId}
+    </update>
 
     <!-- 查询部门列表 -->
     <select id="list" resultMap="SysDeptResult">

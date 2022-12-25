@@ -1,6 +1,7 @@
 package ginyi.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import org.apache.ibatis.annotations.Select;
 
@@ -16,6 +17,7 @@ public class SysPost extends BaseEntity {
     /**
      * 岗位序号
      */
+    @TableId
     private Long postId;
 
     /**

@@ -1,6 +1,7 @@
 package ginyi.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class SysDept extends BaseEntity {
      * 部门ID
      */
     @ApiModelProperty("部门id")
+    @TableId
     private Long deptId;
 
     /**

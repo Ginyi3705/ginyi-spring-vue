@@ -1,6 +1,7 @@
 package ginyi.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -23,6 +24,7 @@ public class SysRole extends BaseEntity {
     /**
      * 角色ID
      */
+    @TableId
     private Long roleId;
 
     /**
