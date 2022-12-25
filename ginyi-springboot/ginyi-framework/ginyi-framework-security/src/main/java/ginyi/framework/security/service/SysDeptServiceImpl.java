@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -167,6 +168,35 @@ public class SysDeptServiceImpl implements ISysDeptService {
         redisCache.removeCacheObject(CacheConstants.DEPT_KEY_PREFIX);
     }
 
+
+    /**
+     * 批量删除部门
+     *
+     * @param ids
+     */
+    @Override
+    public void removeDeptByIds(Set<Long> ids) {
+        if (ids.size() > 0) {
+            SysDept sysDept;
+            for (Long deptId : ids) {
+                // 检查缓存中是否标记着空id
+                if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptId)) {
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+                }
+                LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(SysDept::getDeptId, deptId);
+                SysDept dept = deptMapper.selectOne(queryWrapper);
+                if (StringUtils.isNull(dept)) {
+                    redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + dept, null);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+                }
+            }
+            deptMapper.deleteBatchIds(ids);
+            redisCache.removeCacheObject(CacheConstants.DEPT_KEY_PREFIX);
+        } else {
+            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, MessageConstants.SYS_REQUEST_ILLEGAL);
+        }
+    }
 
     /**
      * 部门列表转换成部门树的结构

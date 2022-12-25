@@ -5,6 +5,8 @@ import ginyi.system.domain.model.dto.DeptDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.DeptVo;
 
+import java.util.Set;
+
 /**
  * 系统部门
  */
@@ -42,4 +44,10 @@ public interface ISysDeptService {
      * @param deptId
      */
     public void removeDeptById(Long deptId);
+
+    /**
+     * 批量删除部门
+     * @param ids
+     */
+    public void removeDeptByIds(Set<Long> ids);
 }

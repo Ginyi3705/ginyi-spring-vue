@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 @Api(tags = "部门模块")
 @RestController
@@ -30,8 +31,8 @@ public class SysDeptController {
     @PostMapping("/list")
     @PreAuthorize("@ss.hasPermission('system:dept:list')")
     public CommonResult<BaseVo<SysDept>> list(@RequestBody DeptDto deptDto,
-                             @RequestParam(value = "page", required = false) Long page,
-                             @RequestParam(value = "pageSize", required = false) Long pageSize) {
+                                              @RequestParam(value = "page", required = false) Long page,
+                                              @RequestParam(value = "pageSize", required = false) Long pageSize) {
         BaseVo<SysDept> list = deptService.list(deptDto, page, pageSize);
         return CommonResult.success(list);
     }
@@ -39,7 +40,7 @@ public class SysDeptController {
     @ApiOperation("部门详情")
     @GetMapping("/getDeptByDeptId/{deptId}")
     @PreAuthorize("@ss.hasPermission('system:dept:edit')")
-    public CommonResult<DeptVo> getDeptByDeptId(@PathVariable("deptId") Long deptId){
+    public CommonResult<DeptVo> getDeptByDeptId(@PathVariable("deptId") Long deptId) {
         DeptVo deptVo = deptService.getDeptByDeptId(deptId);
         return CommonResult.success(deptVo);
     }
@@ -48,7 +49,7 @@ public class SysDeptController {
     @PostMapping("/add")
     @PreAuthorize("@ss.hasPermission('system:dept:add')")
     @Log(title = "部门模块", businessType = BusinessType.INSERT)
-    public CommonResult addDept(@RequestBody @Validated(AddGroup.class) DeptDto deptDto){
+    public CommonResult addDept(@RequestBody @Validated(AddGroup.class) DeptDto deptDto) {
         deptService.addDept(deptDto);
         return CommonResult.success();
     }
@@ -57,7 +58,7 @@ public class SysDeptController {
     @PostMapping("/update")
     @PreAuthorize("@ss.hasPermission('system:dept:edit')")
     @Log(title = "部门模块", businessType = BusinessType.UPDATE)
-    public CommonResult update(@RequestBody @Validated(UpdateGroup.class) DeptDto deptDto){
+    public CommonResult update(@RequestBody @Validated(UpdateGroup.class) DeptDto deptDto) {
         deptService.updateDept(deptDto);
         return CommonResult.success();
     }
@@ -66,8 +67,17 @@ public class SysDeptController {
     @PostMapping("/delete/{deptId}")
     @PreAuthorize("@ss.hasPermission('system:dept:remove')")
     @Log(title = "部门模块", businessType = BusinessType.DELETE)
-    public CommonResult delete(@PathVariable("deptId") Long deptId){
+    public CommonResult delete(@PathVariable("deptId") Long deptId) {
         deptService.removeDeptById(deptId);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("批量删除部门")
+    @PostMapping("/delete}")
+    @PreAuthorize("@ss.hasPermission('system:dept:remove')")
+    @Log(title = "部门模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@RequestBody Set<Long> ids) {
+        deptService.removeDeptByIds(ids);
         return CommonResult.success();
     }
 
