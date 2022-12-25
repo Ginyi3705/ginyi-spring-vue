@@ -54,7 +54,7 @@ public class SysMenuController {
     @ApiOperation("菜单详情")
     @GetMapping("/getMenuById/{menuId}")
     @PreAuthorize("@ss.hasPermission('system:menu:edit')")
-    public CommonResult getMenuById(@PathVariable("menuId") Long menuId) {
+    public CommonResult<SysMenu> getMenuById(@PathVariable("menuId") Long menuId) {
         SysMenu menu = menuService.getMenuById(menuId);
         return CommonResult.success(menu);
     }

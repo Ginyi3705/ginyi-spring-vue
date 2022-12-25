@@ -55,6 +55,7 @@ spring:
       minIdle: 10
       # 最大连接池数量
       maxActive: 20
+      testWhileIdle: true
   # redis 配置
   redis:
     # 地址

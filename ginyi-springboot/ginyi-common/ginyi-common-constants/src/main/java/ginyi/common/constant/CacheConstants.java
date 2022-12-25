@@ -42,10 +42,17 @@ public class CacheConstants {
     /** 菜单详情 */
     public static final String MENU_DETAILS_BY_ID_KEY = "menu_details_by_id:";
 
-    /** 用户前缀，用户批量删除 */
+    /** 用户前缀，用于批量删除 */
     public static final String USER_KEY_PREFIX = "user_*";
     /** 用户不存在的key */
     public static final String USER_NOT_EXIST_KEY = "user_not_exist:";
     /** 用户详情 */
     public static final  String USER_DETAILS_BY_USERID_KEY = "user_details_by_userId:";
+
+    /** 部门前缀，用于批量删除 */
+    public static final String DEPT_KEY_PREFIX = "dept_*";
+    /** 部门不存在的key */
+    public static final String DEPT_NOT_EXIST_KEY = "dept_not_exist:";
+    /** 部门详情 */
+    public static final String DEPT_DETAILS_BY_DEPTID_KEY = "dept_details_by_deptId:";
 }
