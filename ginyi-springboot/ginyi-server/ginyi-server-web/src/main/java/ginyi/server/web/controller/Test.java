@@ -1,8 +1,8 @@
 package ginyi.server.web.controller;
 
 
+import ginyi.common.annotation.Anonymous;
 import ginyi.common.result.CommonResult;
-import ginyi.framework.core.annotation.Anonymous;
 import ginyi.framework.websocket.WebSocket;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

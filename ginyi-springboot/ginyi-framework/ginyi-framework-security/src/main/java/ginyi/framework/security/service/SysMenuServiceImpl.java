@@ -116,7 +116,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return
      */
     @Override
-    public BaseVo<SysMenu> selectMenuListByAdmin(MenuDto menuDto) {
+    public BaseVo<SysMenu> list(MenuDto menuDto) {
         List<SysMenu> list = menuMapper.selectMenuListByAdmin();
         List<SysMenu> menuList = list.stream()
                 .filter(menu -> menu.getParentId().equals(0L))

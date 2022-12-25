@@ -38,7 +38,7 @@ public class SysMenuController {
     @PreAuthorize("@ss.hasPermission('system:menu:list')")
     @Log(title = "菜单模块", businessType = BusinessType.OTHER)
     public CommonResult<BaseVo<SysMenu>> list(@RequestBody @Validated MenuDto menuDto) {
-        BaseVo<SysMenu> baseVo = menuService.selectMenuListByAdmin(menuDto);
+        BaseVo<SysMenu> baseVo = menuService.list(menuDto);
         return CommonResult.success(baseVo);
     }
 

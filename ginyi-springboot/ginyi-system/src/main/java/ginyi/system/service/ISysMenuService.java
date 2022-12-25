@@ -40,7 +40,7 @@ public interface ISysMenuService {
      *
      * @return 菜单列表
      */
-    public BaseVo<SysMenu> selectMenuListByAdmin(MenuDto menuDto);
+    public BaseVo<SysMenu> list(MenuDto menuDto);
 
     /**
      * 添加菜单

@@ -34,7 +34,7 @@
         <result property="parentId" column="parent_id"/>
         <result property="deptName" column="dept_name"/>
         <result property="ancestors" column="ancestors"/>
-        <result property="orderNum" column="order_num"/>
+        <result property="sort" column="sort"/>
         <result property="leader" column="leader"/>
         <result property="status" column="dept_status"/>
     </resultMap>
@@ -120,7 +120,7 @@
                sd.parent_id,
                sd.ancestors,
                sd.dept_name,
-               sd.order_num,
+               sd.sort,
                sd.leader,
                sd.status as dept_status,
                sr.role_id,
