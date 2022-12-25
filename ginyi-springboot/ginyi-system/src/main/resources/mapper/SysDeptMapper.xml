@@ -24,7 +24,7 @@
     <insert id="insertDept">
         insert into sys_dept
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="deptDto.parentId != null and deptDto.parentId != ''">parent_id,</if>
+            parent_id,
             <if test="deptDto.deptName != null and deptDto.deptName != ''">dept_name,</if>
             <if test="deptDto.sort != null and deptDto.sort != ''">sort,</if>
             <if test="deptDto.leader != null and deptDto.leader != ''">leader,</if>
@@ -38,7 +38,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <choose>
-                <when test="deptDto.parentId == null or deptDto.parentId == ''">0</when>
+                <when test="deptDto.parentId == null or deptDto.parentId == ''">0,</when>
                 <otherwise>#{deptDto.parentId}</otherwise>
             </choose>
             <if test="deptDto.deptName != null and deptDto.deptName != ''">#{deptDto.deptName},</if>

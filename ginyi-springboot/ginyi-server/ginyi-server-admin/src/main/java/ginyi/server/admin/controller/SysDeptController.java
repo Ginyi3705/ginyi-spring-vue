@@ -62,4 +62,13 @@ public class SysDeptController {
         return CommonResult.success();
     }
 
+    @ApiOperation("删除部门")
+    @PostMapping("/delete/{deptId}")
+    @PreAuthorize("@ss.hasPermission('system:dept:remove')")
+    @Log(title = "部门模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@PathVariable("deptId") Long deptId){
+        deptService.removeDeptById(deptId);
+        return CommonResult.success();
+    }
+
 }

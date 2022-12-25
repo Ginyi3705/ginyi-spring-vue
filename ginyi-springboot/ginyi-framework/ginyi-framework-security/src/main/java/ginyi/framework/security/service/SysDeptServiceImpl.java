@@ -146,6 +146,29 @@ public class SysDeptServiceImpl implements ISysDeptService {
     }
 
     /**
+     * 删除部门
+     *
+     * @param deptId
+     */
+    @Override
+    public void removeDeptById(Long deptId) {
+        // 检查缓存中是否标记着空id
+        if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptId)) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+        }
+        LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysDept::getDeptId, deptId);
+        SysDept dept = deptMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(dept)) {
+            redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + deptId, null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+        }
+        deptMapper.deleteById(deptId);
+        redisCache.removeCacheObject(CacheConstants.DEPT_KEY_PREFIX);
+    }
+
+
+    /**
      * 部门列表转换成部门树的结构
      *
      * @param dept

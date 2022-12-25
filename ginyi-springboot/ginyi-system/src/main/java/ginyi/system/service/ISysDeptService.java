@@ -36,4 +36,10 @@ public interface ISysDeptService {
      * @param deptDto
      */
     public void updateDept(DeptDto deptDto);
+
+    /**
+     * 删除部门
+     * @param deptId
+     */
+    public void removeDeptById(Long deptId);
 }
