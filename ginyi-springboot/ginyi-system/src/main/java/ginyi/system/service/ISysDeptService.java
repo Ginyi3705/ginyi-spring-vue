@@ -24,4 +24,10 @@ public interface ISysDeptService {
      * @return
      */
     public DeptVo getDeptByDeptId(Long deptId);
+
+    /**
+     * 新增部门
+     * @param deptDto
+     */
+    public void addDept(DeptDto deptDto);
 }

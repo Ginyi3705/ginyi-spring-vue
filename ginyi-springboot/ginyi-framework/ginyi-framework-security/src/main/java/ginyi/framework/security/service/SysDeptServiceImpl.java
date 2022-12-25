@@ -76,6 +76,30 @@ public class SysDeptServiceImpl implements ISysDeptService {
     }
 
     /**
+     * 新增部门
+     *
+     * @param deptDto
+     */
+    @Override
+    public void addDept(DeptDto deptDto) {
+        Long parentId = StringUtils.isNull(deptDto.getParentId()) ? 0L : deptDto.getParentId();
+        // 检查缓存中是否有标记同个分支下名称有被使用
+        if (redisCache.hasKey(CacheConstants.DEPT_NAME_USED_KEY + parentId + deptDto.getDeptName())) {
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.DEPT_NAME_USED);
+        }
+        LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysDept::getParentId, parentId)
+                .eq(SysDept::getDeptName, deptDto.getDeptName());
+        SysDept dept = deptMapper.selectOne(queryWrapper);
+        // 检查同个分支下名称是否被使用
+        if (StringUtils.isNotNull(dept)) {
+            redisCache.setCacheObject(CacheConstants.DEPT_NAME_USED_KEY + parentId + deptDto.getDeptName(), null);
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.DEPT_NAME_USED);
+        }
+        deptMapper.insertDept(deptDto);
+    }
+
+    /**
      * 部门列表转换成部门树的结构
      *
      * @param dept

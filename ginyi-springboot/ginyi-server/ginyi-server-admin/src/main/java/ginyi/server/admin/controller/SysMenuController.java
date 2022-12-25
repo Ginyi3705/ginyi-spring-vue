@@ -42,7 +42,7 @@ public class SysMenuController {
         return CommonResult.success(baseVo);
     }
 
-    @ApiOperation("添加菜单")
+    @ApiOperation("新增菜单")
     @PostMapping("/add")
     @Log(title = "菜单模块", businessType = BusinessType.INSERT)
     @PreAuthorize("@ss.hasPermission('system:menu:add')")

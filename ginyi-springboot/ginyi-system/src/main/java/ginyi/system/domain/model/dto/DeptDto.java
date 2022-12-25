@@ -1,16 +1,13 @@
 package ginyi.system.domain.model.dto;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import ginyi.common.swagger.AddGroup;
 import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -41,7 +38,7 @@ public class DeptDto extends BaseEntity {
      * 部门名称
      */
     @ApiModelProperty("部门名称")
-    @NotBlank(message = "部门名称不能为空")
+    @NotBlank(groups = {AddGroup.class, UpdateGroup.class}, message = "部门名称不能为空")
     @Size(min = 0, max = 30, message = "部门名称长度不能超过30个字符")
     private String deptName;
 
@@ -49,7 +46,7 @@ public class DeptDto extends BaseEntity {
      * 显示顺序
      */
     @ApiModelProperty("显示顺序")
-    @NotNull(message = "显示顺序不能为空")
+    @NotNull(groups = {AddGroup.class, UpdateGroup.class}, message = "显示顺序不能为空")
     private Integer sort;
 
     /**
@@ -62,7 +59,7 @@ public class DeptDto extends BaseEntity {
      * 联系电话
      */
     @ApiModelProperty("部门负责人电话")
-    @Size(min = 0, max = 11, message = "联系电话长度不能超过11个字符")
+    @Pattern(regexp = "(?:0|86|\\+86)?1[3-9]\\d{9}", message = "手机号码格式不正确")
     private String phone;
 
     /**
@@ -77,6 +74,7 @@ public class DeptDto extends BaseEntity {
      * 状态:0正常,1停用
      */
     @ApiModelProperty("状态，0正常，1停用")
+    @Size(min = 0, max = 1, message = "状态不合法，0正常，1停用")
     private String status;
 
     /**

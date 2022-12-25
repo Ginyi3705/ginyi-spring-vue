@@ -41,5 +41,6 @@ public class MessageConstants {
 
 
     public static final String DEPT_NOT_EXIST = "部门不存在！";
+    public static final String DEPT_NAME_USED = "同分支下部门名称已被使用！";
 
 }

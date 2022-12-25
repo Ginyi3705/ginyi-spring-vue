@@ -15,4 +15,10 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
      * @param page
      */
     public IPage<SysDept> list(@Param("deptDto") DeptDto deptDto, Page page);
+
+    /**
+     * 新增部门
+     * @param deptDto
+     */
+    public void insertDept(@Param("deptDto") DeptDto deptDto);
 }

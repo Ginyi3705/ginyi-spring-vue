@@ -20,6 +20,39 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
+    <!-- 新增部门 -->
+    <insert id="insertDept">
+        insert into sys_dept
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptDto.parentId != null and deptDto.parentId != ''">parent_id,</if>
+            <if test="deptDto.deptName != null and deptDto.deptName != ''">dept_name,</if>
+            <if test="deptDto.sort != null and deptDto.sort != ''">sort,</if>
+            <if test="deptDto.leader != null and deptDto.leader != ''">leader,</if>
+            <if test="deptDto.phone != null and deptDto.phone != ''">phone,</if>
+            <if test="deptDto.email != null and deptDto.email != ''">email,</if>
+            <if test="deptDto.status != null and deptDto.status != ''">`status`,</if>
+            <if test="deptDto.createBy != null and deptDto.createBy != ''">create_by,</if>
+            <if test="deptDto.createTime != null">create_time,</if>
+            <if test="deptDto.updateBy != null and deptDto.updateBy">update_by,</if>
+            <if test="deptDto.updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deptDto.parentId != null and deptDto.parentId != ''">#{deptDto.parentId},</if>
+            <if test="deptDto.deptName != null and deptDto.deptName != ''">#{deptDto.deptName},</if>
+            <if test="deptDto.sort != null and deptDto.sort != ''">#{deptDto.sort},</if>
+            <if test="deptDto.leader != null and deptDto.leader != ''">#{deptDto.leader},</if>
+            <if test="deptDto.phone != null and deptDto.phone != ''">#{deptDto.phone},</if>
+            <if test="deptDto.email != null and deptDto.email != ''">#{deptDto.email},</if>
+            <if test="deptDto.status != null and deptDto.status != ''">#{deptDto.status},</if>
+            <if test="deptDto.createBy != null and deptDto.createBy != ''">#{deptDto.createBy},</if>
+            <if test="deptDto.createTime != null">#{deptDto.createTime},</if>
+            <if test="deptDto.updateBy != null and deptDto.updateBy">#{deptDto.updateBy},</if>
+            <if test="deptDto.updateTime != null">#{deptDto.updateTime},</if>
+        </trim>
+
+
+    </insert>
+
     <!-- 查询部门列表 -->
     <select id="list" resultMap="SysDeptResult">
         select dept_id,

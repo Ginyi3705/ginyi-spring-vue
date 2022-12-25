@@ -1,6 +1,9 @@
 package ginyi.server.admin.controller;
 
+import ginyi.common.annotation.Log;
+import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
+import ginyi.common.swagger.AddGroup;
 import ginyi.system.domain.SysDept;
 import ginyi.system.domain.model.dto.DeptDto;
 import ginyi.system.domain.model.vo.BaseVo;
@@ -9,6 +12,7 @@ import ginyi.system.service.ISysDeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -37,6 +41,15 @@ public class SysDeptController {
     public CommonResult<DeptVo> getDeptByDeptId(@PathVariable("deptId") Long deptId){
         DeptVo deptVo = deptService.getDeptByDeptId(deptId);
         return CommonResult.success(deptVo);
+    }
+
+    @ApiOperation("新增部门")
+    @PostMapping("/add")
+    @PreAuthorize("@ss.hasPermission('system:dept:add')")
+    @Log(title = "部门模块", businessType = BusinessType.INSERT)
+    public CommonResult addDept(@RequestBody @Validated(AddGroup.class) DeptDto deptDto){
+        deptService.addDept(deptDto);
+        return CommonResult.success();
     }
 
 }

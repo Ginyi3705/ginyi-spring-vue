@@ -55,4 +55,6 @@ public class CacheConstants {
     public static final String DEPT_NOT_EXIST_KEY = "dept_not_exist:";
     /** 部门详情 */
     public static final String DEPT_DETAILS_BY_DEPTID_KEY = "dept_details_by_deptId:";
+    /** 同分支下部门名称已被使用 */
+    public static final String DEPT_NAME_USED_KEY = "dept_name_used_key:";
 }
