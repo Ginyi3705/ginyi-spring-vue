@@ -4,6 +4,7 @@ import ginyi.common.result.CommonResult;
 import ginyi.system.domain.SysPost;
 import ginyi.system.domain.model.dto.PostDto;
 import ginyi.system.domain.model.vo.BaseVo;
+import ginyi.system.domain.model.vo.DeptVo;
 import ginyi.system.domain.model.vo.PostVo;
 import ginyi.system.service.ISysPostService;
 import io.swagger.annotations.Api;
@@ -31,5 +32,13 @@ public class SysPostController {
                              @RequestParam(value = "pageSize", required = false) Long pageSize){
         BaseVo<PostVo> list = postService.list(postDto, page, pageSize);
         return CommonResult.success(list);
+    }
+
+    @ApiOperation("岗位详情")
+    @GetMapping("/getPostById/{postId}")
+    @PreAuthorize("@ss.hasPermission('system:post:edit')")
+    public CommonResult<PostVo> getPostByDeptId(@PathVariable("postId") Long postId) {
+        PostVo postVo = postService.getPostByPostId(postId);
+        return CommonResult.success(postVo);
     }
 }

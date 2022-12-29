@@ -42,12 +42,14 @@ public class CacheConstants {
     /** 菜单详情 */
     public static final String MENU_DETAILS_BY_ID_KEY = "menu_details_by_id:";
 
+
     /** 用户前缀，用于批量删除 */
     public static final String USER_KEY_PREFIX = "user_*";
     /** 用户不存在的key */
     public static final String USER_NOT_EXIST_KEY = "user_not_exist:";
     /** 用户详情 */
     public static final  String USER_DETAILS_BY_USERID_KEY = "user_details_by_userId:";
+
 
     /** 部门前缀，用于批量删除 */
     public static final String DEPT_KEY_PREFIX = "dept_*";
@@ -57,4 +59,13 @@ public class CacheConstants {
     public static final String DEPT_DETAILS_BY_DEPTID_KEY = "dept_details_by_deptId:";
     /** 同分支下部门名称已被使用 */
     public static final String DEPT_NAME_USED_KEY = "dept_name_used_key:";
+
+
+    /** 岗位前缀，用于批量删除 */
+    public static final String POST_KEY_PREFIX = "post_*";
+    /** 岗位不存在大的key */
+    public static final String POST_NOT_EXIST_KEY = "post_not_exist:";
+    /** 岗位详情 */
+    public static final String POST_DETAILS_BY_POSTID_KEY = "post_details_by_postId:";
+
 }

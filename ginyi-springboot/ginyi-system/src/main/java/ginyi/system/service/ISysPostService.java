@@ -15,4 +15,11 @@ public interface ISysPostService {
      * @return
      */
     public BaseVo<PostVo> list(PostDto postDto, Long page, Long pageSize);
+
+    /**
+     * 根据岗位id获取岗位详情
+     * @param postId
+     * @return
+     */
+    public PostVo getPostByPostId(Long postId);
 }

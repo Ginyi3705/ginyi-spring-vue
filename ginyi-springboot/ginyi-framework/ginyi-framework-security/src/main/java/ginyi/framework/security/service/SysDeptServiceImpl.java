@@ -65,15 +65,21 @@ public class SysDeptServiceImpl implements ISysDeptService {
         if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptId)) {
             throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
         }
+        DeptVo deptVo = new DeptVo();
+        // 检查缓存中是否存在
+        SysDept dept = redisCache.getCacheObject(CacheConstants.DEPT_DETAILS_BY_DEPTID_KEY + deptId, SysDept.class);
+        if (StringUtils.isNotNull(dept)) {
+            BeanUtils.copyProperties(dept, deptVo);
+            return deptVo;
+        }
         LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysDept::getDeptId, deptId);
-        SysDept dept = deptMapper.selectOne(queryWrapper);
+        dept = deptMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(dept)) {
             redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + deptId, null);
             throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
         }
         redisCache.setCacheObject(CacheConstants.DEPT_DETAILS_BY_DEPTID_KEY + deptId, dept);
-        DeptVo deptVo = new DeptVo();
         BeanUtils.copyProperties(dept, deptVo);
         return deptVo;
     }
