@@ -24,12 +24,6 @@ public class SysLoginController {
     @Autowired
     private ISysLoginService loginService;
 
-    /**
-     * 用户登录
-     *
-     * @param loginDto 登录信息
-     * @return 结果
-     */
     @ApiOperation("用户登录")
     @PostMapping("/login")
     public CommonResult<LoginVo> login(@RequestBody @Validated LoginDto loginDto) {
@@ -37,12 +31,6 @@ public class SysLoginController {
         return CommonResult.success(loginVo);
     }
 
-    /**
-     * 用户注册
-     *
-     * @param registerDto
-     * @return 结果
-     */
     @ApiOperation("用户注册")
     @PostMapping("/register")
     public CommonResult register(@RequestBody @Validated RegisterDto registerDto) {
@@ -50,11 +38,6 @@ public class SysLoginController {
         return CommonResult.success();
     }
 
-    /**
-     * 退出登录
-     *
-     * @return
-     */
     @ApiOperation("退出登录")
     @PostMapping("/logout")
     public CommonResult logout() {

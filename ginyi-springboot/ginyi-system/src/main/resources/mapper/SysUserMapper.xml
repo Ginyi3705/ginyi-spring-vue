@@ -52,7 +52,7 @@
         <id property="postId" column="post_id"/>
         <result property="postCode" column="post_code"/>
         <result property="postName" column="post_name"/>
-        <result property="postSort" column="post_sort"/>
+        <result property="sort" column="sort"/>
         <result property="status" column="status"/>
     </resultMap>
 
@@ -132,7 +132,7 @@
                sp.post_id,
                sp.post_code,
                sp.post_name,
-               sp.post_sort,
+               sp.sort,
                sp.status as post_status
         from sys_user as su
                  left join sys_dept as sd on su.dept_id = sd.dept_id

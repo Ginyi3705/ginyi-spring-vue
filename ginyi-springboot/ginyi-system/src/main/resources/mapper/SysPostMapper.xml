@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ginyi.system.mapper.SysPostMapper">
+
+    <resultMap id="SysPostResult" type="sysPost">
+        <id property="postId" column="post_id"/>
+        <result property="postName" column="post_name"/>
+        <result property="postCode" column="post_code"/>
+        <result property="sort" column="sort"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <!-- 查询列表 -->
+    <select id="list" resultMap="SysPostResult">
+        select post_id,
+        post_code,
+        post_name,
+        sort,
+        status,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        remark
+        from sys_post
+        <where>
+            <if test="postDto.postName != null and postDto.postName != ''">
+             and post_name like concat('%',#{postDto.postName}, '%')
+            </if>
+            <if test="postDto.postCode != null and postDto.postCode != ''">
+                and post_code like concat('%',#{postDto.postCode}, '%')
+            </if>
+            <if test="postDto.status != null and postDto.status != ''">
+                and `status` = #{postDto.status}
+            </if>
+            <if test="postDto.createBy != null and postDto.createBy != ''">
+                and create_by like concat('%',#{postDto.createBy}, '%')
+            </if>
+            <if test="postDto.updateBy != null and postDto.updateBy != ''">
+                and update_by like concat('%',#{postDto.updateBy}, '%')
+            </if>
+            <choose>
+                <when test="postDto.beginTime != null and postDto.endTime == null">
+                    and create_time > #{postDto.beginTime}
+                </when>
+                <when test="postDto.beginTime != null and postDto.endTime != null">
+                    and create_time between #{postDto.beginTime} and #{postDto.endTime}
+                </when>
+            </choose>
+        </where>
+    </select>
+</mapper>

@@ -2,7 +2,9 @@ package ginyi.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.ibatis.annotations.Select;
 
 /**
@@ -10,6 +12,7 @@ import org.apache.ibatis.annotations.Select;
  *
  * @author ruoyi
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class SysPost extends BaseEntity {
     private static final long serialVersionUID = 1L;
@@ -33,7 +36,7 @@ public class SysPost extends BaseEntity {
     /**
      * 岗位排序
      */
-    private Integer postSort;
+    private Integer sort;
 
     /**
      * 状态（0正常 1停用）

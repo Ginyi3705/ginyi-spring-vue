@@ -21,69 +21,39 @@ public class UserDto extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户ID
-     */
     @ApiModelProperty("用户id")
     @NotNull(groups = UpdateGroup.class, message = "用户id不能为空")
     private Long userId;
 
-    /**
-     * 用户账号
-     */
     @ApiModelProperty("用户账号")
     @NotBlank(groups = {UpdateGroup.class, AddGroup.class}, message = "用户账号不能为空")
     private String userName;
 
-    /**
-     * 部门ID
-     */
     @ApiModelProperty("部门id")
     @NotNull(groups = {UpdateGroup.class, AddGroup.class}, message = "部门id不能为空")
     private Long deptId;
 
-    /**
-     * 用户昵称
-     */
     @ApiModelProperty("用户昵称")
     private String nickName;
 
-    /**
-     * 用户邮箱
-     */
     @ApiModelProperty("邮箱")
     @Email(message = "邮箱格式不正确")
     private String email;
 
-    /**
-     * 手机号码
-     */
     @ApiModelProperty("手机号码")
     @Pattern(regexp = "(?:0|86|\\+86)?1[3-9]\\d{9}", message = "手机号码格式不正确")
     private String phoneNumber;
 
-    /**
-     * 用户性别
-     */
     @ApiModelProperty("性别（0男 1女 2未知）")
     @Size(min = 0, max = 2, message = "性别不合法，0男 1女 2未知")
     private String sex;
 
-    /**
-     * 用户头像
-     */
     @ApiModelProperty("头像")
     private String avatar;
 
-    /**
-     * 密码
-     */
     @ApiModelProperty("密码")
     private String password;
 
-    /**
-     * 帐号状态（0正常 1停用）
-     */
     @ApiModelProperty("状态（0正常 1停用）")
     @Size(min = 0, max = 1, message = "状态不合法")
     private String status;
@@ -98,33 +68,18 @@ public class UserDto extends BaseEntity {
      */
     private Date loginDate;
 
-    /**
-     * 创建时间，开始时间
-     */
     @ApiModelProperty("创建时间，开始时间")
     private Date beginTime;
 
-    /**
-     * 创建时间，结束时间
-     */
     @ApiModelProperty("创建时间，结束时间")
     private Date endTime;
 
-    /**
-     * 删除标志（0代表存在 2代表删除）
-     */
     @TableLogic
     private String deleted;
 
-    /**
-     * 岗位ID
-     */
     @ApiModelProperty("岗位id")
     private List<Long> postIds;
 
-    /**
-     * 角色ID
-     */
     @ApiModelProperty("角色id")
     private List<Long> roleIds;
 
