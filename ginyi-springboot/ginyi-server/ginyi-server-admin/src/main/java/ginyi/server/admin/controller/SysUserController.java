@@ -29,21 +29,12 @@ public class SysUserController {
     @Resource
     private ISysUserService userService;
 
-    @ApiOperation("添加用户")
-    @PostMapping("/add")
-    @PreAuthorize("@ss.hasPermission('system:user:add')")
-    @Log(title = "用户模块", businessType = BusinessType.INSERT)
-    public CommonResult add(@RequestBody @Validated(AddGroup.class) UserDto userDto) {
-        userService.addUser(userDto);
-        return CommonResult.success();
-    }
-
-    @ApiOperation("更新用户")
-    @PostMapping("/update")
-    @PreAuthorize("@ss.hasPermission('system:user:edit')")
-    @Log(title = "用户模块", businessType = BusinessType.UPDATE)
-    public CommonResult update(@RequestBody @Validated(UpdateGroup.class) UserDto userDto) {
-        userService.updateUser(userDto);
+    @ApiOperation("删除用户")
+    @PostMapping("/delete/{userId}")
+    @PreAuthorize("@ss.hasPermission('system:user:remove')")
+    @Log(title = "用户模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@PathVariable("userId") Long userId){
+        userService.removeById(userId);
         return CommonResult.success();
     }
 
@@ -53,25 +44,6 @@ public class SysUserController {
     public CommonResult<UserVo> getUserByUserId(@PathVariable("userId") String userId) {
         UserVo user = userService.getUserByUserId(userId);
         return CommonResult.success(user);
-    }
-
-    @ApiOperation("用户列表")
-    @PostMapping("/list")
-    @PreAuthorize("@ss.hasPermission('system:user:list')")
-    public CommonResult<BaseVo<UserVo>> list(@RequestBody UserDto userDto,
-                             @RequestParam(value = "page", required = false) Long page,
-                             @RequestParam(value = "pageSize", required = false) Long pageSize) {
-        BaseVo<UserVo> baseVo = userService.list(userDto, page, pageSize);
-        return CommonResult.success(baseVo);
-    }
-
-    @ApiOperation("删除用户")
-    @PostMapping("/delete/{userId}")
-    @PreAuthorize("@ss.hasPermission('system:user:remove')")
-    @Log(title = "用户模块", businessType = BusinessType.DELETE)
-    public CommonResult delete(@PathVariable("userId") Long userId){
-        userService.removeById(userId);
-        return CommonResult.success();
     }
 
     @ApiOperation("批量删除用户")
@@ -96,5 +68,74 @@ public class SysUserController {
         return CommonResult.success();
     }
 
+    @ApiOperation("添加用户")
+    @PostMapping("/add")
+    @PreAuthorize("@ss.hasPermission('system:user:add')")
+    @Log(title = "用户模块", businessType = BusinessType.INSERT)
+    @ApiOperationSupport(ignoreParameters = {
+            "userDto.beginTime",
+            "userDto.endTime",
+            "userDto.createBy",
+            "userDto.createTime",
+            "userDto.deleted",
+            "userDto.loginDate",
+            "userDto.loginIp",
+            "userDto.params",
+            "userDto.updateBy",
+            "userDto.updateTime",
+            "userDto.userId",
+            "userDto.password",
+    })
+    public CommonResult add(@RequestBody @Validated(AddGroup.class) UserDto userDto) {
+        userService.addUser(userDto);
+        return CommonResult.success();
+    }
 
+    @ApiOperation("更新用户")
+    @PostMapping("/update")
+    @PreAuthorize("@ss.hasPermission('system:user:edit')")
+    @Log(title = "用户模块", businessType = BusinessType.UPDATE)
+    @ApiOperationSupport(ignoreParameters = {
+            "userDto.beginTime",
+            "userDto.endTime",
+            "userDto.createBy",
+            "userDto.createTime",
+            "userDto.deleted",
+            "userDto.loginDate",
+            "userDto.loginIp",
+            "userDto.params",
+            "userDto.updateBy",
+            "userDto.updateTime",
+            "userDto.password",
+    })
+    public CommonResult update(@RequestBody @Validated(UpdateGroup.class) UserDto userDto) {
+        userService.updateUser(userDto);
+        return CommonResult.success();
+    }
+
+
+    @ApiOperation("用户列表")
+    @PostMapping("/list")
+    @PreAuthorize("@ss.hasPermission('system:user:list')")
+    @ApiOperationSupport(ignoreParameters = {
+            "userDto.deleted",
+            "userDto.loginDate",
+            "userDto.loginIp",
+            "userDto.params",
+            "userDto.userId",
+            "userDto.password",
+            "userDto.avatar",
+            "userDto.updateBy",
+            "userDto.updateTime",
+            "userDto.createTime",
+            "userDto.deptId",
+            "userDto.postIds",
+            "userDto.roleIds",
+    })
+    public CommonResult<BaseVo<UserVo>> list(@RequestBody UserDto userDto,
+                             @RequestParam(value = "page", required = false) Long page,
+                             @RequestParam(value = "pageSize", required = false) Long pageSize) {
+        BaseVo<UserVo> baseVo = userService.list(userDto, page, pageSize);
+        return CommonResult.success(baseVo);
+    }
 }

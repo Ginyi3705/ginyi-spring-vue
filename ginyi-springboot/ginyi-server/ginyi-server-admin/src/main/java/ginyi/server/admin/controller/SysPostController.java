@@ -1,5 +1,6 @@
 package ginyi.server.admin.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
@@ -25,16 +26,6 @@ public class SysPostController {
     @Resource
     private ISysPostService postService;
 
-    @ApiOperation("岗位列表")
-    @PostMapping("/list")
-    @PreAuthorize("@ss.hasPermission('system:post:list')")
-    public CommonResult<BaseVo<PostVo>> list(@RequestBody PostDto postDto,
-                                             @RequestParam(value = "page", required = false) Long page,
-                                             @RequestParam(value = "pageSize", required = false) Long pageSize) {
-        BaseVo<PostVo> list = postService.list(postDto, page, pageSize);
-        return CommonResult.success(list);
-    }
-
     @ApiOperation("岗位详情")
     @GetMapping("/getPostById/{postId}")
     @PreAuthorize("@ss.hasPermission('system:post:edit')")
@@ -43,10 +34,39 @@ public class SysPostController {
         return CommonResult.success(postVo);
     }
 
+    @ApiOperation("岗位列表")
+    @PostMapping("/list")
+    @PreAuthorize("@ss.hasPermission('system:post:list')")
+    @ApiOperationSupport(ignoreParameters = {
+            "postDto.createTime",
+            "postDto.params",
+            "postDto.updateBy",
+            "postDto.updateTime",
+            "postDto.postId",
+            "postDto.sort",
+    })
+    public CommonResult<BaseVo<PostVo>> list(@RequestBody PostDto postDto,
+                                             @RequestParam(value = "page", required = false) Long page,
+                                             @RequestParam(value = "pageSize", required = false) Long pageSize) {
+        BaseVo<PostVo> list = postService.list(postDto, page, pageSize);
+        return CommonResult.success(list);
+    }
+
+
     @ApiOperation("新增岗位")
     @PostMapping("/add")
     @PreAuthorize("@ss.hasPermission('system:post:add')")
     @Log(title = "岗位模块", businessType = BusinessType.INSERT)
+    @ApiOperationSupport(ignoreParameters = {
+            "postDto.createBy",
+            "postDto.createTime",
+            "postDto.beginTime",
+            "postDto.endTime",
+            "postDto.params",
+            "postDto.updateBy",
+            "postDto.updateTime",
+            "postDto.postId",
+    })
     public CommonResult addPost(@RequestBody @Validated(AddGroup.class) PostDto postDto) {
         postService.addPost(postDto);
         return CommonResult.success();
@@ -56,6 +76,15 @@ public class SysPostController {
     @PostMapping("/update")
     @PreAuthorize("@ss.hasPermission('system:post:edit')")
     @Log(title = "岗位模块", businessType = BusinessType.UPDATE)
+    @ApiOperationSupport(ignoreParameters = {
+            "postDto.createBy",
+            "postDto.createTime",
+            "postDto.beginTime",
+            "postDto.endTime",
+            "postDto.params",
+            "postDto.updateBy",
+            "postDto.updateTime",
+    })
     public CommonResult update(@RequestBody @Validated PostDto postDto){
         postService.updatePost(postDto);
         return CommonResult.success();

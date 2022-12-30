@@ -1,5 +1,6 @@
 package ginyi.server.admin.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
@@ -26,48 +27,6 @@ public class SysMenuController {
     @Resource
     private ISysMenuService menuService;
 
-    @ApiOperation("路由菜单列表")
-    @GetMapping("/getRouterList")
-    public CommonResult<BaseVo<SysMenu>> list() {
-        BaseVo<SysMenu> baseVo = menuService.selectMenuList();
-        return CommonResult.success(baseVo);
-    }
-
-    @ApiOperation("菜单列表")
-    @PostMapping("/list")
-    @PreAuthorize("@ss.hasPermission('system:menu:list')")
-    @Log(title = "菜单模块", businessType = BusinessType.OTHER)
-    public CommonResult<BaseVo<SysMenu>> list(@RequestBody @Validated MenuDto menuDto) {
-        BaseVo<SysMenu> baseVo = menuService.list(menuDto);
-        return CommonResult.success(baseVo);
-    }
-
-    @ApiOperation("新增菜单")
-    @PostMapping("/add")
-    @Log(title = "菜单模块", businessType = BusinessType.INSERT)
-    @PreAuthorize("@ss.hasPermission('system:menu:add')")
-    public CommonResult add(@RequestBody @Validated({AddGroup.class}) MenuDto menuDto) {
-        menuService.addMenu(menuDto);
-        return CommonResult.success();
-    }
-
-    @ApiOperation("菜单详情")
-    @GetMapping("/getMenuById/{menuId}")
-    @PreAuthorize("@ss.hasPermission('system:menu:edit')")
-    public CommonResult<SysMenu> getMenuById(@PathVariable("menuId") Long menuId) {
-        SysMenu menu = menuService.getMenuById(menuId);
-        return CommonResult.success(menu);
-    }
-
-    @ApiOperation("更新菜单")
-    @PostMapping("/update")
-    @PreAuthorize("@ss.hasPermission('system:menu:edit')")
-    @Log(title = "菜单模块", businessType = BusinessType.UPDATE)
-    public CommonResult update(@RequestBody @Validated({UpdateGroup.class}) MenuDto menuDto) {
-        menuService.updateMenu(menuDto);
-        return CommonResult.success();
-    }
-
     @ApiOperation("删除菜单")
     @PostMapping("/delete/{menuId}")
     @PreAuthorize("@ss.hasPermission('system:menu:remove')")
@@ -83,6 +42,70 @@ public class SysMenuController {
     @Log(title = "菜单模块", businessType = BusinessType.DELETE)
     public CommonResult delete(@RequestBody Set<Long> ids) {
         menuService.removeMenuByIds(ids);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("菜单详情")
+    @GetMapping("/getMenuById/{menuId}")
+    @PreAuthorize("@ss.hasPermission('system:menu:edit')")
+    public CommonResult<SysMenu> getMenuById(@PathVariable("menuId") Long menuId) {
+        SysMenu menu = menuService.getMenuById(menuId);
+        return CommonResult.success(menu);
+    }
+
+    @ApiOperation("路由菜单列表")
+    @GetMapping("/getRouterList")
+    public CommonResult<BaseVo<SysMenu>> list() {
+        BaseVo<SysMenu> baseVo = menuService.selectMenuList();
+        return CommonResult.success(baseVo);
+    }
+
+    @ApiOperation("菜单列表")
+    @PostMapping("/list")
+    @PreAuthorize("@ss.hasPermission('system:menu:list')")
+    @Log(title = "菜单模块", businessType = BusinessType.OTHER)
+    @ApiOperationSupport(ignoreParameters = {
+            "menuDto.updateBy",
+            "menuDto.updateTime",
+            "menuDto.createTime",
+            "menuDto.params",
+    })
+    public CommonResult<BaseVo<SysMenu>> list(@RequestBody @Validated MenuDto menuDto) {
+        BaseVo<SysMenu> baseVo = menuService.list(menuDto);
+        return CommonResult.success(baseVo);
+    }
+
+    @ApiOperation("新增菜单")
+    @PostMapping("/add")
+    @Log(title = "菜单模块", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermission('system:menu:add')")
+    @ApiOperationSupport(ignoreParameters = {
+            "menuDto.updateBy",
+            "menuDto.updateTime",
+            "menuDto.createTime",
+            "menuDto.createBy",
+            "menuDto.params",
+            "menuDto.menuId",
+    })
+    public CommonResult add(@RequestBody @Validated({AddGroup.class}) MenuDto menuDto) {
+        menuService.addMenu(menuDto);
+        return CommonResult.success();
+    }
+
+
+    @ApiOperation("更新菜单")
+    @PostMapping("/update")
+    @PreAuthorize("@ss.hasPermission('system:menu:edit')")
+    @Log(title = "菜单模块", businessType = BusinessType.UPDATE)
+    @ApiOperationSupport(ignoreParameters = {
+            "menuDto.updateBy",
+            "menuDto.updateTime",
+            "menuDto.createTime",
+            "menuDto.createBy",
+            "menuDto.params",
+    })
+    public CommonResult update(@RequestBody @Validated({UpdateGroup.class}) MenuDto menuDto) {
+        menuService.updateMenu(menuDto);
         return CommonResult.success();
     }
 }
