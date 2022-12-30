@@ -40,7 +40,7 @@
             <if test="postDto.createTime != null">#{postDto.createTime},</if>
             <if test="postDto.updateBy != null and postDto.updateBy != ''">#{postDto.updateBy},</if>
             <if test="postDto.updateTime != null">#{postDto.updateTime},</if>
-            <if test="postDto.remark != null and postDto != ''">#{postDto.remark},</if>
+            <if test="postDto.remark != null and postDto.remark != ''">#{postDto.remark},</if>
         </trim>
     </insert>
 

@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 
 @Api(tags = "岗位模块")
@@ -32,6 +33,24 @@ public class SysPostController {
     public CommonResult<PostVo> getPostByDeptId(@PathVariable("postId") Long postId) {
         PostVo postVo = postService.getPostByPostId(postId);
         return CommonResult.success(postVo);
+    }
+
+    @ApiOperation("删除岗位")
+    @PostMapping("/delete/{postId}")
+    @PreAuthorize("@ss.hasPermission('system:post:remove')")
+    @Log(title = "岗位模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@PathVariable("postId") Long postId) {
+        postService.removePostById(postId);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("批量删除岗位")
+    @PostMapping("/delete")
+    @PreAuthorize("@ss.hasPermission('system:post:remove')")
+    @Log(title = "岗位模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@RequestBody Set<Long> ids) {
+        postService.removeDeptByIds(ids);
+        return CommonResult.success();
     }
 
     @ApiOperation("岗位列表")

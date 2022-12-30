@@ -183,15 +183,16 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     public void removeDeptByIds(Set<Long> ids) {
         if (ids.size() > 0) {
-            SysDept sysDept;
+            SysDept dept;
+            LambdaQueryWrapper<SysDept> queryWrapper;
             for (Long deptId : ids) {
                 // 检查缓存中是否标记着空id
                 if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptId)) {
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
                 }
-                LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper = new LambdaQueryWrapper<>();
                 queryWrapper.eq(SysDept::getDeptId, deptId);
-                SysDept dept = deptMapper.selectOne(queryWrapper);
+                dept = deptMapper.selectOne(queryWrapper);
                 if (StringUtils.isNull(dept)) {
                     redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + dept, null);
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);

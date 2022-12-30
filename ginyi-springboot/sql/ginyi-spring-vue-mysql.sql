@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 30/12/2022 22:49:55
+ Date: 31/12/2022 00:27:19
 */
 
 SET NAMES utf8mb4;
@@ -539,7 +539,7 @@ CREATE TABLE `sys_user`  (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.101', '2022-12-29 23:14:54', 'admin', '2022-12-03 07:21:32', '', '2022-12-29 23:14:54', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'ginyi', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '172.18.0.1', '2022-12-25 23:36:45', 'admin', '2022-12-03 07:21:32', 'ginyi', '2022-12-25 23:36:45', '测试员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ginyi', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.101', '2022-12-31 00:18:00', 'admin', '2022-12-03 07:21:32', 'ginyi', '2022-12-31 00:18:00', '测试员');
 INSERT INTO `sys_user` VALUES (133, 101, 'zhangsans', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:40:55', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (134, 101, 'list', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:02', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (135, 101, 'wangwu', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:08', '', NULL, NULL);

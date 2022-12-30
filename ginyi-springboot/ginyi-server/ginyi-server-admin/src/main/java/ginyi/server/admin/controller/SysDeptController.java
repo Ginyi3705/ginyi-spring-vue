@@ -38,7 +38,7 @@ public class SysDeptController {
     }
 
     @ApiOperation("批量删除部门")
-    @PostMapping("/delete}")
+    @PostMapping("/delete")
     @PreAuthorize("@ss.hasPermission('system:dept:remove')")
     @Log(title = "部门模块", businessType = BusinessType.DELETE)
     public CommonResult delete(@RequestBody Set<Long> ids) {

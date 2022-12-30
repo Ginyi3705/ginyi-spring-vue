@@ -19,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 @Service
 public class SysPostServiceImpl implements ISysPostService {
@@ -107,6 +108,7 @@ public class SysPostServiceImpl implements ISysPostService {
         }
         postMapper.insertPost(postDto);
         redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
+        redisCache.removeCacheObject(CacheConstants.ROLE_KEY_PREFIX);
     }
 
     /**
@@ -143,5 +145,57 @@ public class SysPostServiceImpl implements ISysPostService {
         }
         postMapper.updatePost(postDto);
         redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
+    }
+
+    /**
+     * 删除岗位
+     *
+     * @param postId
+     */
+    @Override
+    public void removePostById(Long postId) {
+        // 查看缓存中是否存在空id
+        if (redisCache.hasKey(CacheConstants.POST_NOT_EXIST_KEY + postId)) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+        }
+        LambdaQueryWrapper<SysPost> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysPost::getPostId, postId);
+        SysPost post = postMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(post)) {
+            redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postId, null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+        }
+        postMapper.deleteById(postId);
+        redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
+    }
+
+    /**
+     * 批量删除岗位
+     *
+     * @param ids
+     */
+    @Override
+    public void removeDeptByIds(Set<Long> ids) {
+        if (ids.size() > 0) {
+            SysPost post;
+            LambdaQueryWrapper<SysPost> queryWrapper;
+            for (Long postId : ids) {
+                // 检查缓存中是否有标记着空id
+                if (redisCache.hasKey(CacheConstants.POST_NOT_EXIST_KEY + postId)) {
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+                }
+                queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(SysPost::getPostId, postId);
+                post = postMapper.selectOne(queryWrapper);
+                if (StringUtils.isNull(post)) {
+                    redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postId, null);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+                }
+            }
+            postMapper.deleteBatchIds(ids);
+            redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
+        } else {
+            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, MessageConstants.SYS_REQUEST_ILLEGAL);
+        }
     }
 }

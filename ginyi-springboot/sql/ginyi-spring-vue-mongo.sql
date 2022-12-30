@@ -11,7 +11,7 @@
  Target Server Version : 50005
  File Encoding         : 65001
 
- Date: 30/12/2022 22:50:46
+ Date: 31/12/2022 00:27:03
 */
 
 
@@ -524,6 +524,18 @@ db.getCollection("sys_log_login").insert([ {
     os: "Windows 10",
     msg: "登录成功",
     createTime: ISODate("2022-12-29T15:14:54.34Z"),
+    _class: "ginyi.system.domain.SysLogLogin"
+} ]);
+db.getCollection("sys_log_login").insert([ {
+    _id: ObjectId("63af0f38aafc5771ea9146a6"),
+    userName: "ginyi",
+    status: "0",
+    ipaddr: "192.168.0.101",
+    loginLocation: "内网IP",
+    browser: "Chrome 10",
+    os: "Windows 10",
+    msg: "登录成功",
+    createTime: ISODate("2022-12-30T16:18:00.14Z"),
     _class: "ginyi.system.domain.SysLogLogin"
 } ]);
 
@@ -4109,7 +4121,7 @@ db.getCollection("sys_log_operation").insert([ {
     requestMethod: "POST",
     operatorType: NumberInt("1"),
     operationName: "ginyi",
-    operationUrl: "/api/dept/delete%7D",
+    operationUrl: "/api/dept/delete",
     operationIp: "192.168.0.100",
     operationLocation: "内网IP",
     operationParam: "[202,203,204,205]",
@@ -4126,12 +4138,386 @@ db.getCollection("sys_log_operation").insert([ {
     requestMethod: "POST",
     operatorType: NumberInt("1"),
     operationName: "ginyi",
-    operationUrl: "/api/dept/delete%7D",
+    operationUrl: "/api/dept/delete",
     operationIp: "192.168.0.100",
     operationLocation: "内网IP",
     operationParam: "[202,203,204]",
     jsonResult: "{\"code\":200,\"msg\":\"操作成功\"}",
     status: NumberInt("0"),
     createTime: ISODate("2022-12-25T14:30:08.899Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af0f65aafc5771ea9146a7"),
+    title: "岗位模块",
+    businessType: NumberInt("1"),
+    method: "ginyi.server.admin.controller.SysPostController.addPost()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/add",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "{\"params\":{},\"postCode\":\"hr\",\"postName\":\"哈哈哈\",\"remark\":\"\",\"sort\":0,\"status\":\"1\"}",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据已存在\",\"code\":6005,\"data\":\"岗位编码已被使用！\"}",
+    createTime: ISODate("2022-12-30T16:18:45.596Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af0f6aaafc5771ea9146a8"),
+    title: "岗位模块",
+    businessType: NumberInt("1"),
+    method: "ginyi.server.admin.controller.SysPostController.addPost()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/add",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "{\"createBy\":\"ginyi\",\"createTime\":\"2022-12-31 00:18:50.057\",\"params\":{},\"postCode\":\"hrs\",\"postName\":\"哈哈哈\",\"remark\":\"\",\"sort\":0,\"status\":\"1\"}",
+    status: NumberInt("1"),
+    errorMsg: "{}",
+    createTime: ISODate("2022-12-30T16:18:50.313Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af0f75aafc5771ea9146a9"),
+    title: "岗位模块",
+    businessType: NumberInt("1"),
+    method: "ginyi.server.admin.controller.SysPostController.addPost()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/add",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "{\"createBy\":\"ginyi\",\"createTime\":\"2022-12-31 00:19:01.23\",\"params\":{},\"postCode\":\"hrs\",\"postName\":\"哈哈哈\",\"remark\":\"\",\"sort\":0,\"status\":\"1\"}",
+    status: NumberInt("1"),
+    errorMsg: "{}",
+    createTime: ISODate("2022-12-30T16:19:01.244Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af1023040a453e119fb793"),
+    title: "岗位模块",
+    businessType: NumberInt("1"),
+    method: "ginyi.server.admin.controller.SysPostController.addPost()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/add",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "{\"createBy\":\"ginyi\",\"createTime\":\"2022-12-31 00:21:55.304\",\"params\":{},\"postCode\":\"hrs\",\"postName\":\"哈哈哈\",\"remark\":\"\",\"sort\":0,\"status\":\"1\"}",
+    jsonResult: "{\"code\":200,\"msg\":\"操作成功\"}",
+    status: NumberInt("0"),
+    createTime: ISODate("2022-12-30T16:21:55.368Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af103d040a453e119fb794"),
+    title: "岗位模块",
+    businessType: NumberInt("1"),
+    method: "ginyi.server.admin.controller.SysPostController.addPost()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/add",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "{\"params\":{},\"postCode\":\"hrs\",\"postName\":\"哈哈哈\",\"remark\":\"\",\"sort\":0,\"status\":\"1\"}",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据已存在\",\"code\":6005,\"data\":\"岗位名称已被使用！\"}",
+    createTime: ISODate("2022-12-30T16:22:21.893Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af1042040a453e119fb795"),
+    title: "岗位模块",
+    businessType: NumberInt("1"),
+    method: "ginyi.server.admin.controller.SysPostController.addPost()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/add",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "{\"params\":{},\"postCode\":\"hrs\",\"postName\":\"哈哈ss哈\",\"remark\":\"\",\"sort\":0,\"status\":\"1\"}",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据已存在\",\"code\":6005,\"data\":\"岗位编码已被使用！\"}",
+    createTime: ISODate("2022-12-30T16:22:26.326Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af1045040a453e119fb796"),
+    title: "岗位模块",
+    businessType: NumberInt("1"),
+    method: "ginyi.server.admin.controller.SysPostController.addPost()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/add",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "{\"createBy\":\"ginyi\",\"createTime\":\"2022-12-31 00:22:28.974\",\"params\":{},\"postCode\":\"hrsss\",\"postName\":\"哈哈ss哈\",\"remark\":\"\",\"sort\":0,\"status\":\"1\"}",
+    jsonResult: "{\"code\":200,\"msg\":\"操作成功\"}",
+    status: NumberInt("0"),
+    createTime: ISODate("2022-12-30T16:22:29.041Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af104b040a453e119fb797"),
+    title: "岗位模块",
+    businessType: NumberInt("1"),
+    method: "ginyi.server.admin.controller.SysPostController.addPost()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/add",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "{\"createBy\":\"ginyi\",\"createTime\":\"2022-12-31 00:22:35.212\",\"params\":{},\"postCode\":\"hrsssssss\",\"postName\":\"哈哈ss哈s\",\"remark\":\"\",\"sort\":0,\"status\":\"1\"}",
+    jsonResult: "{\"code\":200,\"msg\":\"操作成功\"}",
+    status: NumberInt("0"),
+    createTime: ISODate("2022-12-30T16:22:35.245Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af1059040a453e119fb798"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:49.013Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af1059040a453e119fb799"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:49.215Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af1059040a453e119fb79a"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:49.877Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af105a040a453e119fb79b"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:50.054Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af105a040a453e119fb79c"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:50.222Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af105a040a453e119fb79d"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:50.398Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af105a040a453e119fb79e"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:50.61Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af105a040a453e119fb79f"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:50.771Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af105a040a453e119fb7a0"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:50.962Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af105b040a453e119fb7a1"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/8",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "8",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"8岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:22:51.109Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af105d040a453e119fb7a2"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete/7",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "7",
+    jsonResult: "{\"code\":200,\"msg\":\"操作成功\"}",
+    status: NumberInt("0"),
+    createTime: ISODate("2022-12-30T16:22:53.8Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af10dc449a245dcfcaf1bd"),
+    title: "岗位模块",
+    businessType: NumberInt("1"),
+    method: "ginyi.server.admin.controller.SysPostController.addPost()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/add",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "{\"createBy\":\"ginyi\",\"createTime\":\"2022-12-31 00:25:00.225\",\"params\":{},\"postCode\":\"hrsssssss\",\"postName\":\"哈哈ss哈sdd\",\"remark\":\"\",\"sort\":0,\"status\":\"1\"}",
+    jsonResult: "{\"code\":200,\"msg\":\"操作成功\"}",
+    status: NumberInt("0"),
+    createTime: ISODate("2022-12-30T16:25:00.346Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af10fe449a245dcfcaf1be"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "[5,6,8,10]",
+    status: NumberInt("1"),
+    errorMsg: "{\"msg\":\"数据不存在\",\"code\":6006,\"data\":\"10岗位不存在！\"}",
+    createTime: ISODate("2022-12-30T16:25:34.24Z"),
+    _class: "ginyi.system.domain.SysLogOperation"
+} ]);
+db.getCollection("sys_log_operation").insert([ {
+    _id: ObjectId("63af1108449a245dcfcaf1bf"),
+    title: "岗位模块",
+    businessType: NumberInt("3"),
+    method: "ginyi.server.admin.controller.SysPostController.delete()",
+    requestMethod: "POST",
+    operatorType: NumberInt("1"),
+    operationName: "ginyi",
+    operationUrl: "/api/post/delete",
+    operationIp: "192.168.0.101",
+    operationLocation: "内网IP",
+    operationParam: "[5,6,8]",
+    jsonResult: "{\"code\":200,\"msg\":\"操作成功\"}",
+    status: NumberInt("0"),
+    createTime: ISODate("2022-12-30T16:25:44.841Z"),
     _class: "ginyi.system.domain.SysLogOperation"
 } ]);
