@@ -68,4 +68,14 @@ public class CacheConstants {
     /** 岗位详情 */
     public static final String POST_DETAILS_BY_POSTID_KEY = "post_details_by_postId:";
 
+
+    /** 角色前缀，用于批量删除 */
+    public static final String ROLE_KEY_PREFIX = "role_*";
+    /** 角色不存在的key */
+    public static final String ROLE_NOT_EXIST_KEY = "role_not_exist:";
+    /** 角色名已被使用 */
+    public static final String ROLE_NAME_USED_KEY = "role_name_used:";
+    /** 角色编码已被使用 */
+    public static final String ROLE_CODE_USED_KEY = "role_code_used:";
+
 }

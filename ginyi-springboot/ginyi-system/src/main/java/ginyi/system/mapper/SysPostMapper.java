@@ -15,9 +15,24 @@ public interface SysPostMapper extends BaseMapper<SysPost> {
 
     /**
      * 查询岗位列表
+     *
      * @param postDto
      * @param page
      * @return
      */
     public IPage<PostVo> list(@Param("postDto") PostDto postDto, Page page);
+
+    /**
+     * 新增岗位
+     *
+     * @param postDto
+     */
+    public void insertPost(@Param("postDto") PostDto postDto);
+
+    /**
+     * 更新岗位
+     *
+     * @param postDto
+     */
+    public void updatePost(@Param("postDto") PostDto postDto);
 }

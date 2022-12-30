@@ -75,4 +75,73 @@ public class SysPostServiceImpl implements ISysPostService {
         BeanUtils.copyProperties(post, postVo);
         return postVo;
     }
+
+    /**
+     * 添加岗位
+     *
+     * @param postDto
+     */
+    @Override
+    public void addPost(PostDto postDto) {
+        if (redisCache.hasKey(CacheConstants.ROLE_NAME_USED_KEY + postDto.getPostName())) {
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_NAME_USED);
+        }
+        if (redisCache.hasKey(CacheConstants.ROLE_CODE_USED_KEY + postDto.getPostCode())) {
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_CODE_USED);
+        }
+        // 检查名称是否被使用
+        LambdaQueryWrapper<SysPost> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysPost::getPostName, postDto.getPostName());
+        SysPost post = postMapper.selectOne(queryWrapper);
+        if (StringUtils.isNotNull(post)) {
+            redisCache.setCacheObject(CacheConstants.ROLE_NAME_USED_KEY + postDto.getPostName(), null);
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_NAME_USED);
+        }
+        // 检查编码是否被使用
+        queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysPost::getPostCode, postDto.getPostCode());
+        post = postMapper.selectOne(queryWrapper);
+        if (StringUtils.isNotNull(post)) {
+            redisCache.setCacheObject(CacheConstants.ROLE_CODE_USED_KEY + postDto.getPostCode(), null);
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_CODE_USED);
+        }
+        postMapper.insertPost(postDto);
+        redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
+    }
+
+    /**
+     * 更新岗位
+     *
+     * @param postDto
+     */
+    @Override
+    public void updatePost(PostDto postDto) {
+        // 检查缓存中是否存在空id
+        if (redisCache.hasKey(CacheConstants.POST_NOT_EXIST_KEY + postDto.getPostId())) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postDto.getPostId() + MessageConstants.POST_NOT_EXIST);
+        }
+        LambdaQueryWrapper<SysPost> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysPost::getPostId, postDto.getPostId());
+        SysPost post = postMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(post)) {
+            redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postDto.getPostId(), null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postDto.getPostId() + MessageConstants.POST_NOT_EXIST);
+        }
+        // 检查名称是否被使用
+        queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysPost::getPostName, postDto.getPostName());
+        post = postMapper.selectOne(queryWrapper);
+        if (StringUtils.isNotNull(post) && !post.getPostId().equals(postDto.getPostId())) {
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_NAME_USED);
+        }
+        // 检查编码是否被使用
+        queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysPost::getPostCode, postDto.getPostCode());
+        post = postMapper.selectOne(queryWrapper);
+        if (StringUtils.isNotNull(post) && !post.getPostId().equals(postDto.getPostId())) {
+            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_CODE_USED);
+        }
+        postMapper.updatePost(postDto);
+        redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
+    }
 }

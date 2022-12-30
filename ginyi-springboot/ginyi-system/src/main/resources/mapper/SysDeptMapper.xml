@@ -52,8 +52,6 @@
             <if test="deptDto.updateBy != null and deptDto.updateBy">#{deptDto.updateBy},</if>
             <if test="deptDto.updateTime != null">#{deptDto.updateTime},</if>
         </trim>
-
-
     </insert>
 
     <!-- 更新部门 -->

@@ -20,7 +20,7 @@ public class PostDto extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("岗位序号")
+    @ApiModelProperty("岗位id")
     @NotNull(groups = UpdateGroup.class, message = "岗位id不能为空")
     private Long postId;
 

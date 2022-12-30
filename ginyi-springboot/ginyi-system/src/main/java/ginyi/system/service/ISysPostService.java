@@ -22,4 +22,16 @@ public interface ISysPostService {
      * @return
      */
     public PostVo getPostByPostId(Long postId);
+
+    /**
+     * 添加岗位
+     * @param postDto
+     */
+    public void addPost(PostDto postDto);
+
+    /**
+     * 更新岗位
+     * @param postDto
+     */
+    public void updatePost(PostDto postDto);
 }

@@ -84,6 +84,8 @@ public class SysUserServiceImpl implements ISysUserService {
             }
             // 清除缓存
             redisCache.removeCacheObject(CacheConstants.USER_KEY_PREFIX);
+            redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
+            redisCache.removeCacheObject(CacheConstants.DEPT_KEY_PREFIX);
         }
     }
 
@@ -219,12 +221,17 @@ public class SysUserServiceImpl implements ISysUserService {
     public boolean checkLogic(UserDto userDto) {
         // 判断部门是否存在
         if (StringUtils.isNotNull(userDto.getDeptId())) {
+            // 检查缓存中是否标记着空id
+            if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + userDto.getDeptId())) {
+                throw new CommonException(StateCode.ERROR_NOT_EXIST, userDto.getDeptId() + MessageConstants.DEPT_NOT_EXIST);
+            }
             SysDept sysDept;
             LambdaQueryWrapper<SysDept> deptQueryWrapper = new LambdaQueryWrapper<>();
             deptQueryWrapper.eq(SysDept::getDeptId, userDto.getDeptId());
             sysDept = deptMapper.selectOne(deptQueryWrapper);
             if (sysDept == null) {
-                throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.DEPT_NOT_EXIST);
+                redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + userDto.getDeptId(), null);
+                throw new CommonException(StateCode.ERROR_NOT_EXIST, userDto.getDeptId() + MessageConstants.DEPT_NOT_EXIST);
             }
         }
 
@@ -242,11 +249,15 @@ public class SysUserServiceImpl implements ISysUserService {
         if (StringUtils.isNotNull(userDto.getPostIds()) && userDto.getPostIds().size() > 0) {
             SysPost sysPost;
             for (Long postId : userDto.getPostIds()) {
+                if (redisCache.hasKey(CacheConstants.POST_NOT_EXIST_KEY + postId)) {
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+                }
                 LambdaQueryWrapper<SysPost> postQueryWrapper = new LambdaQueryWrapper<>();
                 postQueryWrapper.eq(SysPost::getPostId, postId);
                 sysPost = postMapper.selectOne(postQueryWrapper);
                 if (sysPost == null) {
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.POST_NOT_EXIST);
+                    redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postId, null);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
                 }
             }
         }
@@ -255,11 +266,15 @@ public class SysUserServiceImpl implements ISysUserService {
         if (StringUtils.isNotNull(userDto.getRoleIds()) && userDto.getRoleIds().size() > 0) {
             SysRole sysRole;
             for (Long roleId : userDto.getRoleIds()) {
+                if (redisCache.hasKey(CacheConstants.ROLE_NOT_EXIST_KEY + roleId)) {
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + MessageConstants.ROLE_NOT_EXIST);
+                }
                 LambdaQueryWrapper<SysRole> roleQueryWrapper = new LambdaQueryWrapper<>();
                 roleQueryWrapper.eq(SysRole::getRoleId, roleId);
                 sysRole = roleMapper.selectOne(roleQueryWrapper);
                 if (sysRole == null) {
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.ROLE_NOT_EXIST);
+                    redisCache.setCacheObject(CacheConstants.ROLE_NOT_EXIST_KEY + roleId, null);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + MessageConstants.ROLE_NOT_EXIST);
                 }
             }
         }

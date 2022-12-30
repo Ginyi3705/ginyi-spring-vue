@@ -17,6 +17,48 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
+    <!-- 新增岗位 -->
+    <insert id="insertPost">
+        insert into sys_post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            post_name,
+            post_code,
+            sort,
+            `status`,
+            <if test="postDto.createBy != null and postDto.createBy != ''">create_by,</if>
+            <if test="postDto.createTime != null">create_time,</if>
+            <if test="postDto.updateBy != null and postDto.updateBy != ''">update_by,</if>
+            <if test="postDto.updateTime != null">update_time,</if>
+            <if test="postDto.remark != null and postDto.remark != ''">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{postDto.postName},
+            #{postDto.postCode},
+            #{postDto.sort},
+            #{postDto.status},
+            <if test="postDto.createBy != null and postDto.createBy != ''">#{postDto.createBy},</if>
+            <if test="postDto.createTime != null">#{postDto.createTime},</if>
+            <if test="postDto.updateBy != null and postDto.updateBy != ''">#{postDto.updateBy},</if>
+            <if test="postDto.updateTime != null">#{postDto.updateTime},</if>
+            <if test="postDto.remark != null and postDto != ''">#{postDto.remark},</if>
+        </trim>
+    </insert>
+
+    <!-- 更新岗位 -->
+    <update id="updatePost">
+        update sys_post
+        <set>
+            post_name = #{postDto.postName},
+            post_code = #{postDto.postCode},
+            sort = #{postDto.sort},
+            `status` = #{postDto.status},
+            <if test="postDto.updateBy != null and postDto.updateBy != ''">update_by = #{postDto.updateBy},</if>
+            <if test="postDto.updateTime != null">update_time = #{postDto.updateTime},</if>
+            <if test="postDto.remark != null and postDto != ''">remark = #{postDto.remark},</if>
+        </set>
+        where post_id = #{postDto.postId}
+    </update>
+
     <!-- 查询列表 -->
     <select id="list" resultMap="SysPostResult">
         select post_id,
@@ -32,7 +74,7 @@
         from sys_post
         <where>
             <if test="postDto.postName != null and postDto.postName != ''">
-             and post_name like concat('%',#{postDto.postName}, '%')
+                and post_name like concat('%',#{postDto.postName}, '%')
             </if>
             <if test="postDto.postCode != null and postDto.postCode != ''">
                 and post_code like concat('%',#{postDto.postCode}, '%')

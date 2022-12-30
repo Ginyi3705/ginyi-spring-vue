@@ -1,5 +1,6 @@
 package ginyi.common.swagger;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import static springfox.documentation.builders.RequestHandlerSelectors.basePackage;
 
 
-@EnableSwagger2
 public class Swagger2Config {
 
     /**

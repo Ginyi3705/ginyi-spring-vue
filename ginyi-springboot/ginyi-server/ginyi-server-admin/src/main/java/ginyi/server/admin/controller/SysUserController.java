@@ -1,5 +1,6 @@
 package ginyi.server.admin.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
@@ -86,6 +87,10 @@ public class SysUserController {
     @PostMapping("/disable")
     @PreAuthorize("@ss.hasPermission('system:user:edit')")
     @Log(title = "用户模块", businessType = BusinessType.UPDATE)
+    @ApiOperationSupport(includeParameters = {
+            "userDto.userId",
+            "userDto.status"
+    })
     public CommonResult disable(@RequestBody UserDto userDto){
         userService.disable(userDto);
         return CommonResult.success();
