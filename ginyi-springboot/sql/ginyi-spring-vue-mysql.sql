@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 22/12/2022 14:55:02
+ Date: 30/12/2022 22:49:55
 */
 
 SET NAMES utf8mb4;
@@ -119,32 +119,33 @@ CREATE TABLE `sys_dept`  (
   `parent_id` bigint NULL DEFAULT 0 COMMENT '父部门id',
   `ancestors` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '祖级列表',
   `dept_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '部门名称',
-  `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
+  `sort` int NULL DEFAULT 0 COMMENT '显示顺序',
   `leader` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '负责人',
   `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '联系电话',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
-  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `deleted` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dept_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '部门表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 204 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '部门表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES (100, 0, '0', '若依科技', 0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
-INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
-INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
-INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
-INSERT INTO `sys_dept` VALUES (104, 101, '0,100,101', '市场部门', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
-INSERT INTO `sys_dept` VALUES (105, 101, '0,100,101', '测试部门', 3, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
-INSERT INTO `sys_dept` VALUES (106, 101, '0,100,101', '财务部门', 4, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
-INSERT INTO `sys_dept` VALUES (107, 101, '0,100,101', '运维部门', 5, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
-INSERT INTO `sys_dept` VALUES (108, 102, '0,100,102', '市场部门', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
-INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL);
+INSERT INTO `sys_dept` VALUES (100, 0, '0', '若依科技', 0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
+INSERT INTO `sys_dept` VALUES (101, 100, '0,100', '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
+INSERT INTO `sys_dept` VALUES (102, 100, '0,100', '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
+INSERT INTO `sys_dept` VALUES (103, 101, '0,100,101', '研发部门', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
+INSERT INTO `sys_dept` VALUES (104, 101, '0,100,101', '市场部门', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
+INSERT INTO `sys_dept` VALUES (105, 101, '0,100,101', '测试部门', 3, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
+INSERT INTO `sys_dept` VALUES (106, 101, '0,100,101', '财务部门', 4, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
+INSERT INTO `sys_dept` VALUES (107, 101, '0,100,101', '运维部门', 5, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
+INSERT INTO `sys_dept` VALUES (108, 102, '0,100,102', '市场部门', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
+INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2022-12-03 07:21:32', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -306,7 +307,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2029 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2030 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -335,7 +336,7 @@ INSERT INTO `sys_menu` VALUES (116, '代码生成', 3, 2, 'gen', 'tool/gen/index
 INSERT INTO `sys_menu` VALUES (117, '系统接口', 3, 3, 'swagger', 'tool/swagger/index', '', 1, 0, 'C', '0', '0', 'tool:swagger:list', 'swagger', 'admin', '2022-12-03 07:21:33', '', NULL, '系统接口菜单');
 INSERT INTO `sys_menu` VALUES (500, '操作日志', 108, 1, 'operlog', 'monitor/operlog/index', '', 1, 0, 'C', '0', '0', 'monitor:operlog:list', 'form', 'admin', '2022-12-03 07:21:33', '', NULL, '操作日志菜单');
 INSERT INTO `sys_menu` VALUES (501, '登录日志', 108, 2, 'logininfor', 'monitor/logininfor/index', '', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'logininfor', 'admin', '2022-12-03 07:21:33', '', NULL, '登录日志菜单');
-INSERT INTO `sys_menu` VALUES (1000, '用户查询', 100, 1, '', '', '', 1, 0, 'F', '0', '0', 'system:user:query', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1000, '用户查询', 100, 1, '', '', '', 1, 0, 'F', '0', '0', 'system:user:list', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1001, '用户新增', 100, 2, '', '', '', 1, 0, 'F', '0', '0', 'system:user:add', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1002, '用户修改', 100, 3, '', '', '', 1, 0, 'F', '0', '0', 'system:user:edit', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1003, '用户删除', 100, 4, '', '', '', 1, 0, 'F', '0', '0', 'system:user:remove', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
@@ -351,7 +352,7 @@ INSERT INTO `sys_menu` VALUES (1012, '菜单查询', 102, 1, '', '', '', 1, 0, '
 INSERT INTO `sys_menu` VALUES (1013, '菜单新增', 102, 2, '', '', '', 1, 0, 'F', '0', '0', 'system:menu:add', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1014, '菜单修改', 102, 3, '', '', '', 1, 0, 'F', '0', '0', 'system:menu:edit', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1015, '菜单删除', 102, 4, '', '', '', 1, 0, 'F', '0', '0', 'system:menu:remove', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (1016, '部门查询', 103, 1, '', '', '', 1, 0, 'F', '0', '0', 'system:dept:query', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1016, '部门查询', 103, 1, '', '', '', 1, 0, 'F', '0', '0', 'system:dept:list', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1017, '部门新增', 103, 2, '', '', '', 1, 0, 'F', '0', '0', 'system:dept:add', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1018, '部门修改', 103, 3, '', '', '', 1, 0, 'F', '0', '0', 'system:dept:edit', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1019, '部门删除', 103, 4, '', '', '', 1, 0, 'F', '0', '0', 'system:dept:remove', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
@@ -396,16 +397,6 @@ INSERT INTO `sys_menu` VALUES (1057, '生成删除', 116, 3, '#', '', '', 1, 0, 
 INSERT INTO `sys_menu` VALUES (1058, '导入代码', 116, 4, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1059, '预览代码', 116, 5, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1060, '生成代码', 116, 6, '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2022-12-03 07:21:33', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2000, '测试菜单', 0, 0, '', NULL, NULL, 1, 0, 'M', '0', '0', NULL, '#', '', NULL, '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2001, '测试菜单的子菜单', 2000, 0, '/test', '/abc/bcd', NULL, 1, 0, 'C', '0', '0', NULL, '#', '', NULL, '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2017, '测试菜单的子菜单22ss2', 2000, 0, '/test', '/abc/bcd', '', 1, 1, 'C', '0', '0', '', '', 'admin', '2022-12-21 11:54:29', 'admin', '2022-12-21 11:54:29', '');
-INSERT INTO `sys_menu` VALUES (2018, '测试菜单的子菜单22ss2bb', 2000, 0, '/test', '/abc/bcd', '', 1, 1, 'C', '0', '0', '', '', 'admin', '2022-12-21 12:10:50', 'admin', '2022-12-21 12:10:50', '');
-INSERT INTO `sys_menu` VALUES (2019, '测试菜单的子菜单11', 2000, 0, '/test', '/abc/bcd', '', 1, 1, 'C', '0', '0', '', '', 'ginyi', '2022-12-21 12:48:15', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2020, '测试菜单的子菜单121', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-21 13:27:15', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2021, '测试菜单的子菜单121ww', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-21 13:47:28', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2022, '测试菜单的子菜单eee', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-21 13:59:14', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2023, '测试菜单的子菜单eeefff', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-22 04:34:47', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (2024, '测试菜单的子菜单哈2哈', 2000, 1, '/test', '/abc/bcd', NULL, 1, 1, 'C', '0', '0', NULL, '#', 'ginyi', '2022-12-22 04:35:42', 'ginyi', '2022-12-22 06:50:33', '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -439,7 +430,7 @@ CREATE TABLE `sys_post`  (
   `post_id` bigint NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
   `post_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '岗位编码',
   `post_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '岗位名称',
-  `post_sort` int NOT NULL COMMENT '显示顺序',
+  `sort` int NOT NULL COMMENT '显示顺序',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '状态（0正常 1停用）',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
@@ -525,7 +516,7 @@ CREATE TABLE `sys_user`  (
   `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `dept_id` bigint NULL DEFAULT NULL COMMENT '部门ID',
   `user_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户账号',
-  `nick_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户昵称',
+  `nick_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户昵称',
   `user_type` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '00' COMMENT '用户类型（00系统用户）',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '用户邮箱',
   `phone_number` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '手机号码',
@@ -542,13 +533,23 @@ CREATE TABLE `sys_user`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 104 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 142 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.100', '2022-12-21 11:21:22', 'admin', '2022-12-03 07:21:32', '', '2022-12-21 11:21:20', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'ginyi', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.100', '2022-12-22 06:41:15', 'admin', '2022-12-03 07:21:32', 'ginyi', '2022-12-22 06:41:14', '测试员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.101', '2022-12-29 23:14:54', 'admin', '2022-12-03 07:21:32', '', '2022-12-29 23:14:54', '管理员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ginyi', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '172.18.0.1', '2022-12-25 23:36:45', 'admin', '2022-12-03 07:21:32', 'ginyi', '2022-12-25 23:36:45', '测试员');
+INSERT INTO `sys_user` VALUES (133, 101, 'zhangsans', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:40:55', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (134, 101, 'list', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:02', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (135, 101, 'wangwu', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:08', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (136, 101, 'zhaoliu', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:12', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (137, 101, 'tom', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:21', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (138, 101, 'tony', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:28', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (139, 101, 'lucy', NULL, '00', '', '', '0', '', '', '1', '0', '', NULL, 'ginyi', '2022-12-23 13:31:22', 'ginyi', '2022-12-24 16:24:43', NULL);
+INSERT INTO `sys_user` VALUES (140, 101, 'carry', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 21:35:13', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (141, 101, 'abc', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 21:38:58', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (142, 101, 'asdasd', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 21:40:56', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -565,6 +566,16 @@ CREATE TABLE `sys_user_post`  (
 -- ----------------------------
 INSERT INTO `sys_user_post` VALUES (1, '[1]');
 INSERT INTO `sys_user_post` VALUES (2, '[2]');
+INSERT INTO `sys_user_post` VALUES (133, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (134, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (135, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (136, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (137, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (138, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (139, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (140, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (141, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (142, '[1, 2]');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -581,5 +592,15 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES (1, '[1]');
 INSERT INTO `sys_user_role` VALUES (2, '[2]');
+INSERT INTO `sys_user_role` VALUES (133, '[1, 2]');
+INSERT INTO `sys_user_role` VALUES (134, '[1, 2]');
+INSERT INTO `sys_user_role` VALUES (135, '[1, 2]');
+INSERT INTO `sys_user_role` VALUES (136, '[1, 2]');
+INSERT INTO `sys_user_role` VALUES (137, '[1, 2]');
+INSERT INTO `sys_user_role` VALUES (138, '[1, 2]');
+INSERT INTO `sys_user_role` VALUES (139, '[1, 2]');
+INSERT INTO `sys_user_role` VALUES (140, '[1, 2]');
+INSERT INTO `sys_user_role` VALUES (141, '[1, 2]');
+INSERT INTO `sys_user_role` VALUES (142, '[1, 2]');
 
 SET FOREIGN_KEY_CHECKS = 1;
