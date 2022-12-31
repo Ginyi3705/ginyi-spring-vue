@@ -141,3 +141,9 @@ swagger:
   swagger-contact:
     name: Author Email is Ginyi@aliyun.com
     email: Ginyi@aliyun.com
+
+
+# 日志配置文件
+logging:
+  config: classpath:logging-config.xml
+
