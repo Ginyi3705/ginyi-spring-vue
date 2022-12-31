@@ -1,7 +1,12 @@
 package ginyi.framework.security.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ginyi.common.mysql.MyPage;
 import ginyi.common.utils.StringUtils;
 import ginyi.system.domain.SysRole;
+import ginyi.system.domain.model.dto.RoleDto;
+import ginyi.system.domain.model.vo.BaseVo;
+import ginyi.system.domain.model.vo.RoleVo;
 import ginyi.system.mapper.SysRoleMapper;
 import ginyi.system.service.ISysRoleService;
 import org.springframework.stereotype.Service;
@@ -34,5 +39,21 @@ public class SysRoleServiceImpl implements ISysRoleService {
             }
         }
         return permsSet;
+    }
+
+    /**
+     * 角色列表
+     * @param roleDto
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public BaseVo<RoleVo> list(RoleDto roleDto, Long page, Long pageSize) {
+        IPage<RoleVo> list = roleMapper.list(roleDto, new MyPage(page, pageSize).getPage());
+        BaseVo<RoleVo> baseVo = new BaseVo<>();
+        baseVo.setList(list.getRecords());
+        baseVo.setCount((int) list.getTotal());
+        return baseVo;
     }
 }

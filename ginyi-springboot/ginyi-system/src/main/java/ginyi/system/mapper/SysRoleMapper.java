@@ -1,7 +1,12 @@
 package ginyi.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ginyi.system.domain.SysRole;
+import ginyi.system.domain.model.dto.RoleDto;
+import ginyi.system.domain.model.vo.RoleVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +26,11 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      */
     public List<SysRole> selectRolePermissionByUserId(Long userId);
 
+    /**
+     * 查询角色列表
+     * @param roleDto
+     * @param page
+     * @return
+     */
+    public IPage<RoleVo> list(@Param("roleDto") RoleDto roleDto, Page page);
 }

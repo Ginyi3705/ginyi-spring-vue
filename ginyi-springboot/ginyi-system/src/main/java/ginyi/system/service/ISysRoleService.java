@@ -1,5 +1,9 @@
 package ginyi.system.service;
 
+import ginyi.system.domain.model.dto.RoleDto;
+import ginyi.system.domain.model.vo.BaseVo;
+import ginyi.system.domain.model.vo.RoleVo;
+
 import java.util.Set;
 
 /**
@@ -16,4 +20,12 @@ public interface ISysRoleService {
      */
     public Set<String> selectRolePermissionByUserId(Long userId);
 
+    /**
+     * 角色列表
+     * @param roleDto
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    BaseVo<RoleVo> list(RoleDto roleDto, Long page, Long pageSize);
 }

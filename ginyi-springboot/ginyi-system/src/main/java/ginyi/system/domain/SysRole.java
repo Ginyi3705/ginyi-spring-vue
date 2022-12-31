@@ -45,7 +45,7 @@ public class SysRole extends BaseEntity {
      * 角色排序
      */
     @NotNull(message = "显示顺序不能为空")
-    private Integer roleSort;
+    private Integer sort;
 
     /**
      * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限）

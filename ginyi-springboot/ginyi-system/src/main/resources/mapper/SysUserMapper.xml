@@ -43,7 +43,7 @@
         <id property="roleId" column="role_id"/>
         <result property="roleName" column="role_name"/>
         <result property="roleKey" column="role_key"/>
-        <result property="roleSort" column="role_sort"/>
+        <result property="sort" column="sort"/>
         <result property="dataScope" column="data_scope"/>
         <result property="status" column="role_status"/>
     </resultMap>
@@ -126,7 +126,7 @@
                sr.role_id,
                sr.role_name,
                sr.role_key,
-               sr.role_sort,
+               sr.sort,
                sr.data_scope,
                sr.status as role_status,
                sp.post_id,
