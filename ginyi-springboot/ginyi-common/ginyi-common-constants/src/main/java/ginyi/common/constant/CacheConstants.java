@@ -77,5 +77,7 @@ public class CacheConstants {
     public static final String ROLE_NAME_USED_KEY = "role_name_used:";
     /** 角色编码已被使用 */
     public static final String ROLE_CODE_USED_KEY = "role_code_used:";
+    /** 角色详情 */
+    public static final String ROLE_DETAILS_BY_ROLEID_KEY = "role_details_by_roleId:";
 
 }

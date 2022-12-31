@@ -40,4 +40,12 @@ public class SysRoleController {
         BaseVo<RoleVo> list = roleService.list(roleDto, page, pageSize);
         return CommonResult.success(list);
     }
+
+    @ApiOperation("角色详情")
+    @GetMapping("/getRoleByRoleId/{roleId}")
+    @PreAuthorize("@ss.hasPermission('system:role:edit')")
+    public CommonResult getRoleByRoleId(@PathVariable("roleId") Long roleId){
+        RoleVo role = roleService.getRoleByRoleId(roleId);
+        return CommonResult.success(role);
+    }
 }

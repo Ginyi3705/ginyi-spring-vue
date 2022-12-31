@@ -28,4 +28,11 @@ public interface ISysRoleService {
      * @return
      */
     BaseVo<RoleVo> list(RoleDto roleDto, Long page, Long pageSize);
+
+    /**
+     * 根据角色id获取角色
+     * @param roleId
+     * @return
+     */
+    public RoleVo getRoleByRoleId(Long roleId);
 }
