@@ -12,6 +12,9 @@ public class MessageConstants {
     public static final String SYS_AUTHENTICATION_VALID = "权限不足，无法访问系统资源！";
     public static final String SYS_REQUEST_ILLEGAL = "请求参数错误，请仔细检查！";
 
+    public static final String UPLOAD_FILE_ERROR = "文件上传业务异常";
+    public static final String UPLOAD_SIZE_EXCEED = "单文件大小不得大于5MB，总文件大小不得大于50MB";
+
     public static final String VERIFY_EXPIRE = "验证码已失效！";
     public static final String VERiFY_INCORRECT = "验证码错误！";
 

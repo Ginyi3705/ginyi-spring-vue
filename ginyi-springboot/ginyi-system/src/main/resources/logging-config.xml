@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <property name="LOG_PATH" value="logs" />
-    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} %-5level [%20thread]  [%-50.50class] >>> %msg %n" />
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} %-5level [%21thread]  [%-50.50class] >>> %msg %n" />
 
     <!-- 控制台输出 -->
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
         <!-- 彩色日志 -->
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>
-                %d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) %magenta([%20thread])  %green([%-50.50class]) >>> %cyan(%msg) %n
+                %d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) %magenta([%21thread])  %green([%-50.50class]) >>> %cyan(%msg) %n
             </pattern>
         </layout>
     </appender>

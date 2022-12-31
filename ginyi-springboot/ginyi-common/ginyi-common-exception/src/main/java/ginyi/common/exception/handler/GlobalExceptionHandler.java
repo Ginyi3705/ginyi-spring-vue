@@ -1,6 +1,5 @@
 package ginyi.common.exception.handler;
 
-import cn.hutool.json.JSONUtil;
 import ginyi.common.constant.MessageConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.exception.UnPermissionException;
@@ -31,14 +30,14 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     /**
-     * 业务异常 ===> 处理数据异常处理
+     * 业务异常 ===>>> 处理数据异常处理
      *
      * @param e
      * @return
      */
     @ExceptionHandler(CommonException.class)
     @ResponseStatus(HttpStatus.OK)
-    public CommonResult BusinessEcxeptionHandler(CommonException e) {
+    public CommonResult BusinessExceptionHandler(CommonException e) {
         if (e.getState() == StateCode.ERROR_SYSTEM) {
             return CommonResult.error(e.getState(), MessageConstants.SYS_ERROR);
         }
@@ -63,7 +62,6 @@ public class GlobalExceptionHandler {
         }
         HashMap<String, Object> map = new HashMap<>();
         map.put("errorMessageList", errorList);
-        log.info(String.valueOf(JSONUtil.toJsonStr(CommonResult.error(StateCode.ERROR_PARAMS, errorList))));
         return CommonResult.error(StateCode.ERROR_PARAMS, map);
     }
 
@@ -96,7 +94,7 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * 捕获上传文件异常
+     * 上传文件异常
      *
      * @param e
      * @return
@@ -105,14 +103,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public CommonResult MultipartExceptionHandler(MultipartException e) {
         if (e instanceof MaxUploadSizeExceededException) {
-            return CommonResult.error(StateCode.ERROR_MULTIPART, "单文件大小不得大于5MB，总文件大小不得大于50MB");
+            return CommonResult.error(StateCode.ERROR_MULTIPART, MessageConstants.UPLOAD_SIZE_EXCEED);
         }
-        log.info("文件上传业务异常", e);
-        return CommonResult.error(StateCode.ERROR_MULTIPART, "文件上传业务异常");
+        return CommonResult.error(StateCode.ERROR_MULTIPART, MessageConstants.UPLOAD_FILE_ERROR);
     }
 
     /**
-     * 权限异常 ===> 访问接口无权限
+     * 权限异常 ===>>>> 访问接口无权限
      *
      * @param e
      * @return

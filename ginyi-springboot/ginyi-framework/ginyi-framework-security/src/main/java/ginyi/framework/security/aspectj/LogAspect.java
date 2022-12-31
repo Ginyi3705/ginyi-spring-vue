@@ -1,10 +1,16 @@
 package ginyi.framework.security.aspectj;
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson2.JSON;
 import ginyi.common.annotation.Log;
+import ginyi.common.constant.MessageConstants;
 import ginyi.common.enums.BusinessStatus;
 import ginyi.common.enums.HttpMethod;
 import ginyi.common.exception.CommonException;
+import ginyi.common.exception.UnPermissionException;
+import ginyi.common.exception.UserPasswordNotMatchException;
+import ginyi.common.exception.UserPasswordRetryLimitExceedException;
+import ginyi.common.result.StateCode;
 import ginyi.common.utils.ServletUtils;
 import ginyi.common.utils.StringUtils;
 import ginyi.common.utils.ip.IpUtils;
@@ -14,22 +20,24 @@ import ginyi.framework.security.manager.factory.AsyncFactory;
 import ginyi.framework.security.utils.SecurityUtils;
 import ginyi.system.domain.LoginUser;
 import ginyi.system.domain.SysLogOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.fusesource.jansi.Ansi;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 操作日志记录处理
@@ -38,9 +46,8 @@ import java.util.Map;
  */
 @Aspect
 @Component
+@Slf4j
 public class LogAspect {
-    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
-
     /**
      * 排除敏感属性字段
      */
@@ -71,7 +78,6 @@ public class LogAspect {
         try {
             // 获取当前的用户
             LoginUser loginUser = SecurityUtils.getLoginUser();
-
             // 数据库日志
             SysLogOperation operationLog = new SysLogOperation();
             operationLog.setStatus(BusinessStatus.SUCCESS.ordinal());
@@ -83,18 +89,6 @@ public class LogAspect {
             if (loginUser != null) {
                 operationLog.setOperationName(loginUser.getUsername());
             }
-
-            if (e != null) {
-                // 只处理了 CommonException 异常
-                HashMap<String, Object> map = new HashMap<>();
-                if (e instanceof CommonException) {
-                    map.put("code", ((CommonException) e).getState().getCode());
-                    map.put("msg", ((CommonException) e).getState().getMessage());
-                    map.put("data", ((CommonException) e).getData());
-                }
-                operationLog.setStatus(BusinessStatus.FAIL.ordinal());
-                operationLog.setErrorMsg(JSON.toJSONString(map));
-            }
             // 设置方法名称
             String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
@@ -103,6 +97,27 @@ public class LogAspect {
             operationLog.setRequestMethod(ServletUtils.getRequest().getMethod());
             // 处理设置注解上的参数
             getControllerMethodDescription(joinPoint, controllerLog, operationLog, jsonResult);
+            log.info("[ Log日志记录 ] 操作人员: {}", operationLog.getOperationName());
+            log.info("[ Log日志记录 ] 操作主机: {}", operationLog.getOperationIp());
+            log.info("[ Log日志记录 ] 请求时间: {}", DateUtil.date(System.currentTimeMillis()));
+            log.info("[ Log日志记录 ] 请求模块: {}", operationLog.getTitle());
+            log.info("[ Log日志记录 ] 请求地址: {}", operationLog.getOperationUrl());
+            log.info("[ Log日志记录 ] 方法类型: {}", operationLog.getRequestMethod());
+            log.info("[ Log日志记录 ] 操作类型: {}", operationLog.getBusinessType() == 0 ? "其他" :
+                    operationLog.getBusinessType() == 1 ? "新增" : operationLog.getBusinessType() == 2 ? "修改" : "删除");
+            log.info("[ Log日志记录 ] 方法名称: {}", operationLog.getMethod());
+            log.info("[ Log日志记录 ] 请求参数: {}", operationLog.getOperationParam());
+
+            if (e != null) {
+                String msg = handleException(e);
+                operationLog.setStatus(BusinessStatus.FAIL.ordinal());
+                operationLog.setErrorMsg(msg);
+                log.info("[ Log日志记录 ] 请求结果: {}", operationLog.getStatus() == 0 ? colorPrint("成功", Ansi.Color.GREEN) : colorPrint("失败", Ansi.Color.RED));
+                log.info("[ Log日志记录 ] ===>>> 响应结果: {}\n", msg);
+            } else {
+                log.info("[ Log日志记录 ] 请求结果: {}", operationLog.getStatus() == 0 ? colorPrint("成功", Ansi.Color.GREEN) : colorPrint("失败", Ansi.Color.RED));
+                log.info("[ Log日志记录 ] ===>>> 响应结果: {}\n", operationLog.getJsonResult());
+            }
             // 保存数据库
             AsyncManager.me().execute(AsyncFactory.recordOper(operationLog));
         } catch (Exception exp) {
@@ -110,6 +125,88 @@ public class LogAspect {
             log.error("记录本地日志时发生异常，异常信息:{}", exp.getMessage());
             exp.printStackTrace();
         }
+    }
+
+    /**
+     * 处理并异常信息
+     *
+     * @param e
+     * @return
+     */
+    private String handleException(Exception e) {
+        HashMap<String, Object> map = new HashMap<>();
+        // 公用异常
+        if (e instanceof CommonException) {
+            CommonException ce = (CommonException) e;
+            map.put("code", ce.getState().getCode());
+            map.put("msg", ce.getState().getMessage());
+            map.put("data", ce.getData());
+            return JSON.toJSONString(map);
+        }
+        // 参数校验异常
+        if (e instanceof MethodArgumentNotValidException) {
+            MethodArgumentNotValidException me = (MethodArgumentNotValidException) e;
+            List<String> errorList = new ArrayList<>();
+            // 从异常对象中获取 ObjectError 对象
+            if (!me.getBindingResult().getAllErrors().isEmpty()) {
+                for (ObjectError error : me.getBindingResult().getAllErrors()) {
+                    errorList.add(error.getDefaultMessage());
+                }
+            }
+            map.put("code", StateCode.ERROR_PARAMS.getCode());
+            map.put("msg", StateCode.ERROR_PARAMS.getMessage());
+            map.put("data", errorList);
+            return JSON.toJSONString(map);
+        }
+        // 请求参数不合法
+        if (e instanceof HttpMessageNotReadableException) {
+            HttpMessageNotReadableException he = (HttpMessageNotReadableException) e;
+            map.put("code", StateCode.ERROR_REQUEST_PARAMS.getCode());
+            map.put("msg", StateCode.ERROR_REQUEST_PARAMS.getMessage());
+            map.put("data", MessageConstants.SYS_REQUEST_ILLEGAL);
+            return JSON.toJSONString(map);
+        }
+        // 用户名密码不匹配
+        if (e instanceof UserPasswordNotMatchException) {
+            UserPasswordNotMatchException ue = (UserPasswordNotMatchException) e;
+            map.put("code", StateCode.ERROR_UNAUTHENTICATION.getCode());
+            map.put("msg", StateCode.ERROR_UNAUTHENTICATION.getMessage());
+            map.put("data", MessageConstants.USER_PASSWORD_NOT_MATCH);
+            return JSON.toJSONString(map);
+        }
+        // 用户登录失败次数超最大限制异常
+        if (e instanceof UserPasswordRetryLimitExceedException) {
+            UserPasswordRetryLimitExceedException upe = (UserPasswordRetryLimitExceedException) e;
+            map.put("code", upe.getState().getCode());
+            map.put("msg", upe.getState().getMessage());
+            map.put("data", upe.getData());
+            return JSON.toJSONString(map);
+        }
+        // 上传文件异常
+        if (e instanceof MultipartException) {
+            MultipartException mte = (MultipartException) e;
+            map.put("code", StateCode.ERROR_MULTIPART.getCode());
+            map.put("msg", StateCode.ERROR_MULTIPART.getMessage());
+            if (mte instanceof MaxUploadSizeExceededException) {
+                map.put("data", MessageConstants.UPLOAD_SIZE_EXCEED);
+                return JSON.toJSONString(map);
+            }
+            map.put("data", MessageConstants.UPLOAD_FILE_ERROR);
+            return JSON.toJSONString(map);
+        }
+        // 访问接口无权限
+        if (e instanceof UnPermissionException) {
+            UnPermissionException upe = (UnPermissionException) e;
+            map.put("code", StateCode.ERROR_NOT_PERMISSION.getCode());
+            map.put("msg", StateCode.ERROR_NOT_PERMISSION.getMessage());
+            map.put("data", MessageConstants.SYS_ERROR);
+            return JSON.toJSONString(map);
+        }
+        // 处理其他所有未知异常
+        map.put("code", StateCode.ERROR_SYSTEM.getCode());
+        map.put("msg", StateCode.ERROR_SYSTEM.getMessage());
+        map.put("data", MessageConstants.SYS_ERROR);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -205,5 +302,12 @@ public class LogAspect {
         }
         return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse
                 || o instanceof BindingResult;
+    }
+
+    /**
+     * 彩色打印字体
+     */
+    public static String colorPrint(String s, Ansi.Color color) {
+        return Ansi.ansi().eraseScreen().fg(color).a(s).reset().toString();
     }
 }
