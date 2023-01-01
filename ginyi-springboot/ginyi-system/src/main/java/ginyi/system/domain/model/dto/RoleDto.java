@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -27,18 +28,21 @@ public class RoleDto extends BaseEntity {
 
     @ApiModelProperty("角色名称")
     @NotBlank(groups = {AddGroup.class, UpdateGroup.class}, message = "角色名称不能为空")
+    @Size(max = 20, message = "角色名称不能超过20个字符")
     private String roleName;
 
     @ApiModelProperty("角色权限字符串")
     @NotBlank(groups = {AddGroup.class, UpdateGroup.class}, message = "角色权限字符串不能为空")
+    @Size(max = 20, message = "角色权限字符不能超过20个字符")
     private String roleKey;
 
     @ApiModelProperty("角色排序")
-    @NotNull(groups = {AddGroup.class, UpdateGroup.class}, message = "角色权限字符串不能为空")
+    @NotNull(groups = {AddGroup.class, UpdateGroup.class}, message = "角色排序不能为空")
     private Integer sort;
 
     @ApiModelProperty("角色状态（0正常 1停用）")
-    @NotBlank(groups = {AddGroup.class, UpdateGroup.class}, message = "角色权限字符串不能为空")
+    @NotBlank(groups = {AddGroup.class, UpdateGroup.class}, message = "角色状态不能为空")
+    @Size(max = 1, message = "状态不合法")
     private String status;
 
     @ApiModelProperty("角色菜单权限")

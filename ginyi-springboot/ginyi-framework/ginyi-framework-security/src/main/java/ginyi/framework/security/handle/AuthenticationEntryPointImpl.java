@@ -1,7 +1,7 @@
 package ginyi.framework.security.handle;
 
 import com.alibaba.fastjson2.JSON;
-import ginyi.common.constant.MessageConstants;
+import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.result.CommonResult;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.ServletUtils;
@@ -26,6 +26,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, S
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
             throws IOException {
-        ServletUtils.renderString(response, JSON.toJSONString(CommonResult.error(StateCode.ERROR_AUTHENTICATION_VALID, MessageConstants.SYS_AUTHENTICATION_VALID)));
+        ServletUtils.renderString(response, JSON.toJSONString(CommonResult.error(StateCode.ERROR_AUTHENTICATION_VALID, CommonMessageConstants.SYS_AUTHENTICATION_VALID)));
     }
 }

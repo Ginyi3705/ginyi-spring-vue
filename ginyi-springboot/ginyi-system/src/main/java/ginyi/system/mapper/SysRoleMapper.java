@@ -28,9 +28,24 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     /**
      * 查询角色列表
+     *
      * @param roleDto
      * @param page
      * @return
      */
     public IPage<RoleVo> list(@Param("roleDto") RoleDto roleDto, Page page);
+
+    /**
+     * 新增角色
+     *
+     * @param roleDto
+     */
+    public void insertRole(@Param("roleDto") RoleDto roleDto);
+
+    /**
+     * 新增角色对应的菜单权限
+     *
+     * @param roleDto
+     */
+    public void insertRoleMenu(@Param("roleDto") RoleDto roleDto);
 }

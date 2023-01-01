@@ -1,6 +1,6 @@
 package ginyi.framework.security.utils;
 
-import ginyi.common.constant.MessageConstants;
+import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.result.StateCode;
 import ginyi.system.domain.LoginUser;
@@ -28,7 +28,7 @@ public class SecurityUtils {
         try {
             return (LoginUser) getAuthentication().getPrincipal();
         } catch (Exception e) {
-            throw new CommonException(StateCode.ERROR_SYSTEM, MessageConstants.USER_NOT_FOUND);
+            throw new CommonException(StateCode.ERROR_SYSTEM, CommonMessageConstants.USER_NOT_FOUND);
         }
     }
 

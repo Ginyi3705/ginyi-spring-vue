@@ -1,7 +1,10 @@
 package ginyi.server.admin.controller;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import ginyi.common.annotation.Log;
+import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
+import ginyi.common.swagger.AddGroup;
 import ginyi.system.domain.model.dto.RoleDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.RoleVo;
@@ -48,4 +51,24 @@ public class SysRoleController {
         RoleVo role = roleService.getRoleByRoleId(roleId);
         return CommonResult.success(role);
     }
+
+    @ApiOperation("新增角色")
+    @PostMapping("/add")
+    @PreAuthorize("@ss.hasPermission('system:role:add')")
+    @Log(title = "角色模块", businessType = BusinessType.INSERT)
+    @ApiOperationSupport(ignoreParameters = {
+            "roleDto.updateBy",
+            "roleDto.updateTime",
+            "roleDto.createBy",
+            "roleDto.createTime",
+            "roleDto.beginTime",
+            "roleDto.endTime",
+            "roleDto.params",
+            "roleDto.roleId",
+    })
+    public CommonResult addRole(@RequestBody @Validated(AddGroup.class) RoleDto roleDto){
+        roleService.addRole(roleDto);
+        return CommonResult.success();
+    }
+
 }

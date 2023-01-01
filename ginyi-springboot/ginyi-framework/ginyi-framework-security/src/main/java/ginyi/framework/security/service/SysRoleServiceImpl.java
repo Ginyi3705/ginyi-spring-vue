@@ -3,7 +3,7 @@ package ginyi.framework.security.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import ginyi.common.constant.CacheConstants;
-import ginyi.common.constant.MessageConstants;
+import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.mysql.MyPage;
 import ginyi.common.redis.cache.RedisCache;
@@ -17,6 +17,7 @@ import ginyi.system.mapper.SysRoleMapper;
 import ginyi.system.service.ISysRoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -77,7 +78,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public RoleVo getRoleByRoleId(Long roleId) {
         // 检查缓存中是否标记着空id
         if (redisCache.hasKey(CacheConstants.ROLE_NOT_EXIST_KEY + roleId)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + MessageConstants.ROLE_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + CommonMessageConstants.ROLE_NOT_EXIST);
         }
         RoleVo roleVo = new RoleVo();
         // 检查缓存中是否存在
@@ -91,10 +92,45 @@ public class SysRoleServiceImpl implements ISysRoleService {
         role = roleMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(role)) {
             redisCache.setCacheObject(CacheConstants.ROLE_NOT_EXIST_KEY + roleId, null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + MessageConstants.ROLE_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + CommonMessageConstants.ROLE_NOT_EXIST);
         }
         redisCache.setCacheObject(CacheConstants.ROLE_DETAILS_BY_ROLEID_KEY + roleId, role);
         BeanUtils.copyProperties(role, roleVo);
         return roleVo;
+    }
+
+    /**
+     * 新增角色
+     *
+     * @param roleDto
+     */
+    @Override
+    @Transactional
+    public void addRole(RoleDto roleDto) {
+        // 角色名称是否被使用
+        if (redisCache.hasKey(CacheConstants.ROLE_NAME_USED_KEY + roleDto.getRoleName())) {
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.ROLE_NAME_USED);
+        }
+        // 角色权限字符是否被使用
+        if (redisCache.hasKey(CacheConstants.ROLE_CODE_USED_KEY + roleDto.getRoleName())) {
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.ROLE_PERMISSION_CODE_USED);
+        }
+        LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysRole::getRoleName, roleDto.getRoleName());
+        SysRole role = roleMapper.selectOne(queryWrapper);
+        if (StringUtils.isNotNull(role)) {
+            redisCache.setCacheObject(CacheConstants.ROLE_NAME_USED_KEY + roleDto.getRoleName(), null);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.ROLE_NAME_USED);
+        }
+        queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysRole::getRoleKey, roleDto.getRoleKey());
+        role = roleMapper.selectOne(queryWrapper);
+        if (StringUtils.isNotNull(role)) {
+            redisCache.setCacheObject(CacheConstants.ROLE_NAME_USED_KEY + roleDto.getRoleKey(), null);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.ROLE_PERMISSION_CODE_USED);
+        }
+        roleMapper.insertRole(roleDto);
+        roleMapper.insertRoleMenu(roleDto);
+        redisCache.removeCacheObject(CacheConstants.ROLE_KEY_PREFIX);
     }
 }

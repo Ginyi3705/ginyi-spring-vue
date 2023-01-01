@@ -35,4 +35,10 @@ public interface ISysRoleService {
      * @return
      */
     public RoleVo getRoleByRoleId(Long roleId);
+
+    /**
+     * 新增角色
+     * @param roleDto
+     */
+    public void addRole(RoleDto roleDto);
 }

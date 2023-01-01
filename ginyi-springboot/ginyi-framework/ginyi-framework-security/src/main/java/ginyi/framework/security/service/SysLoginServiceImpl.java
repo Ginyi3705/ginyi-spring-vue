@@ -1,6 +1,6 @@
 package ginyi.framework.security.service;
 
-import ginyi.common.constant.MessageConstants;
+import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.constant.UserConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.exception.UserPasswordNotMatchException;
@@ -85,14 +85,14 @@ public class SysLoginServiceImpl implements ISysLoginService {
             loginVo.setTokenHeader(tokenHeader);
 
             // 记录日志
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageConstants.LOGIN_SUCCESS));
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, CommonMessageConstants.LOGIN_SUCCESS));
             return loginVo;
         } catch (Exception e) {
             if (e instanceof AuthenticationException) {
                 // 账户被锁定
                 if (e.getCause() instanceof UserPasswordRetryLimitExceedException) {
                     UserPasswordRetryLimitExceedException userPasswordRetryLimitExceedException = (UserPasswordRetryLimitExceedException) e.getCause();
-                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageConstants.USER_IS_LOCKED));
+                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, CommonMessageConstants.USER_IS_LOCKED));
                     throw new UserPasswordRetryLimitExceedException(
                             userPasswordRetryLimitExceedException.getState(),
                             userPasswordRetryLimitExceedException.getData()
@@ -100,7 +100,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
                 }
                 // 密码不匹配
                 if (e.getCause() instanceof UserPasswordNotMatchException) {
-                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageConstants.USER_PASSWORD_NOT_MATCH));
+                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, CommonMessageConstants.USER_PASSWORD_NOT_MATCH));
                     throw new UserPasswordNotMatchException();
                 }
                 // 其他异常（被禁用、被删除、被停用）
@@ -140,7 +140,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
 
         // 当前注册的用户是否存在
         if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(sysUser))) {
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.USER_EXIST);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.USER_EXIST);
         } else {
             sysUser.setNickName(registerDto.getUsername());
             sysUser.setPassword(SecurityUtils.encryptPassword(registerDto.getPassword()));
@@ -148,7 +148,7 @@ public class SysLoginServiceImpl implements ISysLoginService {
             if (!regFlag) {
                 throw new CommonException(StateCode.ERROR_SYSTEM);
             } else {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(registerDto.getUsername(), Constants.REGISTER, MessageConstants.REGISTER_SUCCESS));
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(registerDto.getUsername(), Constants.REGISTER, CommonMessageConstants.REGISTER_SUCCESS));
             }
         }
     }

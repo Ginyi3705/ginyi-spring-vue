@@ -1,6 +1,7 @@
 package ginyi.common.exception.handler;
 
-import ginyi.common.constant.MessageConstants;
+import com.alibaba.fastjson2.JSON;
+import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.exception.UnPermissionException;
 import ginyi.common.exception.UserPasswordNotMatchException;
@@ -39,7 +40,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public CommonResult BusinessExceptionHandler(CommonException e) {
         if (e.getState() == StateCode.ERROR_SYSTEM) {
-            return CommonResult.error(e.getState(), MessageConstants.SYS_ERROR);
+            return CommonResult.error(e.getState(), CommonMessageConstants.SYS_ERROR);
         }
         return CommonResult.error(e.getState(), e.getData());
     }
@@ -62,6 +63,7 @@ public class GlobalExceptionHandler {
         }
         HashMap<String, Object> map = new HashMap<>();
         map.put("errorMessageList", errorList);
+        log.info(JSON.toJSONString(CommonResult.error(StateCode.ERROR_PARAMS, map)));
         return CommonResult.error(StateCode.ERROR_PARAMS, map);
     }
 
@@ -71,7 +73,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public CommonResult HttpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
-        return CommonResult.error(StateCode.ERROR_REQUEST_PARAMS, MessageConstants.SYS_REQUEST_ILLEGAL);
+        return CommonResult.error(StateCode.ERROR_REQUEST_PARAMS, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
     }
 
     /**
@@ -80,7 +82,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(UserPasswordNotMatchException.class)
     public CommonResult UserPasswordNotMatchExceptionHandler(UserPasswordNotMatchException e) {
-        return CommonResult.error(StateCode.ERROR_UNAUTHENTICATION, MessageConstants.USER_PASSWORD_NOT_MATCH);
+        return CommonResult.error(StateCode.ERROR_UNAUTHENTICATION, CommonMessageConstants.USER_PASSWORD_NOT_MATCH);
     }
 
     /**
@@ -103,9 +105,9 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public CommonResult MultipartExceptionHandler(MultipartException e) {
         if (e instanceof MaxUploadSizeExceededException) {
-            return CommonResult.error(StateCode.ERROR_MULTIPART, MessageConstants.UPLOAD_SIZE_EXCEED);
+            return CommonResult.error(StateCode.ERROR_MULTIPART, CommonMessageConstants.UPLOAD_SIZE_EXCEED);
         }
-        return CommonResult.error(StateCode.ERROR_MULTIPART, MessageConstants.UPLOAD_FILE_ERROR);
+        return CommonResult.error(StateCode.ERROR_MULTIPART, CommonMessageConstants.UPLOAD_FILE_ERROR);
     }
 
     /**
@@ -117,7 +119,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({UnPermissionException.class})
     @ResponseStatus(HttpStatus.OK)
     public CommonResult UnPermissionExceptionHandler(UnPermissionException e) {
-        return CommonResult.error(StateCode.ERROR_NOT_PERMISSION, MessageConstants.SYS_ERROR);
+        return CommonResult.error(StateCode.ERROR_NOT_PERMISSION, CommonMessageConstants.SYS_ERROR);
     }
 
 
@@ -131,6 +133,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public CommonResult ExceptionHandler(Exception e) {
         log.error("系统异常", e);
-        return CommonResult.error(StateCode.ERROR_SYSTEM, MessageConstants.SYS_ERROR);
+        return CommonResult.error(StateCode.ERROR_SYSTEM, CommonMessageConstants.SYS_ERROR);
     }
 }

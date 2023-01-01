@@ -3,7 +3,7 @@ package ginyi.framework.security.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import ginyi.common.constant.CacheConstants;
-import ginyi.common.constant.MessageConstants;
+import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.mysql.MyPage;
 import ginyi.common.redis.cache.RedisCache;
@@ -63,7 +63,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public DeptVo getDeptByDeptId(Long deptId) {
         // 检查缓存中是否存在空id
         if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptId)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + CommonMessageConstants.DEPT_NOT_EXIST);
         }
         DeptVo deptVo = new DeptVo();
         // 检查缓存中是否存在
@@ -77,7 +77,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         dept = deptMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(dept)) {
             redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + deptId, null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + CommonMessageConstants.DEPT_NOT_EXIST);
         }
         redisCache.setCacheObject(CacheConstants.DEPT_DETAILS_BY_DEPTID_KEY + deptId, dept);
         BeanUtils.copyProperties(dept, deptVo);
@@ -94,7 +94,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         Long parentId = StringUtils.isNull(deptDto.getParentId()) ? 0L : deptDto.getParentId();
         // 检查缓存中是否有标记同个分支下名称有被使用
         if (redisCache.hasKey(CacheConstants.DEPT_NAME_USED_KEY + parentId + deptDto.getDeptName())) {
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.DEPT_NAME_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.DEPT_NAME_USED);
         }
         LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysDept::getParentId, parentId)
@@ -103,7 +103,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         // 检查同个分支下名称是否被使用
         if (StringUtils.isNotNull(dept)) {
             redisCache.setCacheObject(CacheConstants.DEPT_NAME_USED_KEY + parentId + deptDto.getDeptName(), null);
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.DEPT_NAME_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.DEPT_NAME_USED);
         }
         deptMapper.insertDept(deptDto);
         redisCache.removeCacheObject(CacheConstants.DEPT_KEY_PREFIX);
@@ -118,7 +118,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public void updateDept(DeptDto deptDto) {
         // 检查缓存中是否有标记空id
         if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptDto.getDeptId())) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptDto.getDeptId() + MessageConstants.DEPT_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptDto.getDeptId() + CommonMessageConstants.DEPT_NOT_EXIST);
         }
 
         LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
@@ -127,7 +127,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         List<SysDept> deptList = deptMapper.selectList(queryWrapper);
         // 检查上级部门是否存在
         if (deptList.size() == 0) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.DEPT_PARENT_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, CommonMessageConstants.DEPT_PARENT_NOT_EXIST);
         }
 
         queryWrapper = new LambdaQueryWrapper<>();
@@ -137,7 +137,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         // 检查同个分支下名称是否被使用
         if (StringUtils.isNotNull(dept)) {
             redisCache.setCacheObject(CacheConstants.DEPT_NAME_USED_KEY + parentId + deptDto.getDeptName(), null);
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.DEPT_NAME_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.DEPT_NAME_USED);
         }
 
         queryWrapper = new LambdaQueryWrapper<>();
@@ -146,7 +146,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         // 检查是否存在
         if (StringUtils.isNull(dept)) {
             redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + deptDto.getDeptId(), null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptDto.getDeptId() + MessageConstants.DEPT_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptDto.getDeptId() + CommonMessageConstants.DEPT_NOT_EXIST);
         }
         deptMapper.updateDept(deptDto);
         redisCache.removeCacheObject(CacheConstants.DEPT_KEY_PREFIX);
@@ -161,14 +161,14 @@ public class SysDeptServiceImpl implements ISysDeptService {
     public void removeDeptById(Long deptId) {
         // 检查缓存中是否标记着空id
         if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptId)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + CommonMessageConstants.DEPT_NOT_EXIST);
         }
         LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysDept::getDeptId, deptId);
         SysDept dept = deptMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(dept)) {
             redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + deptId, null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + CommonMessageConstants.DEPT_NOT_EXIST);
         }
         deptMapper.deleteById(deptId);
         redisCache.removeCacheObject(CacheConstants.DEPT_KEY_PREFIX);
@@ -188,20 +188,20 @@ public class SysDeptServiceImpl implements ISysDeptService {
             for (Long deptId : ids) {
                 // 检查缓存中是否标记着空id
                 if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptId)) {
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + CommonMessageConstants.DEPT_NOT_EXIST);
                 }
                 queryWrapper = new LambdaQueryWrapper<>();
                 queryWrapper.eq(SysDept::getDeptId, deptId);
                 dept = deptMapper.selectOne(queryWrapper);
                 if (StringUtils.isNull(dept)) {
                     redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + dept, null);
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + MessageConstants.DEPT_NOT_EXIST);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + CommonMessageConstants.DEPT_NOT_EXIST);
                 }
             }
             deptMapper.deleteBatchIds(ids);
             redisCache.removeCacheObject(CacheConstants.DEPT_KEY_PREFIX);
         } else {
-            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, MessageConstants.SYS_REQUEST_ILLEGAL);
+            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
         }
     }
 

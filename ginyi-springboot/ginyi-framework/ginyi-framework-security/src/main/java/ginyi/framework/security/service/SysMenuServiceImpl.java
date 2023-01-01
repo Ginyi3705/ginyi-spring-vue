@@ -2,7 +2,7 @@ package ginyi.framework.security.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import ginyi.common.constant.CacheConstants;
-import ginyi.common.constant.MessageConstants;
+import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.result.StateCode;
@@ -154,10 +154,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
         // c 是菜单，其余的是目录或者按钮
         if ("C".equalsIgnoreCase(menuDto.getMenuType())) {
             if (menuDto.getComponent().isEmpty()) {
-                throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_COMPONENT_NOT_EXIST);
+                throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.MENU_COMPONENT_NOT_EXIST);
             }
             if (menuDto.getPath().isEmpty()) {
-                throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_PATH_NOT_EXIST);
+                throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.MENU_PATH_NOT_EXIST);
             }
         }
 
@@ -166,7 +166,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         queryWrapper.eq(SysMenu::getMenuName, menuDto.getMenuName());
         SysMenu result = menuMapper.selectOne(queryWrapper);
         if (StringUtils.isNotNull(result)) {
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.MENU_NAME_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.MENU_NAME_USED);
         }
 
         menuMapper.insertMenu(menuDto);
@@ -186,7 +186,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
         // 判断是否是无效id
         if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, CommonMessageConstants.MENU_NOT_EXIST);
         }
         // 查看缓存中是否有
         menu = redisCache.getCacheObject(CacheConstants.MENU_DETAILS_BY_ID_KEY + menuId, SysMenu.class);
@@ -201,7 +201,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         if (StringUtils.isNull(menu)) {
             // 存储不存在的key
             redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, CommonMessageConstants.MENU_NOT_EXIST);
         }
         // 存入缓存
         redisCache.setCacheObject(CacheConstants.MENU_DETAILS_BY_ID_KEY + menuId, menu);
@@ -218,10 +218,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
         // c 是菜单，其余的是目录或者按钮
         if ("C".equalsIgnoreCase(menuDto.getMenuType())) {
             if (StringUtils.isNull(menuDto.getComponent()) || menuDto.getComponent().isEmpty()) {
-                throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_COMPONENT_NOT_EXIST);
+                throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.MENU_COMPONENT_NOT_EXIST);
             }
             if (StringUtils.isNull(menuDto.getPath()) || menuDto.getPath().isEmpty()) {
-                throw new CommonException(StateCode.ERROR_PARAMS, MessageConstants.MENU_PATH_NOT_EXIST);
+                throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.MENU_PATH_NOT_EXIST);
             }
         }
 
@@ -230,7 +230,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         queryWrapper.eq(SysMenu::getMenuId, menuDto.getMenuId());
         SysMenu result = menuMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(result)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, CommonMessageConstants.MENU_NOT_EXIST);
         }
 
         // 判断上级菜单是否存在
@@ -239,7 +239,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         queryWrapper.eq(parentId != 0L, SysMenu::getMenuId, parentId);
         List<SysMenu> menuList = menuMapper.selectList(queryWrapper);
         if (menuList.size() == 0) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, MessageConstants.MENU_PARENT_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, CommonMessageConstants.MENU_PARENT_NOT_EXIST);
         }
 
         menuMapper.updateMenu(menuDto);
@@ -256,7 +256,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public void removeMenuById(Long menuId) {
         // 缓存中是否标记空id
         if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + CommonMessageConstants.MENU_NOT_EXIST);
         }
 
         LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
@@ -266,7 +266,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         // 数据不存在
         if (StringUtils.isNull(menu)) {
             redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + CommonMessageConstants.MENU_NOT_EXIST);
         }
 
         menuMapper.deleteById(menuId);
@@ -286,20 +286,20 @@ public class SysMenuServiceImpl implements ISysMenuService {
             for (Long menuId : ids) {
                 // 缓存中是否标记空id
                 if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_NOT_EXIST);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + CommonMessageConstants.MENU_NOT_EXIST);
                 }
                 LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
                 queryWrapper.eq(SysMenu::getMenuId, menuId);
                 menu = menuMapper.selectOne(queryWrapper);
                 if (StringUtils.isNull(menu)) {
                     redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + MessageConstants.MENU_NOT_EXIST);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + CommonMessageConstants.MENU_NOT_EXIST);
                 }
             }
             menuMapper.deleteBatchIds(ids);
             redisCache.removeCacheObject(CacheConstants.MENU_KEY_PREFIX);
         } else {
-            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, MessageConstants.SYS_REQUEST_ILLEGAL);
+            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
         }
     }
 }

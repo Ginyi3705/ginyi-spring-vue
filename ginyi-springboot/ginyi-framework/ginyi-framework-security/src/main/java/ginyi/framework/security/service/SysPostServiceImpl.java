@@ -3,7 +3,7 @@ package ginyi.framework.security.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import ginyi.common.constant.CacheConstants;
-import ginyi.common.constant.MessageConstants;
+import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.exception.CommonException;
 import ginyi.common.mysql.MyPage;
 import ginyi.common.redis.cache.RedisCache;
@@ -56,7 +56,7 @@ public class SysPostServiceImpl implements ISysPostService {
     public PostVo getPostByPostId(Long postId) {
         // 检查缓存中是否存在空id
         if (redisCache.hasKey(CacheConstants.POST_NOT_EXIST_KEY + postId)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + CommonMessageConstants.POST_NOT_EXIST);
         }
         PostVo postVo = new PostVo();
         // 检查缓存中是否存在
@@ -70,7 +70,7 @@ public class SysPostServiceImpl implements ISysPostService {
         post = postMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(post)) {
             redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postId, null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + CommonMessageConstants.POST_NOT_EXIST);
         }
         redisCache.setCacheObject(CacheConstants.POST_DETAILS_BY_POSTID_KEY + postId, post);
         BeanUtils.copyProperties(post, postVo);
@@ -85,10 +85,10 @@ public class SysPostServiceImpl implements ISysPostService {
     @Override
     public void addPost(PostDto postDto) {
         if (redisCache.hasKey(CacheConstants.ROLE_NAME_USED_KEY + postDto.getPostName())) {
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_NAME_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.POST_NAME_USED);
         }
         if (redisCache.hasKey(CacheConstants.ROLE_CODE_USED_KEY + postDto.getPostCode())) {
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_CODE_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.POST_CODE_USED);
         }
         // 检查名称是否被使用
         LambdaQueryWrapper<SysPost> queryWrapper = new LambdaQueryWrapper<>();
@@ -96,7 +96,7 @@ public class SysPostServiceImpl implements ISysPostService {
         SysPost post = postMapper.selectOne(queryWrapper);
         if (StringUtils.isNotNull(post)) {
             redisCache.setCacheObject(CacheConstants.ROLE_NAME_USED_KEY + postDto.getPostName(), null);
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_NAME_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.POST_NAME_USED);
         }
         // 检查编码是否被使用
         queryWrapper = new LambdaQueryWrapper<>();
@@ -104,7 +104,7 @@ public class SysPostServiceImpl implements ISysPostService {
         post = postMapper.selectOne(queryWrapper);
         if (StringUtils.isNotNull(post)) {
             redisCache.setCacheObject(CacheConstants.ROLE_CODE_USED_KEY + postDto.getPostCode(), null);
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_CODE_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.POST_CODE_USED);
         }
         postMapper.insertPost(postDto);
         redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
@@ -120,28 +120,28 @@ public class SysPostServiceImpl implements ISysPostService {
     public void updatePost(PostDto postDto) {
         // 检查缓存中是否存在空id
         if (redisCache.hasKey(CacheConstants.POST_NOT_EXIST_KEY + postDto.getPostId())) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, postDto.getPostId() + MessageConstants.POST_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postDto.getPostId() + CommonMessageConstants.POST_NOT_EXIST);
         }
         LambdaQueryWrapper<SysPost> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysPost::getPostId, postDto.getPostId());
         SysPost post = postMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(post)) {
             redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postDto.getPostId(), null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, postDto.getPostId() + MessageConstants.POST_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postDto.getPostId() + CommonMessageConstants.POST_NOT_EXIST);
         }
         // 检查名称是否被使用
         queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysPost::getPostName, postDto.getPostName());
         post = postMapper.selectOne(queryWrapper);
         if (StringUtils.isNotNull(post) && !post.getPostId().equals(postDto.getPostId())) {
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_NAME_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.POST_NAME_USED);
         }
         // 检查编码是否被使用
         queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysPost::getPostCode, postDto.getPostCode());
         post = postMapper.selectOne(queryWrapper);
         if (StringUtils.isNotNull(post) && !post.getPostId().equals(postDto.getPostId())) {
-            throw new CommonException(StateCode.ERROR_EXIST, MessageConstants.POST_CODE_USED);
+            throw new CommonException(StateCode.ERROR_EXIST, CommonMessageConstants.POST_CODE_USED);
         }
         postMapper.updatePost(postDto);
         redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
@@ -156,14 +156,14 @@ public class SysPostServiceImpl implements ISysPostService {
     public void removePostById(Long postId) {
         // 查看缓存中是否存在空id
         if (redisCache.hasKey(CacheConstants.POST_NOT_EXIST_KEY + postId)) {
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + CommonMessageConstants.POST_NOT_EXIST);
         }
         LambdaQueryWrapper<SysPost> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysPost::getPostId, postId);
         SysPost post = postMapper.selectOne(queryWrapper);
         if (StringUtils.isNull(post)) {
             redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postId, null);
-            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + CommonMessageConstants.POST_NOT_EXIST);
         }
         postMapper.deleteById(postId);
         redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
@@ -182,20 +182,20 @@ public class SysPostServiceImpl implements ISysPostService {
             for (Long postId : ids) {
                 // 检查缓存中是否有标记着空id
                 if (redisCache.hasKey(CacheConstants.POST_NOT_EXIST_KEY + postId)) {
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + CommonMessageConstants.POST_NOT_EXIST);
                 }
                 queryWrapper = new LambdaQueryWrapper<>();
                 queryWrapper.eq(SysPost::getPostId, postId);
                 post = postMapper.selectOne(queryWrapper);
                 if (StringUtils.isNull(post)) {
                     redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postId, null);
-                    throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + MessageConstants.POST_NOT_EXIST);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + CommonMessageConstants.POST_NOT_EXIST);
                 }
             }
             postMapper.deleteBatchIds(ids);
             redisCache.removeCacheObject(CacheConstants.POST_KEY_PREFIX);
         } else {
-            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, MessageConstants.SYS_REQUEST_ILLEGAL);
+            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
         }
     }
 }

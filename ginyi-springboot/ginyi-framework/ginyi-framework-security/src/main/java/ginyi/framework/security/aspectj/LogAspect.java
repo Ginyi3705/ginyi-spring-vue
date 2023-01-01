@@ -3,7 +3,7 @@ package ginyi.framework.security.aspectj;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson2.JSON;
 import ginyi.common.annotation.Log;
-import ginyi.common.constant.MessageConstants;
+import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.enums.BusinessStatus;
 import ginyi.common.enums.HttpMethod;
 import ginyi.common.exception.CommonException;
@@ -143,27 +143,12 @@ public class LogAspect {
             map.put("data", ce.getData());
             return JSON.toJSONString(map);
         }
-        // 参数校验异常
-        if (e instanceof MethodArgumentNotValidException) {
-            MethodArgumentNotValidException me = (MethodArgumentNotValidException) e;
-            List<String> errorList = new ArrayList<>();
-            // 从异常对象中获取 ObjectError 对象
-            if (!me.getBindingResult().getAllErrors().isEmpty()) {
-                for (ObjectError error : me.getBindingResult().getAllErrors()) {
-                    errorList.add(error.getDefaultMessage());
-                }
-            }
-            map.put("code", StateCode.ERROR_PARAMS.getCode());
-            map.put("msg", StateCode.ERROR_PARAMS.getMessage());
-            map.put("data", errorList);
-            return JSON.toJSONString(map);
-        }
         // 请求参数不合法
         if (e instanceof HttpMessageNotReadableException) {
             HttpMessageNotReadableException he = (HttpMessageNotReadableException) e;
             map.put("code", StateCode.ERROR_REQUEST_PARAMS.getCode());
             map.put("msg", StateCode.ERROR_REQUEST_PARAMS.getMessage());
-            map.put("data", MessageConstants.SYS_REQUEST_ILLEGAL);
+            map.put("data", CommonMessageConstants.SYS_REQUEST_ILLEGAL);
             return JSON.toJSONString(map);
         }
         // 用户名密码不匹配
@@ -171,7 +156,7 @@ public class LogAspect {
             UserPasswordNotMatchException ue = (UserPasswordNotMatchException) e;
             map.put("code", StateCode.ERROR_UNAUTHENTICATION.getCode());
             map.put("msg", StateCode.ERROR_UNAUTHENTICATION.getMessage());
-            map.put("data", MessageConstants.USER_PASSWORD_NOT_MATCH);
+            map.put("data", CommonMessageConstants.USER_PASSWORD_NOT_MATCH);
             return JSON.toJSONString(map);
         }
         // 用户登录失败次数超最大限制异常
@@ -188,10 +173,10 @@ public class LogAspect {
             map.put("code", StateCode.ERROR_MULTIPART.getCode());
             map.put("msg", StateCode.ERROR_MULTIPART.getMessage());
             if (mte instanceof MaxUploadSizeExceededException) {
-                map.put("data", MessageConstants.UPLOAD_SIZE_EXCEED);
+                map.put("data", CommonMessageConstants.UPLOAD_SIZE_EXCEED);
                 return JSON.toJSONString(map);
             }
-            map.put("data", MessageConstants.UPLOAD_FILE_ERROR);
+            map.put("data", CommonMessageConstants.UPLOAD_FILE_ERROR);
             return JSON.toJSONString(map);
         }
         // 访问接口无权限
@@ -199,13 +184,13 @@ public class LogAspect {
             UnPermissionException upe = (UnPermissionException) e;
             map.put("code", StateCode.ERROR_NOT_PERMISSION.getCode());
             map.put("msg", StateCode.ERROR_NOT_PERMISSION.getMessage());
-            map.put("data", MessageConstants.SYS_ERROR);
+            map.put("data", CommonMessageConstants.SYS_ERROR);
             return JSON.toJSONString(map);
         }
         // 处理其他所有未知异常
         map.put("code", StateCode.ERROR_SYSTEM.getCode());
         map.put("msg", StateCode.ERROR_SYSTEM.getMessage());
-        map.put("data", MessageConstants.SYS_ERROR);
+        map.put("data", CommonMessageConstants.SYS_ERROR);
         return JSON.toJSONString(map);
     }
 

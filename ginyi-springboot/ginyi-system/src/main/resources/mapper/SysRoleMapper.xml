@@ -51,6 +51,50 @@
                  left join sys_user u on u.user_id = ur.user_id
                  left join sys_dept d on u.dept_id = d.dept_id
     </sql>
+    <!-- 新增角色 -->
+    <insert id="insertRole" useGeneratedKeys="true" keyProperty="roleId">
+        insert into sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            role_name,
+            role_key,
+            sort,
+            `status`,
+            <if test="roleDto.createBy != null and roleDto.createBy != ''">create_by,</if>
+            <if test="roleDto.createTime != null">create_time,</if>
+            <if test="roleDto.remark != null and roleDto.remark != ''">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{roleDto.roleName},
+            #{roleDto.roleKey},
+            #{roleDto.sort},
+            #{roleDto.status},
+            <if test="roleDto.createBy != null and roleDto.createBy != ''">#{roleDto.createBy},</if>
+            <if test="roleDto.createTime != null">#{roleDto.createTime},</if>
+            <if test="roleDto.remark != null and roleDto.remark != ''">#{roleDto.remark},</if>
+        </trim>
+    </insert>
+
+    <!-- 新增角色权限 -->
+    <insert id="insertRoleMenu">
+        insert into sys_role_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            role_id,
+            <if test="roleDto.permissions != null and roleDto.permissions.size() > 0">
+                menu_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{roleDto.roleId},
+            <choose>
+                <when test="roleDto.permissions != null and roleDto.permissions.size() > 0">
+                    json_array
+                    <foreach collection="roleDto.permissions" item="menuId" open="(" close=")" separator=",">
+                        #{menuId}
+                    </foreach>
+                </when>
+            </choose>
+        </trim>
+    </insert>
 
     <select id="selectRolePermissionByUserId" parameterType="Long" resultMap="SysRoleResult">
         <include refid="selectRoleVo"/>
