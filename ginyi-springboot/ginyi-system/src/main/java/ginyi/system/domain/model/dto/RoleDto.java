@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -46,7 +45,7 @@ public class RoleDto extends BaseEntity {
     private String status;
 
     @ApiModelProperty("角色菜单权限")
-    private Set<String> permissions;
+    private List<Long> permissions;
 
     @ApiModelProperty("创建时间，开始时间")
     private Date beginTime;
