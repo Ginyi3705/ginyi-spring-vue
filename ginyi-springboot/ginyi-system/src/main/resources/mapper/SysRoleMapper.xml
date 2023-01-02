@@ -21,7 +21,7 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-    <resultMap id="SysRoleListResult" type="sysRole">
+    <resultMap id="SysRoleListResult" type="ginyi.system.domain.model.vo.RoleVo">
         <id property="roleId" column="role_id"/>
         <result property="roleName" column="role_name"/>
         <result property="roleKey" column="role_key"/>
@@ -32,6 +32,8 @@
         <result property="updateBy" column="update_by"/>
         <result property="updateTime" column="update_time"/>
         <result property="remark" column="remark"/>
+        <result property="permissions" column="menu_id" javaType="Long"
+                typeHandler="ginyi.common.mysql.handler.JacksonArrayTypeHandler"/>
     </resultMap>
 
     <sql id="selectRoleVo">
@@ -96,6 +98,34 @@
         </trim>
     </insert>
 
+    <!-- 更新角色 -->
+    <update id="updateRole">
+        update sys_role
+        <set>
+            role_name = #{roleDto.roleName},
+            role_key = #{roleDto.roleKey},
+            sort = #{roleDto.sort},
+            `status` = #{roleDto.status},
+            <if test="roleDto.updateBy != null and roleDto.updateBy != ''">update_by = #{roleDto.updateBy},</if>
+            <if test="roleDto.updateTime != null">update_time = #{roleDto.updateTime},</if>
+            <if test="roleDto.remark != null and roleDto.remark != ''">remark = #{roleDto.remark},</if>
+        </set>
+        where role_id = #{roleDto.roleId}
+    </update>
+
+    <!-- 更新角色对应的菜单权限 -->
+    <update id="updateRoleMenu">
+        update sys_role_menu
+        <set>
+            <if test="roleDto.permissions != null and roleDto.permissions.size() > 0">menu_id = json_array
+                <foreach collection="roleDto.permissions" item="menuId" open="(" close=")" separator=",">
+                    #{menuId}
+                </foreach>
+            </if>
+        </set>
+        where role_id = #{roleDto.roleId}
+    </update>
+
     <select id="selectRolePermissionByUserId" parameterType="Long" resultMap="SysRoleResult">
         <include refid="selectRoleVo"/>
         WHERE r.deleted = '0' and ur.user_id = #{userId}
@@ -143,6 +173,24 @@
                 </when>
             </choose>
         </where>
+    </select>
+
+    <!-- 根据角色id查询角详情 -->
+    <select id="selectRoleByRoleId" resultMap="SysRoleListResult">
+        select sr.role_id,
+               sr.role_name,
+               sr.role_key,
+               sr.sort,
+               sr.status,
+               sr.create_by,
+               sr.create_time,
+               sr.update_by,
+               sr.update_time,
+               sr.remark,
+               srm.menu_id
+        from sys_role as sr
+                 left join sys_role_menu as srm on sr.role_id = srm.role_id
+        where sr.role_id = ${roleId}
     </select>
 
 

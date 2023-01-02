@@ -5,7 +5,9 @@ import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
+import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.model.dto.RoleDto;
+import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.RoleVo;
 import ginyi.system.service.ISysRoleService;
@@ -68,6 +70,24 @@ public class SysRoleController {
     })
     public CommonResult addRole(@RequestBody @Validated(AddGroup.class) RoleDto roleDto){
         roleService.addRole(roleDto);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("更新角色")
+    @PostMapping("/update")
+    @PreAuthorize("@ss.hasPermission('system:role:add')")
+    @Log(title = "角色模块", businessType = BusinessType.UPDATE)
+    @ApiOperationSupport(ignoreParameters = {
+            "roleDto.updateBy",
+            "roleDto.updateTime",
+            "roleDto.createBy",
+            "roleDto.createTime",
+            "roleDto.beginTime",
+            "roleDto.endTime",
+            "roleDto.params",
+    })
+    public CommonResult update(@RequestBody @Validated(UpdateGroup.class) RoleDto roleDto){
+        roleService.updateRole(roleDto);
         return CommonResult.success();
     }
 

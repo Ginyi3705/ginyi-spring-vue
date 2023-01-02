@@ -1,16 +1,12 @@
 package ginyi.system.domain.model.vo;
 
-import ginyi.common.swagger.AddGroup;
-import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -35,5 +31,5 @@ public class RoleVo extends BaseEntity {
     private String status;
 
     @ApiModelProperty("角色菜单权限")
-    private Set<String> permissions;
+    private List<Long> permissions;
 }

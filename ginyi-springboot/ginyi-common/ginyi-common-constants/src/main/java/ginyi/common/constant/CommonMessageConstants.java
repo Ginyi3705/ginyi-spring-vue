@@ -45,6 +45,7 @@ public class CommonMessageConstants {
     public static final String ROLE_NOT_EXIST = "角色不存在！";
     public static final String ROLE_NAME_USED = "角色名称已被使用！";
     public static final String ROLE_PERMISSION_CODE_USED = "角色权限字符已被使用！";
+    public static final String ROLE_MENU_NOT_EXIST = "菜单权限不存在！";
 
 
     public static final String DEPT_NOT_EXIST = "部门不存在！";

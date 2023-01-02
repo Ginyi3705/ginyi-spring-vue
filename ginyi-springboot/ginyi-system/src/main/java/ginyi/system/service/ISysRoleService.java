@@ -6,11 +6,6 @@ import ginyi.system.domain.model.vo.RoleVo;
 
 import java.util.Set;
 
-/**
- * 角色业务层
- *
- * @author ruoyi
- */
 public interface ISysRoleService {
     /**
      * 根据用户ID查询角色权限
@@ -22,6 +17,7 @@ public interface ISysRoleService {
 
     /**
      * 角色列表
+     *
      * @param roleDto
      * @param page
      * @param pageSize
@@ -31,6 +27,7 @@ public interface ISysRoleService {
 
     /**
      * 根据角色id获取角色
+     *
      * @param roleId
      * @return
      */
@@ -38,7 +35,15 @@ public interface ISysRoleService {
 
     /**
      * 新增角色
+     *
      * @param roleDto
      */
     public void addRole(RoleDto roleDto);
+
+    /**
+     * 跟新角色
+     *
+     * @param roleDto
+     */
+    public void updateRole(RoleDto roleDto);
 }

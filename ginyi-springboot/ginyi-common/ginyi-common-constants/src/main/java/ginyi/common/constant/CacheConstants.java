@@ -35,6 +35,8 @@ public class CacheConstants {
 
     /** 菜单前缀，用于批量删除 */
     public static final String MENU_KEY_PREFIX = "menu_*";
+    /** 菜单列表 */
+    public static final String MENU_LIST_KEY = "menu_list";
     /** 用户菜单的菜单列表 */
     public static final String MENU_USER_LIST_KEY = "menu_user_list:";
     /** 菜单不存在的key */

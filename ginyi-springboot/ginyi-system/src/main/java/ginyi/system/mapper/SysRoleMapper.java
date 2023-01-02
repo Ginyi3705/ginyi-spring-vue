@@ -48,4 +48,25 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @param roleDto
      */
     public void insertRoleMenu(@Param("roleDto") RoleDto roleDto);
+
+    /**
+     * 更新角色
+     *
+     * @param roleDto
+     */
+    public void updateRole(@Param("roleDto") RoleDto roleDto);
+
+    /**
+     * 更新角色对应的菜单权限
+     *
+     * @param roleDto
+     */
+    public void updateRoleMenu(@Param("roleDto") RoleDto roleDto);
+
+    /**
+     * 根据角色id查询角色详情
+     * @param roleId
+     * @return
+     */
+    public RoleVo selectRoleByRoleId(Long roleId);
 }
