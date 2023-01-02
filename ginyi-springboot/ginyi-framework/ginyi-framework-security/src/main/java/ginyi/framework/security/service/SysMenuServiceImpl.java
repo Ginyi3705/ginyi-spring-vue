@@ -282,16 +282,20 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Transactional
     public void removeMenuByIds(Set<Long> ids) {
         if (ids.size() > 0) {
-            SysMenu menu;
+            List<SysMenu> menuList;
+            menuList = redisCache.getCacheList(CacheConstants.MENU_LIST_KEY, SysMenu.class);
+            if (StringUtils.isNull(menuList) || menuList.size() == 0) {
+                LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+                menuList = menuMapper.selectList(queryWrapper);
+                redisCache.setCacheList(CacheConstants.MENU_LIST_KEY, menuList);
+            }
             for (Long menuId : ids) {
                 // 缓存中是否标记空id
                 if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuId)) {
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + CommonMessageConstants.MENU_NOT_EXIST);
                 }
-                LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
-                queryWrapper.eq(SysMenu::getMenuId, menuId);
-                menu = menuMapper.selectOne(queryWrapper);
-                if (StringUtils.isNull(menu)) {
+                boolean exist = menuList.stream().anyMatch(menu -> menuId.equals(menu.getMenuId()));
+                if (!exist) {
                     redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuId, null);
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + CommonMessageConstants.MENU_NOT_EXIST);
                 }

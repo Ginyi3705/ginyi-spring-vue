@@ -47,6 +47,8 @@ public class CacheConstants {
 
     /** 用户前缀，用于批量删除 */
     public static final String USER_KEY_PREFIX = "user_*";
+    /** 用户列表的key */
+    public static final String USER_LIST_KEY = "user_list";
     /** 用户不存在的key */
     public static final String USER_NOT_EXIST_KEY = "user_not_exist:";
     /** 用户详情 */
@@ -55,6 +57,8 @@ public class CacheConstants {
 
     /** 部门前缀，用于批量删除 */
     public static final String DEPT_KEY_PREFIX = "dept_*";
+    /** 部门列表 */
+    public static final String DEPT_LIST_KEY = "dept_list";
     /** 部门不存在的key */
     public static final String DEPT_NOT_EXIST_KEY = "dept_not_exist:";
     /** 部门详情 */
@@ -65,6 +69,8 @@ public class CacheConstants {
 
     /** 岗位前缀，用于批量删除 */
     public static final String POST_KEY_PREFIX = "post_*";
+    /** 岗位列表 */
+    public static final String POST_LIST_KEY = "post_list";
     /** 岗位不存在大的key */
     public static final String POST_NOT_EXIST_KEY = "post_not_exist:";
     /** 岗位详情 */

@@ -183,18 +183,21 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     public void removeDeptByIds(Set<Long> ids) {
         if (ids.size() > 0) {
-            SysDept dept;
-            LambdaQueryWrapper<SysDept> queryWrapper;
+            List<SysDept> deptList;
+            deptList = redisCache.getCacheList(CacheConstants.DEPT_LIST_KEY, SysDept.class);
+            if (StringUtils.isNull(deptList) || deptList.size() == 0) {
+                LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
+                deptList = deptMapper.selectList(queryWrapper);
+                redisCache.setCacheList(CacheConstants.DEPT_LIST_KEY, deptList);
+            }
             for (Long deptId : ids) {
                 // 检查缓存中是否标记着空id
                 if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptId)) {
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + CommonMessageConstants.DEPT_NOT_EXIST);
                 }
-                queryWrapper = new LambdaQueryWrapper<>();
-                queryWrapper.eq(SysDept::getDeptId, deptId);
-                dept = deptMapper.selectOne(queryWrapper);
-                if (StringUtils.isNull(dept)) {
-                    redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + dept, null);
+                boolean exist = deptList.stream().anyMatch(dept -> deptId.equals(dept.getDeptId()));
+                if (!exist) {
+                    redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + deptId, null);
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + CommonMessageConstants.DEPT_NOT_EXIST);
                 }
             }

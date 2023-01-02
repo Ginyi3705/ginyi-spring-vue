@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -164,16 +165,20 @@ public class SysUserServiceImpl implements ISysUserService {
     @Transactional
     public void removeUserByIds(Set<Long> ids) {
         if (ids.size() > 0) {
-            SysUser user;
+            List<SysUser> userList;
+            userList = redisCache.getCacheList(CacheConstants.USER_LIST_KEY, SysUser.class);
+            if (StringUtils.isNull(userList) || userList.size() == 0) {
+                LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+                userList = userMapper.selectList(queryWrapper);
+                redisCache.setCacheList(CacheConstants.USER_LIST_KEY, userList);
+            }
             for (Long userId : ids) {
                 // 检查缓存中是否标记着空id
                 if (redisCache.hasKey(CacheConstants.USER_NOT_EXIST_KEY + userId)) {
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, userId + CommonMessageConstants.USER_NOT_EXIST);
                 }
-                LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
-                queryWrapper.eq(SysUser::getUserId, userId);
-                user = userMapper.selectOne(queryWrapper);
-                if (StringUtils.isNull(user)) {
+                boolean exist = userList.stream().anyMatch(user -> userId.equals(user.getUserId()));
+                if (!exist) {
                     redisCache.setCacheObject(CacheConstants.USER_NOT_EXIST_KEY + userId, null);
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, userId + CommonMessageConstants.USER_NOT_EXIST);
                 }

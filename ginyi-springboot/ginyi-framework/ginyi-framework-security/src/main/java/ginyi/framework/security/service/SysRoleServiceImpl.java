@@ -17,7 +17,6 @@ import ginyi.system.domain.model.vo.RoleVo;
 import ginyi.system.mapper.SysMenuMapper;
 import ginyi.system.mapper.SysRoleMapper;
 import ginyi.system.service.ISysRoleService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -188,6 +187,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
             for (Long menuId : roleDto.getPermissions()) {
                 boolean exist = menuList.stream().anyMatch(menu -> menuId.equals(menu.getMenuId()));
                 if (!exist) {
+                    // 菜单id不存在
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, menuId + CommonMessageConstants.ROLE_MENU_NOT_EXIST);
                 }
             }

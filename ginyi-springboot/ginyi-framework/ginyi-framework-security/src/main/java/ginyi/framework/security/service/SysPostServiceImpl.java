@@ -19,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -177,17 +178,20 @@ public class SysPostServiceImpl implements ISysPostService {
     @Override
     public void removeDeptByIds(Set<Long> ids) {
         if (ids.size() > 0) {
-            SysPost post;
-            LambdaQueryWrapper<SysPost> queryWrapper;
+            List<SysPost> postList;
+            postList = redisCache.getCacheList(CacheConstants.POST_LIST_KEY, SysPost.class);
+            if (StringUtils.isNull(postList) || postList.size() == 0) {
+                LambdaQueryWrapper<SysPost> queryWrapper = new LambdaQueryWrapper<>();
+                postList = postMapper.selectList(queryWrapper);
+                redisCache.setCacheList(CacheConstants.POST_LIST_KEY, postList);
+            }
             for (Long postId : ids) {
                 // 检查缓存中是否有标记着空id
                 if (redisCache.hasKey(CacheConstants.POST_NOT_EXIST_KEY + postId)) {
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + CommonMessageConstants.POST_NOT_EXIST);
                 }
-                queryWrapper = new LambdaQueryWrapper<>();
-                queryWrapper.eq(SysPost::getPostId, postId);
-                post = postMapper.selectOne(queryWrapper);
-                if (StringUtils.isNull(post)) {
+                boolean exist = postList.stream().anyMatch(post -> postId.equals(post.getPostId()));
+                if (!exist) {
                     redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postId, null);
                     throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + CommonMessageConstants.POST_NOT_EXIST);
                 }
