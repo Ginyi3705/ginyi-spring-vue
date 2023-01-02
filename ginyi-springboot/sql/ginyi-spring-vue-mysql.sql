@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 31/12/2022 00:27:19
+ Date: 02/01/2023 23:16:16
 */
 
 SET NAMES utf8mb4;
@@ -438,7 +438,7 @@ CREATE TABLE `sys_post`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`post_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '岗位信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '岗位信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_post
@@ -447,6 +447,7 @@ INSERT INTO `sys_post` VALUES (1, 'ceo', '董事长', 1, '0', 'admin', '2022-12-
 INSERT INTO `sys_post` VALUES (2, 'se', '项目经理', 2, '0', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_post` VALUES (3, 'hr', '人力资源', 3, '0', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_post` VALUES (4, 'user', '普通员工', 4, '0', 'admin', '2022-12-03 07:21:33', '', NULL, '');
+INSERT INTO `sys_post` VALUES (9, 'test', '测试测试', 0, '1', 'ginyi', '2022-12-31 18:23:34', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -456,7 +457,7 @@ CREATE TABLE `sys_role`  (
   `role_id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
   `role_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '角色名称',
   `role_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '角色权限字符串',
-  `role_sort` int NOT NULL COMMENT '显示顺序',
+  `sort` int NOT NULL COMMENT '显示顺序',
   `data_scope` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
   `menu_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '菜单树选择项是否关联显示',
   `dept_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '部门树选择项是否关联显示',
@@ -468,7 +469,7 @@ CREATE TABLE `sys_role`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 106 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -507,6 +508,7 @@ CREATE TABLE `sys_role_menu`  (
 -- Records of sys_role_menu
 -- ----------------------------
 INSERT INTO `sys_role_menu` VALUES (2, '[1, 2, 3, 4, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 500, 501, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060]');
+INSERT INTO `sys_role_menu` VALUES (105, '[1]');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -539,7 +541,7 @@ CREATE TABLE `sys_user`  (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.101', '2022-12-29 23:14:54', 'admin', '2022-12-03 07:21:32', '', '2022-12-29 23:14:54', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'ginyi', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.101', '2022-12-31 00:18:00', 'admin', '2022-12-03 07:21:32', 'ginyi', '2022-12-31 00:18:00', '测试员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ginyi', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.101', '2023-01-02 22:58:54', 'admin', '2022-12-03 07:21:32', 'ginyi', '2023-01-02 22:58:54', '测试员');
 INSERT INTO `sys_user` VALUES (133, 101, 'zhangsans', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:40:55', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (134, 101, 'list', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:02', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (135, 101, 'wangwu', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:08', '', NULL, NULL);
@@ -547,7 +549,7 @@ INSERT INTO `sys_user` VALUES (136, 101, 'zhaoliu', NULL, '00', '', '', '0', '',
 INSERT INTO `sys_user` VALUES (137, 101, 'tom', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:21', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (138, 101, 'tony', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:28', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (139, 101, 'lucy', NULL, '00', '', '', '0', '', '', '1', '0', '', NULL, 'ginyi', '2022-12-23 13:31:22', 'ginyi', '2022-12-24 16:24:43', NULL);
-INSERT INTO `sys_user` VALUES (140, 101, 'carry', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 21:35:13', '', NULL, NULL);
+INSERT INTO `sys_user` VALUES (140, 101, 'carry', NULL, '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 21:35:13', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (141, 101, 'abc', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 21:38:58', '', NULL, NULL);
 INSERT INTO `sys_user` VALUES (142, 101, 'asdasd', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 21:40:56', '', NULL, NULL);
 
