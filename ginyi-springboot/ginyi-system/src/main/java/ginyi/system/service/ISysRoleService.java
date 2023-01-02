@@ -46,4 +46,18 @@ public interface ISysRoleService {
      * @param roleDto
      */
     public void updateRole(RoleDto roleDto);
+
+    /**
+     * 删除角色
+     *
+     * @param roleId
+     */
+    public void removeByRoleId(Long roleId);
+
+    /**
+     * 批量删除角色
+     *
+     * @param ids
+     */
+    public void removeByRoleIds(Set<Long> ids);
 }

@@ -7,7 +7,6 @@ import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
 import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.model.dto.RoleDto;
-import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.RoleVo;
 import ginyi.system.service.ISysRoleService;
@@ -18,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 @Api(tags = "角色模块")
 @RestController
@@ -88,6 +88,24 @@ public class SysRoleController {
     })
     public CommonResult update(@RequestBody @Validated(UpdateGroup.class) RoleDto roleDto){
         roleService.updateRole(roleDto);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("删除角色")
+    @PostMapping("/delete/{roleId}")
+    @PreAuthorize("@ss.hasPermission('system:role:remove')")
+    @Log(title = "角色模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@PathVariable("roleId") Long roleId){
+        roleService.removeByRoleId(roleId);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("批量删除角色")
+    @PreAuthorize("@ss.hasPermission('system:role:remove')")
+    @PostMapping("/delete")
+    @Log(title = "角色模块", businessType = BusinessType.DELETE)
+    public CommonResult delete(@RequestBody Set<Long> ids){
+        roleService.removeByRoleIds(ids);
         return CommonResult.success();
     }
 

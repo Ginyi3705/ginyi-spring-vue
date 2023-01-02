@@ -198,4 +198,59 @@ public class SysRoleServiceImpl implements ISysRoleService {
         }
         redisCache.removeCacheObject(CacheConstants.ROLE_KEY_PREFIX);
     }
+
+    /**
+     * 删除角色
+     *
+     * @param roleId
+     */
+    @Override
+    public void removeByRoleId(Long roleId) {
+        // 检查缓存中是否存在空id
+        if (redisCache.hasKey(CacheConstants.ROLE_NOT_EXIST_KEY + roleId)) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + CommonMessageConstants.ROLE_NOT_EXIST);
+        }
+        LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysRole::getRoleId, roleId);
+        SysRole role = roleMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(role)) {
+            redisCache.setCacheObject(CacheConstants.ROLE_NOT_EXIST_KEY + roleId, null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + CommonMessageConstants.ROLE_NOT_EXIST);
+        }
+        roleMapper.deleteById(roleId);
+        redisCache.removeCacheObject(CacheConstants.ROLE_KEY_PREFIX);
+    }
+
+    /**
+     * 批量删除角色
+     *
+     * @param ids
+     */
+    @Override
+    public void removeByRoleIds(Set<Long> ids) {
+        if (ids.size() > 0) {
+            List<SysRole> roleList;
+            roleList = redisCache.getCacheList(CacheConstants.ROLE_LIST_KEY, SysRole.class);
+            if (StringUtils.isNull(roleList) || roleList.size() == 0) {
+                LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
+                roleList = roleMapper.selectList(queryWrapper);
+                redisCache.setCacheList(CacheConstants.ROLE_LIST_KEY, roleList);
+            }
+            for (Long roleId : ids) {
+                // 检查缓存中是否存在空id
+                if (redisCache.hasKey(CacheConstants.ROLE_NOT_EXIST_KEY + roleId)) {
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + CommonMessageConstants.ROLE_NOT_EXIST);
+                }
+                boolean exist = roleList.stream().anyMatch(role -> roleId.equals(role.getRoleId()));
+                if (!exist) {
+                    redisCache.setCacheObject(CacheConstants.ROLE_NOT_EXIST_KEY + roleId, null);
+                    throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + CommonMessageConstants.ROLE_NOT_EXIST);
+                }
+            }
+            roleMapper.deleteBatchIds(ids);
+            redisCache.removeCacheObject(CacheConstants.ROLE_KEY_PREFIX);
+        } else {
+            throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
+        }
+    }
 }

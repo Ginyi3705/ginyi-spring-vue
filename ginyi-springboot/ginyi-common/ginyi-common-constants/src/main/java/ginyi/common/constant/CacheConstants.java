@@ -79,6 +79,8 @@ public class CacheConstants {
 
     /** 角色前缀，用于批量删除 */
     public static final String ROLE_KEY_PREFIX = "role_*";
+    /** 角色列表 */
+    public static final String ROLE_LIST_KEY = "role_list";
     /** 角色不存在的key */
     public static final String ROLE_NOT_EXIST_KEY = "role_not_exist:";
     /** 角色名已被使用 */
