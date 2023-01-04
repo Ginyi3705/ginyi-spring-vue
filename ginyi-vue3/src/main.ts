@@ -1,16 +1,10 @@
 import {createApp} from 'vue'
 import App from './App.vue'
 
-/**
- * 路由
- */
 import router from "./router";
-
-/**
- * 状态管理pinia
- */
 import {createPinia} from "pinia";
 import {piniaPlugin} from "@/store/piniaPlugin";
+import naive from 'naive-ui';
 
 const pinia = createPinia()
 pinia.use(piniaPlugin())
@@ -18,4 +12,5 @@ pinia.use(piniaPlugin())
 const app = createApp(App)
 app.use(router)
 app.use(pinia)
+app.use(naive)
 app.mount('#app')
