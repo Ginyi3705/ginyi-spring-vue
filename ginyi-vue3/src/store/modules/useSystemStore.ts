@@ -2,11 +2,7 @@ import {defineStore} from "pinia";
 import {storeKeyEnums} from "@/enums/storeKeyEnums";
 import {darkTheme} from "naive-ui";
 import {BuiltInGlobalTheme} from "naive-ui/es/themes/interface";
-
-export interface ISystemState {
-    // 系统深色主题
-    darkTheme: boolean | undefined;
-}
+import {ISystemState} from "@/interface/modules/system";
 
 export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
     state: (): ISystemState => ({
