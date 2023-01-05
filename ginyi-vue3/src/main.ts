@@ -3,7 +3,7 @@ import App from './App.vue'
 
 import router from "./router";
 import {createPinia} from "pinia";
-import {piniaPlugin} from "@/store/piniaPlugin";
+import {piniaPlugin} from "@/plugins/pinia/piniaPlugin";
 import naive from 'naive-ui';
 
 const pinia = createPinia()
