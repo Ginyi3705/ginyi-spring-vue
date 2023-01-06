@@ -49,3 +49,11 @@ export interface IRegisterFormType {
     // 验证码
     code: string | undefined;
 }
+
+/**
+ * 用户
+ */
+export interface IUser {
+    // 用户名
+    username: string | undefined
+}

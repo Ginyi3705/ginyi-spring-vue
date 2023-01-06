@@ -31,6 +31,7 @@
             </n-layout-footer>
         </n-layout>
     </n-layout>
+
 </template>
 
 <script lang="ts">
@@ -46,6 +47,7 @@ import Logo from "@/layout/logo/index.vue";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {storeToRefs} from "pinia";
 import Headers from "@/layout/header/index.vue";
+import {renderIcon} from "@/plugins/naive-ui/common";
 
 export default defineComponent({
     name: "Layout",
@@ -65,9 +67,6 @@ export default defineComponent({
         } = storeToRefs(useSystemStore());
         const {setCollapsed} = useSystemStore();
 
-        function renderIcon(icon: Component) {
-            return () => h(NIcon, null, {default: () => h(icon)})
-        }
 
         const menuOptions = [
             {
@@ -145,7 +144,7 @@ export default defineComponent({
         ]
 
         const expandIcon = () => {
-            return h(NIcon, null, { default: () => h(CaretDownOutline) })
+            return h(NIcon, null, {default: () => h(CaretDownOutline)})
         }
 
         return {

@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory, RouteRecordRaw} from "vue-router";
+import {createRouter, createWebHashHistory, RouteRecordRaw, useRouter} from "vue-router";
 import {systemRoute} from "@/router/modules/system";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 
@@ -28,5 +28,13 @@ router.beforeEach((to, from, next) => {
     document.title = `${useSystemStore().title} - ${to.meta.title as string}`
     next()
 })
+
+/**
+ * 封装路由跳转
+ * @param name 路由name
+ */
+export const useCommonRouter = (name: string) => {
+    router.push({name})
+}
 
 export default router

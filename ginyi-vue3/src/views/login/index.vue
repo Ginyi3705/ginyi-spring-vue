@@ -42,11 +42,12 @@ import {storeToRefs} from "pinia";
 import {ILoginFormType, IRegisterFormType} from "@/interface/modules/system";
 import LoginForm from "@/views/login/loginForm.vue";
 import RegisterForm from "@/views/login/RegisterForm.vue";
-import {useRouter} from "vue-router";
+import {useUserStore} from "@/store/modules/useUserStore";
+import {useCommonRouter} from "@/router";
 
 // 系统深色主题
 const {darkTheme, clientHeight} = storeToRefs(useSystemStore())
-const router = useRouter()
+const {setName} = useUserStore();
 // 登录
 const doLogin = (data: ILoginFormType) => {
     if (data.username === "ginyi" && data.password === "123456" && data.code === "xnxs") {
@@ -54,7 +55,8 @@ const doLogin = (data: ILoginFormType) => {
     } else {
         console.error("登录失败")
     }
-    router.push({name: 'home'})
+    setName(data.username)
+    useCommonRouter("home")
 }
 // 注册
 const doRegister = (data: IRegisterFormType) => {

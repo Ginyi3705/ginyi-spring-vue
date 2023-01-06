@@ -1,3 +1,4 @@
 export const enum storeKeyEnums {
-    SYSTEM = "system"
+    SYSTEM = "system",
+    USER = "user"
 }
