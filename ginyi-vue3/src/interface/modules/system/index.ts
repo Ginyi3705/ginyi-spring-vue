@@ -4,6 +4,24 @@
 export interface ISystemState {
     // 系统深色主题
     darkTheme: boolean | undefined;
+    // 项目logo
+    logo: string | undefined;
+    // 项目名称 = title + name
+    title: string | undefined;
+    // 项目名称 = title + name
+    name: string | undefined;
+    // 作者
+    author: string | undefined;
+    // 客户端宽度
+    clientWidth: number | undefined;
+    // 客户端高度
+    clientHeight: number | undefined;
+    // Layout - header 的高度
+    layoutHeaderHeight: number | undefined;
+    // Layout - footer 的高度
+    layoutFooterHeight: number | undefined;
+    // 侧边栏折叠
+    collapsed: boolean | undefined
 }
 
 /**

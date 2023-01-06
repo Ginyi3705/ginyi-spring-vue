@@ -1,5 +1,5 @@
 <template>
-    <n-card class="login-box">
+    <n-card class="login-box" :style="{height: clientHeight + 'px'}">
         <div style="display: flex; justify-content: flex-end" class="dark-switch">
             <n-switch v-model:value="darkTheme">
                 <template #checked>
@@ -42,10 +42,11 @@ import {storeToRefs} from "pinia";
 import {ILoginFormType, IRegisterFormType} from "@/interface/modules/system";
 import LoginForm from "@/views/login/loginForm.vue";
 import RegisterForm from "@/views/login/RegisterForm.vue";
+import {useRouter} from "vue-router";
 
 // 系统深色主题
-const {darkTheme} = storeToRefs(useSystemStore())
-
+const {darkTheme, clientHeight} = storeToRefs(useSystemStore())
+const router = useRouter()
 // 登录
 const doLogin = (data: ILoginFormType) => {
     if (data.username === "ginyi" && data.password === "123456" && data.code === "xnxs") {
@@ -53,6 +54,7 @@ const doLogin = (data: ILoginFormType) => {
     } else {
         console.error("登录失败")
     }
+    router.push({name: 'home'})
 }
 // 注册
 const doRegister = (data: IRegisterFormType) => {
@@ -64,7 +66,6 @@ const doRegister = (data: IRegisterFormType) => {
 <style scoped lang="less">
 .login-box {
     border-radius: 0;
-    height: 100vh;
     background-image: url("../src/assets/bg-light.svg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
