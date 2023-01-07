@@ -25,7 +25,7 @@
                 style="margin: 0 -4px"
                 pane-style="padding-left: 4px; padding-right: 4px; box-sizing: border-box;">
                 <n-tab-pane name="signin" tab="登录">
-                    <LoginForm @doLogin="doLogin"/>
+                    <LoginForm @doLogin="doLogin" :is-success="isLoginSuccess"/>
                 </n-tab-pane>
                 <n-tab-pane name="signup" tab="注册">
                     <RegisterForm @doRegister="doRegister"/>
@@ -38,25 +38,37 @@
 <script setup lang="ts">
 import {Moon, SunnySharp} from '@vicons/ionicons5';
 import {useSystemStore} from "@/store/modules/useSystemStore";
-import {storeToRefs} from "pinia";
 import {ILoginFormType, IRegisterFormType} from "@/interface/modules/system";
 import LoginForm from "@/views/login/loginForm.vue";
 import RegisterForm from "@/views/login/RegisterForm.vue";
 import {useUserStore} from "@/store/modules/useUserStore";
 import {useCommonRouter} from "@/router";
+import {userController} from "@/api";
+import {ref} from "vue";
+import {storeToRefs} from "pinia";
 
 // 系统深色主题
 const {darkTheme, clientHeight} = storeToRefs(useSystemStore())
-const {setName} = useUserStore();
+const {setUsername, setTokenKey, setAuthorization} = useUserStore();
+// 登录状态
+const isLoginSuccess = ref<boolean | string>(false)
 // 登录
 const doLogin = (data: ILoginFormType) => {
-    if (data.username === "ginyi" && data.password === "123456" && data.code === "xnxs") {
-        console.log("登录成功")
-    } else {
-        console.error("登录失败")
-    }
-    setName(data.username)
-    useCommonRouter("home")
+    userController.login(data).then(res => {
+        setUsername(data.username)
+        setTokenKey(res.data.tokenHeader)
+        setAuthorization(res.data.token)
+        isLoginSuccess.value = true
+        window.$notification.success({
+            title: "登录成功",
+            content: "工作顺利，快乐摸鱼！",
+            duration: 2500,
+        })
+        useCommonRouter("home")
+    }).catch(() => {
+        // 用于更新验证码
+        isLoginSuccess.value = `${false}_${new Date().valueOf()}`
+    })
 }
 // 注册
 const doRegister = (data: IRegisterFormType) => {

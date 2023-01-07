@@ -1,7 +1,9 @@
-import {createRouter, createWebHashHistory, RouteRecordRaw, useRouter} from "vue-router";
-import {systemRoute} from "@/router/modules/system";
-import {useSystemStore} from "@/store/modules/useSystemStore";
+import {createRouter, createWebHashHistory, RouteRecordRaw} from "vue-router";
+import {useProjectStore} from "@/store/modules/useProjectStore";
 
+/**
+ * 系统路由
+ */
 const routes: Array<RouteRecordRaw> = [
     {
         path: "/",
@@ -16,7 +18,12 @@ const routes: Array<RouteRecordRaw> = [
             },
         ]
     },
-    ...systemRoute
+    {
+        path: "/login",
+        name: "login",
+        meta: {title: "登录"},
+        component: () => import("@/views/login/index.vue")
+    }
 ]
 
 const router = createRouter({
@@ -25,16 +32,20 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    document.title = `${useSystemStore().title} - ${to.meta.title as string}`
+    document.title = `${useProjectStore().title} - ${to.meta.title as string}`
     next()
 })
 
 /**
  * 封装路由跳转
  * @param name 路由name
+ * @param query 路由参数
  */
-export const useCommonRouter = (name: string) => {
-    router.push({name})
+export const useCommonRouter = (name: string, query?: any) => {
+    router.push({
+        name: name,
+        query: query
+    })
 }
 
 export default router

@@ -3,15 +3,11 @@ import {storeKeyEnums} from "@/enums/storeKeyEnums";
 import {darkTheme} from "naive-ui";
 import {BuiltInGlobalTheme} from "naive-ui/es/themes/interface";
 import {ISystemState} from "@/interface/modules/system";
-import Logo from "@/assets/img/logo.jpg"
+import {store} from "@/store";
 
 export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
     state: (): ISystemState => ({
-        darkTheme: undefined,
-        logo: Logo,
-        title: "Ginyi",
-        name: "管理系统",
-        author: "Ginyi@aliyun.com",
+        darkTheme: false,
         clientHeight: document.body.clientHeight,
         clientWidth: document.body.clientWidth,
         layoutHeaderHeight: 60,
@@ -22,13 +18,26 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         getTheme(): BuiltInGlobalTheme | undefined {
             return this.darkTheme ? darkTheme : undefined
         },
-        getCollapsed(): boolean  | undefined {
+        getCollapsed(): boolean | undefined {
             return this.collapsed
         }
     },
     actions: {
-        setCollapsed(data: boolean | undefined){
+        setTheme(data: boolean | undefined) {
+            this.darkTheme = data
+        },
+        setClientHeight(data: number | undefined) {
+            this.clientHeight = data
+        },
+        setClientWidth(data: number | undefined) {
+            this.clientWidth = data
+        },
+        setCollapsed(data: boolean | undefined) {
             this.collapsed = data
         }
     }
 })
+
+export const useUserStoreOut = () => {
+    return useSystemStore(store);
+}

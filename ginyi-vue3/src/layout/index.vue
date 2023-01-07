@@ -15,7 +15,7 @@
                     :inverted="true"
                     :collapsed-icon-size="22"
                     :options="menuOptions"
-                    :expand-icon="expandIcon"/>
+                    :expand-icon="renderIcon(CaretDownOutline)"/>
         </n-layout-sider>
         <n-layout>
             <n-layout-header :style="{height: layoutHeaderHeight + 'px', padding: '10px'}">
@@ -35,8 +35,7 @@
 </template>
 
 <script lang="ts">
-import {Component, defineComponent, h} from 'vue'
-import {NIcon} from 'naive-ui'
+import {defineComponent} from 'vue'
 import {
     BookOutline as BookIcon,
     CaretDownOutline,
@@ -45,9 +44,10 @@ import {
 } from '@vicons/ionicons5'
 import Logo from "@/layout/logo/index.vue";
 import {useSystemStore} from "@/store/modules/useSystemStore";
-import {storeToRefs} from "pinia";
 import Headers from "@/layout/header/index.vue";
 import {renderIcon} from "@/plugins/naive-ui/common";
+import {useProjectStore} from "@/store/modules/useProjectStore";
+import {storeToRefs} from "pinia";
 
 export default defineComponent({
     name: "Layout",
@@ -57,16 +57,14 @@ export default defineComponent({
     },
     setup() {
         const {
-            title,
-            author,
             clientHeight,
             layoutHeaderHeight,
             layoutFooterHeight,
             collapsed,
             darkTheme
         } = storeToRefs(useSystemStore());
+        const {title, author} = storeToRefs(useProjectStore());
         const {setCollapsed} = useSystemStore();
-
 
         const menuOptions = [
             {
@@ -143,15 +141,11 @@ export default defineComponent({
             }
         ]
 
-        const expandIcon = () => {
-            return h(NIcon, null, {default: () => h(CaretDownOutline)})
-        }
-
         return {
             menuOptions,
-            expandIcon,
+            renderIcon,
             title, author, clientHeight, layoutHeaderHeight, layoutFooterHeight, collapsed, setCollapsed, darkTheme,
-            Logo, Headers
+            Logo, Headers, CaretDownOutline
         }
     }
 })

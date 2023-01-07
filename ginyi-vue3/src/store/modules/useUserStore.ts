@@ -4,7 +4,9 @@ import {IUser} from "@/interface/modules/system";
 
 export const useUserStore = defineStore(storeKeyEnums.USER, {
     state: (): IUser => ({
-        username: undefined
+        username: undefined,
+        tokenKey: undefined,
+        authorization: undefined
     }),
     getters: {
         getName(): string | undefined {
@@ -12,8 +14,14 @@ export const useUserStore = defineStore(storeKeyEnums.USER, {
         },
     },
     actions: {
-        setName(data: string | undefined) {
+        setUsername(data: string | undefined) {
             this.username = data
+        },
+        setTokenKey(data: string | undefined) {
+            this.tokenKey = data
+        },
+        setAuthorization(data: string | undefined) {
+            this.authorization = data
         }
     }
 })

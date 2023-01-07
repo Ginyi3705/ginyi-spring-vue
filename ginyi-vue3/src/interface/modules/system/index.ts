@@ -1,9 +1,11 @@
 /**
- * pinia - 系统状态
+ * 项目配置
  */
-export interface ISystemState {
-    // 系统深色主题
-    darkTheme: boolean | undefined;
+export interface IProject {
+    // 开发环境请求地址
+    devBaseURL: string | undefined;
+    // 生产环境请求地址
+    prodBaseURL: string | undefined;
     // 项目logo
     logo: string | undefined;
     // 项目名称 = title + name
@@ -12,6 +14,14 @@ export interface ISystemState {
     name: string | undefined;
     // 作者
     author: string | undefined;
+}
+
+/**
+ * pinia - 系统状态
+ */
+export interface ISystemState {
+    // 系统深色主题
+    darkTheme: boolean | undefined;
     // 客户端宽度
     clientWidth: number | undefined;
     // 客户端高度
@@ -21,7 +31,7 @@ export interface ISystemState {
     // Layout - footer 的高度
     layoutFooterHeight: number | undefined;
     // 侧边栏折叠
-    collapsed: boolean | undefined
+    collapsed: boolean | undefined;
 }
 
 /**
@@ -31,7 +41,7 @@ export interface ILoginFormType {
     // 用户名
     username: string | undefined;
     // 密码
-    password: string | number | undefined;
+    password: string | undefined;
     // 验证码
     code: string | undefined;
 }
@@ -55,5 +65,10 @@ export interface IRegisterFormType {
  */
 export interface IUser {
     // 用户名
-    username: string | undefined
+    username: string | undefined;
+    // Token key
+    tokenKey: string | undefined;
+    // Token令牌
+    authorization: string | undefined;
+
 }

@@ -1,16 +1,13 @@
 import {createApp} from 'vue'
-import App from './App.vue'
-
-import router from "./router";
-import {createPinia} from "pinia";
-import {piniaPlugin} from "@/plugins/pinia/piniaPlugin";
+import App from '@/App.vue'
+import router from "@/router";
 import naive from 'naive-ui';
-
-const pinia = createPinia()
-pinia.use(piniaPlugin())
+import {initStore} from '@/store';
+import "@/plugins/naive-ui/common"
 
 const app = createApp(App)
+initStore(app)
+
 app.use(router)
-app.use(pinia)
 app.use(naive)
 app.mount('#app')
