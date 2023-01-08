@@ -31,7 +31,7 @@
             </n-input-group>
         </n-form-item-row>
     </n-form>
-    <n-button type="primary" block :loading="loading" @click="handleLogin">登录{{loading}}</n-button>
+    <n-button type="primary" block :loading="loading" @click="handleLogin">登 录</n-button>
 </template>
 
 <script lang="ts">
