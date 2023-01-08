@@ -38,6 +38,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    window.$loading && window.$loading.start();
     document.title = `${setting.title} - ${to.meta.title as string}`
     const {authorization, tokenKey} = storeToRefs(useUserStore(store));
     const token = authorization?.value ?? storage.get(tokenKey?.value as string);
@@ -79,6 +80,10 @@ router.beforeEach((to, from, next) => {
         }
     }
 
+})
+
+router.afterEach(() => {
+    window.$loading && window.$loading.finish();
 })
 
 /**
