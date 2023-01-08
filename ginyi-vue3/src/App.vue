@@ -16,12 +16,11 @@ import {useThrottle} from "@/hooks/useDebthro";
 import {storeToRefs} from "pinia";
 
 const {getTheme} = storeToRefs(useSystemStore())
-const {setClientHeight, setClientWidth} = useSystemStore()
 
 // 节流，可以适当增加时间
 window.addEventListener("resize", useThrottle(() => {
-    setClientWidth(document.body.clientWidth)
-    setClientHeight(document.body.clientHeight)
+    useSystemStore().setClientWidth(document.body.clientWidth)
+    useSystemStore().setClientHeight(document.body.clientHeight)
 }, 0))
 
 

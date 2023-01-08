@@ -14,14 +14,14 @@ import {LogOutOutline as LogoutIcon, PersonCircleOutline as UserIcon} from '@vic
 import {renderIcon} from "@/plugins/naive-ui/common";
 import {useUserStore} from "@/store/modules/useUserStore";
 import {useCommonRouter} from "@/router";
-import {useProjectStore} from "@/store/modules/useProjectStore";
+import {setting} from "@/config/setting";
 
 
 export default defineComponent({
     name: "Personnel",
     setup() {
         const {username} = storeToRefs(useUserStore());
-        const {logo} = storeToRefs(useProjectStore());
+        const {logo} = setting;
         const options = ref<Array<{ label: string, key: string, icon?: Function }>>([
             {
                 label: '个人中心',
@@ -36,7 +36,10 @@ export default defineComponent({
         ])
         const handleSelect = (key: string) => {
             if (key === "logout") {
-                useCommonRouter("login")
+                useUserStore().logout().then(() => {
+                    useCommonRouter("login")
+                    window.$message.success("退出成功")
+                })
             }
         }
 

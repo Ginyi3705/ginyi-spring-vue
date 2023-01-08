@@ -7,13 +7,13 @@ export interface IProject {
     // 生产环境请求地址
     prodBaseURL: string | undefined;
     // 项目logo
-    logo: string | undefined;
+    logo?: string | undefined;
     // 项目名称 = title + name
-    title: string | undefined;
+    title?: string | undefined;
     // 项目名称 = title + name
-    name: string | undefined;
+    name?: string | undefined;
     // 作者
-    author: string | undefined;
+    author?: string | undefined;
 }
 
 /**
@@ -21,17 +21,17 @@ export interface IProject {
  */
 export interface ISystemState {
     // 系统深色主题
-    darkTheme: boolean | undefined;
+    darkTheme?: boolean | undefined;
     // 客户端宽度
-    clientWidth: number | undefined;
+    clientWidth?: number | undefined;
     // 客户端高度
-    clientHeight: number | undefined;
+    clientHeight?: number | undefined;
     // Layout - header 的高度
-    layoutHeaderHeight: number | undefined;
+    layoutHeaderHeight?: number | undefined;
     // Layout - footer 的高度
-    layoutFooterHeight: number | undefined;
+    layoutFooterHeight?: number | undefined;
     // 侧边栏折叠
-    collapsed: boolean | undefined;
+    collapsed?: boolean | undefined;
 }
 
 /**
@@ -65,10 +65,10 @@ export interface IRegisterFormType {
  */
 export interface IUser {
     // 用户名
-    username: string | undefined;
+    username?: string | undefined;
     // Token key
-    tokenKey: string | undefined;
+    tokenKey?: string | undefined;
     // Token令牌
-    authorization: string | undefined;
+    authorization?: string | undefined;
 
 }

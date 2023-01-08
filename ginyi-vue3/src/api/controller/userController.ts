@@ -14,6 +14,17 @@ export class userController {
     }
 
     /**
+     * 退出登录
+     * @param data
+     */
+    static logout() {
+        return useRequest({
+            url: "/api/user/logout",
+            method: "post",
+        })
+    }
+
+    /**
      * 获取验证码
      */
     static captcha() {

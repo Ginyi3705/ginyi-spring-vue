@@ -46,8 +46,8 @@ import Logo from "@/layout/logo/index.vue";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import Headers from "@/layout/header/index.vue";
 import {renderIcon} from "@/plugins/naive-ui/common";
-import {useProjectStore} from "@/store/modules/useProjectStore";
 import {storeToRefs} from "pinia";
+import {setting} from "@/config/setting";
 
 export default defineComponent({
     name: "Layout",
@@ -63,7 +63,7 @@ export default defineComponent({
             collapsed,
             darkTheme
         } = storeToRefs(useSystemStore());
-        const {title, author} = storeToRefs(useProjectStore());
+        const {title, author} = setting;
         const {setCollapsed} = useSystemStore();
 
         const menuOptions = [

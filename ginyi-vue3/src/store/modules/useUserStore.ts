@@ -1,6 +1,8 @@
 import {defineStore} from "pinia";
 import {storeKeyEnums} from "@/enums/storeKeyEnums";
 import {IUser} from "@/interface/modules/system";
+import {storage} from "@/hooks/useStorage";
+import {userController} from "@/api";
 
 export const useUserStore = defineStore(storeKeyEnums.USER, {
     state: (): IUser => ({
@@ -14,14 +16,23 @@ export const useUserStore = defineStore(storeKeyEnums.USER, {
         },
     },
     actions: {
-        setUsername(data: string | undefined) {
-            this.username = data
+        login(username: string | undefined, data: any): Promise<any> {
+            return new Promise((resolve, reject) => {
+                this.username = username
+                this.tokenKey = data.tokenHeader
+                this.authorization = data.token
+                storage.set(data.tokenHeader, data.token)
+                resolve(null);
+            })
         },
-        setTokenKey(data: string | undefined) {
-            this.tokenKey = data
-        },
-        setAuthorization(data: string | undefined) {
-            this.authorization = data
+        logout(): Promise<any> {
+            return new Promise((resolve, reject) => {
+                userController.logout().then(() => {
+                    useUserStore().$reset()
+                    storage.clear()
+                    resolve(null);
+                })
+            })
         }
     }
 })

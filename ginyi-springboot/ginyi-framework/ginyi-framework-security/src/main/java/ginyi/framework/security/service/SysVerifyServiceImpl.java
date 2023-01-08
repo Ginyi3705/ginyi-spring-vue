@@ -10,6 +10,7 @@ import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.Constants;
+import ginyi.common.utils.StringUtils;
 import ginyi.system.service.ISysConfigService;
 import ginyi.system.service.IVerifyService;
 import org.springframework.stereotype.Service;
@@ -66,11 +67,14 @@ public class SysVerifyServiceImpl implements IVerifyService {
 
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + SecureUtil.md5(clientIP + userAgent);
         String captcha = redisCache.getCacheObject(verifyKey, String.class);
+        if(StringUtils.isNull(code)){
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, CommonMessageConstants.SYS_CAPTCHA_NOT_EXIST);
+        }
         // 验证码失效
         if (captcha == null) {
             throw new CommonException(StateCode.ERROR_PARAMS_SERVICE, CommonMessageConstants.VERIFY_EXPIRE);
         }
-        if (!code.equalsIgnoreCase(captcha)) {
+        if (!captcha.equalsIgnoreCase(code)) {
             throw new CommonException(StateCode.ERROR_PARAMS_SERVICE, CommonMessageConstants.VERiFY_INCORRECT);
         } else {
             // 输入正确，删除该验证码

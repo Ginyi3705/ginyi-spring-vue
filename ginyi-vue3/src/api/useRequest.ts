@@ -1,22 +1,28 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import {useUserStore} from "@/store/modules/useUserStore";
-import {useProjectStore} from "@/store/modules/useProjectStore";
 import {h} from "vue";
 import {useFormatTime} from "@/hooks/useFormat";
+import {storeToRefs} from "pinia";
+import {store} from "@/store";
+import {setting} from "@/config/setting";
 
-const {tokenKey, authorization} = useUserStore();
-const {devBaseURL, prodBaseURL} = useProjectStore();
+const {devBaseURL, prodBaseURL} = setting
 
-// 创建axios示例
+/**
+ * 创建axios示例
+ */
 const service = axios.create({
     baseURL: import.meta.env.DEV ? devBaseURL : prodBaseURL,
-    timeout: 5000
+    timeout: 5000,
 });
 
-// 请求拦截
+/**
+ * 请求拦截
+ */
 service.interceptors.request.use((config: AxiosRequestConfig<any>) => {
-    if (config.headers) {
-        typeof config.headers.set === 'function' && config.headers.set(tokenKey, authorization)
+    const {tokenKey, authorization} = storeToRefs(useUserStore(store));
+    if (authorization && config && config.headers) {
+        typeof config.headers.set === 'function' && config.headers.set(tokenKey?.value, authorization.value)
     }
     return config
 }, (error: any) => {
@@ -31,7 +37,9 @@ service.interceptors.request.use((config: AxiosRequestConfig<any>) => {
     })
 })
 
-// 响应拦截
+/**
+ * 响应拦截
+ */
 service.interceptors.response.use(
     (response: AxiosResponse<any, any>) => {
         const res = response.data;

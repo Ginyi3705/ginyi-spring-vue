@@ -49,15 +49,12 @@ import {storeToRefs} from "pinia";
 
 // 系统深色主题
 const {darkTheme, clientHeight} = storeToRefs(useSystemStore())
-const {setUsername, setTokenKey, setAuthorization} = useUserStore();
 // 登录状态
 const isLoginSuccess = ref<boolean | string>(false)
 // 登录
 const doLogin = (data: ILoginFormType) => {
     userController.login(data).then(res => {
-        setUsername(data.username)
-        setTokenKey(res.data.tokenHeader)
-        setAuthorization(res.data.token)
+        useUserStore().login(data.username, res.data)
         isLoginSuccess.value = true
         window.$notification.success({
             title: "登录成功",

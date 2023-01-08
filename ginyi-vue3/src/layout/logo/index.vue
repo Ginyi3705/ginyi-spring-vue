@@ -12,13 +12,13 @@
 import {defineComponent} from "vue";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {storeToRefs} from "pinia";
-import {useProjectStore} from "@/store/modules/useProjectStore";
+import {setting} from "@/config/setting";
 
 export default defineComponent({
     name: "Logo",
     setup() {
         const {collapsed} = storeToRefs(useSystemStore());
-        const {logo, title, name} = storeToRefs(useProjectStore());
+        const {logo, title, name} = setting;
         return {
             logo, title, name, collapsed
         }

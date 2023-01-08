@@ -11,6 +11,7 @@ public class CommonMessageConstants {
     public static final String SYS_ERROR = "请联系管理人员！";
     public static final String SYS_AUTHENTICATION_VALID = "权限不足，无法访问系统资源！";
     public static final String SYS_REQUEST_ILLEGAL = "请求参数错误，请仔细检查！";
+    public static final String SYS_CAPTCHA_NOT_EXIST = "验证码不能为空！";
 
     public static final String UPLOAD_FILE_ERROR = "文件上传业务异常";
     public static final String UPLOAD_SIZE_EXCEED = "单文件大小不得大于5MB，总文件大小不得大于50MB";
