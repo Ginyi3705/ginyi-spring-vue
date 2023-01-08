@@ -4,6 +4,7 @@ import router from "@/router";
 import naive from 'naive-ui';
 import {initStore} from '@/store';
 import "@/plugins/naive-ui/common"
+import "@/config/console.log";
 
 const app = createApp(App)
 initStore(app)

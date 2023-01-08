@@ -31,7 +31,7 @@
             </n-input-group>
         </n-form-item-row>
     </n-form>
-    <n-button type="primary" block @click="handleLogin">登录</n-button>
+    <n-button type="primary" block :loading="loading" @click="handleLogin">登录{{loading}}</n-button>
 </template>
 
 <script lang="ts">
@@ -50,15 +50,18 @@ export default defineComponent({
         }
     },
     setup(props, {emit}) {
+        // 加载中
+        const loading = ref<boolean>(false)
         // 验证码
         const captchaCode = ref<string | undefined>(undefined)
         const loginForm = reactive<ILoginFormType>({
-            username: undefined,
-            password: undefined,
+            username: "Ginyi",
+            password: "123456",
             code: undefined
         })
         // 登录
         const handleLogin = () => {
+            loading.value = true
             emit("doLogin", loginForm)
         }
         // 获取验证码
@@ -69,6 +72,7 @@ export default defineComponent({
         }
         // 监听登录状态，失败则更新验证码
         watchEffect(() => {
+            loading.value = false
             if (props.isSuccess !== true) {
                 getCaptcha()
             }
@@ -80,6 +84,7 @@ export default defineComponent({
         })
 
         return {
+            loading,
             loginForm,
             captchaCode,
             handleLogin,

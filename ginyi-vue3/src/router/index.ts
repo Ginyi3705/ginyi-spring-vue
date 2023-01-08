@@ -12,6 +12,7 @@ import {setting} from "@/config/setting";
 const routes: Array<RouteRecordRaw> = [
     {
         path: "/",
+        name: "Layout",
         redirect: "/home",
         component: () => import("@/layout/index.vue"),
         children: [
@@ -39,7 +40,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     document.title = `${setting.title} - ${to.meta.title as string}`
     const {authorization, tokenKey} = storeToRefs(useUserStore(store));
-    const token = authorization.value ?? storage.get(tokenKey.value as string);
+    const token = authorization?.value ?? storage.get(tokenKey?.value as string);
 
     if (to.name === "login") {
         if (token) {
