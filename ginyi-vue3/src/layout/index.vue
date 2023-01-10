@@ -21,6 +21,7 @@
             <n-layout-header :style="{height: layoutHeaderHeight + 'px', padding: '10px'}">
                 <Headers/>
             </n-layout-header>
+            <TagsView />
             <n-layout-content :content-style="{padding: '15px', height: clientHeight - (layoutHeaderHeight + layoutFooterHeight) + 'px',
             backgroundColor: darkTheme ? null : '#f5f7f9'}">
                 <router-view/>
@@ -48,12 +49,15 @@ import Headers from "@/layout/header/index.vue";
 import {renderIcon} from "@/plugins/naive-ui/common";
 import {storeToRefs} from "pinia";
 import {setting} from "@/config/setting";
+import TagsView from "@/layout/tags/index.vue";
+
 
 export default defineComponent({
     name: "Layout",
     components: {
         Logo,
-        Headers
+        Headers,
+        TagsView
     },
     setup() {
         const {
