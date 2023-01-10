@@ -1,6 +1,5 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
 import {useUserStore} from "@/store/modules/useUserStore";
-import {h} from "vue";
 import {useFormatTime} from "@/hooks/useFormat";
 import {storeToRefs} from "pinia";
 import {store} from "@/store";
@@ -30,8 +29,9 @@ service.interceptors.request.use((config: AxiosRequestConfig<any>) => {
         title: "网络请求错误",
         description: `From ${import.meta.env.DEV ? devBaseURL : prodBaseURL}`,
         meta: useFormatTime(new Date().valueOf()),
-        content: () => h("span", {},
-            typeof error.message === "string" ? error.message : JSON.stringify(error.message)),
+        content: () => (
+            <span>{typeof error.message === "string" ? error.message : JSON.stringify(error.message)}</span>
+        ),
         duration: 5000,
         keepAliveOnHover: true
     })
@@ -48,8 +48,9 @@ service.interceptors.response.use(
                 title: res.msg,
                 description: `From ${import.meta.env.DEV ? devBaseURL : prodBaseURL}`,
                 meta: useFormatTime(new Date().valueOf()),
-                content: () => h("span", {},
-                    typeof res.data === "string" ? res.data : JSON.stringify(res.data)),
+                content: () => (
+                    <span>{typeof res.data === "string" ? res.data : JSON.stringify(res.data)}</span>
+                ),
                 duration: 5000,
                 keepAliveOnHover: true
             })
@@ -64,8 +65,9 @@ service.interceptors.response.use(
             title: "请求响应错误",
             description: `From ${import.meta.env.DEV ? devBaseURL : prodBaseURL}`,
             meta: useFormatTime(new Date().valueOf()),
-            content: () => h("span", {},
-                typeof error.message === "string" ? error.message : JSON.stringify(error.message)),
+            content: () => (
+                <span>{typeof error.message === "string" ? error.message : JSON.stringify(error.message)}</span>
+            ),
             duration: 5000,
             keepAliveOnHover: true
         })

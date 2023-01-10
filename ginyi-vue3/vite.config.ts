@@ -1,10 +1,12 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import {resolve} from 'path'
+import vueJsxPlugin from "@vitejs/plugin-vue-jsx";
+
 
 export default defineConfig({
     envDir: ".",
-    plugins: [vue()],
+    plugins: [vue(), vueJsxPlugin()],
     server: {
         host: '0.0.0.0',    // 主机地址
         open: true,         // 自动打开浏览器

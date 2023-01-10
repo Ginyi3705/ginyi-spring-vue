@@ -1,4 +1,4 @@
-import {Component, computed, h} from "vue";
+import {Component, computed} from "vue";
 import {createDiscreteApi, NIcon} from "naive-ui";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {storeToRefs} from "pinia";
@@ -30,8 +30,6 @@ setTimeout(() => {
  */
 export const renderIcon = (icon: Component) => {
     return () => {
-        return h(NIcon, null, {
-            default: () => h(icon)
-        })
+        return <NIcon component={icon}/>
     }
 }
