@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "web-types": "web-types.json",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",

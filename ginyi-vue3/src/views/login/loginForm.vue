@@ -1,7 +1,7 @@
 <template>
     <n-form label-placement="left" label-width="auto">
         <n-form-item-row label="用户名">
-            <n-input v-model:value="loginForm.username" @keyup.enter.native="handleLogin" placeholder="用户名" clearable>
+            <n-input v-model:value="loginForm.username" v-focus @keyup.enter.native="handleLogin" placeholder="用户名" clearable>
                 <template #prefix>
                     <n-icon :component="Person"/>
                 </template>
@@ -76,11 +76,6 @@ export default defineComponent({
             if (props.isSuccess !== true) {
                 getCaptcha()
             }
-        })
-
-        // 加载验证码
-        onMounted(() => {
-            getCaptcha()
         })
 
         return {

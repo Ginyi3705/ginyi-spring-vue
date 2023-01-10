@@ -5,9 +5,11 @@ import naive from 'naive-ui';
 import {initStore} from '@/store';
 import "@/plugins/naive-ui/common"
 import "@/config/console.log";
+import {initDirectives} from "@/directives";
 
 const app = createApp(App)
 initStore(app)
+initDirectives(app)
 
 app.use(router)
 app.use(naive)
