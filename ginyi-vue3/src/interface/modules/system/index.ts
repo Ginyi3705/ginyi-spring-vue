@@ -22,6 +22,8 @@ export interface IProject {
 export interface ISystemState {
     // 系统深色主题
     darkTheme?: boolean | undefined;
+    // 系统主题色
+    themeColor?: string | undefined;
     // 客户端宽度
     clientWidth?: number | undefined;
     // 客户端高度

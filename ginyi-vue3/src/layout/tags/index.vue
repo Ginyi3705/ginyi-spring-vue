@@ -1,8 +1,8 @@
 <template>
-    <div class="tagsView" :style="{backgroundColor: getTheme ? '#18181c' : 'white'}">
-        <div :id="'tagsView' + item.id" :class="item.id === index ? 'tabs-active' : 'tabs'" v-for="item in list"
+    <div class="tagsView" >
+        <div :id="'tagsView_' + item.id" :class="item.id === index ? 'tabs-active' : 'tabs'" v-for="item in list"
              :key="item.id"
-             :style="{color: getTheme ? 'white' : null}"
+             :style="{color: getTheme ||  item.id === index ? activeFontColor :  fontColor, backgroundColor: item.id === index ? activeBackgroundColor: null}"
              @click="onClickTag(item)">
             <div class="tabs-title">
                 <n-icon>
@@ -15,11 +15,11 @@
             </div>
             <div :class="item.id === index ? 'tabs-active-divider' : 'tabs-divider'"></div>
             <svg :class="item.id === index ? 'tabs-active-before' : 'tabs-before'" width="7" height="7"
-                 :style="{fill: item.id === index ? '#e6e5f2' : ''}">
+                 :style="{fill: item.id === index ? activeBackgroundColor : getTheme ? systemDarkBackgroundColor  : activeFontColor}">
                 <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"/>
             </svg>
             <svg :class="item.id === index ? 'tabs-active-after' : 'tabs-after'" width="7" height="7"
-                 :style="{fill: item.id === index ? '#e6e5f2' : ''}">
+                 :style="{fill: item.id === index ? activeBackgroundColor : getTheme ? systemDarkBackgroundColor  : activeFontColor}">
                 <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"></path>
             </svg>
         </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from "vue";
+import {computed, defineComponent, onMounted, ref, watchEffect} from "vue";
 import {CloseOutline, GameController} from '@vicons/ionicons5'
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
@@ -38,11 +38,22 @@ export default defineComponent({
         CloseOutline, GameController
     },
     setup() {
-        const {getTheme} = storeToRefs(useSystemStore());
+        const {getTheme, themeColor} = storeToRefs(useSystemStore());
         // 选中的tag
         const index = ref<number | undefined>(1);
+        // 系统暗色背景色
+        const systemDarkBackgroundColor = ref<string>("#18181c")
         // 选中的tag颜色
-        const activeBackgroundColor = ref<string | undefined | null>("#18a058");
+        const activeBackgroundColor = ref<string | undefined | null>(themeColor?.value);
+        // 未选中的文字颜色
+        const fontColor = ref<string>("#18181c")
+        // 选中的文字颜色
+        const activeFontColor = ref<string>("#ffffff")
+
+        watchEffect(() => {
+            activeBackgroundColor.value = themeColor?.value
+        })
+
         // 初始化未选中的颜色
         const initBackgroundColor = () => {
             const tabs = document.getElementsByClassName("tabs")[0];
@@ -50,13 +61,13 @@ export default defineComponent({
             const tabsAfter = document.getElementsByClassName("tabs-after")[0];
 
             if (tabs instanceof HTMLElement) {
-                tabs.style.background = getTheme !== undefined ? "#18181c" : "white";
+                tabs.style.background = getTheme.value !== undefined ? systemDarkBackgroundColor.value : activeFontColor.value;
             }
             if (tabsBefore instanceof SVGElement) {
-                tabsBefore.style.fill = getTheme !== undefined ? "#18181c" : "white";
+                tabsBefore.style.fill = getTheme.value !== undefined ? systemDarkBackgroundColor.value : activeFontColor.value;
             }
             if (tabsAfter instanceof SVGElement) {
-                tabsAfter.style.fill = getTheme !== undefined ? "#18181c" : "white";
+                tabsAfter.style.fill = getTheme.value !== undefined ? systemDarkBackgroundColor.value : activeFontColor.value;
             }
         }
         // 初始化选中的颜色
@@ -75,8 +86,60 @@ export default defineComponent({
                 tabsAfterActive.style.fill = activeBackgroundColor.value as string;
             }
         }
+        // 初始化鼠标事件
+        const initMouseEvent = (index?: number) => {
+            list.value.forEach(item => {
+                const tagsView = document.getElementById("tagsView_" + item.id);
+
+                if (tagsView) {
+                    const childNodes = tagsView.childNodes;
+                    // 除选中的tag外，其余的背景色进行重置
+                    if (index && tagsView.id.indexOf(index.toString()) === -1) {
+                        tagsView.style.background = "";
+                    }
+                    // 给 tagsView 添加鼠标【到达】事件监听
+                    tagsView.onmouseover = () => {
+                        tagsView.style.background = activeBackgroundColor.value as string;
+                        tagsView.style.color = activeFontColor.value
+                        childNodes.forEach(child => {
+                            if (child.nodeName === "svg" && child instanceof SVGElement) {
+                                child.style.fill = activeBackgroundColor.value as string;
+                            }
+                        })
+                    }
+                    // 给 tagsView 添加鼠标【离开】事件监听
+                    tagsView.onmouseout = () => {
+                        if (index && tagsView.id.indexOf(index.toString()) === -1) {
+                            tagsView.style.background = "";
+                            tagsView.style.color = getTheme.value !== undefined ? activeFontColor.value : fontColor.value;
+                        }
+                        childNodes.forEach(child => {
+                            if (child.nodeName === "svg" && child instanceof SVGElement) {
+                                if (index && tagsView.id.indexOf(index.toString()) === -1) {
+                                    child.style.fill = getTheme.value !== undefined ? systemDarkBackgroundColor.value : activeFontColor.value;
+                                }
+                            }
+                        })
+                    }
+                    if (childNodes.length > 0) {
+                        // 给 tagsView 里边的内容元素添加鼠标监听
+                        childNodes.forEach(child => {
+                            if (child instanceof HTMLElement) {
+                                child.onmouseover = () => {
+                                    child.style.background = activeBackgroundColor.value as string;
+                                }
+                                child.onmouseout = () => {
+                                    child.style.background = "";
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        }
         const onClickTag = (item: any) => {
             index.value = item.id
+            initMouseEvent(index.value)
         }
         const list = ref<Array<{ id: number, name: string }>>([
             {
@@ -104,49 +167,16 @@ export default defineComponent({
         onMounted(() => {
             initBackgroundColor();
             initActiveBackgroundColor();
-            list.value.forEach(item => {
-                const tagsView = document.getElementById("tagsView" + item.id);
-                if (tagsView) {
-                    // 给 tagsView 添加鼠标监听
-                    const childNodes = tagsView.childNodes;
-                    tagsView.onmouseover = () => {
-                        tagsView.style.background = activeBackgroundColor.value as string;
-                        childNodes.forEach(child => {
-                            if (child.nodeName === "svg" && child instanceof SVGElement) {
-                                child.style.fill = activeBackgroundColor.value as string;
-                            }
-                        })
-                    }
-                    tagsView.onmouseout = () => {
-                        tagsView.style.background = "";
-                        childNodes.forEach(child => {
-                            if (child.nodeName === "svg" && child instanceof SVGElement) {
-                                child.style.fill = "";
-                            }
-                        })
-                    }
-                    if (childNodes.length > 0) {
-                        // 给 tagsView 里边的内容元素添加鼠标监听
-                        childNodes.forEach(child => {
-                            if (child instanceof HTMLElement) {
-                                child.onmouseover = () => {
-                                    child.style.background = activeBackgroundColor.value as string;
-                                }
-                                child.onmouseout = () => {
-                                    child.style.background = "";
-                                }
-                            }
-                        })
-                    }
-                }
-            })
-
+            initMouseEvent(index.value);
         })
 
         return {
             getTheme,
             index,
+            systemDarkBackgroundColor,
             activeBackgroundColor,
+            fontColor,
+            activeFontColor,
             list,
             onClickTag
         }
@@ -166,6 +196,7 @@ export default defineComponent({
         display: flex;
         align-items: center;
         justify-content: space-between;
+        cursor: pointer;
 
         &-title {
             width: 100%;
@@ -176,6 +207,7 @@ export default defineComponent({
 
             span {
                 margin: 0 10px 0 5px;
+                user-select: none;
             }
         }
 
@@ -184,19 +216,18 @@ export default defineComponent({
             height: 15px;
             position: absolute;
             right: -1px;
-            z-index: 9999;
             background-color: #8a8a8a;
         }
 
         &-before {
             position: absolute;
-            left: -6px;
+            left: -7px;
             bottom: 0;
         }
 
         &-after {
             position: absolute;
-            right: -6px;
+            right: -7px;
             bottom: 0;
             transform: rotate(90deg);
         }
@@ -243,7 +274,7 @@ export default defineComponent({
 
     .tabs:hover {
         cursor: pointer;
-        z-index: 999999;
+        z-index: 9999;
 
         .tabs-before {
             position: absolute;

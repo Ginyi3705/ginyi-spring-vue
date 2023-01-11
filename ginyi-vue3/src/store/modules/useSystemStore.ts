@@ -8,6 +8,7 @@ import {store} from "@/store";
 export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
     state: (): ISystemState => ({
         darkTheme: false,
+        themeColor: themeColorList[0],
         clientHeight: document.body.clientHeight,
         clientWidth: document.body.clientWidth,
         layoutHeaderHeight: 60,
@@ -38,6 +39,25 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
     }
 })
 
-export const useUserStoreOut = () => {
-    return useSystemStore(store);
-}
+const themeColorList:Array<string> = [
+    '#9A53FE',
+    '#e88080',
+    '#0084f4',
+    '#009688',
+    '#536dfe',
+    '#ff5c93',
+    '#ee4f12',
+    '#0096c7',
+    '#9c27b0',
+    '#ff9800',
+    '#FF3D68',
+    '#00C1D4',
+    '#71EFA3',
+    '#78DEC7',
+    '#1768AC',
+    '#63e2b7',
+    '#A8EA3E',
+    '#E03D3D',
+    '#E63AAF',
+    '#40EA9A',
+]
