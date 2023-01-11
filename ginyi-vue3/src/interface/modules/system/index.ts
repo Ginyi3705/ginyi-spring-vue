@@ -24,6 +24,8 @@ export interface ISystemState {
     darkTheme?: boolean | undefined;
     // 系统主题色
     themeColor?: string | undefined;
+    // 系统主题色列表
+    themeColorList?: Array<string>;
     // 客户端宽度
     clientWidth?: number | undefined;
     // 客户端高度
@@ -34,6 +36,10 @@ export interface ISystemState {
     layoutFooterHeight?: number | undefined;
     // 侧边栏折叠
     collapsed?: boolean | undefined;
+    // 多标签的高度
+    tabsHeight?: number | undefined;
+    // 菜单风格
+    menuStyle?: string | undefined
 }
 
 /**

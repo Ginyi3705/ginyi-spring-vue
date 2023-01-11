@@ -10,7 +10,7 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
 import {storeToRefs} from "pinia";
-import {LogOutOutline as LogoutIcon, PersonCircleOutline as UserIcon} from '@vicons/ionicons5'
+import {LogOutOutline as LogoutIcon, Moon, PersonCircleOutline as UserIcon, SunnySharp} from '@vicons/ionicons5'
 import {renderIcon} from "@/plugins/naive-ui/common";
 import {useUserStore} from "@/store/modules/useUserStore";
 import {useCommonRouter} from "@/router";
@@ -19,7 +19,11 @@ import {setting} from "@/config/setting";
 
 export default defineComponent({
     name: "Personnel",
+    components: {
+        Moon, SunnySharp
+    },
     setup() {
+        // 系统深色主题
         const {username} = storeToRefs(useUserStore());
         const {logo} = setting;
         const options = ref<Array<{ label: string, key: string, icon?: Function }>>([

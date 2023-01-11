@@ -11,18 +11,16 @@
             :native-scrollbar="false"
             :on-update:collapsed="(val) => setCollapsed(val)">
             <Logo/>
-            <n-menu :collapsed-width="64"
-                    :inverted="true"
-                    :collapsed-icon-size="22"
-                    :options="menuOptions"
-                    :expand-icon="renderIcon(CaretDownOutline)"/>
+            <Menu />
         </n-layout-sider>
         <n-layout>
-            <n-layout-header :style="{height: layoutHeaderHeight + 'px', padding: '10px'}">
-                <Headers/>
+            <n-layout-header :style="{height: (layoutHeaderHeight + tabsHeight) + 'px', padding: '10px'}">
+                <div>
+                    <Headers :style="{height: layoutHeaderHeight - 10 + 'px'}"/>
+                    <TagsView/>
+                </div>
             </n-layout-header>
-            <TagsView />
-            <n-layout-content :content-style="{padding: '15px', height: clientHeight - (layoutHeaderHeight + layoutFooterHeight) + 'px',
+            <n-layout-content :content-style="{padding: '15px', height: clientHeight - (layoutHeaderHeight + layoutFooterHeight + tabsHeight) + 'px',
             backgroundColor: darkTheme ? null : '#f5f7f9'}">
                 <router-view/>
             </n-layout-content>
@@ -31,18 +29,13 @@
                 {{ `Copyright © 2023-Now ${author}. All rights reserved.` }}
             </n-layout-footer>
         </n-layout>
+        <Theme/>
     </n-layout>
-
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue'
-import {
-    BookOutline as BookIcon,
-    CaretDownOutline,
-    PersonOutline as PersonIcon,
-    WineOutline as WineIcon
-} from '@vicons/ionicons5'
+import {CaretDownOutline, SparklesOutline} from '@vicons/ionicons5'
 import Logo from "@/layout/logo/index.vue";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import Headers from "@/layout/header/index.vue";
@@ -50,14 +43,17 @@ import {renderIcon} from "@/plugins/naive-ui/common";
 import {storeToRefs} from "pinia";
 import {setting} from "@/config/setting";
 import TagsView from "@/layout/tags/index.vue";
-
+import Theme from "@/layout/theme/index.vue";
+import Menu from "@/layout/menu/index.vue";
 
 export default defineComponent({
     name: "Layout",
     components: {
         Logo,
         Headers,
-        TagsView
+        TagsView,
+        Theme,
+        Menu
     },
     setup() {
         const {
@@ -65,91 +61,28 @@ export default defineComponent({
             layoutHeaderHeight,
             layoutFooterHeight,
             collapsed,
-            darkTheme
+            darkTheme,
+            tabsHeight
         } = storeToRefs(useSystemStore());
         const {title, author} = setting;
         const {setCollapsed} = useSystemStore();
 
-        const menuOptions = [
-            {
-                label: '且听风吟',
-                key: 'hear-the-wind-sing',
-                icon: renderIcon(BookIcon)
-            },
-            {
-                label: '1973年的弹珠玩具',
-                key: 'pinball-1973',
-                icon: renderIcon(BookIcon),
-                disabled: true,
-                children: [
-                    {
-                        label: '鼠',
-                        key: 'rat'
-                    }
-                ]
-            },
-            {
-                label: '寻羊冒险记',
-                key: 'a-wild-sheep-chase',
-                disabled: true,
-                icon: renderIcon(BookIcon)
-            },
-            {
-                label: '舞，舞，舞',
-                key: 'dance-dance-dance',
-                icon: renderIcon(BookIcon),
-                children: [
-                    {
-                        type: 'group',
-                        label: '人物',
-                        key: 'people',
-                        children: [
-                            {
-                                label: '叙事者',
-                                key: 'narrator',
-                                icon: renderIcon(PersonIcon)
-                            },
-                            {
-                                label: '羊男',
-                                key: 'sheep-man',
-                                icon: renderIcon(PersonIcon)
-                            }
-                        ]
-                    },
-                    {
-                        label: '饮品',
-                        key: 'beverage',
-                        icon: renderIcon(WineIcon),
-                        children: [
-                            {
-                                label: '威士忌',
-                                key: 'whisky'
-                            }
-                        ]
-                    },
-                    {
-                        label: '食物',
-                        key: 'food',
-                        children: [
-                            {
-                                label: '三明治',
-                                key: 'sandwich'
-                            }
-                        ]
-                    },
-                    {
-                        label: '过去增多，未来减少',
-                        key: 'the-past-increases-the-future-recedes'
-                    }
-                ]
-            }
-        ]
 
         return {
-            menuOptions,
             renderIcon,
-            title, author, clientHeight, layoutHeaderHeight, layoutFooterHeight, collapsed, setCollapsed, darkTheme,
-            Logo, Headers, CaretDownOutline
+            title,
+            author,
+            clientHeight,
+            layoutHeaderHeight,
+            layoutFooterHeight,
+            collapsed,
+            setCollapsed,
+            darkTheme,
+            tabsHeight,
+            Logo,
+            Headers,
+            CaretDownOutline,
+            SparklesOutline
         }
     }
 })

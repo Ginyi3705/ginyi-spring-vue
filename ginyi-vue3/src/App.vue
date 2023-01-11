@@ -1,5 +1,5 @@
 <template>
-    <n-config-provider :theme="getTheme">
+    <n-config-provider :theme="getTheme" :theme-overrides="getThemeOverrides">
         <n-loading-bar-provider>
             <n-dialog-provider>
                 <n-notification-provider>
@@ -16,8 +16,22 @@
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {useThrottle} from "@/hooks/useDebthro";
 import {storeToRefs} from "pinia";
+import {computed} from "vue";
+import {useLighten} from "@/hooks/useColor";
 
-const {getTheme} = storeToRefs(useSystemStore())
+const {getTheme, themeColor} = storeToRefs(useSystemStore())
+const getThemeOverrides = computed(() => {
+    return {
+        common: {
+            primaryColor: themeColor?.value,
+            primaryColorHover: useLighten(themeColor?.value as string, 6),
+            primaryColorPressed: useLighten(themeColor?.value as string, 6),
+        },
+        LoadingBar: {
+            colorLoading: themeColor?.value as string,
+        },
+    };
+});
 
 // 节流，可以适当增加时间
 window.addEventListener("resize", useThrottle(() => {

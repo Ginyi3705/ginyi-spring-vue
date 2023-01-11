@@ -9,11 +9,14 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
     state: (): ISystemState => ({
         darkTheme: false,
         themeColor: themeColorList[0],
+        themeColorList: themeColorList,
         clientHeight: document.body.clientHeight,
         clientWidth: document.body.clientWidth,
         layoutHeaderHeight: 60,
         layoutFooterHeight: 40,
-        collapsed: false
+        tabsHeight: 30,
+        collapsed: false,
+        menuStyle: 'dark-header'
     }),
     getters: {
         getTheme(): BuiltInGlobalTheme | undefined {
@@ -26,6 +29,9 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
     actions: {
         setTheme(data: boolean | undefined) {
             this.darkTheme = data
+        },
+        setThemeColor(data: string | undefined) {
+            this.themeColor = data
         },
         setClientHeight(data: number | undefined) {
             this.clientHeight = data
