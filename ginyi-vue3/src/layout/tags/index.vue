@@ -1,29 +1,29 @@
 <template>
     <div class="tagsView">
-        <div :id="'tagsView_' + item.id" :class="item.id === index ? 'tabs-active' : 'tabs'" v-for="item in list"
-             :key="item.id"
-             :style="{color: getTheme ||  item.id === index ? activeFontColor :  fontColor,
-             backgroundColor: item.id === index ? useHexToRgba(activeBackgroundColor) : null}"
-             @click="onClickTag(item)">
-            <div class="tabs-title">
-                <n-icon>
-                    <GameController/>
-                </n-icon>
-                <span>{{ item.name }}</span>
-                <n-icon>
-                    <CloseOutline/>
-                </n-icon>
+        <transition-group name="tag" tag="div" class="tabs-transition">
+            <div :id="'tagsView_' + item.id" :class="item.id === tagIndex ? 'tabs-active' : 'tabs'"
+                 v-for="item in tagList"
+                 :key="item.id"
+                 :style="{color: getTheme ||  item.id === tagIndex ? activeFontColor :  null,backgroundColor: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : null}"
+                 @click="onClickTag(item)">
+                <div class="tabs-title">
+                    <n-icon>
+                        <GameController/>
+                    </n-icon>
+                    <span>{{ item.tagName }}</span>
+                    <n-icon style="border-radius: 50%" :component="CloseOutline" @click="() => removeTag(item.id)"
+                            :id="`tabs-close-${item.id}`"/>
+                </div>
+                <svg :class="item.id === tagIndex ? 'tabs-active-before' : 'tabs-before'" width="7" height="7"
+                     :style="{fill: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
+                    <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"/>
+                </svg>
+                <svg :class="item.id === tagIndex ? 'tabs-active-after' : 'tabs-after'" width="7" height="7"
+                     :style="{fill: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
+                    <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"></path>
+                </svg>
             </div>
-            <div :class="item.id === index ? 'tabs-active-divider' : 'tabs-divider'"></div>
-            <svg :class="item.id === index ? 'tabs-active-before' : 'tabs-before'" width="7" height="7"
-                 :style="{fill: item.id === index ? useHexToRgba(activeBackgroundColor) : getTheme ? systemDarkBackgroundColor  : activeFontColor}">
-                <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"/>
-            </svg>
-            <svg :class="item.id === index ? 'tabs-active-after' : 'tabs-after'" width="7" height="7"
-                 :style="{fill: item.id === index ? useHexToRgba(activeBackgroundColor) : getTheme ? systemDarkBackgroundColor  : activeFontColor}">
-                <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"></path>
-            </svg>
-        </div>
+        </transition-group>
     </div>
 </template>
 
@@ -40,38 +40,18 @@ export default defineComponent({
         CloseOutline, GameController
     },
     setup() {
-        const {getTheme, themeColor} = storeToRefs(useSystemStore());
-        // 选中的tag
-        const index = ref<number | undefined>(1);
-        // 系统暗色背景色
-        const systemDarkBackgroundColor = ref<string>("#18181c")
+        const {getTheme, themeColor, tagIndex, tagList} = storeToRefs(useSystemStore());
+        // 选中tag的索引
+        const index = ref<number | undefined>(0);
         // 选中的tag颜色
         const activeBackgroundColor = ref<string | undefined | null>(useHexToRgba(themeColor?.value as string));
-        // 未选中的文字颜色
-        const fontColor = ref<string>("#18181c")
         // 选中的文字颜色
-        const activeFontColor = ref<string>("#ffffff")
+        const activeFontColor = themeColor
 
         watchEffect(() => {
             activeBackgroundColor.value = themeColor?.value
         })
 
-        // 初始化未选中的颜色
-        const initBackgroundColor = () => {
-            const tabs = document.getElementsByClassName("tabs")[0];
-            const tabsBefore = document.getElementsByClassName("tabs-before")[0];
-            const tabsAfter = document.getElementsByClassName("tabs-after")[0];
-
-            if (tabs instanceof HTMLElement) {
-                tabs.style.backgroundColor = getTheme.value !== undefined ? systemDarkBackgroundColor.value : activeFontColor.value;
-            }
-            if (tabsBefore instanceof SVGElement) {
-                tabsBefore.style.fill = getTheme.value !== undefined ? systemDarkBackgroundColor.value : activeFontColor.value;
-            }
-            if (tabsAfter instanceof SVGElement) {
-                tabsAfter.style.fill = getTheme.value !== undefined ? systemDarkBackgroundColor.value : activeFontColor.value;
-            }
-        }
         // 初始化选中的颜色
         const initActiveBackgroundColor = () => {
             const tabsActive = document.getElementsByClassName("tabs-active")[0];
@@ -90,105 +70,63 @@ export default defineComponent({
         }
         // 初始化鼠标事件
         const initMouseEvent = (index?: number) => {
-            list.value.forEach((item, key) => {
-                const tagsView = document.getElementById("tagsView_" + item.id);
-
+            tagList?.value?.forEach((item, key) => {
+                const tagsView = document.getElementById(`tagsView_${item.id}`);
                 if (tagsView) {
                     const childNodes = tagsView.childNodes;
-                    // 除选中的tag外，其余的背景色进行重置
-                    if (index && tagsView.id.indexOf(index.toString()) === -1) {
-                        tagsView.style.backgroundColor = "";
-                    }
                     // 给 tagsView 添加鼠标【到达】事件监听
                     tagsView.onmouseover = () => {
                         tagsView.style.backgroundColor = useHexToRgba(activeBackgroundColor.value as string);
-                        tagsView.style.color = activeFontColor.value
-
-                        // 隐藏当前tag和上一个tag的分割线
-                        const currentNode = document.getElementById("tagsView_" + list.value[key]?.id);
-                        const prevNode = document.getElementById("tagsView_" + list.value[key - 1]?.id);
-                        if (currentNode instanceof HTMLElement) {
-                            const currentDivider = currentNode.childNodes[1];
-                            if (currentDivider instanceof HTMLElement) {
-                                currentDivider.style.opacity = '0'
-                            }
-                        }
-                        if (prevNode instanceof HTMLElement) {
-                            const prevDivider = prevNode.childNodes[1];
-                            if (prevDivider instanceof HTMLElement) {
-                                prevDivider.style.opacity = '0'
-                            }
-                        }
-
+                        tagsView.style.color = activeFontColor?.value as string
                         childNodes.forEach(child => {
-                            if (child.nodeName === "svg" && child instanceof SVGElement) {
+                            if (child.nodeName.toUpperCase() === "SVG" && child instanceof SVGElement) {
                                 child.style.fill = useHexToRgba(activeBackgroundColor.value as string);
                             }
                         })
                     }
                     // 给 tagsView 添加鼠标【离开】事件监听
                     tagsView.onmouseout = () => {
-                        if (index && tagsView.id.indexOf(index.toString()) === -1) {
+                        if (tagIndex?.value && tagsView.id.indexOf(tagIndex?.value.toString()) === -1) {
                             tagsView.style.backgroundColor = "";
-                            tagsView.style.color = getTheme.value !== undefined ? activeFontColor.value : fontColor.value;
+                            tagsView.style.color = getTheme.value !== undefined ? activeFontColor?.value as string : "";
                         }
-
-                        // 显示当前tag和上一个tag的分割线
-                        const currentNode = document.getElementById("tagsView_" + list.value[key]?.id);
-                        const prevNode = document.getElementById("tagsView_" + list.value[key - 1]?.id);
-                        if (currentNode instanceof HTMLElement) {
-                            const currentDivider = currentNode.childNodes[1];
-                            if (currentDivider instanceof HTMLElement) {
-                                currentDivider.style.opacity = '1'
-                            }
-                        }
-                        if (prevNode instanceof HTMLElement) {
-                            const prevDivider = prevNode.childNodes[1];
-                            if (prevDivider instanceof HTMLElement) {
-                                prevDivider.style.opacity = '1'
-                            }
-                        }
-
                         childNodes.forEach(child => {
                             if (child.nodeName === "svg" && child instanceof SVGElement) {
-                                if (index && tagsView.id.indexOf(index.toString()) === -1) {
-                                    child.style.fill = getTheme.value !== undefined ? systemDarkBackgroundColor.value : activeFontColor.value;
+                                if (tagIndex?.value && tagsView.id.indexOf(tagIndex?.value.toString()) === -1) {
+                                    child.style.fill = 'transparent';
                                 }
                             }
                         })
                     }
+
+                    // 关闭图片的鼠标监听事件
+                    const closeIcon = document.getElementById(`tabs-close-${item.id}`);
+                    console.log('----', closeIcon)
+                    if (closeIcon) {
+                        closeIcon.onmouseover = () => {
+                            closeIcon.style.backgroundColor = useHexToRgba(activeBackgroundColor.value as string, 0.3);
+                            closeIcon.style.opacity = "0.5"
+                        }
+                        closeIcon.onmouseout = () => {
+                            closeIcon.style.backgroundColor = ""
+                            closeIcon.style.opacity = "1"
+                        }
+                    }
+
                 }
             })
         }
+
         const onClickTag = (item: any) => {
-            index.value = item.id
-            initMouseEvent(index.value)
+            useSystemStore().setTagIndex(item.id)
+            initMouseEvent(tagIndex?.value)
         }
-        const list = ref<Array<{ id: number, name: string }>>([
-            {
-                id: 1,
-                name: '工作台'
-            },
-            {
-                id: 2,
-                name: '上传图片'
-            },
-            {
-                id: 3,
-                name: '弹窗扩展'
-            },
-            {
-                id: 4,
-                name: '海外完工清单录入'
-            },
-            {
-                id: 5,
-                name: '在线文档'
-            }
-        ])
+
+        const removeTag = (tagId: number) => {
+            useSystemStore().removeTag(tagId)
+        }
 
         onMounted(() => {
-            initBackgroundColor();
             initActiveBackgroundColor();
             initMouseEvent(index.value);
         })
@@ -196,13 +134,14 @@ export default defineComponent({
         return {
             getTheme,
             index,
-            systemDarkBackgroundColor,
             activeBackgroundColor,
-            fontColor,
             activeFontColor,
-            list,
+            CloseOutline,
             onClickTag,
-            useHexToRgba
+            useHexToRgba,
+            removeTag,
+            tagIndex,
+            tagList
         }
     }
 })
@@ -210,108 +149,97 @@ export default defineComponent({
 
 <style lang="less">
 .tagsView {
-    padding: 0 10px 0 15px;
+    width: 100%;
+    padding: 0 0 0 15px;
     display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
 
-    .tabs {
-        height: 30px;
-        position: relative;
-        border-radius: 8px 8px 0 0;
+    .tabs-transition {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        cursor: pointer;
 
-        &-title {
-            width: 100%;
-            height: 14px;
+        .tabs {
+            height: 30px;
+            position: relative;
+            border-radius: 8px 8px 0 0;
             display: flex;
             align-items: center;
-            padding: 0 6px 0 10px;
+            justify-content: space-between;
 
-            span {
-                margin: 0 10px 0 5px;
-                user-select: none;
+            &-title {
+                width: 100%;
+                height: 15px;
+                display: flex;
+                align-items: center;
+                padding: 0 6px 0 10px;
+
+                span {
+                    margin: 0 10px 0 5px;
+                    user-select: none;
+                    white-space: nowrap;
+                }
+            }
+
+            &-before {
+                position: absolute;
+                left: -7px;
+                bottom: 0;
+            }
+
+            &-after {
+                position: absolute;
+                right: -7px;
+                bottom: 0;
+                transform: rotate(90deg);
             }
         }
 
-        &-divider {
-            width: 1px;
-            height: 15px;
-            position: absolute;
-            right: -1px;
-            background-color: #8a8a8a;
-        }
-
-        &-before {
-            position: absolute;
-            left: -7px;
-            bottom: 0;
-        }
-
-        &-after {
-            position: absolute;
-            right: -7px;
-            bottom: 0;
-            transform: rotate(90deg);
-        }
-    }
-
-    .tabs-active {
-        height: 30px;
-        position: relative;
-        border-radius: 8px 8px 0 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        z-index: 9999;
-
-        &-title {
-            width: 100%;
-            height: 14px;
+        .tabs-active {
+            height: 30px;
+            position: relative;
+            border-radius: 8px 8px 0 0;
             display: flex;
             align-items: center;
-            padding: 0 6px 0 10px;
+            justify-content: space-between;
 
-            span {
-                margin: 0 10px 0 5px;
+            &-before {
+                position: absolute;
+                left: -7px;
+                bottom: 0;
+            }
+
+            &-after {
+                position: absolute;
+                right: -7px;
+                bottom: 0;
+                transform: rotate(90deg);
             }
         }
 
-        &-divider {
+        .tabs-active:hover {
+            cursor: pointer;
+        }
+
+        .tabs:hover {
+            cursor: pointer;
+        }
+
+        .tag-move,
+        .tag-enter-active,
+        .tag-leave-active {
+            transition: all 0.3s ease;
+        }
+
+        .tag-enter-from,
+        .tag-leave-to {
             opacity: 0;
         }
 
-        &-before {
+        .tag-leave-active {
             position: absolute;
-            left: -7px;
-            bottom: 0;
-        }
-
-        &-after {
-            position: absolute;
-            right: -7px;
-            bottom: 0;
-            transform: rotate(90deg);
-        }
-    }
-
-    .tabs:hover {
-        cursor: pointer;
-        z-index: 9999;
-
-        .tabs-before {
-            position: absolute;
-            left: -7px;
-            bottom: 0;
-        }
-
-        .tabs-after {
-            position: absolute;
-            right: -7px;
-            bottom: 0;
-            transform: rotate(90deg);
         }
     }
 }
+
+
 </style>

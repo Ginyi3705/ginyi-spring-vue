@@ -3,7 +3,6 @@ import {storeKeyEnums} from "@/enums/storeKeyEnums";
 import {darkTheme} from "naive-ui";
 import {BuiltInGlobalTheme} from "naive-ui/es/themes/interface";
 import {ISystemState} from "@/interface/modules/system";
-import {store} from "@/store";
 
 export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
     state: (): ISystemState => ({
@@ -16,7 +15,8 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         layoutFooterHeight: 40,
         tabsHeight: 30,
         collapsed: false,
-        menuStyle: 'dark-header'
+        tagIndex: tagsList[0].id,
+        tagList: tagsList
     }),
     getters: {
         getTheme(): BuiltInGlobalTheme | undefined {
@@ -41,11 +41,27 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         },
         setCollapsed(data: boolean | undefined) {
             this.collapsed = data
+        },
+        setTagIndex(data: number | undefined) {
+            this.tagIndex = data
+        },
+        setTagList(data: Array<{ id: number, tagName: string }>) {
+            this.tagList = data
+        },
+        addTag(data: { id: number, tagName: string }) {
+            this.tagIndex = data.id
+            this.tagList?.push(data)
+        },
+        removeTag(tagId: number) {
+            this.tagList = this.tagList?.filter((tag, key) => {
+                return tagId !== tag.id
+            })
+
         }
     }
 })
 
-const themeColorList:Array<string> = [
+const themeColorList: Array<string> = [
     '#9A53FE',
     '#e88080',
     '#0084f4',
@@ -66,4 +82,27 @@ const themeColorList:Array<string> = [
     '#E03D3D',
     '#E63AAF',
     '#40EA9A',
+]
+
+const tagsList = [
+    {
+        id: 1,
+        tagName: '工作台'
+    },
+    {
+        id: 2,
+        tagName: '上传图片'
+    },
+    {
+        id: 3,
+        tagName: '弹窗扩展'
+    },
+    {
+        id: 4,
+        tagName: '海外完工清单录入'
+    },
+    {
+        id: 5,
+        tagName: '在线文档'
+    }
 ]

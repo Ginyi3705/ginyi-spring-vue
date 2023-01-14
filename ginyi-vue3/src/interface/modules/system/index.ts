@@ -38,8 +38,10 @@ export interface ISystemState {
     collapsed?: boolean | undefined;
     // 多标签的高度
     tabsHeight?: number | undefined;
-    // 菜单风格
-    menuStyle?: string | undefined
+    // 多标签页 选中的的索引
+    tagIndex?: number
+    // 多标签页 列表
+    tagList?: Array<{id: number, tagName: string}>;
 }
 
 /**

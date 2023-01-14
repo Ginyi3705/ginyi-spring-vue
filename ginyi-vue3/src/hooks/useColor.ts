@@ -4,7 +4,7 @@
  * @param {number} amount 更改颜色的量
  * @returns {string} 颜色的处理部分
  */
-function useAddLight(color: string, amount: number) {
+function useAddLight(color: string, amount: number): string {
     const cc = parseInt(color, 16) + amount;
     const c = cc > 255 ? 255 : cc;
     return c.toString(16).length > 1 ? c.toString(16) : `0${c.toString(16)}`;
@@ -16,7 +16,7 @@ function useAddLight(color: string, amount: number) {
  * @param {number} amount 更改颜色的量
  * @returns {string} 处理后的颜色表示为HEX
  */
-export function useLighten(color: string, amount: number) {
+export function useLighten(color: string, amount: number): string {
     color = color.indexOf('#') >= 0 ? color.substring(1, color.length) : color;
     amount = Math.trunc((255 * amount) / 100);
     return `#${useAddLight(color.substring(0, 2), amount)}${useAddLight(
@@ -26,11 +26,11 @@ export function useLighten(color: string, amount: number) {
 }
 
 /**
- * hex转rgb
+ * hex转rgba
  * @param bgColor
  * @param alpha
  */
-export const useHexToRgba = (bgColor: string, alpha = 0.3) => {
+export const useHexToRgba = (bgColor: string, alpha = 0.2): string => {
     let color = bgColor.slice(1); // 去掉'#'号
     let rgba = [
         parseInt("0x" + color.slice(0, 2)),
