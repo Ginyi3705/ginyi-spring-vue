@@ -12,7 +12,6 @@ import {defineComponent, ref} from "vue";
 import {menuController} from "@/api";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {storeToRefs} from "pinia";
-import { shuffle as _shuffle } from 'lodash-es'
 
 export default defineComponent({
     setup() {
@@ -44,7 +43,7 @@ export default defineComponent({
             items.value = _shuffle(items.value)
         }
 
-        function remove(item:any) {
+        function remove(item: any) {
             const i = items.value.indexOf(item)
             if (i > -1) {
                 items.value.splice(i, 1)

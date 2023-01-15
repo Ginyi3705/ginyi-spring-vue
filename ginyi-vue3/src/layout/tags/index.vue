@@ -1,29 +1,31 @@
 <template>
-    <div class="tagsView">
-        <transition-group name="tag" tag="div" class="tabs-transition">
-            <div :id="'tagsView_' + item.id" :class="item.id === tagIndex ? 'tabs-active' : 'tabs'"
-                 v-for="item in tagList"
-                 :key="item.id"
-                 :style="{color: getTheme ||  item.id === tagIndex ? activeFontColor :  null,backgroundColor: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : null}"
-                 @click="onClickTag(item)">
-                <div class="tabs-title">
-                    <n-icon>
-                        <GameController/>
-                    </n-icon>
-                    <span>{{ item.tagName }}</span>
-                    <n-icon style="border-radius: 50%" :component="CloseOutline" @click="() => removeTag(item.id)"
-                            :id="`tabs-close-${item.id}`"/>
+    <div class="tagsView" id="tagsView" ref="tagsView">
+        <div ref="tabsTransitionWidth">
+            <transition-group name="tag" tag="div" class="tabs-transition">
+                <div :id="'tagsView_' + item.id" :class="item.id === tagIndex ? 'tabs-active' : 'tabs'"
+                     v-for="item in tagList"
+                     :key="item.id"
+                     :style="{color: getTheme ||  item.id === tagIndex ? activeFontColor :  null,backgroundColor: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : null}"
+                     @click="onClickTag(item)">
+                    <div class="tabs-title">
+                        <n-icon>
+                            <GameController/>
+                        </n-icon>
+                        <span>{{ item.tagName }}</span>
+                        <n-icon style="border-radius: 50%" :component="CloseOutline" @click="() => removeTag(item.id)"
+                                :id="`tabs-close-${item.id}`"/>
+                    </div>
+                    <svg :class="item.id === tagIndex ? 'tabs-active-before' : 'tabs-before'" width="7" height="7"
+                         :style="{fill: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
+                        <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"/>
+                    </svg>
+                    <svg :class="item.id === tagIndex ? 'tabs-active-after' : 'tabs-after'" width="7" height="7"
+                         :style="{fill: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
+                        <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"></path>
+                    </svg>
                 </div>
-                <svg :class="item.id === tagIndex ? 'tabs-active-before' : 'tabs-before'" width="7" height="7"
-                     :style="{fill: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
-                    <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"/>
-                </svg>
-                <svg :class="item.id === tagIndex ? 'tabs-active-after' : 'tabs-after'" width="7" height="7"
-                     :style="{fill: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
-                    <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"></path>
-                </svg>
-            </div>
-        </transition-group>
+            </transition-group>
+        </div>
     </div>
 </template>
 
@@ -33,6 +35,8 @@ import {CloseOutline, GameController} from '@vicons/ionicons5'
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {useHexToRgba} from "@/hooks/useColor";
+// @ts-ignore
+import elementResizeDetectorMaker from "element-resize-detector";
 
 export default defineComponent({
     name: "TagsView",
@@ -40,6 +44,7 @@ export default defineComponent({
         CloseOutline, GameController
     },
     setup() {
+        const tabsTransitionWidth = ref<HTMLElement | undefined>(undefined)
         const {getTheme, themeColor, tagIndex, tagList} = storeToRefs(useSystemStore());
         // 选中tag的索引
         const index = ref<number | undefined>(0);
@@ -101,7 +106,6 @@ export default defineComponent({
 
                     // 关闭图片的鼠标监听事件
                     const closeIcon = document.getElementById(`tabs-close-${item.id}`);
-                    console.log('----', closeIcon)
                     if (closeIcon) {
                         closeIcon.onmouseover = () => {
                             closeIcon.style.backgroundColor = useHexToRgba(activeBackgroundColor.value as string, 0.3);
@@ -129,9 +133,19 @@ export default defineComponent({
         onMounted(() => {
             initActiveBackgroundColor();
             initMouseEvent(index.value);
+            elementResizeDetectorMaker().listenTo(tabsTransitionWidth.value, () => {
+                const tabsView = document.getElementById("tagsView");
+                if (tabsView && tabsTransitionWidth.value) {
+                    if (tabsTransitionWidth.value.offsetWidth > tabsView.offsetWidth) {
+                        tabsView.scrollTo({left: tabsView.scrollWidth, behavior: 'smooth'});
+                        tabsView.style.overflow = "hidden"
+                    }
+                }
+            })
         })
 
         return {
+            tabsTransitionWidth,
             getTheme,
             index,
             activeBackgroundColor,
@@ -233,6 +247,7 @@ export default defineComponent({
         .tag-enter-from,
         .tag-leave-to {
             opacity: 0;
+            transform: translateX(-30px);
         }
 
         .tag-leave-active {
