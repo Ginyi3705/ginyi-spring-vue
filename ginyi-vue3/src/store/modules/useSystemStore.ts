@@ -56,7 +56,11 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             this.tagList = this.tagList?.filter((tag, key) => {
                 return tagId !== tag.id
             })
-
+        },
+        toFirstTag(): any {
+            if (this.tagList !== undefined && this.tagIndex !== undefined) {
+                this.tagIndex = this.tagList[0].id
+            }
         }
     }
 })

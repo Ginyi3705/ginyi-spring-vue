@@ -4,11 +4,14 @@
         <n-button type="primary" @click="addTag({id: new Date().valueOf(), tagName: '测' + new Date().valueOf()})">
             添加一个Tag
         </n-button>
+        <n-button type="primary" @click="toFirst">
+            跳转到第一个
+        </n-button>
     </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import {defineComponent} from "vue";
 import {menuController} from "@/api";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {storeToRefs} from "pinia";
@@ -26,38 +29,14 @@ export default defineComponent({
             useSystemStore().addTag(data)
         }
 
-        const getInitialItems = () => [1, 2, 3, 4, 5]
-        const items = ref(getInitialItems())
-        let id = items.value.length + 1
-
-        function insert() {
-            const i = Math.round(Math.random() * items.value.length)
-            items.value.splice(i, 0, id++)
-        }
-
-        function reset() {
-            items.value = getInitialItems()
-        }
-
-        function shuffle() {
-            items.value = _shuffle(items.value)
-        }
-
-        function remove(item: any) {
-            const i = items.value.indexOf(item)
-            if (i > -1) {
-                items.value.splice(i, 1)
-            }
+        const toFirst = () => {
+            useSystemStore().toFirstTag()
         }
 
         return {
             addTag,
+            toFirst,
             tagList,
-            items,
-            shuffle,
-            reset,
-            insert,
-            remove,
             getRouterList,
             useSystemStore
         }
