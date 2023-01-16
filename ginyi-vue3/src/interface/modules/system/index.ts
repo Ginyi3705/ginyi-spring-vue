@@ -41,7 +41,11 @@ export interface ISystemState {
     // 多标签页 选中的的索引
     tagIndex?: number
     // 多标签页 列表
-    tagList?: Array<{id: number, tagName: string}>;
+    tagList?: Array<{ id: number, tagName: string }>;
+    // 多标签删除标志
+    isRemoveFlag?: boolean;
+    // 多标签上一次的宽度
+    prevTagsViewWidth?: number | undefined;
 }
 
 /**

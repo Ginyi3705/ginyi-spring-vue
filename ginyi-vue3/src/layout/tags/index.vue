@@ -1,8 +1,8 @@
 <template>
     <div style="display: flex; align-items: center">
-        <n-icon :component="ChevronBack" size="25" style="cursor: pointer"/>
-        <div class="tagsView" id="tagsView" ref="tagsView">
-            <div ref="tabsTransitionWidth">
+        <n-icon :component="ChevronBack" size="20" style="cursor: pointer"/>
+        <div class="tabsView" id="tabsView" ref="tabsView">
+            <div ref="tabsTransitionWidth" id="tabsTransition">
                 <transition-group name="tag" tag="div" class="tabs-transition">
                     <div :id="'tagsView_' + item.id" :class="item.id === tagIndex ? 'tabs-active' : 'tabs'"
                          v-for="item in tagList"
@@ -15,7 +15,7 @@
                             </n-icon>
                             <span>{{ item.tagName }}</span>
                             <n-icon style="border-radius: 50%" :component="CloseOutline"
-                                    @click="() => removeTag(item.id)"
+                                    @click.stop="() => removeTag(item.id)"
                                     :id="`tabs-close-${item.id}`"/>
                         </div>
                         <svg :class="item.id === tagIndex ? 'tabs-active-before' : 'tabs-before'" width="7" height="7"
@@ -30,12 +30,12 @@
                 </transition-group>
             </div>
         </div>
-        <n-icon :component="ChevronForward" size="25" style="cursor: pointer"/>
+        <n-icon :component="ChevronForward" size="20" style="cursor: pointer"/>
     </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, watch, watchEffect} from "vue";
+import {defineComponent, onMounted, ref, watchEffect} from "vue";
 import {ChevronBack, ChevronForward, CloseOutline, GameController} from '@vicons/ionicons5'
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
@@ -50,8 +50,9 @@ export default defineComponent({
         ChevronBack, ChevronForward
     },
     setup() {
+        const width = ref<number>(0)
         const tabsTransitionWidth = ref<HTMLElement | undefined>(undefined)
-        const tagsView = ref<HTMLElement | undefined>(undefined)
+        const tabsView = ref<HTMLElement | undefined>(undefined)
         const {getTheme, themeColor, tagIndex, tagList} = storeToRefs(useSystemStore());
         // 选中的tag颜色
         const activeBackgroundColor = ref<string | undefined | null>(useHexToRgba(themeColor?.value as string));
@@ -60,10 +61,6 @@ export default defineComponent({
 
         watchEffect(() => {
             activeBackgroundColor.value = themeColor?.value
-        })
-
-        watch(() => tagIndex?.value, () => {
-            tagToView();
         })
 
         // 初始化选中的颜色
@@ -133,41 +130,16 @@ export default defineComponent({
         const onClickTag = (item: any) => {
             useSystemStore().setTagIndex(item.id);
             initMouseEvent(tagIndex?.value);
-            tagToView();
         }
 
         const removeTag = (tagId: number) => {
             useSystemStore().removeTag(tagId)
         }
 
-        const onElementResize = () => {
-            elementResizeDetectorMaker().listenTo(tabsTransitionWidth.value, () => {
-                if (tagsView.value && tabsTransitionWidth.value) {
-                    if (tabsTransitionWidth.value.offsetWidth > tagsView.value.offsetWidth) {
-                        tagsView.value.scrollTo({left: tagsView.value.scrollWidth, behavior: 'smooth'});
-                        tagsView.value.style.overflow = "hidden"
-                    }
-                }
-            })
-        }
-
-        const tagToView = () => {
-            const tagsBox = document.getElementsByClassName("tabs-transition")[0];
-            if (tagsBox && tagsBox instanceof HTMLElement) {
-                (tagsBox.childNodes || [])?.forEach(tag => {
-                    if (tag instanceof HTMLElement && (tag.id === `tagsView_${tagIndex?.value}`)) {
-                        tag.scrollIntoView && tag.scrollIntoView({
-                            behavior: "smooth",  // 平滑过渡
-                        });
-                    }
-                })
-            }
-        }
 
         onMounted(() => {
             initActiveBackgroundColor();
             initMouseEvent(tagIndex?.value);
-            onElementResize();
         })
 
         return {
@@ -182,14 +154,14 @@ export default defineComponent({
             removeTag,
             tagIndex,
             tagList,
-            tagsView
+            tabsView
         }
     }
 })
 </script>
 
 <style lang="less">
-.tagsView {
+.tabsView {
     width: 100%;
     display: flex;
     overflow-x: auto;

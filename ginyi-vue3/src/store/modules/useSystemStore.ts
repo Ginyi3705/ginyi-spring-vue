@@ -16,7 +16,9 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         tabsHeight: 30,
         collapsed: false,
         tagIndex: tagsList[0].id,
-        tagList: tagsList
+        tagList: tagsList,
+        isRemoveFlag: false,
+        prevTagsViewWidth: 0
     }),
     getters: {
         getTheme(): BuiltInGlobalTheme | undefined {
@@ -51,16 +53,48 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         addTag(data: { id: number, tagName: string }) {
             this.tagIndex = data.id
             this.tagList?.push(data)
+
+            const tabsView = document.getElementById("tabsView");
+            const tabsTransition = document.getElementById("tabsTransition");
+            if (tabsView && tabsTransition) {
+                if (tabsTransition.offsetWidth > tabsView.offsetWidth) {
+                    setTimeout(() => {
+                        tabsView.scrollTo({left: tabsTransition.offsetWidth, behavior: 'smooth'});
+                    }, 50)
+                    tabsView.style.overflow = "auto"
+                }
+                this.prevTagsViewWidth = tabsTransition.offsetWidth
+            }
         },
         removeTag(tagId: number) {
-            this.tagList = this.tagList?.filter((tag, key) => {
+            this.tagList = this.tagList?.filter(tag => {
                 return tagId !== tag.id
             })
         },
-        toFirstTag(): any {
+        locateCurrent(): any {
             if (this.tagList !== undefined && this.tagIndex !== undefined) {
-                this.tagIndex = this.tagList[0].id
+                // // 是tag显示在可视区域
+                const tabsList = document.getElementsByClassName("tabs-transition")[0];
+                if (tabsList && tabsList instanceof HTMLElement) {
+                    (tabsList.childNodes || [])?.forEach(tag => {
+                        if (tag instanceof HTMLElement && (tag.id === `tagsView_${this.tagIndex}`)) {
+                            tag.scrollIntoView && tag.scrollIntoView({
+                                inline: "center",
+                                behavior: "smooth",  // 平滑过渡
+                            });
+                        }
+                    })
+                }
             }
+        },
+        setIsRemoveFlag(data: boolean): Promise<any> {
+            this.isRemoveFlag = data
+            return new Promise((resolve) => {
+                resolve(null)
+            })
+        },
+        setPrevTagsViewWidth(data: number) {
+            this.prevTagsViewWidth = data
         }
     }
 })

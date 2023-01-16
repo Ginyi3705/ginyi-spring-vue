@@ -5,7 +5,7 @@
             添加一个Tag
         </n-button>
         <n-button type="primary" @click="toFirst">
-            跳转到第一个
+            定位当前
         </n-button>
     </div>
 </template>
@@ -26,11 +26,13 @@ export default defineComponent({
         }
 
         const addTag = (data: any) => {
-            useSystemStore().addTag(data)
+            useSystemStore().setIsRemoveFlag(false).then(() => {
+                useSystemStore().addTag(data)
+            })
         }
 
         const toFirst = () => {
-            useSystemStore().toFirstTag()
+            useSystemStore().locateCurrent()
         }
 
         return {
