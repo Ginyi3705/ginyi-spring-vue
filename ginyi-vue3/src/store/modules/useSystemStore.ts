@@ -66,6 +66,43 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             if (this.tabsList && tagId === this.tabIndex) {
                 this.tabIndex = this.tabsList[0].id
             }
+        },
+        removeLeftTabs(index: number) {
+            this.tabsList?.splice(1, index - 1)
+            const closeSelf = this.tabsList?.some(item => {
+                return item.id === this.tabIndex
+            })
+            if (!closeSelf && this.tabsList) {
+                this.tabIndex = this.tabsList[0].id
+            }
+        },
+        removeRightTabs(index: number) {
+            this.tabsList?.splice(index + 1, this.tabsList?.length - 1)
+            const closeSelf = this.tabsList?.some(item => {
+                return item.id === this.tabIndex
+            })
+            if (!closeSelf && this.tabsList) {
+                this.tabIndex = this.tabsList[0].id
+            }
+        },
+        removeOtherTabs(index: number) {
+            this.tabsList = this.tabsList?.filter((item, key) => {
+                return key === 0 || key === index
+            })
+            const closeSelf = this.tabsList?.some(item => {
+                return item.id === this.tabIndex
+            })
+            if (!closeSelf && this.tabsList) {
+                this.tabIndex = this.tabsList[0].id
+            }
+        },
+        removeAllTabs() {
+            this.tabsList = this.tabsList?.filter((item, key) => {
+                return key === 0
+            })
+            if (this.tabsList) {
+                this.tabIndex = this.tabsList[0].id
+            }
         }
     }
 })

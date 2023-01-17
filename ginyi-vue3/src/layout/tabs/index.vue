@@ -1,7 +1,7 @@
 <template>
     <div style="display: flex; align-items: center;">
         <n-icon :component="ChevronBack" size="20" class="both-icon" @click="onBothSideIcons('left')"/>
-        <div class="tabsView" id="tabsView" ref="tabsView">
+        <div class="tabsView" id="tabsView">
             <div id="tabsTransition">
                 <transition-group name="tab" tag="div" class="tabs-transition">
                     <div :id="'tabView_' + item.id" :class="item.id === tabIndex ? 'tabs-active' : 'tabs'"
@@ -9,7 +9,8 @@
                          :key="item.id"
                          :style="{color: getTheme ||  item.id === tabIndex ? activeFontColor :  null,
                                   backgroundColor: item.id === tabIndex ? useHexToRgba(activeBackgroundColor) : null}"
-                         @click="onClickTag(item)">
+                         @click="onClickTag(item)"
+                         @contextmenu="handleContextMenu($event, item, index)">
                         <div class="tabs-title">
                             <n-icon>
                                 <GameController/>
@@ -36,28 +37,78 @@
         <n-icon :component="ChevronForward" size="20" class="both-icon" @click="onBothSideIcons('right')"/>
         <n-icon :component="LocateOutline" size="16" class="both-icon" @click="location"/>
     </div>
+    <n-dropdown
+        placement="bottom-start"
+        trigger="manual"
+        :x="xRef"
+        :y="yRef"
+        :options="dropOptions"
+        :show="showDropdownRef"
+        :on-clickoutside="() => showDropdownRef = false"
+        @select="handleSelect"
+    />
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, watchEffect} from "vue";
-import {ChevronBack, ChevronForward, CloseOutline, GameController, LocateOutline} from '@vicons/ionicons5'
+import {defineComponent, nextTick, onMounted, ref, watchEffect} from "vue";
+import {
+    ChevronBack,
+    ChevronForward,
+    CloseCircleOutline,
+    CloseOutline,
+    CodeWorking,
+    GameController,
+    LocateOutline,
+    PlaySkipBack,
+    PlaySkipForward
+} from '@vicons/ionicons5'
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {useHexToRgba} from "@/hooks/useColor";
+import {renderIcon} from "@/plugins/naive-ui/common";
 
 export default defineComponent({
     name: "TabsView",
     components: {
-        CloseOutline, GameController,
-        ChevronBack, ChevronForward, LocateOutline
+        CloseOutline, GameController, CodeWorking,
+        ChevronBack, ChevronForward, LocateOutline,
+        PlaySkipForward, PlaySkipBack, CloseCircleOutline,
     },
     setup() {
-        const tabsView = ref<HTMLElement | undefined>(undefined)
         const {getTheme, themeColor, clientWidth, tabIndex, tabsList} = storeToRefs(useSystemStore());
         // 选中的tag颜色
         const activeBackgroundColor = ref<string | undefined | null>(useHexToRgba(themeColor?.value as string));
         // 选中的文字颜色
         const activeFontColor = themeColor
+
+        // 右击下拉菜单
+        const dropOptions = ref<Array<{ label: string, key: string, icon?: Function }>>([
+            {
+                label: '关闭其他',
+                key: 'other',
+                icon: renderIcon(CodeWorking)
+            },
+            {
+                label: '关闭全部',
+                key: 'all',
+                icon: renderIcon(CloseCircleOutline)
+            },
+            {
+                label: '关闭左侧',
+                key: 'left',
+                icon: renderIcon(PlaySkipBack)
+            },
+            {
+                label: '关闭右侧',
+                key: 'right',
+                icon: renderIcon(PlaySkipForward)
+            }
+        ])
+        const whichIndex = ref<number | undefined>(undefined)
+        const showDropdownRef = ref<boolean>(false)
+        const xRef = ref<number>(0)
+        const yRef = ref<number>(0)
+
 
         watchEffect(() => {
             activeBackgroundColor.value = themeColor?.value
@@ -103,14 +154,14 @@ export default defineComponent({
                         }
                         childNodes.forEach(child => {
                             if (child.nodeName === "svg" && child instanceof SVGElement) {
-                                if (tabIndex?.value && tagsView.id.indexOf(tabIndex?.value.toString()) === -1) {
-                                    child.style.fill = 'transparent';
+                                if (tagsView.id.split("_")[1] !== tabIndex?.value?.toString()) {
+                                    child.style.fill = "transparent";
                                 }
                             }
                         })
                     }
 
-                    // 关闭图片的鼠标监听事件
+                    // 关闭icon的鼠标监听事件
                     const closeIcon = document.getElementById(`tabs-close-${item.id}`);
                     if (closeIcon) {
                         closeIcon.onmouseover = () => {
@@ -161,7 +212,6 @@ export default defineComponent({
 
         const removeTab = (tagId: number) => {
             useSystemStore().removeTab(tagId);
-            initMouseEvent();
         }
         // tabsView两边的icon
         const onBothSideIcons = (type: string) => {
@@ -191,6 +241,36 @@ export default defineComponent({
             }
         }
 
+        // 右击
+        const handleContextMenu = (e: MouseEvent, item: any, index: number) => {
+            e.preventDefault()
+            showDropdownRef.value = false
+            nextTick().then(() => {
+                showDropdownRef.value = true
+                xRef.value = e.clientX
+                yRef.value = e.clientY
+                whichIndex.value = index
+            })
+        }
+
+        const handleSelect = (key: string) => {
+            showDropdownRef.value = false
+            switch (key) {
+                case "right":
+                    useSystemStore().removeRightTabs(whichIndex.value as number);
+                    break;
+                case "left":
+                    useSystemStore().removeLeftTabs(whichIndex.value as number);
+                    break;
+                case "other":
+                    useSystemStore().removeOtherTabs(whichIndex.value as number);
+                    break;
+                case "all":
+                    useSystemStore().removeAllTabs();
+                    break;
+            }
+        }
+
         onMounted(() => {
             initActiveBackgroundColor();
             initMouseEvent(tabIndex?.value);
@@ -200,16 +280,22 @@ export default defineComponent({
             getTheme,
             activeBackgroundColor,
             activeFontColor,
-            CloseOutline,
+            CloseOutline, CloseCircleOutline,
             ChevronBack, ChevronForward, LocateOutline,
+            PlaySkipForward, PlaySkipBack, CodeWorking,
             onClickTag,
             useHexToRgba,
             removeTab,
             tabIndex,
             tabsList,
-            tabsView,
             onBothSideIcons,
-            location
+            location,
+            dropOptions,
+            showDropdownRef,
+            xRef,
+            yRef,
+            handleContextMenu,
+            handleSelect
         }
     }
 })
