@@ -14,10 +14,10 @@
             <Menu />
         </n-layout-sider>
         <n-layout>
-            <n-layout-header :style="{height: (layoutHeaderHeight + tabsHeight) + 'px', padding: '10px'}">
+            <n-layout-header :style="{height: (layoutHeaderHeight + tabsHeight) + 'px', padding: '0px 10px 10px 10px'}">
                 <div>
                     <Headers :style="{height: layoutHeaderHeight - 10 + 'px'}"/>
-                    <TagsView/>
+                    <TabsView/>
                 </div>
             </n-layout-header>
             <n-layout-content :content-style="{padding: '15px', height: clientHeight - (layoutHeaderHeight + layoutFooterHeight + tabsHeight) + 'px',
@@ -42,7 +42,7 @@ import Headers from "@/layout/header/index.vue";
 import {renderIcon} from "@/plugins/naive-ui/common";
 import {storeToRefs} from "pinia";
 import {setting} from "@/config/setting";
-import TagsView from "@/layout/tags/index.vue";
+import TabsView from "@/layout/tabs/index.vue";
 import Theme from "@/layout/theme/index.vue";
 import Menu from "@/layout/menu/index.vue";
 
@@ -51,7 +51,7 @@ export default defineComponent({
     components: {
         Logo,
         Headers,
-        TagsView,
+        TabsView,
         Theme,
         Menu
     },

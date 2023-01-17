@@ -11,14 +11,12 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         themeColorList: themeColorList,
         clientHeight: document.body.clientHeight,
         clientWidth: document.body.clientWidth,
-        layoutHeaderHeight: 60,
+        layoutHeaderHeight: 58,
         layoutFooterHeight: 40,
-        tabsHeight: 30,
         collapsed: false,
-        tagIndex: tagsList[0].id,
-        tagList: tagsList,
-        isRemoveFlag: false,
-        prevTagsViewWidth: 0
+        tabsHeight: 20,
+        tabIndex: tabsList[0].id,
+        tabsList: tabsList,
     }),
     getters: {
         getTheme(): BuiltInGlobalTheme | undefined {
@@ -45,56 +43,29 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             this.collapsed = data
         },
         setTagIndex(data: number | undefined) {
-            this.tagIndex = data
-        },
-        setTagList(data: Array<{ id: number, tagName: string }>) {
-            this.tagList = data
+            this.tabIndex = data
         },
         addTag(data: { id: number, tagName: string }) {
-            this.tagIndex = data.id
-            this.tagList?.push(data)
+            this.tabIndex = data.id
+            this.tabsList?.push(data)
 
-            const tabsView = document.getElementById("tabsView");
-            const tabsTransition = document.getElementById("tabsTransition");
-            if (tabsView && tabsTransition) {
-                if (tabsTransition.offsetWidth > tabsView.offsetWidth) {
-                    setTimeout(() => {
+            setTimeout(() => {
+                const tabsView = document.getElementById("tabsView");
+                const tabsTransition = document.getElementById("tabsTransition");
+                if (tabsView && tabsTransition) {
+                    if (tabsTransition.offsetWidth > tabsView.offsetWidth) {
                         tabsView.scrollTo({left: tabsTransition.offsetWidth, behavior: 'smooth'});
-                    }, 50)
-                    tabsView.style.overflow = "auto"
+                    }
                 }
-                this.prevTagsViewWidth = tabsTransition.offsetWidth
-            }
+            }, 50)
         },
-        removeTag(tagId: number) {
-            this.tagList = this.tagList?.filter(tag => {
+        removeTab(tagId: number) {
+            this.tabsList = this.tabsList?.filter(tag => {
                 return tagId !== tag.id
             })
-        },
-        locateCurrent(): any {
-            if (this.tagList !== undefined && this.tagIndex !== undefined) {
-                // // 是tag显示在可视区域
-                const tabsList = document.getElementsByClassName("tabs-transition")[0];
-                if (tabsList && tabsList instanceof HTMLElement) {
-                    (tabsList.childNodes || [])?.forEach(tag => {
-                        if (tag instanceof HTMLElement && (tag.id === `tagsView_${this.tagIndex}`)) {
-                            tag.scrollIntoView && tag.scrollIntoView({
-                                inline: "center",
-                                behavior: "smooth",  // 平滑过渡
-                            });
-                        }
-                    })
-                }
+            if (this.tabsList && tagId === this.tabIndex) {
+                this.tabIndex = this.tabsList[0].id
             }
-        },
-        setIsRemoveFlag(data: boolean): Promise<any> {
-            this.isRemoveFlag = data
-            return new Promise((resolve) => {
-                resolve(null)
-            })
-        },
-        setPrevTagsViewWidth(data: number) {
-            this.prevTagsViewWidth = data
         }
     }
 })
@@ -122,10 +93,10 @@ const themeColorList: Array<string> = [
     '#40EA9A',
 ]
 
-const tagsList = [
+const tabsList: Array<{ id: number, tagName: string }> = [
     {
         id: 1,
-        tagName: '工作台'
+        tagName: '首页'
     },
     {
         id: 2,

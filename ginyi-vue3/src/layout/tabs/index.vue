@@ -1,59 +1,59 @@
 <template>
-    <div style="display: flex; align-items: center">
-        <n-icon :component="ChevronBack" size="20" style="cursor: pointer"/>
+    <div style="display: flex; align-items: center;">
+        <n-icon :component="ChevronBack" size="20" class="both-icon" @click="onBothSideIcons('left')"/>
         <div class="tabsView" id="tabsView" ref="tabsView">
-            <div ref="tabsTransitionWidth" id="tabsTransition">
-                <transition-group name="tag" tag="div" class="tabs-transition">
-                    <div :id="'tagsView_' + item.id" :class="item.id === tagIndex ? 'tabs-active' : 'tabs'"
-                         v-for="item in tagList"
+            <div id="tabsTransition">
+                <transition-group name="tab" tag="div" class="tabs-transition">
+                    <div :id="'tabView_' + item.id" :class="item.id === tabIndex ? 'tabs-active' : 'tabs'"
+                         v-for="(item, index) in tabsList"
                          :key="item.id"
-                         :style="{color: getTheme ||  item.id === tagIndex ? activeFontColor :  null,backgroundColor: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : null}"
+                         :style="{color: getTheme ||  item.id === tabIndex ? activeFontColor :  null,
+                                  backgroundColor: item.id === tabIndex ? useHexToRgba(activeBackgroundColor) : null}"
                          @click="onClickTag(item)">
                         <div class="tabs-title">
                             <n-icon>
                                 <GameController/>
                             </n-icon>
                             <span>{{ item.tagName }}</span>
-                            <n-icon style="border-radius: 50%" :component="CloseOutline"
-                                    @click.stop="() => removeTag(item.id)"
+                            <n-icon style="border-radius: 50%" :component="CloseOutline" v-if="index !== 0"
+                                    @click.stop="() => removeTab(item.id)"
                                     :id="`tabs-close-${item.id}`"/>
                         </div>
-                        <svg :class="item.id === tagIndex ? 'tabs-active-before' : 'tabs-before'" width="7" height="7"
-                             :style="{fill: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
+                        <svg :id="'tabLeftSvg_' + item.id"
+                             :class="item.id === tabIndex ? 'tabs-active-before' : 'tabs-before'" width="7" height="7"
+                             :style="{fill: item.id === tabIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
                             <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"/>
                         </svg>
-                        <svg :class="item.id === tagIndex ? 'tabs-active-after' : 'tabs-after'" width="7" height="7"
-                             :style="{fill: item.id === tagIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
+                        <svg :id="'tabRightSvg_' + item.id"
+                             :class="item.id === tabIndex ? 'tabs-active-after' : 'tabs-after'" width="7" height="7"
+                             :style="{fill: item.id === tabIndex ? useHexToRgba(activeBackgroundColor) : 'transparent'}">
                             <path d="M 0 7 A 7 7 0 0 0 7 0 L 7 7 Z"></path>
                         </svg>
                     </div>
                 </transition-group>
             </div>
         </div>
-        <n-icon :component="ChevronForward" size="20" style="cursor: pointer"/>
+        <n-icon :component="ChevronForward" size="20" class="both-icon" @click="onBothSideIcons('right')"/>
+        <n-icon :component="LocateOutline" size="16" class="both-icon" @click="location"/>
     </div>
 </template>
 
 <script lang="ts">
 import {defineComponent, onMounted, ref, watchEffect} from "vue";
-import {ChevronBack, ChevronForward, CloseOutline, GameController} from '@vicons/ionicons5'
+import {ChevronBack, ChevronForward, CloseOutline, GameController, LocateOutline} from '@vicons/ionicons5'
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {useHexToRgba} from "@/hooks/useColor";
-// @ts-ignore
-import elementResizeDetectorMaker from "element-resize-detector";
 
 export default defineComponent({
-    name: "TagsView",
+    name: "TabsView",
     components: {
         CloseOutline, GameController,
-        ChevronBack, ChevronForward
+        ChevronBack, ChevronForward, LocateOutline
     },
     setup() {
-        const width = ref<number>(0)
-        const tabsTransitionWidth = ref<HTMLElement | undefined>(undefined)
         const tabsView = ref<HTMLElement | undefined>(undefined)
-        const {getTheme, themeColor, tagIndex, tagList} = storeToRefs(useSystemStore());
+        const {getTheme, themeColor, clientWidth, tabIndex, tabsList} = storeToRefs(useSystemStore());
         // 选中的tag颜色
         const activeBackgroundColor = ref<string | undefined | null>(useHexToRgba(themeColor?.value as string));
         // 选中的文字颜色
@@ -81,8 +81,8 @@ export default defineComponent({
         }
         // 初始化鼠标事件
         const initMouseEvent = (index?: number) => {
-            tagList?.value?.forEach((item, key) => {
-                const tagsView = document.getElementById(`tagsView_${item.id}`);
+            tabsList?.value?.forEach((item, key) => {
+                const tagsView = document.getElementById(`tabView_${item.id}`);
                 if (tagsView) {
                     const childNodes = tagsView.childNodes;
                     // 给 tagsView 添加鼠标【到达】事件监听
@@ -97,13 +97,13 @@ export default defineComponent({
                     }
                     // 给 tagsView 添加鼠标【离开】事件监听
                     tagsView.onmouseout = () => {
-                        if (tagIndex?.value && tagsView.id.indexOf(tagIndex?.value.toString()) === -1) {
+                        if (tagsView.id.split("_")[1] !== tabIndex?.value?.toString()) {
                             tagsView.style.backgroundColor = "";
                             tagsView.style.color = getTheme.value !== undefined ? activeFontColor?.value as string : "";
                         }
                         childNodes.forEach(child => {
                             if (child.nodeName === "svg" && child instanceof SVGElement) {
-                                if (tagIndex?.value && tagsView.id.indexOf(tagIndex?.value.toString()) === -1) {
+                                if (tabIndex?.value && tagsView.id.indexOf(tabIndex?.value.toString()) === -1) {
                                     child.style.fill = 'transparent';
                                 }
                             }
@@ -125,48 +125,106 @@ export default defineComponent({
 
                 }
             })
+
+            const leftIcon = document.getElementsByClassName("both-icon")[0];
+            const rightIcon = document.getElementsByClassName("both-icon")[1];
+            const locationIcon = document.getElementsByClassName("both-icon")[2];
+            [leftIcon, rightIcon, locationIcon].forEach(icon => {
+                if (icon instanceof HTMLElement) {
+                    icon.onmouseover = () => {
+                        icon.style.color = activeBackgroundColor.value as string;
+                    }
+                    icon.onmouseout = () => {
+                        icon.style.color = ""
+                    }
+                }
+            })
         }
 
         const onClickTag = (item: any) => {
             useSystemStore().setTagIndex(item.id);
-            initMouseEvent(tagIndex?.value);
+            initMouseEvent(tabIndex?.value);
+
+            // 是当前选中的元素完全出现（主要是左右两个脚老是有一个显示不出来，故单独判断）
+            const activeLeftSvg = document.getElementById(`tabLeftSvg_${item.id}`);
+            const activeRightSvg = document.getElementById(`tabRightSvg_${item.id}`);
+            if (activeLeftSvg && activeLeftSvg?.getBoundingClientRect()?.x < (clientWidth?.value as number / 2)) {
+                activeLeftSvg?.scrollIntoView({
+                    behavior: "smooth",
+                })
+            } else {
+                activeRightSvg?.scrollIntoView({
+                    behavior: "smooth",
+                })
+            }
         }
 
-        const removeTag = (tagId: number) => {
-            useSystemStore().removeTag(tagId)
+        const removeTab = (tagId: number) => {
+            useSystemStore().removeTab(tagId);
+            initMouseEvent();
         }
-
+        // tabsView两边的icon
+        const onBothSideIcons = (type: string) => {
+            const tabsView = document.getElementById("tabsView");
+            if (tabsView) {
+                const offset = tabsView.scrollLeft
+                if (type === "right") {
+                    tabsView.scrollTo({left: offset + 500, behavior: 'smooth'});
+                }
+                if (type === "left") {
+                    tabsView.scrollTo({left: offset - 500, behavior: 'smooth'});
+                }
+            }
+        }
+        // 定位当前
+        const location = () => {
+            const tabsList = document.getElementsByClassName("tabs-transition")[0];
+            if (tabsList && tabsList instanceof HTMLElement) {
+                (tabsList.childNodes || [])?.forEach(tab => {
+                    if (tab instanceof HTMLElement && (tab.id === `tabView_${tabIndex?.value}`)) {
+                        tab.scrollIntoView && tab.scrollIntoView({
+                            inline: "center",
+                            behavior: "smooth",
+                        });
+                    }
+                })
+            }
+        }
 
         onMounted(() => {
             initActiveBackgroundColor();
-            initMouseEvent(tagIndex?.value);
+            initMouseEvent(tabIndex?.value);
         })
 
         return {
-            tabsTransitionWidth,
             getTheme,
             activeBackgroundColor,
             activeFontColor,
             CloseOutline,
-            ChevronBack, ChevronForward,
+            ChevronBack, ChevronForward, LocateOutline,
             onClickTag,
             useHexToRgba,
-            removeTag,
-            tagIndex,
-            tagList,
-            tabsView
+            removeTab,
+            tabIndex,
+            tabsList,
+            tabsView,
+            onBothSideIcons,
+            location
         }
     }
 })
 </script>
 
 <style lang="less">
+.both-icon:hover {
+    cursor: pointer;
+}
+
 .tabsView {
     width: 100%;
     display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
     padding: 0 5px 0 5px;
+    overflow: hidden;
 
     .tabs-transition {
         display: flex;
@@ -237,19 +295,19 @@ export default defineComponent({
             cursor: pointer;
         }
 
-        .tag-move,
-        .tag-enter-active,
-        .tag-leave-active {
+        .tab-move,
+        .tab-enter-active,
+        .tab-leave-active {
             transition: all 0.3s ease;
         }
 
-        .tag-enter-from,
-        .tag-leave-to {
+        .tab-enter-from,
+        .tab-leave-to {
             opacity: 0;
             transform: translateX(-30px);
         }
 
-        .tag-leave-active {
+        .tab-leave-active {
             position: absolute;
         }
     }

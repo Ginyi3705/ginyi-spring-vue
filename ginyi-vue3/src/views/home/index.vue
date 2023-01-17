@@ -4,9 +4,6 @@
         <n-button type="primary" @click="addTag({id: new Date().valueOf(), tagName: '测' + new Date().valueOf()})">
             添加一个Tag
         </n-button>
-        <n-button type="primary" @click="toFirst">
-            定位当前
-        </n-button>
     </div>
 </template>
 
@@ -18,7 +15,7 @@ import {storeToRefs} from "pinia";
 
 export default defineComponent({
     setup() {
-        const {tagList} = storeToRefs(useSystemStore());
+        const {tabsList} = storeToRefs(useSystemStore());
         const getRouterList = () => {
             menuController.getRouterList().then(res => {
                 console.log('=====>>', res)
@@ -26,19 +23,12 @@ export default defineComponent({
         }
 
         const addTag = (data: any) => {
-            useSystemStore().setIsRemoveFlag(false).then(() => {
-                useSystemStore().addTag(data)
-            })
-        }
-
-        const toFirst = () => {
-            useSystemStore().locateCurrent()
+            useSystemStore().addTag(data)
         }
 
         return {
             addTag,
-            toFirst,
-            tagList,
+            tabsList,
             getRouterList,
             useSystemStore
         }
