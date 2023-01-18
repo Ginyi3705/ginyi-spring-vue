@@ -12,13 +12,14 @@
                          @click="onClickTag(item)"
                          @contextmenu="handleContextMenu($event, item, index)">
                         <div class="tabs-title">
-                            <n-icon>
-                                <GameController/>
+                            <n-icon v-if="item.icon">
+                                <Icon :icon="item.icon"/>
                             </n-icon>
                             <span>{{ item.tagName }}</span>
                             <n-icon style="border-radius: 50%" :component="CloseOutline" v-if="index !== 0"
                                     @click.stop="() => removeTab(item.id)"
-                                    :id="`tabs-close-${item.id}`"/>
+                                    :id="`tabs-close-${item.id}`">
+                            </n-icon>
                         </div>
                         <svg :id="'tabLeftSvg_' + item.id"
                              :class="item.id === tabIndex ? 'tabs-active-before' : 'tabs-before'" width="7" height="7"

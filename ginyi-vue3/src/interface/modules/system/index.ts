@@ -41,7 +41,7 @@ export interface ISystemState {
     // 多标签页 选中的的索引
     tabIndex?: number
     // 多标签页 列表
-    tabsList?: Array<{ id: number, tagName: string }>;
+    tabsList?: Array<{ id: number, tagName: string, icon?: string}>;
 }
 
 /**

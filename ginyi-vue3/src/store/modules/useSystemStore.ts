@@ -130,25 +130,30 @@ const themeColorList: Array<string> = [
     '#40EA9A',
 ]
 
-const tabsList: Array<{ id: number, tagName: string }> = [
+const tabsList: Array<{ id: number, tagName: string, icon?: string }> = [
     {
         id: 1,
-        tagName: '首页'
+        tagName: "首页",
+        icon: "BagOutline"
     },
     {
         id: 2,
-        tagName: '上传图片'
+        tagName: "上传图片",
+        icon: "FishOutline"
     },
     {
         id: 3,
-        tagName: '弹窗扩展'
+        tagName: "弹窗扩展",
+        icon: "CloudDoneSharp"
     },
     {
         id: 4,
-        tagName: '海外完工清单录入'
+        tagName: "海外完工清单录入",
+        icon: "Bug"
     },
     {
         id: 5,
-        tagName: '在线文档'
+        tagName: "在线文档",
+        icon: "BicycleSharp"
     }
 ]
