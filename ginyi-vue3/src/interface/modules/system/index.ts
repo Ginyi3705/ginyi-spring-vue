@@ -36,12 +36,16 @@ export interface ISystemState {
     layoutFooterHeight?: number | undefined;
     // 侧边栏折叠
     collapsed?: boolean | undefined;
+    // logo处的高度
+    logoHeight?: number | number;
     // 多标签的高度
     tabsHeight?: number | undefined;
     // 多标签页 选中的的索引
     tabIndex?: number
     // 多标签页 列表
     tabsList?: Array<{ id: number, tagName: string, icon?: string}>;
+    // 左侧菜单栏列表
+    menuList?: Array<any>;
 }
 
 /**

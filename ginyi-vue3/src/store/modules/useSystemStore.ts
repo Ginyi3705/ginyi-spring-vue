@@ -14,9 +14,11 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         layoutHeaderHeight: 58,
         layoutFooterHeight: 40,
         collapsed: false,
+        logoHeight: 60,
         tabsHeight: 20,
         tabIndex: tabsList[0].id,
         tabsList: tabsList,
+        menuList: []
     }),
     getters: {
         getTheme(): BuiltInGlobalTheme | undefined {
@@ -24,6 +26,9 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         },
         getCollapsed(): boolean | undefined {
             return this.collapsed
+        },
+        getMenuList(): any {
+            return this.menuList
         }
     },
     actions: {
@@ -103,6 +108,9 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             if (this.tabsList) {
                 this.tabIndex = this.tabsList[0].id
             }
+        },
+        setMenuList(data: any) {
+            this.menuList = data
         }
     }
 })
@@ -134,26 +142,6 @@ const tabsList: Array<{ id: number, tagName: string, icon?: string }> = [
     {
         id: 1,
         tagName: "首页",
-        icon: "BagOutline"
-    },
-    {
-        id: 2,
-        tagName: "上传图片",
-        icon: "FishOutline"
-    },
-    {
-        id: 3,
-        tagName: "弹窗扩展",
-        icon: "CloudDoneSharp"
-    },
-    {
-        id: 4,
-        tagName: "海外完工清单录入",
-        icon: "Bug"
-    },
-    {
-        id: 5,
-        tagName: "在线文档",
-        icon: "BicycleSharp"
+        icon: "Home"
     }
 ]

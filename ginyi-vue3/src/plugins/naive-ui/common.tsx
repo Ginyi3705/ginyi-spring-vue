@@ -1,5 +1,7 @@
-import {Component, computed} from "vue";
+import type {App} from "vue";
+import {Component, computed, createVNode} from "vue";
 import {createDiscreteApi, NIcon} from "naive-ui";
+import * as Icons from "@vicons/ionicons5";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {storeToRefs} from "pinia";
 import {useLighten} from "@/hooks/useColor";
@@ -35,12 +37,30 @@ setTimeout(() => {
     window.$loading = loadingBar;
 }, 100)
 
+
 /**
- * 渲染icon
+ * 加载图标，要配合【 renderIcon 】一起使用
+ * @param icon
+ */
+export const loadIcon = (icon: string) => {
+    return Icons[icon as keyof typeof Icons];
+}
+
+/**
+ * 渲染icon，不一定要配合【 loadIcon 】，可以单独使用
  * @param icon
  */
 export const renderIcon = (icon: Component) => {
     return () => {
         return <NIcon component={icon}/>
     }
+}
+
+const icon = (props: { icon: string }) => {
+    const {icon} = props;
+    return createVNode(Icons[icon as keyof typeof Icons]);
+};
+
+export function initIcon(app: App<Element>): void {
+    app.component('Icon', icon);
 }

@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 50px; display: flex; align-items: center; margin-left: 15px;">
+    <div style="display: flex; align-items: center; margin-left: 15px;">
         <n-avatar v-if="collapsed" round size="medium" :src="logo" style="margin-right: 10px"/>
         <div v-else style="display: flex; align-items: center; margin-left: 15px;">
             <n-avatar round size="medium" :src="logo" style="margin-right: 10px"/>

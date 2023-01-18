@@ -15,6 +15,7 @@ import {renderIcon} from "@/plugins/naive-ui/common";
 import {useUserStore} from "@/store/modules/useUserStore";
 import {useCommonRouter} from "@/router";
 import {setting} from "@/config/setting";
+import {useSystemStore} from "@/store/modules/useSystemStore";
 
 
 export default defineComponent({
@@ -42,6 +43,7 @@ export default defineComponent({
             if (key === "logout") {
                 useUserStore().logout().then(() => {
                     useCommonRouter("login")
+                    // useSystemStore().$reset()
                     window.$message.success("退出成功")
                 })
             }

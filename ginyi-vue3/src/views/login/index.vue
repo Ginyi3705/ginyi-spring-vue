@@ -43,7 +43,7 @@ import LoginForm from "@/views/login/loginForm.vue";
 import RegisterForm from "@/views/login/RegisterForm.vue";
 import {useUserStore} from "@/store/modules/useUserStore";
 import {useCommonRouter} from "@/router";
-import {userController} from "@/api";
+import {menuController, userController} from "@/api";
 import {ref} from "vue";
 import {storeToRefs} from "pinia";
 
@@ -54,14 +54,18 @@ const isLoginSuccess = ref<boolean | string>(false)
 // 登录
 const doLogin = (data: ILoginFormType) => {
     userController.login(data).then(res => {
-        useUserStore().login(data.username, res.data)
+        return useUserStore().login(data.username, res.data)
+    }).then(() => {
         isLoginSuccess.value = true
+        return menuController.getRouterList()
+    }).then(res => {
+        useCommonRouter("home")
+        useSystemStore().setMenuList(res.data.list)
         window.$notification.success({
             title: "登录成功",
             content: "工作顺利，快乐摸鱼！",
             duration: 2500,
         })
-        useCommonRouter("home")
     }).catch(() => {
         // 用于更新验证码
         isLoginSuccess.value = `${false}_${new Date().valueOf()}`

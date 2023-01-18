@@ -1,6 +1,7 @@
 <template>
     <n-layout has-sider class="layout">
         <n-layout-sider
+            class="layout-side"
             bordered
             show-trigger="bar"
             collapse-mode="width"
@@ -10,8 +11,8 @@
             :inverted="true"
             :native-scrollbar="false"
             :on-update:collapsed="(val) => setCollapsed(val)">
-            <Logo/>
-            <Menu />
+            <Logo :style="{height: logoHeight + 'px'}"/>
+            <Menu :style="{height: (clientHeight - logoHeight) + 'px'}"/>
         </n-layout-sider>
         <n-layout>
             <n-layout-header :style="{height: (layoutHeaderHeight + tabsHeight) + 'px', padding: '0px 10px 10px 10px'}">
@@ -61,6 +62,7 @@ export default defineComponent({
             layoutHeaderHeight,
             layoutFooterHeight,
             collapsed,
+            logoHeight,
             darkTheme,
             tabsHeight
         } = storeToRefs(useSystemStore());
@@ -76,6 +78,7 @@ export default defineComponent({
             layoutHeaderHeight,
             layoutFooterHeight,
             collapsed,
+            logoHeight,
             setCollapsed,
             darkTheme,
             tabsHeight,
@@ -87,3 +90,12 @@ export default defineComponent({
     }
 })
 </script>
+
+<style lang="less">
+.layout {
+    &-side {
+        box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
+        transition: all 0.3s ease-in-out;
+    }
+}
+</style>
