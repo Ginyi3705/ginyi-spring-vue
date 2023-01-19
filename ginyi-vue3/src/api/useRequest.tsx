@@ -4,6 +4,8 @@ import {useFormatTime} from "@/hooks/useFormat";
 import {storeToRefs} from "pinia";
 import {store} from "@/store";
 import {setting} from "@/config/setting";
+import {useCommonRouter} from "@/router";
+import {storage} from "@/hooks/useStorage";
 
 const {devBaseURL, prodBaseURL} = setting
 
@@ -54,6 +56,13 @@ service.interceptors.response.use(
                 duration: 5000,
                 keepAliveOnHover: true
             })
+            switch (res.code) {
+                case 5005:
+                    useUserStore(store).$reset()
+                    storage.clear()
+                    useCommonRouter("login")
+                    break;
+            }
             return Promise.reject(res);
         } else {
             return res;
@@ -76,7 +85,3 @@ service.interceptors.response.use(
 );
 
 export default service
-
-
-
-

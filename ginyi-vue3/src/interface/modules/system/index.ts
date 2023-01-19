@@ -1,3 +1,5 @@
+import {RouteRecordRaw} from "vue-router";
+
 /**
  * 项目配置
  */
@@ -43,9 +45,19 @@ export interface ISystemState {
     // 多标签页 选中的的索引
     tabIndex?: number
     // 多标签页 列表
-    tabsList?: Array<{ id: number, tagName: string, icon?: string}>;
+    tabsList?: Array<{ id: number, tabName: string, icon?: string}>;
     // 左侧菜单栏列表
     menuList?: Array<any>;
+    // 路由列表
+    routesList?: Array<RouteRecordRaw>;
+}
+
+/**
+ * pinia - 系统路由
+ */
+export interface IRouterType {
+    // 路由列表
+    routesList?: Array<RouteRecordRaw>;
 }
 
 /**

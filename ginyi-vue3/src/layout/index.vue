@@ -40,7 +40,6 @@ import {CaretDownOutline, SparklesOutline} from '@vicons/ionicons5'
 import Logo from "@/layout/logo/index.vue";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import Headers from "@/layout/header/index.vue";
-import {renderIcon} from "@/plugins/naive-ui/common";
 import {storeToRefs} from "pinia";
 import {setting} from "@/config/setting";
 import TabsView from "@/layout/tabs/index.vue";
@@ -71,7 +70,6 @@ export default defineComponent({
 
 
         return {
-            renderIcon,
             title,
             author,
             clientHeight,

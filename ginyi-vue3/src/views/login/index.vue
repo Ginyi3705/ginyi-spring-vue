@@ -46,6 +46,7 @@ import {useCommonRouter} from "@/router";
 import {menuController, userController} from "@/api";
 import {ref} from "vue";
 import {storeToRefs} from "pinia";
+import {useRouterStore} from "@/store/modules/useRouterStore";
 
 // 系统深色主题
 const {darkTheme, clientHeight} = storeToRefs(useSystemStore())
@@ -61,6 +62,75 @@ const doLogin = (data: ILoginFormType) => {
     }).then(res => {
         useCommonRouter("home")
         useSystemStore().setMenuList(res.data.list)
+        useRouterStore().setRoutesList([
+            {
+                path: "test1",
+                name: "test1",
+                menuName: "测试页1",
+                component: "pages/test1/index",
+                menuType: "C",
+            },
+            {
+                path: "test6",
+                name: "test6",
+                menuName: "测试页6",
+                menuType: "M",
+                children: [
+                    {
+                        path: "test7",
+                        name: "test7",
+                        menuName: "测试页7",
+                        menuType: "M",
+                        children: [
+                            {
+                                path: "test8",
+                                name: "test8",
+                                menuName: "测试页8",
+                                component: "pages/test8/index",
+                                menuType: "C",
+                            },
+                            {
+                                path: "test9",
+                                name: "test9",
+                                menuName: "测试页9",
+                                component: "pages/test9/index",
+                                menuType: "C",
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                path: "test2",
+                name: "test2",
+                menuName: "测试页2",
+                component: "pages/test2/index",
+                menuType: "C"
+            },
+            {
+                path: "test3",
+                name: "test3",
+                menuName: "测试页3",
+                menuType: "M",
+                children: [
+                    {
+                        path: "test4",
+                        name: "test4",
+                        menuName: "测试页4",
+                        component: "pages/test4/index",
+                        menuType: "C"
+                    },
+                    {
+                        path: "test5",
+                        name: "test5",
+                        menuName: "测试页5",
+                        component: "pages/test5/index",
+                        menuType: "C"
+                    },
+                ]
+            },
+
+        ])
         window.$notification.success({
             title: "登录成功",
             content: "工作顺利，快乐摸鱼！",

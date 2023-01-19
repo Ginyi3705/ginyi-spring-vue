@@ -15,7 +15,7 @@
                             <n-icon v-if="item.icon">
                                 <Icon :icon="item.icon"/>
                             </n-icon>
-                            <span>{{ item.tagName }}</span>
+                            <span>{{ item.tabName }}</span>
                             <n-icon style="border-radius: 50%" :component="CloseOutline" v-if="index !== 0"
                                     @click.stop="() => removeTab(item.id)"
                                     :id="`tabs-close-${item.id}`">
@@ -66,7 +66,7 @@ import {
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {useHexToRgba} from "@/hooks/useColor";
-import {renderIcon} from "@/plugins/naive-ui/common";
+import {useRenderIcon} from "@/plugins/naive-ui/common";
 
 export default defineComponent({
     name: "TabsView",
@@ -87,22 +87,22 @@ export default defineComponent({
             {
                 label: '关闭其他',
                 key: 'other',
-                icon: renderIcon(CodeWorking)
+                icon: useRenderIcon(CodeWorking)
             },
             {
                 label: '关闭全部',
                 key: 'all',
-                icon: renderIcon(CloseCircleOutline)
+                icon: useRenderIcon(CloseCircleOutline)
             },
             {
                 label: '关闭左侧',
                 key: 'left',
-                icon: renderIcon(PlaySkipBack)
+                icon: useRenderIcon(PlaySkipBack)
             },
             {
                 label: '关闭右侧',
                 key: 'right',
-                icon: renderIcon(PlaySkipForward)
+                icon: useRenderIcon(PlaySkipForward)
             }
         ])
         const whichIndex = ref<number | undefined>(undefined)

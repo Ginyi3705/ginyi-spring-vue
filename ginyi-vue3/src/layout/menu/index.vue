@@ -6,13 +6,13 @@
                 :inverted="!darkTheme"
                 :collapsed-icon-size="22"
                 :options="menuOptions"
-                :expand-icon="renderIcon(CaretDownOutline)"/>
+                :expand-icon="useRenderIcon(CaretDownOutline)"/>
     </n-scrollbar>
 </template>
 
 <script lang="ts">
 import {defineComponent, ref, watchEffect} from "vue";
-import {renderIcon} from "@/plugins/naive-ui/common";
+import {useRenderIcon} from "@/plugins/naive-ui/common";
 import {CaretDownOutline} from "@vicons/ionicons5";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {storeToRefs} from "pinia";
@@ -30,7 +30,7 @@ export default defineComponent({
         return {
             darkTheme,
             menuOptions,
-            renderIcon,
+            useRenderIcon,
             CaretDownOutline
         }
     }

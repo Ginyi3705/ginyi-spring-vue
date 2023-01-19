@@ -4,6 +4,8 @@ import {storeToRefs} from "pinia";
 import {storage} from "@/hooks/useStorage";
 import {store} from "@/store";
 import {setting} from "@/config/setting";
+import {useSystemStore} from "@/store/modules/useSystemStore";
+import {useRouterStore} from "@/store/modules/useRouterStore";
 
 
 /**
@@ -21,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
                 name: "home",
                 meta: {title: "首页"},
                 component: () => import("@/views/home/index.vue")
-            },
+            }
         ]
     },
     {
@@ -52,6 +54,7 @@ router.beforeEach((to, from, next) => {
                 negativeText: '取消',
                 onPositiveClick: () => {
                     useUserStore(store).logout().then(() => {
+                        useRouterStore(store).$reset()
                         next({name: to.name as string})
                         window.$message.success('退出成功')
                     })
@@ -74,6 +77,8 @@ router.beforeEach((to, from, next) => {
         }
     } else {
         if (token) {
+            // 注入路由
+            useRouterStore(store).addRoutes()
             next()
         } else {
             next({name: "login"})

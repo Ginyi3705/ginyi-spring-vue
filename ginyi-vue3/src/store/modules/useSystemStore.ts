@@ -50,7 +50,7 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         setTagIndex(data: number | undefined) {
             this.tabIndex = data
         },
-        addTag(data: { id: number, tagName: string }) {
+        addTag(data: { id: number, tabName: string }) {
             this.tabIndex = data.id
             this.tabsList?.push(data)
 
@@ -59,7 +59,7 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
                 const tabsTransition = document.getElementById("tabsTransition");
                 if (tabsView && tabsTransition) {
                     if (tabsTransition.offsetWidth > tabsView.offsetWidth) {
-                        tabsView.scrollTo({left: tabsTransition.offsetWidth, behavior: 'smooth'});
+                        tabsView.scrollTo({left: tabsTransition.offsetWidth, behavior: "smooth"});
                     }
                 }
             }, 50)
@@ -116,32 +116,32 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
 })
 
 const themeColorList: Array<string> = [
-    '#9A53FE',
-    '#e88080',
-    '#0084f4',
-    '#009688',
-    '#536dfe',
-    '#ff5c93',
-    '#ee4f12',
-    '#0096c7',
-    '#9c27b0',
-    '#ff9800',
-    '#FF3D68',
-    '#00C1D4',
-    '#71EFA3',
-    '#78DEC7',
-    '#1768AC',
-    '#63e2b7',
-    '#A8EA3E',
-    '#E03D3D',
-    '#E63AAF',
-    '#40EA9A',
+    "#9A53FE",
+    "#e88080",
+    "#0084f4",
+    "#009688",
+    "#536dfe",
+    "#ff5c93",
+    "#ee4f12",
+    "#0096c7",
+    "#9c27b0",
+    "#ff9800",
+    "#FF3D68",
+    "#00C1D4",
+    "#71EFA3",
+    "#78DEC7",
+    "#1768AC",
+    "#63e2b7",
+    "#A8EA3E",
+    "#E03D3D",
+    "#E63AAF",
+    "#40EA9A",
 ]
 
-const tabsList: Array<{ id: number, tagName: string, icon?: string }> = [
+const tabsList: Array<{ id: number, tabName: string, icon?: string }> = [
     {
         id: 1,
-        tagName: "首页",
+        tabName: "首页",
         icon: "Home"
     }
 ]

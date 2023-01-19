@@ -11,11 +11,12 @@
 import {defineComponent, ref} from "vue";
 import {storeToRefs} from "pinia";
 import {LogOutOutline as LogoutIcon, Moon, PersonCircleOutline as UserIcon, SunnySharp} from '@vicons/ionicons5'
-import {renderIcon} from "@/plugins/naive-ui/common";
+import {useRenderIcon} from "@/plugins/naive-ui/common";
 import {useUserStore} from "@/store/modules/useUserStore";
 import {useCommonRouter} from "@/router";
 import {setting} from "@/config/setting";
 import {useSystemStore} from "@/store/modules/useSystemStore";
+import {useRouterStore} from "@/store/modules/useRouterStore";
 
 
 export default defineComponent({
@@ -31,19 +32,19 @@ export default defineComponent({
             {
                 label: '个人中心',
                 key: 'person',
-                icon: renderIcon(UserIcon)
+                icon: useRenderIcon(UserIcon)
             },
             {
                 label: '退出登录',
                 key: 'logout',
-                icon: renderIcon(LogoutIcon)
+                icon: useRenderIcon(LogoutIcon)
             }
         ])
         const handleSelect = (key: string) => {
             if (key === "logout") {
                 useUserStore().logout().then(() => {
                     useCommonRouter("login")
-                    // useSystemStore().$reset()
+                    useRouterStore().$reset()
                     window.$message.success("退出成功")
                 })
             }

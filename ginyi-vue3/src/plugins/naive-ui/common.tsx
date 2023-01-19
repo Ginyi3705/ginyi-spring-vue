@@ -42,7 +42,7 @@ setTimeout(() => {
  * 加载图标，要配合【 renderIcon 】一起使用
  * @param icon
  */
-export const loadIcon = (icon: string) => {
+export const useLoadIcon = (icon: string) => {
     return Icons[icon as keyof typeof Icons];
 }
 
@@ -50,7 +50,7 @@ export const loadIcon = (icon: string) => {
  * 渲染icon，不一定要配合【 loadIcon 】，可以单独使用
  * @param icon
  */
-export const renderIcon = (icon: Component) => {
+export const useRenderIcon = (icon: Component) => {
     return () => {
         return <NIcon component={icon}/>
     }
