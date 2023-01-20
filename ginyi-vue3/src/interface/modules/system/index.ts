@@ -57,7 +57,7 @@ export interface ISystemState {
  */
 export interface IRouterType {
     // 路由列表
-    routesList?: Array<RouteRecordRaw>;
+    routesList?: Array<any>;
 }
 
 /**

@@ -11,16 +11,13 @@ export const useRouterStore = defineStore(storeKeyEnums.ROUTER, {
     }),
     actions: {
         setRoutesList(data: Array<any>, prevRoute?: RouteRecordRaw) {
-            const modules = import.meta.glob('../../views/**/*.vue')
             data?.forEach((menu: any) => {
                 if (prevRoute) {
                     menu.path = prevRoute ? `${prevRoute.path}/${menu.path}` : menu.path
                 }
                 // C代表菜单，其余是目录和按钮
                 if (menu.menuType.toUpperCase() === "C") {
-                    menu.name = menu.name
                     menu.meta = {title: menu.menuName}
-                    menu.component = modules[`../../views/${menu.component}.vue`]
                     router.addRoute("Layout", menu)
                     this.routesList?.push(menu);
                 }
@@ -30,8 +27,15 @@ export const useRouterStore = defineStore(storeKeyEnums.ROUTER, {
             })
         },
         addRoutes() {
+            const modules = import.meta.glob('../../views/**/*.vue')
             this.routesList?.forEach(route => {
-                router.addRoute("Layout", route)
+                const temp: RouteRecordRaw = {
+                    path: route.path,
+                    name: route.name,
+                    meta: route.meta,
+                    component: modules[`../../views/${route.component}.vue`]
+                }
+                router.addRoute("Layout", temp)
             })
         }
     }
