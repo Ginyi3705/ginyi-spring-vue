@@ -111,6 +111,19 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         },
         setMenuList(data: any) {
             this.menuList = data
+            const hasHome = this.menuList?.some(menu => {
+                return menu.name === "home"
+            })
+            if (!hasHome) {
+                this.menuList?.unshift({
+                    menuId: new Date().valueOf(),
+                    path: "home",
+                    name: "home",
+                    menuName: "首页",
+                    component: "home/index",
+                    menuType: "C",
+                },)
+            }
         }
     }
 })
