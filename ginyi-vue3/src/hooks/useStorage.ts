@@ -56,8 +56,6 @@ export class storage {
             keys.push(localStorage.key(i) as string)
         }
         keys.map(key => {
-            console.log(key)
-            console.log(key.indexOf(storeKeyEnums.SYSTEM) === -1)
             if (key.indexOf(storeKeyEnums.SYSTEM) === -1) {
                 this.remove(key as string)
             }

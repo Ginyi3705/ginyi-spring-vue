@@ -18,7 +18,6 @@ export const useRouterStore = defineStore(storeKeyEnums.ROUTER, {
                 // C代表菜单，其余是目录和按钮
                 if (menu.menuType.toUpperCase() === "C") {
                     menu.meta = {title: menu.menuName}
-                    router.addRoute("Layout", menu)
                     this.routesList?.push(menu);
                 }
                 if (menu.children?.length > 0) {

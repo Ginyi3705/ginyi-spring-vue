@@ -78,7 +78,11 @@ router.beforeEach((to, from, next) => {
         if (token) {
             // 注入路由
             useRouterStore(store).addRoutes()
-            next()
+            if (!router.hasRoute(to.name as string)) {
+                next({...to, replace: true});
+            } else {
+                next();
+            }
         } else {
             next({name: "login"})
         }
