@@ -6,7 +6,7 @@ import {useLoadIcon, useRenderIcon} from "@/plugins/naive-ui/common";
  */
 export const useMenuFormat = (menuList: any): any => {
     return menuList.map((menu: any) => {
-        menu.icon = useRenderIcon(useLoadIcon("PersonOutline"))
+        menu.icon = useRenderIcon(useLoadIcon(menu.icon))
         if (menu.children?.length > 0) {
             useMenuFormat(menu.children)
         }else {

@@ -26,16 +26,16 @@ import {MenuOption} from "naive-ui";
 import {useCommonRouter} from "@/router";
 import {useRoute} from "vue-router";
 import {useFindParentName} from "@/hooks/useTree";
+import {useDeepClone} from "@/hooks/useObject";
 
 export default defineComponent({
     name: "Menu",
     setup() {
         const currentRoute = useRoute();
-        const {darkTheme, getMenuList} = storeToRefs(useSystemStore());
-        const menuOptions = ref<any>(useMenuFormat(getMenuList?.value ?? []))
+        const {darkTheme, menuList} = storeToRefs(useSystemStore());
+        const menuOptions = ref<Array<any>>([])
         const activeMenuKey = ref<string | undefined>(undefined)
         const openKeys = ref<Array<string>>([])
-        const {menuList} = storeToRefs(useSystemStore())
 
         const handleClickMenu = (key: string, item: MenuOption) => {
             useCommonRouter(item.name as string)
@@ -45,7 +45,7 @@ export default defineComponent({
         }
         watchEffect(() => {
             activeMenuKey.value = currentRoute.name as string
-            menuOptions.value = useMenuFormat(getMenuList?.value ?? [])
+            menuOptions.value = useMenuFormat(useDeepClone(menuList?.value as Array<any>))
             openKeys.value = useFindParentName(currentRoute.name as string, menuList?.value as Array<any>) as Array<string>
         })
 

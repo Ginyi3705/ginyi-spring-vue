@@ -54,6 +54,7 @@ const menuList = ref<Array<any>>([
         menuId: 1,
         path: "test1",
         name: "test1",
+        icon: "PersonOutline",
         menuName: "测试页1",
         component: "pages/test1/index",
         menuType: "C",
@@ -62,6 +63,7 @@ const menuList = ref<Array<any>>([
         menuId: 2,
         path: "test6",
         name: "test6",
+        icon: "PersonOutline",
         menuName: "测试页6",
         menuType: "M",
         children: [
@@ -69,6 +71,7 @@ const menuList = ref<Array<any>>([
                 menuId: 3,
                 path: "test7",
                 name: "test7",
+                icon: "PersonOutline",
                 menuName: "测试页7",
                 menuType: "M",
                 children: [
@@ -76,6 +79,7 @@ const menuList = ref<Array<any>>([
                         menuId: 4,
                         path: "test8",
                         name: "test8",
+                        icon: "PersonOutline",
                         menuName: "测试页8",
                         component: "pages/test8/index",
                         menuType: "C",
@@ -84,6 +88,7 @@ const menuList = ref<Array<any>>([
                         menuId: 5,
                         path: "test9",
                         name: "test9",
+                        icon: "PersonOutline",
                         menuName: "测试页9",
                         component: "pages/test9/index",
                         menuType: "C",
@@ -96,6 +101,7 @@ const menuList = ref<Array<any>>([
         menuId: 6,
         path: "test2",
         name: "test2",
+        icon: "PersonOutline",
         menuName: "测试页2",
         component: "pages/test2/index",
         menuType: "C"
@@ -104,6 +110,7 @@ const menuList = ref<Array<any>>([
         menuId: 7,
         path: "test3",
         name: "test3",
+        icon: "PersonOutline",
         menuName: "测试页3",
         menuType: "M",
         children: [
@@ -111,6 +118,7 @@ const menuList = ref<Array<any>>([
                 menuId: 8,
                 path: "test4",
                 name: "test4",
+                icon: "PersonOutline",
                 menuName: "测试页4",
                 component: "pages/test4/index",
                 menuType: "C"
@@ -119,6 +127,7 @@ const menuList = ref<Array<any>>([
                 menuId: 9,
                 path: "test5",
                 name: "test5",
+                icon: "PersonOutline",
                 menuName: "测试页5",
                 component: "pages/test5/index",
                 menuType: "C"

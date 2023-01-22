@@ -52,7 +52,7 @@
       <module name="ginyi-server-common" options="-parameters" />
       <module name="ginyi-server-system" options="-parameters" />
       <module name="ginyi-server-web" options="-parameters" />
-      <module name="ginyi-springboot" options="" />
+      <module name="ginyi-springboot" options="-parameters" />
       <module name="ginyi-system" options="-parameters" />
     </option>
   </component>

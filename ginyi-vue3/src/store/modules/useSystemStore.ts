@@ -119,6 +119,7 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
                     menuId: new Date().valueOf(),
                     path: "home",
                     name: "home",
+                    icon: "Home",
                     menuName: "首页",
                     component: "home/index",
                     menuType: "C",
