@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import {storeKeyEnums} from "@/enums/storeKeyEnums";
 import {darkTheme} from "naive-ui";
 import {BuiltInGlobalTheme} from "naive-ui/es/themes/interface";
-import {ISystemState} from "@/interface/modules/system";
+import {ISystemState, ITabType} from "@/interface/modules/system";
 
 export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
     state: (): ISystemState => ({
@@ -50,32 +50,37 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         setTagIndex(data: number | undefined) {
             this.tabIndex = data
         },
-        addTag(data: { id: number, tabName: string }) {
+        addTab(data: ITabType) {
+            const exist = this.tabsList?.some(tab => {
+                return tab.id === data.id
+            })
+            if (!exist) {
+                this.tabsList?.push(data)
+            }
             this.tabIndex = data.id
-            this.tabsList?.push(data)
 
             setTimeout(() => {
-                const tabsView = document.getElementById("tabsView");
-                const tabsTransition = document.getElementById("tabsTransition");
-                if (tabsView && tabsTransition) {
-                    if (tabsTransition.offsetWidth > tabsView.offsetWidth) {
-                        tabsView.scrollTo({left: tabsTransition.offsetWidth, behavior: "smooth"});
-                    }
+                const currentTab = document.getElementById(`tabView_${this.tabIndex}`)
+                if (currentTab instanceof HTMLElement) {
+                    currentTab.scrollIntoView && currentTab.scrollIntoView({
+                        inline: "center",
+                        behavior: "smooth",
+                    });
                 }
             }, 50)
         },
-        removeTab(tagId: number) {
-            this.tabsList = this.tabsList?.filter(tag => {
-                return tagId !== tag.id
+        removeTab(tabId: number) {
+            this.tabsList = this.tabsList?.filter(tab => {
+                return tabId !== tab.id
             })
-            if (this.tabsList && tagId === this.tabIndex) {
+            if (this.tabsList && tabId === this.tabIndex) {
                 this.tabIndex = this.tabsList[0].id
             }
         },
         removeLeftTabs(index: number) {
             this.tabsList?.splice(1, index - 1)
-            const closeSelf = this.tabsList?.some(item => {
-                return item.id === this.tabIndex
+            const closeSelf = this.tabsList?.some(tab => {
+                return tab.id === this.tabIndex
             })
             if (!closeSelf && this.tabsList) {
                 this.tabIndex = this.tabsList[0].id
@@ -83,26 +88,26 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         },
         removeRightTabs(index: number) {
             this.tabsList?.splice(index + 1, this.tabsList?.length - 1)
-            const closeSelf = this.tabsList?.some(item => {
-                return item.id === this.tabIndex
+            const closeSelf = this.tabsList?.some(tab => {
+                return tab.id === this.tabIndex
             })
             if (!closeSelf && this.tabsList) {
                 this.tabIndex = this.tabsList[0].id
             }
         },
         removeOtherTabs(index: number) {
-            this.tabsList = this.tabsList?.filter((item, key) => {
+            this.tabsList = this.tabsList?.filter((tab, key) => {
                 return key === 0 || key === index
             })
-            const closeSelf = this.tabsList?.some(item => {
-                return item.id === this.tabIndex
+            const closeSelf = this.tabsList?.some(tab => {
+                return tab.id === this.tabIndex
             })
             if (!closeSelf && this.tabsList) {
                 this.tabIndex = this.tabsList[0].id
             }
         },
         removeAllTabs() {
-            this.tabsList = this.tabsList?.filter((item, key) => {
+            this.tabsList = this.tabsList?.filter((tab, key) => {
                 return key === 0
             })
             if (this.tabsList) {
@@ -116,7 +121,7 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             })
             if (!hasHome) {
                 this.menuList?.unshift({
-                    menuId: new Date().valueOf(),
+                    menuId: 0,
                     path: "home",
                     name: "home",
                     icon: "Home",
@@ -152,9 +157,10 @@ const themeColorList: Array<string> = [
     "#40EA9A",
 ]
 
-const tabsList: Array<{ id: number, tabName: string, icon?: string }> = [
+const tabsList: Array<ITabType> = [
     {
-        id: 1,
+        id: 0,
+        tabKey: "home",
         tabName: "首页",
         icon: "Home"
     }

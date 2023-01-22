@@ -21,3 +21,25 @@ export const useFindParentName = (name: string, list: Array<any> = [], result: A
         result = []
     }
 }
+
+/**
+ * 根据 name 查找匹配的 node
+ *
+ * @param name
+ * @param list
+ */
+export const useFindNodeByName = (name: string, list: Array<any>): any => {
+    for (let i = 0; i < list.length; i++) {
+        const item = list[i];
+        if (item.name === name) {
+            return item;
+        } else {
+            if (item.children?.length > 0) {
+                const temp = useFindNodeByName(name, item.children);
+                if (temp) {
+                    return temp;
+                }
+            }
+        }
+    }
+}

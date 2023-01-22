@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>这是首页</div>
-        <n-button type="primary" @click="addTag({id: new Date().valueOf(), tagName: '测' + new Date().valueOf()})">
+        <n-button type="primary" @click="addTab({id: new Date().valueOf(), tagName: '测' + new Date().valueOf()})">
             添加一个Tag
         </n-button>
         <n-button @click="useCommonRouter('test1')">跳转到test1</n-button>
@@ -24,15 +24,15 @@ export default defineComponent({
     setup() {
         const router = useRouter()
 
-        const addTag = (data: any) => {
-            useSystemStore().addTag(data)
+        const addTab = (data: any) => {
+            useSystemStore().addTab(data)
         }
         const getRoutes = () => {
             console.log(router.getRoutes())
         }
 
         return {
-            addTag,
+            addTab,
             useSystemStore,
             useCommonRouter,
             getRoutes

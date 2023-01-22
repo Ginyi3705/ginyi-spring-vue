@@ -1,8 +1,8 @@
-import {RouteRecordRaw} from "vue-router";
-
 /**
  * 项目配置
  */
+import {Component} from "vue";
+
 export interface IProject {
     // 开发环境请求地址
     devBaseURL: string | undefined;
@@ -45,9 +45,16 @@ export interface ISystemState {
     // 多标签页 选中的的索引
     tabIndex?: number
     // 多标签页 列表
-    tabsList?: Array<{ id: number, tabName: string, icon?: string}>;
+    tabsList?: Array<ITabType>;
     // 左侧菜单栏列表
     menuList?: Array<any>;
+}
+
+export interface ITabType {
+    id: number,
+    tabKey: string,
+    tabName: string,
+    icon?: string | Component | Function
 }
 
 /**

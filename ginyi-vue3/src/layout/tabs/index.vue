@@ -67,6 +67,7 @@ import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {useHexToRgba} from "@/hooks/useColor";
 import {useRenderIcon} from "@/plugins/naive-ui/common";
+import {useCommonRouter} from "@/router";
 
 export default defineComponent({
     name: "TabsView",
@@ -193,22 +194,10 @@ export default defineComponent({
             })
         }
 
-        const onClickTag = (item: any) => {
+        const onClickTab = (item: any) => {
             useSystemStore().setTagIndex(item.id);
             initMouseEvent(tabIndex?.value);
-
-            // 是当前选中的元素完全出现（主要是左右两个脚老是有一个显示不出来，故单独判断）
-            const activeLeftSvg = document.getElementById(`tabLeftSvg_${item.id}`);
-            const activeRightSvg = document.getElementById(`tabRightSvg_${item.id}`);
-            if (activeLeftSvg && activeLeftSvg?.getBoundingClientRect()?.x < (clientWidth?.value as number / 2)) {
-                activeLeftSvg?.scrollIntoView({
-                    behavior: "smooth",
-                })
-            } else {
-                activeRightSvg?.scrollIntoView({
-                    behavior: "smooth",
-                })
-            }
+            useCommonRouter(item.tabKey)
         }
 
         const removeTab = (tagId: number) => {
@@ -284,7 +273,7 @@ export default defineComponent({
             CloseOutline, CloseCircleOutline,
             ChevronBack, ChevronForward, LocateOutline,
             PlaySkipForward, PlaySkipBack, CodeWorking,
-            onClickTag,
+            onClickTag: onClickTab,
             useHexToRgba,
             removeTab,
             tabIndex,
