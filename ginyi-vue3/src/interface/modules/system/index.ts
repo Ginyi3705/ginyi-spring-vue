@@ -48,6 +48,8 @@ export interface ISystemState {
     tabsList?: Array<ITabType>;
     // 左侧菜单栏列表
     menuList?: Array<any>;
+    // 面包屑导航列表
+    breadMenuList?: Array<any>;
 }
 
 export interface ITabType {
@@ -101,5 +103,4 @@ export interface IUser {
     tokenKey?: string | undefined;
     // Token令牌
     authorization?: string | undefined;
-
 }

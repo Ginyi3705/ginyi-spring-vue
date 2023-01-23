@@ -31,6 +31,7 @@ export const useUserStore = defineStore(storeKeyEnums.USER, {
                 userController.logout().then(() => {
                     useUserStore().$reset()
                     useSystemStore().removeAllTabs()
+                    useSystemStore().resetBreadMenuList()
                     storage.clear()
                     resolve(null);
                 })

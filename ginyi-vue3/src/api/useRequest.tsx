@@ -61,6 +61,7 @@ service.interceptors.response.use(
                 case 5005:
                     useUserStore(store).$reset()
                     useSystemStore(store).removeAllTabs()
+                    useSystemStore(store).resetBreadMenuList()
                     storage.clear()
                     useCommonRouter("login")
                     break;

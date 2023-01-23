@@ -19,7 +19,8 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         tabsHeight: 20,
         tabIndex: tabsList[0].id,
         tabsList: tabsList,
-        menuList: []
+        menuList: [],
+        breadMenuList: []
     }),
     getters: {
         getTheme(): BuiltInGlobalTheme | undefined {
@@ -33,9 +34,6 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         }
     },
     actions: {
-        setTheme(data: boolean | undefined) {
-            this.darkTheme = data
-        },
         setThemeColor(data: string | undefined) {
             this.themeColor = data
         },
@@ -132,8 +130,22 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
                     menuName: "首页",
                     component: "home/index",
                     menuType: "C",
-                },)
+                })
             }
+        },
+        setBreadMenuList(data: Array<any>) {
+            this.breadMenuList = data
+        },
+        resetBreadMenuList() {
+            this.breadMenuList = [{
+                menuId: 0,
+                path: "home",
+                name: "home",
+                icon: "Home",
+                menuName: "首页",
+                component: "home/index",
+                menuType: "C",
+            }]
         }
     }
 })
