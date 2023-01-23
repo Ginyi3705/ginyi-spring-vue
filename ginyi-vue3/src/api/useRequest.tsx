@@ -6,6 +6,7 @@ import {store} from "@/store";
 import {setting} from "@/config/setting";
 import {useCommonRouter} from "@/router";
 import {storage} from "@/hooks/useStorage";
+import {useSystemStore} from "@/store/modules/useSystemStore";
 
 const {devBaseURL, prodBaseURL} = setting
 
@@ -59,6 +60,7 @@ service.interceptors.response.use(
             switch (res.code) {
                 case 5005:
                     useUserStore(store).$reset()
+                    useSystemStore(store).removeAllTabs()
                     storage.clear()
                     useCommonRouter("login")
                     break;

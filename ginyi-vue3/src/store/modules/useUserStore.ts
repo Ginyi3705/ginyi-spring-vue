@@ -3,6 +3,7 @@ import {storeKeyEnums} from "@/enums/storeKeyEnums";
 import {IUser} from "@/interface/modules/system";
 import {storage} from "@/hooks/useStorage";
 import {userController} from "@/api";
+import {useSystemStore} from "@/store/modules/useSystemStore";
 
 export const useUserStore = defineStore(storeKeyEnums.USER, {
     state: (): IUser => ({
@@ -29,6 +30,7 @@ export const useUserStore = defineStore(storeKeyEnums.USER, {
             return new Promise((resolve, reject) => {
                 userController.logout().then(() => {
                     useUserStore().$reset()
+                    useSystemStore().removeAllTabs()
                     storage.clear()
                     resolve(null);
                 })
