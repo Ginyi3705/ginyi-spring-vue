@@ -45,6 +45,12 @@ public class SysMenu extends BaseEntity {
     private Long parentId;
 
     /**
+     * 路由name，用于路由跳转
+     */
+    @ApiModelProperty("路由名称")
+    private String name;
+
+    /**
      * 显示顺序
      */
     @ApiModelProperty("显示顺序")

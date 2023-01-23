@@ -33,6 +33,7 @@
                sm.menu_name,
                sm.parent_id,
                sm.sort,
+               sm.name,
                sm.path,
                sm.component,
                sm.query,

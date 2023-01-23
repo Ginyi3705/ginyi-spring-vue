@@ -35,6 +35,10 @@ public class MenuDto extends BaseEntity {
     @NotNull(groups = {AddGroup.class, UpdateGroup.class}, message = "排序不能为空")
     private Integer sort = 1;
 
+    @ApiModelProperty("路由名称")
+    @Size(max = 50, message = "路由名称长度不得超过50个字符")
+    private String name;
+
     @ApiModelProperty("路由地址")
     @Size(max = 200, message = "路由地址长度不得超过200个字符")
     private String path;
