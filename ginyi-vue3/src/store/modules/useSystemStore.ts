@@ -3,6 +3,7 @@ import {storeKeyEnums} from "@/enums/storeKeyEnums";
 import {darkTheme} from "naive-ui";
 import {BuiltInGlobalTheme} from "naive-ui/es/themes/interface";
 import {ISystemState, ITabType} from "@/interface/modules/system";
+import {useCommonRouter} from "@/router";
 
 export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
     state: (): ISystemState => ({
@@ -69,12 +70,11 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
                 }
             }, 50)
         },
-        removeTab(tabId: number) {
-            this.tabsList = this.tabsList?.filter(tab => {
-                return tabId !== tab.id
-            })
+        removeTab(tabId: number, index: number) {
+            this.tabsList?.splice(index, 1)
             if (this.tabsList && tabId === this.tabIndex) {
                 this.tabIndex = this.tabsList[0].id
+                useCommonRouter(this.tabsList[0].tabKey)
             }
         },
         removeLeftTabs(index: number) {
@@ -84,6 +84,7 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             })
             if (!closeSelf && this.tabsList) {
                 this.tabIndex = this.tabsList[0].id
+                useCommonRouter(this.tabsList[0].tabKey)
             }
         },
         removeRightTabs(index: number) {
@@ -93,6 +94,7 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             })
             if (!closeSelf && this.tabsList) {
                 this.tabIndex = this.tabsList[0].id
+                useCommonRouter(this.tabsList[0].tabKey)
             }
         },
         removeOtherTabs(index: number) {
@@ -104,6 +106,7 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             })
             if (!closeSelf && this.tabsList) {
                 this.tabIndex = this.tabsList[0].id
+                useCommonRouter(this.tabsList[0].tabKey)
             }
         },
         removeAllTabs() {
@@ -112,6 +115,7 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             })
             if (this.tabsList) {
                 this.tabIndex = this.tabsList[0].id
+                useCommonRouter(this.tabsList[0].tabKey)
             }
         },
         setMenuList(data: any) {

@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watchEffect} from "vue";
+import {defineComponent, ref, watch, watchEffect} from "vue";
 import {useRenderIcon} from "@/plugins/naive-ui/common";
 import {CaretDownOutline} from "@vicons/ionicons5";
 import {useSystemStore} from "@/store/modules/useSystemStore";
@@ -45,10 +45,7 @@ export default defineComponent({
         const handleUpdateExpandedKeys = (keys: string[]) => {
             openKeys.value = keys
         }
-        watchEffect(() => {
-            activeMenuKey.value = currentRoute.name as string
-            menuOptions.value = useMenuFormat(useDeepClone(menuList?.value as Array<any>))
-            openKeys.value = useFindParentName(currentRoute.name as string, menuList?.value as Array<any>) as Array<string>
+        watch(() => currentRoute.name, () => {
             const clickedMenu = useFindNodeByName(currentRoute.name as string, useDeepClone(menuList?.value as Array<any>))
             const tab: ITabType = {
                 id: clickedMenu.menuId,
@@ -57,6 +54,11 @@ export default defineComponent({
                 tabName: clickedMenu.menuName,
             }
             useSystemStore().addTab(tab)
+        })
+        watchEffect(() => {
+            activeMenuKey.value = currentRoute.name as string
+            menuOptions.value = useMenuFormat(useDeepClone(menuList?.value as Array<any>))
+            openKeys.value = useFindParentName(currentRoute.name as string, menuList?.value as Array<any>) as Array<string>
         })
 
         return {

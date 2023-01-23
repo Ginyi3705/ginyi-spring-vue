@@ -17,7 +17,7 @@
                             </n-icon>
                             <span>{{ item.tabName }}</span>
                             <n-icon style="border-radius: 50%" :component="CloseOutline" v-if="index !== 0"
-                                    @click.stop="() => removeTab(item.id)"
+                                    @click.stop="() => removeTab(item.id, index)"
                                     :id="`tabs-close-${item.id}`">
                             </n-icon>
                         </div>
@@ -68,6 +68,7 @@ import {useSystemStore} from "@/store/modules/useSystemStore";
 import {useHexToRgba} from "@/hooks/useColor";
 import {useRenderIcon} from "@/plugins/naive-ui/common";
 import {useCommonRouter} from "@/router";
+import {ITabType} from "@/interface/modules/system";
 
 export default defineComponent({
     name: "TabsView",
@@ -200,8 +201,8 @@ export default defineComponent({
             useCommonRouter(item.tabKey)
         }
 
-        const removeTab = (tagId: number) => {
-            useSystemStore().removeTab(tagId);
+        const removeTab = (tabId: number, index: number) => {
+            useSystemStore().removeTab(tabId, index)
         }
         // tabsView两边的icon
         const onBothSideIcons = (type: string) => {
