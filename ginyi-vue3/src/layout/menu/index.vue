@@ -45,6 +45,10 @@ export default defineComponent({
         const handleUpdateExpandedKeys = (keys: string[]) => {
             openKeys.value = keys
         }
+
+        /**
+         * 监听路由的变化，实时更新多标签页的内容
+         */
         watch(() => currentRoute.name, () => {
             const clickedMenu = useFindNodeByName(currentRoute.name as string, useDeepClone(menuList?.value as Array<any>))
             const bread: ITabType = {

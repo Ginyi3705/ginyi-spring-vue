@@ -6,11 +6,10 @@
                     <Icon :icon="item.icon"/>
                 </n-icon>
                 <n-dropdown v-if="index !== breadMenuList.length - 1"
-                            :options="breadMenuList[index].children"
+                            :options="useMenuFormat(useDeepClone(breadMenuList[index].children), true)"
                             placement="bottom-start"
                             key-field="menuId"
                             label-field="menuName"
-                            :render-icon="renderDropdownIcon(breadMenuList[index].icon)"
                             @select="handleSelect"
                             trigger="click">
                     {{ item.menuName }}
@@ -29,7 +28,6 @@ import {useFindParentNodes} from "@/hooks/useTree";
 import {useDeepClone} from "@/hooks/useObject";
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
-import {useLoadIcon, useRenderIcon} from "@/plugins/naive-ui/common";
 import {DropdownOption} from "naive-ui";
 import {useCommonRouter} from "@/router";
 import {useMenuFormat} from "@/hooks/useMenu";
@@ -41,13 +39,13 @@ export default defineComponent({
         const currentRoute = useRoute();
         const {menuList, breadMenuList} = storeToRefs(useSystemStore());
 
-        const renderDropdownIcon = (icon: string) => {
-            return useRenderIcon(useLoadIcon(icon))
-        }
         const handleSelect = (key: string, option: DropdownOption) => {
             useCommonRouter(option.name as string)
         }
 
+        /**
+         * 监听路由变化，实时更新面包屑导航的内容
+         */
         watch(() => currentRoute.name, () => {
             const list = useFindParentNodes(
                 currentRoute.name as string, useMenuFormat(useDeepClone(menuList?.value as Array<any>), false)
@@ -58,7 +56,8 @@ export default defineComponent({
         return {
             breadMenuList,
             handleSelect,
-            renderDropdownIcon,
+            useDeepClone,
+            useMenuFormat,
             ApertureOutline, Bicycle, BulbOutline
         }
     }
