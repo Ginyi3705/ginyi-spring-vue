@@ -17,8 +17,8 @@ export const useFindParentName = (name: string, list: Array<any> = [], result: A
             if (temp !== undefined) {
                 return result;
             }
+            result = []
         }
-        result = []
     }
 }
 
@@ -57,7 +57,7 @@ export const useFindParentNodes = (name: string,
                                    result: Array<any> = []): Array<any> | undefined => {
     for (let i = 0; i < list.length; i++) {
         const item = list[i];
-        result.push(item)
+        result.push(item);
         if (item.name === name) {
             return result;
         }
@@ -66,11 +66,11 @@ export const useFindParentNodes = (name: string,
             if (temp !== undefined) {
                 // 表示找到了 name 匹配的, 替换 result 中的最后一项 (最后一项保存的是同级别下的上一项)
                 if (temp.length === 1) {
-                    result[result.length - 1] = temp[0]
+                    result[result.length - 1] = temp[0];
                 }
                 return result;
             }
         }
-        result = []
+        result.pop()
     }
 }

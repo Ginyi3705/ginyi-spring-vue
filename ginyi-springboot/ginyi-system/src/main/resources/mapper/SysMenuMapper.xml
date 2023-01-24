@@ -80,7 +80,7 @@
         <include refid="selectMenuRef"/>
         left join sys_role_menu as srm on json_contains(srm.menu_id, json_array(sm.menu_id))
         left join sys_user_role as sur on json_contains(sur.role_id, json_array(srm.role_id))
-        where sur.user_id = #{userId} and sm.menu_type != 'F'
+        where sur.user_id = #{userId} and sm.menu_type != 'F' and sm.visible != 1
     </select>
 
     <!-- 查询菜单 - admin -->

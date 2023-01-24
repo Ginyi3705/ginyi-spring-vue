@@ -47,17 +47,17 @@ export default defineComponent({
         }
         watch(() => currentRoute.name, () => {
             const clickedMenu = useFindNodeByName(currentRoute.name as string, useDeepClone(menuList?.value as Array<any>))
-            const tab: ITabType = {
+            const bread: ITabType = {
                 id: clickedMenu.menuId,
                 icon: clickedMenu.icon,
                 tabKey: clickedMenu.name,
                 tabName: clickedMenu.menuName,
             }
-            useSystemStore().addTab(tab)
+            useSystemStore().addTab(bread)
         })
         watchEffect(() => {
             activeMenuKey.value = currentRoute.name as string
-            menuOptions.value = useMenuFormat(useDeepClone(menuList?.value as Array<any>))
+            menuOptions.value = useMenuFormat(useDeepClone(menuList?.value as Array<any>), true)
             openKeys.value = useFindParentName(currentRoute.name as string, menuList?.value as Array<any>) as Array<string>
         })
 

@@ -134,7 +134,11 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             }
         },
         setBreadMenuList(data: Array<any>) {
-            this.breadMenuList = data
+            this.breadMenuList = []
+            // 延时主要是为了配合动画效果
+            setTimeout(() => {
+                this.breadMenuList = data
+            }, 0)
         },
         resetBreadMenuList() {
             this.breadMenuList = [{
