@@ -167,14 +167,14 @@ const themeColorList: Array<string> = [
     "#ff9800",
     "#FF3D68",
     "#00C1D4",
-    "#71EFA3",
-    "#78DEC7",
-    "#1768AC",
+    "#1DB85B",
+    "#2AB193",
+    "#5CC143",
     "#63e2b7",
-    "#A8EA3E",
+    "#E61E8F",
     "#E03D3D",
     "#E63AAF",
-    "#40EA9A",
+    "#35BA7B",
 ]
 
 const tabsList: Array<ITabType> = [
