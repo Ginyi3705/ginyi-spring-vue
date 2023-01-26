@@ -1,7 +1,7 @@
 <template>
     <n-popover placement="top-end" trigger="click" :arrow-point-to-center="true">
         <template #trigger>
-            <div style="position: fixed; bottom: 70px; right: 50px; cursor: pointer">
+            <div style="position: fixed; bottom: 55px; right:15px; cursor: pointer">
                 <n-card style="border-radius: 50%; width: 50px; height: 50px; position: relative">
                     <n-icon style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%)" :size="30"
                             :component="SparklesOutline"/>

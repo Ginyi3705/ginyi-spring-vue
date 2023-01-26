@@ -21,7 +21,7 @@
                     <TabsView/>
                 </div>
             </n-layout-header>
-            <n-layout-content :content-style="{padding: '15px', height: clientHeight - (layoutHeaderHeight + layoutFooterHeight + tabsHeight) + 'px',
+            <n-layout-content :content-style="{padding: '15px 15px 15px 20px', height: clientHeight - (layoutHeaderHeight + layoutFooterHeight + tabsHeight) + 'px',
             backgroundColor: darkTheme ? null : '#f5f7f9'}">
                 <router-view/>
             </n-layout-content>

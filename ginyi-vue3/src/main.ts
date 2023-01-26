@@ -7,6 +7,7 @@ import "@/plugins/naive-ui/common"
 import "@/config/console.log";
 import {initDirectives} from "@/directives";
 import {initIcon} from "@/plugins/naive-ui/common";
+import "@/style/index.css"
 
 const app = createApp(App)
 initStore(app)

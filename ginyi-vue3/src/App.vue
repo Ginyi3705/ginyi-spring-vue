@@ -1,5 +1,8 @@
 <template>
-    <n-config-provider :theme="getTheme" :theme-overrides="getThemeOverrides">
+    <n-config-provider :theme="getTheme"
+                       :theme-overrides="getThemeOverrides"
+                       :locale="zhCN"
+                       :date-locale="dateZhCN">
         <n-loading-bar-provider>
             <n-dialog-provider>
                 <n-notification-provider>
@@ -18,6 +21,7 @@ import {useThrottle} from "@/hooks/useDebthro";
 import {storeToRefs} from "pinia";
 import {computed} from "vue";
 import {useLighten} from "@/hooks/useColor";
+import { zhCN, dateZhCN } from "naive-ui";
 
 const {getTheme, themeColor} = storeToRefs(useSystemStore())
 const getThemeOverrides = computed(() => {
