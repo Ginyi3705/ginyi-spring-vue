@@ -1,11 +1,11 @@
 <template>
-    <n-card title="查询条件" :size="size" v-if="hasQuerySlot('query')" style="margin-bottom: 10px">
+    <n-card title="查询条件" :size="size" v-if="hasQuerySlot('query')" style="margin-bottom: 15px">
         <slot name="query"></slot>
     </n-card>
     <n-card>
         <div style="display: flex; justify-content: space-between; margin-bottom: 5px">
             <n-space>
-                <n-button type="primary" :size="size">
+                <n-button type="primary" :size="size" @click="onEvent(0)">
                     <template #icon>
                         <n-icon :component="AddCircleOutline"/>
                     </template>
@@ -61,7 +61,7 @@
                                                    animation="300"
                                                    chosen-class="chosenClass">
                                             <template #item="{element}">
-                                                <div class="item">
+                                                <div class="item" :style="{borderColor: themeColor}">
                                                     <n-space item-style="display: flex;" align="center">
                                                         <n-icon :component="Move"></n-icon>
                                                         <n-checkbox :value="element[labelField]"
@@ -79,13 +79,14 @@
                 </n-space>
             </div>
         </div>
-        <n-data-table ref="tableRef"
-                      :remote="true"
+        <n-data-table :remote="true"
                       :columns="tableColumns"
                       :data="dataList"
                       :size="tableSize"
-                      :max-height="clientHeight - (layoutHeaderHeight + layoutFooterHeight) - 200"
+                      :max-height="(clientHeight - (layoutHeaderHeight + layoutFooterHeight)) / 2"
                       :pagination="pagination"
+                      :row-key="rowKey"
+                      :scroll-x="1200"
                       @update:page="handlePageChange"
                       @update:page-size="handlePageSizeChange"
                       @update:checked-row-keys="handleCheckRows"/>
@@ -93,58 +94,20 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, reactive, ref, toRefs, watchEffect} from "vue";
+import {defineComponent, h, onMounted, reactive, ref, toRefs, watchEffect} from "vue";
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {AddCircleOutline, Move, SettingsOutline, TrashBinOutline} from "@vicons/ionicons5";
-import {DataTableRowKey} from "naive-ui";
+import {DataTableRowKey, NButton} from "naive-ui";
 import Draggable from 'vuedraggable'
 import {useDeepClone} from "@/hooks/useObject";
+import {definedProps} from "@/components/table/props";
 
 export default defineComponent({
     name: "CommonTable",
-    emits: ["onBatchDeleteEvent", "onPageChange", "onPageSizeChange"],
+    emits: ["onBatchDeleteEvent", "onPageChange", "onPageSizeChange", "onEvent"],
     props: {
-        /**
-         * 表格的列
-         */
-        columns: {
-            require: true,
-            type: Array<any>
-        },
-        /**
-         * 表格的数据
-         */
-        dataList: {
-            type: Array<any>
-        },
-        /**
-         * 整个组件的尺寸
-         */
-        size: {
-            type: String,
-            default: "small"
-        },
-        /**
-         * 表格的列显示中文的字段，如 {label: 年龄, value: age}，则传 label
-         */
-        labelField: {
-            type: String
-        },
-        /**
-         * 每页条数数组
-         */
-        pageSizes: {
-            default: () => [5, 10, 20, 50, 100],
-            type: Array<any>
-        },
-        // /**
-        //  * 每一行数据都要有唯一的 key
-        //  */
-        // rowKey: {
-        //     require: true,
-        //     type: String
-        // },
+        ...definedProps
     },
     components: {
         SettingsOutline, Draggable, Move
@@ -154,6 +117,21 @@ export default defineComponent({
         const selectCol = ref<Array<any>>([{
             type: 'selection'
         }])
+        // 操作列
+        const actionCol = ref<Array<any>>([
+            {
+                title: "编辑",
+                colorType: "primary",
+                actionType: 1,
+            },
+            {
+                title: "删除",
+                colorType: "error",
+                actionType: 2,
+            }
+        ])
+        // 操作列添加完毕标志
+        const actionColFlag = ref<boolean>(false)
         // draggable 配置项
         const dragData = reactive({
             drag: false,
@@ -163,13 +141,13 @@ export default defineComponent({
             page: 1,
             pageSize: props.pageSizes[0],
             pageSizes: props.pageSizes,
-            pageCount: props.dataList?.length,
-            itemCount: props.dataList?.length,
-            size: "medium",
+            pageCount: props.total,
+            itemCount: props.total,
+            size: props.size,
             showQuickJumper: true,
             showSizePicker: true
         })
-        const {layoutHeaderHeight, clientHeight, layoutFooterHeight} = storeToRefs((useSystemStore()));
+        const {layoutHeaderHeight, clientHeight, layoutFooterHeight, themeColor} = storeToRefs((useSystemStore()));
         // 表格的尺寸
         const tableSize = ref<string>("medium")
         // 是否开启序号列
@@ -189,11 +167,38 @@ export default defineComponent({
             tableColumns.value = hasSelect.value ? selectCol.value.concat(
                 tableConfigColumns.value.filter(column => {
                     return checkedList.value.includes(column[props.labelField as string])
-                })
+                }).concat(concatActionCol())
             ) : checkedList.value.length < tableConfigColumns.value.length ? tableConfigColumns.value.filter(column => {
                 return checkedList.value.includes(column[props.labelField as string])
-            }) : props.columns as Array<any>
+            }).concat(concatActionCol()) : props.columns as Array<any>
         })
+
+        // 将操作列添加上表格
+        const concatActionCol = () => {
+            // 判断操作列是否有值，如果没有添加上
+            return [{
+                title: "操作",
+                key: "action",
+                fixed: "right",
+                width: props.actionWidth,
+                render: (row: any) => {
+                    return [...actionCol.value, ...props.actionColData].map((action) => {
+                        return h(
+                            NButton,
+                            {
+                                style: {
+                                    marginRight: '6px'
+                                },
+                                size: 'small',
+                                type: action.colorType,
+                                onClick: () => onEvent(action.actionType, row)
+                            },
+                            {default: () => action.title}
+                        )
+                    })
+                }
+            }]
+        }
 
         // 检查插槽是否有内容
         const hasQuerySlot = (name: string) => !!context.slots[name];
@@ -207,6 +212,7 @@ export default defineComponent({
             tableColumns.value = tableConfigColumns.value.filter(column => {
                 return values.includes(column[props.labelField as string])
             })
+            // 添加操作列
             if (hasSelect.value) {
                 tableColumns.value.unshift(...selectCol.value)
             }
@@ -216,6 +222,7 @@ export default defineComponent({
             dragData.drag = false
             // 将排序后的 columns 重新赋值给 tableColumns (回显)
             tableColumns.value = useDeepClone(tableConfigColumns.value)
+            tableColumns.value = [...tableColumns.value, ...concatActionCol()]
             if (hasSelect.value) {
                 tableColumns.value.unshift(...selectCol.value)
             }
@@ -233,6 +240,17 @@ export default defineComponent({
         // 每页数据大小改变事件
         const handlePageSizeChange = (pageSize: number) => {
             context.emit("onPageSizeChange", pageSize)
+        }
+
+        /**
+         * @param type 0新增、1编辑、2删除、其他为自定义传入的值
+         * @param row 操作的行
+         */
+        const onEvent = (type: number, row?: any) => {
+            context.emit("onEvent", {
+                type: type,
+                row: row
+            })
         }
 
         onMounted(() => {
@@ -259,7 +277,9 @@ export default defineComponent({
             handlePageSizeChange,
             layoutHeaderHeight, clientHeight, layoutFooterHeight,
             pagination: paginationReactive,
-            onDragEnd
+            onDragEnd,
+            themeColor,
+            onEvent
         }
     }
 })
@@ -276,7 +296,7 @@ export default defineComponent({
     border-radius: 4px;
     margin: 5px 0;
     padding: 0 5px;
-    border: 1px solid antiquewhite;
+    border: 1px solid;
     display: flex;
     align-items: center;
 }
