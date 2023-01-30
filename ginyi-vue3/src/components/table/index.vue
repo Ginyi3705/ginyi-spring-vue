@@ -94,7 +94,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, h, onMounted, reactive, ref, toRefs, watchEffect} from "vue";
+import {defineComponent, h, onMounted, reactive, ref, toRefs, watch} from "vue";
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {AddCircleOutline, Move, SettingsOutline, TrashBinOutline} from "@vicons/ionicons5";
@@ -163,19 +163,30 @@ export default defineComponent({
         // 表格中启用可选列后选中的
         const checkedRowList = ref<Array<any>>([])
 
-        watchEffect(() => {
-            tableColumns.value = hasSelect.value ? selectCol.value.concat(
-                tableConfigColumns.value.filter(column => {
-                    return checkedList.value.includes(column[props.labelField as string])
-                }).concat(concatActionCol())
-            ) : checkedList.value.length < tableConfigColumns.value.length ? tableConfigColumns.value.filter(column => {
-                return checkedList.value.includes(column[props.labelField as string])
-            }).concat(concatActionCol()) : props.columns as Array<any>
+        watch(() => hasSelect.value, () => {
+            concatActionCol()
         })
 
-        // 将操作列添加上表格
+        // 拼接操作列
         const concatActionCol = () => {
-            // 判断操作列是否有值，如果没有添加上
+            if (hasSelect.value) {
+                tableColumns.value = selectCol.value.concat(
+                    tableConfigColumns.value.filter(column => {
+                        return checkedList.value.includes(column[props.labelField as string])
+                    })
+                )
+            } else if (checkedList.value.length < tableConfigColumns.value.length) {
+                tableColumns.value = tableConfigColumns.value.filter(column => {
+                    return checkedList.value.includes(column[props.labelField as string])
+                })
+            } else {
+                tableColumns.value = props.columns as Array<any>
+            }
+            tableColumns.value = [...tableColumns.value, ...renderActionCol()]
+        }
+
+        // 渲染操作列
+        const renderActionCol = () => {
             return [{
                 title: "操作",
                 key: "action",
@@ -212,6 +223,7 @@ export default defineComponent({
             tableColumns.value = tableConfigColumns.value.filter(column => {
                 return values.includes(column[props.labelField as string])
             })
+            tableColumns.value = [...tableColumns.value, ...renderActionCol()]
             // 添加操作列
             if (hasSelect.value) {
                 tableColumns.value.unshift(...selectCol.value)
@@ -221,8 +233,11 @@ export default defineComponent({
         const onDragEnd = () => {
             dragData.drag = false
             // 将排序后的 columns 重新赋值给 tableColumns (回显)
-            tableColumns.value = useDeepClone(tableConfigColumns.value)
-            tableColumns.value = [...tableColumns.value, ...concatActionCol()]
+            tableColumns.value = [...useDeepClone(
+                tableConfigColumns.value.filter(column => {
+                    return checkedList.value.includes(column[props.labelField as string])
+                })
+            ), ...renderActionCol()]
             if (hasSelect.value) {
                 tableColumns.value.unshift(...selectCol.value)
             }
@@ -254,8 +269,11 @@ export default defineComponent({
         }
 
         onMounted(() => {
+            concatActionCol()
             checkedList.value = tableColumns.value.map(item => item[props.labelField as string])
-            tableConfigColumns.value = useDeepClone(tableColumns.value)
+            tableConfigColumns.value = useDeepClone(tableColumns.value.filter(column => {
+                return column.key !== "action"
+            }))
         })
 
         return {
