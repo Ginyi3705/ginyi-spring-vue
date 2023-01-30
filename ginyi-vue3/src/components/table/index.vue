@@ -98,10 +98,11 @@ import {defineComponent, h, onMounted, reactive, ref, toRefs, watch} from "vue";
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {AddCircleOutline, Move, SettingsOutline, TrashBinOutline} from "@vicons/ionicons5";
-import {DataTableRowKey, NButton} from "naive-ui";
+import {DataTableRowKey, NButton, NSpace} from "naive-ui";
 import Draggable from 'vuedraggable'
 import {useDeepClone} from "@/hooks/useObject";
 import {definedProps} from "@/components/table/props";
+import {Size} from "naive-ui/es/button/src/interface";
 
 export default defineComponent({
     name: "CommonTable",
@@ -193,20 +194,18 @@ export default defineComponent({
                 fixed: "right",
                 width: props.actionWidth,
                 render: (row: any) => {
-                    return [...actionCol.value, ...props.actionColData].map((action) => {
-                        return h(
-                            NButton,
-                            {
-                                style: {
-                                    marginRight: '6px'
-                                },
-                                size: 'small',
-                                type: action.colorType,
-                                onClick: () => onEvent(action.actionType, row)
-                            },
-                            {default: () => action.title}
-                        )
-                    })
+                    return h(NSpace, null, () => [
+                            [...actionCol.value, ...props.actionColData].map((action) => {
+                                return h(NButton, {
+                                        size: props.size as Size,
+                                        type: action.colorType,
+                                        onClick: () => onEvent(action.actionType, row)
+                                    },
+                                    {default: () => action.title}
+                                )
+                            })
+                        ]
+                    )
                 }
             }]
         }
