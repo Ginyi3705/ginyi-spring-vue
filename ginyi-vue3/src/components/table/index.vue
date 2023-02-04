@@ -86,7 +86,8 @@
                       :max-height="(clientHeight - (layoutHeaderHeight + layoutFooterHeight)) / 2"
                       :pagination="pagination"
                       :row-key="rowKey"
-                      :scroll-x="1200"
+                      :scroll-x="2000"
+                      :loading="dataList.length === 0"
                       @update:page="handlePageChange"
                       @update:page-size="handlePageSizeChange"
                       @update:checked-row-keys="handleCheckRows"/>
@@ -136,17 +137,6 @@ export default defineComponent({
         // draggable 配置项
         const dragData = reactive({
             drag: false,
-        })
-        // 分页对象
-        const paginationReactive = reactive({
-            page: 1,
-            pageSize: props.pageSizes[0],
-            pageSizes: props.pageSizes,
-            pageCount: props.total,
-            itemCount: props.total,
-            size: props.size,
-            showQuickJumper: true,
-            showSizePicker: true
         })
         const {layoutHeaderHeight, clientHeight, layoutFooterHeight, themeColor} = storeToRefs((useSystemStore()));
         // 表格的尺寸
@@ -293,7 +283,6 @@ export default defineComponent({
             handlePageChange,
             handlePageSizeChange,
             layoutHeaderHeight, clientHeight, layoutFooterHeight,
-            pagination: paginationReactive,
             onDragEnd,
             themeColor,
             onEvent

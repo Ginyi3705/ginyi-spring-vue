@@ -1,13 +1,12 @@
 <template>
     <div>
-        <CommonTable :columns="columns"
+        <CommonTable :columns="userListColumns"
                      :dataList="dataList"
                      :labelField="'title'"
-                     :rowKey="(row) => row.id"
-                     :pageSizes="[10, 20, 50, 100]"
-                     :total="100"
+                     :rowKey="(row) => row.userId"
                      :actionColData="actionCol"
                      :actionWidth="300"
+                     :pagination="pagination"
                      @onPageChange="onPageChange"
                      @onPageSizeChange="onPageSizeChange"
                      @onBatchDeleteEvent="onBatchDeleteEvent"
@@ -45,35 +44,21 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import {defineComponent, onMounted, ref, watch} from "vue";
 import CommonTable from "@/components/table/index.vue"
-import {DataTableColumns} from "naive-ui";
-import {RowData} from "naive-ui/es/data-table/src/interface";
+import {userListColumns} from "@/views/pages/system/user/userListColumns";
+import {userController} from "@/api";
+import {usePagination} from "@/hooks/usePagination";
 
 export default defineComponent({
     components: {
         CommonTable
     },
     setup() {
-        const columns = ref<DataTableColumns<RowData>>([
-            {
-                title: 'ID',
-                key: 'id'
-            },
-            {
-                title: '姓名',
-                key: 'name'
-            },
-            {
-                title: '年龄',
-                key: 'age'
-            },
-            {
-                title: '地址',
-                key: 'address'
-            }
-        ])
+        // 表格数据
         const dataList = ref<Array<any>>([])
+        // 总条数
+        const total = ref<number>(0)
         // 操作列
         const actionCol = ref<Array<any>>([
             {
@@ -87,13 +72,10 @@ export default defineComponent({
                 actionType: 4,
             }
         ])
-        dataList.value = Array.from({length: 46}).map((_, index) => ({
-            key: index,
-            name: `Edward King ${index}`,
-            age: 32,
-            address: `London, Park Lane no. ${index}`,
-            id: index
-        }))
+        // 分页对象
+        const {pagination} = usePagination()
+
+        watch(() => pagination, () => getUserList(), {deep: true})
 
         const onBatchDeleteEvent = (value: Array<any>) => {
             window.$message.warning("你点击了批量删除，请到控制台查看选中的数据！")
@@ -101,21 +83,35 @@ export default defineComponent({
         }
 
         const onPageChange = (page: number) => {
-            window.$message.warning(`你点击了第 ${page} 页`)
+            pagination.page = page
         }
         const onPageSizeChange = (pageSize: number) => {
-            window.$message.warning(`你选了了每页 ${pageSize} 条`)
+            pagination.pageSize = pageSize
         }
         const onEvent = (value: any) => {
             window.$message.warning(`你点击了 ${value.type === 0 ? '【新增数据】'
                 : value.type === 1 ? '【编辑】'
-                : value.type === 2 ? '【删除】' : '【自定义的】'}`)
+                    : value.type === 2 ? '【删除】' : '【自定义的】'}`)
             console.log('表格事件的回调信息：', value)
         }
+
+        const getUserList = () => {
+            userController.getUserList({}, {page: pagination.page, pageSize: pagination.pageSize}).then((res) => {
+                dataList.value = res.data.list
+                pagination.itemCount = res.data.count
+            })
+        }
+
+        onMounted(() => {
+            getUserList()
+        })
+
         return {
-            columns,
+            userListColumns,
             dataList,
+            total,
             actionCol,
+            pagination,
             onBatchDeleteEvent,
             onPageChange,
             onPageSizeChange,

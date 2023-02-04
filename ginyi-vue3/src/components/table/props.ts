@@ -26,24 +26,11 @@ export const definedProps = {
         type: String
     },
     /**
-     * 每页条数数组
-     */
-    pageSizes: {
-        default: () => [5, 10, 20, 50, 100],
-        type: Array<any>
-    },
-    /**
      * 每一行数据都要有唯一的 key
      */
     rowKey: {
         require: true,
         type: Function
-    },
-    /**
-     * 分页总条数
-     */
-    total: {
-        type: Number,
     },
     /**
      * 操作列宽度
@@ -58,5 +45,12 @@ export const definedProps = {
     actionColData: {
         default: () => [],
         type: Array<any>
-    }
+    },
+    /**
+     * 分页参数对象
+     */
+    pagination: {
+        type: [Object, Boolean],
+        default: () => false,
+    },
 }

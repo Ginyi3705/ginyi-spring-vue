@@ -104,3 +104,20 @@ export interface IUser {
     // Token令牌
     authorization?: string | undefined;
 }
+
+/**
+ * 表格列
+ */
+export interface IColumnType {
+    key: string;
+    title: string;
+    width?: number
+}
+
+/**
+ * 分页
+ */
+export interface IPage {
+    page: number | string;
+    pageSize: number | string
+}
