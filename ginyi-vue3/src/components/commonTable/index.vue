@@ -102,7 +102,7 @@ import {AddCircleOutline, Move, SettingsOutline, TrashBinOutline} from "@vicons/
 import {DataTableRowKey, NButton, NSpace} from "naive-ui";
 import Draggable from 'vuedraggable'
 import {useDeepClone} from "@/hooks/useObject";
-import {definedProps} from "@/components/table/props";
+import {definedProps} from "@/components/commonTable/props";
 import {Size} from "naive-ui/es/button/src/interface";
 
 export default defineComponent({

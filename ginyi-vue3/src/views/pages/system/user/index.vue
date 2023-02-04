@@ -12,32 +12,24 @@
                      @onBatchDeleteEvent="onBatchDeleteEvent"
                      @onEvent="onEvent">
             <template #query>
-                <n-form
-                    style="display: flex; flex-wrap: wrap"
-                    ref="formRef"
-                    inline
-                    :label-width="80"
-                    :size="'small'">
+                <CommonForm
+                    :model="formValue"
+                    :rules="rules"
+                    :inline="true"
+                    :submitButtonText="'查询'"
+                    :cancelButtonText="'重置'"
+                    @onSubmit="onSubmit"
+                    @onReset="onReset">
                     <n-form-item label="姓名" path="user.name">
-                        <n-input placeholder="输入姓名"/>
+                        <n-input v-model:value="formValue.user.name" placeholder="输入姓名"/>
                     </n-form-item>
                     <n-form-item label="年龄" path="user.age">
-                        <n-input placeholder="输入年龄"/>
+                        <n-input v-model:value="formValue.user.age" placeholder="输入年龄"/>
                     </n-form-item>
                     <n-form-item label="电话号码" path="phone">
-                        <n-input placeholder="电话号码"/>
+                        <n-input v-model:value="formValue.phone" placeholder="电话号码"/>
                     </n-form-item>
-                    <n-form-item>
-                        <n-button attr-type="submit" type="primary">
-                            查询
-                        </n-button>
-                    </n-form-item>
-                    <n-form-item>
-                        <n-button attr-type="reset">
-                            重置
-                        </n-button>
-                    </n-form-item>
-                </n-form>
+                </CommonForm>
             </template>
         </CommonTable>
     </div>
@@ -45,16 +37,46 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref, watch} from "vue";
-import CommonTable from "@/components/table/index.vue"
+import CommonTable from "@/components/commonTable/index.vue"
 import {userListColumns} from "@/views/pages/system/user/userListColumns";
 import {userController} from "@/api";
 import {usePagination} from "@/hooks/usePagination";
+import CommonForm from "@/components/commonForm/index.vue";
+import {useDeepClone} from "@/hooks/useObject";
 
 export default defineComponent({
     components: {
-        CommonTable
+        CommonTable, CommonForm
     },
     setup() {
+
+        const formValue = ref({
+            user: {
+                name: '',
+                age: '18'
+            },
+            phone: ''
+        })
+        const rules = ref({
+            user: {
+                name: {
+                    required: true,
+                    message: '请输入姓名',
+                    trigger: 'blur'
+                },
+                age: {
+                    required: true,
+                    message: '请输入年龄',
+                    trigger: ['input', 'blur']
+                }
+            },
+            phone: {
+                required: true,
+                message: '请输入电话号码',
+                trigger: ['input']
+            }
+        })
+
         // 表格数据
         const dataList = ref<Array<any>>([])
         // 总条数
@@ -102,6 +124,13 @@ export default defineComponent({
             })
         }
 
+        const onReset = (value: any) => {
+            formValue.value = useDeepClone(value)
+        }
+        const onSubmit = (result: boolean) => {
+            window.$message.warning(`校验结果-->>${result}`)
+        }
+
         onMounted(() => {
             getUserList()
         })
@@ -115,7 +144,11 @@ export default defineComponent({
             onBatchDeleteEvent,
             onPageChange,
             onPageSizeChange,
-            onEvent
+            onEvent,
+            formValue,
+            rules,
+            onReset,
+            onSubmit
         }
     }
 })
