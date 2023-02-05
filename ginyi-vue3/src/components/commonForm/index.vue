@@ -1,10 +1,13 @@
 <template>
     <n-form
+        style="display: flex; flex-wrap: wrap"
         ref="formRef"
         :inline="inline"
         :rules="rules"
         :model="model"
         :label-width="labelWidth"
+        :label-placement="labelPlacement"
+        :label-align="labelAlign"
         :size="size">
         <slot></slot>
         <n-form-item>

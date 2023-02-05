@@ -1,6 +1,6 @@
-import {IColumnType} from "@/interface/modules/system";
+import {DataTableColumns, NTag} from "naive-ui";
 
-export const userListColumns: Array<IColumnType> = [
+export const userListColumns: DataTableColumns<any> = [
     {
         title: "用户昵称",
         key: "nickName"
@@ -10,20 +10,8 @@ export const userListColumns: Array<IColumnType> = [
         key: "userName"
     },
     {
-        title: "邮箱",
-        key: "email",
-    },
-    {
         title: "部门ID",
         key: "deptId"
-    },
-    {
-        title: "头像",
-        key: "avatar"
-    },
-    {
-        title: "手机号码",
-        key: "phoneNumber"
     },
     {
         title: "岗位",
@@ -34,12 +22,24 @@ export const userListColumns: Array<IColumnType> = [
         key: "roleIds"
     },
     {
-        title: "性别",
-        key: "sex"
+        title: "手机号码",
+        key: "phoneNumber"
     },
     {
         title: "状态",
-        key: "status"
+        key: "status",
+        render: (row) => (
+            <NTag type={row.status === "0" ? "success" : "error"}>
+                {row.status === "0" ? "正常" : "禁用"}
+            </NTag>
+        )
+    },
+    {
+        title: "性别",
+        key: "sex",
+        render: (row) => (
+            <span>{row.sex === "0" ? "男" : row.sex === "1" ? "女" : "未知"}</span>
+        )
     },
     {
         title: "创建时间",

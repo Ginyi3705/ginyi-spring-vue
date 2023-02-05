@@ -5,7 +5,7 @@
                      :labelField="'title'"
                      :rowKey="(row) => row.userId"
                      :actionColData="actionCol"
-                     :actionWidth="300"
+                     :actionWidth="310"
                      :pagination="pagination"
                      @onPageChange="onPageChange"
                      @onPageSizeChange="onPageSizeChange"
@@ -13,21 +13,30 @@
                      @onEvent="onEvent">
             <template #query>
                 <CommonForm
-                    :model="formValue"
-                    :rules="rules"
+                    :model="queryForm"
                     :inline="true"
+                    :labelPlacement="'top'"
                     :submitButtonText="'查询'"
                     :cancelButtonText="'重置'"
                     @onSubmit="onSubmit"
                     @onReset="onReset">
-                    <n-form-item label="姓名" path="user.name">
-                        <n-input v-model:value="formValue.user.name" placeholder="输入姓名"/>
+                    <n-form-item label="用户名" path="userName">
+                        <n-input v-model:value="queryForm.userName" placeholder="请输入用户名"/>
                     </n-form-item>
-                    <n-form-item label="年龄" path="user.age">
-                        <n-input v-model:value="formValue.user.age" placeholder="输入年龄"/>
+                    <n-form-item label="昵称" path="user.nickName">
+                        <n-input v-model:value="queryForm.nickName" placeholder="请输入昵称"/>
                     </n-form-item>
-                    <n-form-item label="电话号码" path="phone">
-                        <n-input v-model:value="formValue.phone" placeholder="电话号码"/>
+                    <n-form-item label="状态" path="status">
+                        <n-select v-model:value="queryForm.status" :options="options" style="width: 100px"/>
+                    </n-form-item>
+                    <n-form-item label="手机号码" path="phoneNumber">
+                        <n-input v-model:value="queryForm.phoneNumber" placeholder="请输入手机号码"/>
+                    </n-form-item>
+                    <n-form-item label="起止时间" path="time">
+                        <n-date-picker v-model:formatted-value="queryForm.time"
+                                       clearable
+                                       value-format="yyyy-MM-dd HH:mm:ss"
+                                       update-value-on-close type="datetimerange" :actions="['confirm', 'clear']"/>
                     </n-form-item>
                 </CommonForm>
             </template>
@@ -36,13 +45,15 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, watch} from "vue";
+import {defineComponent, onMounted, reactive, ref, watch} from "vue";
 import CommonTable from "@/components/commonTable/index.vue"
 import {userListColumns} from "@/views/pages/system/user/userListColumns";
 import {userController} from "@/api";
 import {usePagination} from "@/hooks/usePagination";
 import CommonForm from "@/components/commonForm/index.vue";
 import {useDeepClone} from "@/hooks/useObject";
+import {SelectGroupOption, SelectOption} from "naive-ui";
+import {useStatusDict} from "@/dictionary/useSystemDict";
 
 export default defineComponent({
     components: {
@@ -50,32 +61,16 @@ export default defineComponent({
     },
     setup() {
 
-        const formValue = ref({
-            user: {
-                name: '',
-                age: '18'
-            },
-            phone: ''
+        const queryForm = ref<any>({
+            userName: null,
+            nickName: null,
+            email: null,
+            time: null,
+            phoneNumber: null,
+            status: null,
         })
-        const rules = ref({
-            user: {
-                name: {
-                    required: true,
-                    message: '请输入姓名',
-                    trigger: 'blur'
-                },
-                age: {
-                    required: true,
-                    message: '请输入年龄',
-                    trigger: ['input', 'blur']
-                }
-            },
-            phone: {
-                required: true,
-                message: '请输入电话号码',
-                trigger: ['input']
-            }
-        })
+
+        const options = ref<Array<SelectOption | SelectGroupOption>>(useStatusDict)
 
         // 表格数据
         const dataList = ref<Array<any>>([])
@@ -84,12 +79,12 @@ export default defineComponent({
         // 操作列
         const actionCol = ref<Array<any>>([
             {
-                title: "自定义1",
+                title: "分配角色",
                 colorType: "info",
                 actionType: 3,
             },
             {
-                title: "自定义2",
+                title: "重置密码",
                 colorType: "success",
                 actionType: 4,
             }
@@ -118,17 +113,22 @@ export default defineComponent({
         }
 
         const getUserList = () => {
-            userController.getUserList({}, {page: pagination.page, pageSize: pagination.pageSize}).then((res) => {
+            if(queryForm.value?.time && queryForm.value?.time?.length !== 0){
+                queryForm.value.beginTime = queryForm.value.time[0]
+                queryForm.value.endTime = queryForm.value.time[1]
+            }
+            userController.getUserList(queryForm.value, {page: pagination.page, pageSize: pagination.pageSize}).then((res) => {
                 dataList.value = res.data.list
                 pagination.itemCount = res.data.count
             })
         }
 
         const onReset = (value: any) => {
-            formValue.value = useDeepClone(value)
+            queryForm.value = useDeepClone(value)
+            getUserList()
         }
         const onSubmit = (result: boolean) => {
-            window.$message.warning(`校验结果-->>${result}`)
+            getUserList()
         }
 
         onMounted(() => {
@@ -145,10 +145,10 @@ export default defineComponent({
             onPageChange,
             onPageSizeChange,
             onEvent,
-            formValue,
-            rules,
+            queryForm,
             onReset,
-            onSubmit
+            onSubmit,
+            options
         }
     }
 })

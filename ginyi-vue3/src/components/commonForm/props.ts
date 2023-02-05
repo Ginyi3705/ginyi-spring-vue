@@ -34,9 +34,18 @@ export const definedProps = {
         type: Boolean,
         default: false
     },
+    /**
+     * 标签位置
+     */
     labelPlacement: {
         type: String,
-        default: "top"
+        default: "left"
+    },
+    /**
+     * 标签的文本对齐方式
+     */
+    labelAlign: {
+        type: String,
     },
     /**
      * 确认按钮的文本内容
