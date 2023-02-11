@@ -46,4 +46,15 @@ export class userController {
             data
         })
     }
+
+    /**
+     * 获取用户详情
+     * @param userId
+     */
+    static getUserById(userId: number): Promise<any> {
+        return useRequest({
+            url: `/api/user/getUserByUserId/${userId}`,
+            method: "get",
+        })
+    }
 }

@@ -1,6 +1,5 @@
 <template>
     <n-form
-        style="display: flex; flex-wrap: wrap"
         ref="formRef"
         :inline="inline"
         :rules="rules"
@@ -9,13 +8,15 @@
         :label-placement="labelPlacement"
         :label-align="labelAlign"
         :size="size">
-        <slot></slot>
-        <n-form-item>
-            <n-space>
-                <n-button type="primary" attr-type="button" @click="handleValidate">{{ submitButtonText }}</n-button>
-                <n-button attr-type="button" @click="handleReset">{{ cancelButtonText }}</n-button>
-            </n-space>
-        </n-form-item>
+        <div style="display: flex; flex-wrap: wrap">
+            <slot></slot>
+            <n-form-item>
+                <n-space>
+                    <n-button type="primary" attr-type="button" @click="handleValidate">{{ submitButtonText }}</n-button>
+                    <n-button attr-type="button" @click="handleReset">{{ cancelButtonText }}</n-button>
+                </n-space>
+            </n-form-item>
+        </div>
     </n-form>
 </template>
 

@@ -41,11 +41,20 @@
                 </CommonForm>
             </template>
         </CommonTable>
+        <CommonModel ref="commonModelRef"
+                     style="min-width: 800px"
+                     :title="isEdit ? '编辑用户' : '新增用户'"
+                     positiveText="提交"
+                     negativeText="取消"
+                     @onSubmit="onPositiveClick"
+                     @onCancel="onNegativeClick">
+            <UserEditForm ref="userEditFormRef" :userId="userId" :isEdit="isEdit"/>
+        </CommonModel>
     </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import {defineComponent, nextTick, onMounted, ref, watch} from "vue";
 import CommonTable from "@/components/commonTable/index.vue"
 import {userListColumns} from "@/views/pages/system/user/userListColumns";
 import {userController} from "@/api";
@@ -54,12 +63,18 @@ import CommonForm from "@/components/commonForm/index.vue";
 import {useDeepClone} from "@/hooks/useObject";
 import {SelectGroupOption, SelectOption} from "naive-ui";
 import {useStatusDict} from "@/dictionary/useSystemDict";
+import UserEditForm from "@/views/pages/system/user/userEditForm.vue"
+import CommonModel from "@/components/commonModel/index.vue";
 
 export default defineComponent({
     components: {
-        CommonTable, CommonForm
+        CommonTable, CommonForm, UserEditForm, CommonModel
     },
     setup() {
+        const commonModelRef = ref(undefined)
+        const userEditFormRef = ref(null)
+        const userId = ref<number | undefined>(undefined)
+        const isEdit = ref<boolean>(false)
 
         const queryForm = ref<any>({
             userName: null,
@@ -69,9 +84,8 @@ export default defineComponent({
             phoneNumber: null,
             status: null,
         })
-
+        // 状态下拉配置项
         const options = ref<Array<SelectOption | SelectGroupOption>>(useStatusDict)
-
         // 表格数据
         const dataList = ref<Array<any>>([])
         // 总条数
@@ -105,19 +119,56 @@ export default defineComponent({
         const onPageSizeChange = (pageSize: number) => {
             pagination.pageSize = pageSize
         }
+
         const onEvent = (value: any) => {
-            window.$message.warning(`你点击了 ${value.type === 0 ? '【新增数据】'
-                : value.type === 1 ? '【编辑】'
-                    : value.type === 2 ? '【删除】' : '【自定义的】'}`)
             console.log('表格事件的回调信息：', value)
+            switch (value.type) {
+                // 新增
+                case 0:
+                    nextTick(() => {
+                        isEdit.value = false
+                        // @ts-ignore
+                        commonModelRef?.value?.onOpen()
+                    })
+                    break
+                // 编辑
+                case 1:
+                    isEdit.value = true
+                    userId.value = value.row.userId
+                    nextTick(() => {
+                        // @ts-ignore
+                        commonModelRef?.value?.onOpen()
+                    })
+                    break
+                // 删除
+                case 2:
+                    window.$dialog.warning({
+                        title: "温馨提醒",
+                        content: "删除操作不可逆，是否继续？",
+                        positiveText: "确定",
+                        negativeText: "取消",
+                        onPositiveClick: () => {
+                            window.$message.success("您点击了删除！")
+                        }
+                    })
+                    break
+                case 3:
+                    window.$message.success("您点击了分配角色！")
+                    break
+                case 4:
+                    window.$message.success("您点击了重置密码！")
+            }
         }
 
         const getUserList = () => {
-            if(queryForm.value?.time && queryForm.value?.time?.length !== 0){
+            if (queryForm.value?.time && queryForm.value?.time?.length !== 0) {
                 queryForm.value.beginTime = queryForm.value.time[0]
                 queryForm.value.endTime = queryForm.value.time[1]
             }
-            userController.getUserList(queryForm.value, {page: pagination.page, pageSize: pagination.pageSize}).then((res) => {
+            userController.getUserList(queryForm.value, {
+                page: pagination.page,
+                pageSize: pagination.pageSize
+            }).then((res) => {
                 dataList.value = res.data.list
                 pagination.itemCount = res.data.count
             })
@@ -148,7 +199,17 @@ export default defineComponent({
             queryForm,
             onReset,
             onSubmit,
-            options
+            options,
+            userEditFormRef,
+            isEdit,
+            userId,
+            commonModelRef,
+            onNegativeClick() {
+                console.log('取消')
+            },
+            onPositiveClick() {
+                console.log('提交')
+            }
         }
     }
 })

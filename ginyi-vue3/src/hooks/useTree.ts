@@ -74,3 +74,18 @@ export const useFindParentNodes = (name: string,
         result.pop()
     }
 }
+
+
+/**
+ * 格式化树
+ */
+export const useRemoveEmptyChildrenField = (list: Array<any>, fieldName: string = "children"): Array<any> => {
+    return list.map((item: any) => {
+        if (item[fieldName]?.length > 0) {
+            useRemoveEmptyChildrenField(item[fieldName], fieldName)
+        } else {
+            delete item[fieldName]
+        }
+        return item
+    })
+}
