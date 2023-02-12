@@ -5,7 +5,7 @@
                      :labelField="'title'"
                      :rowKey="(row) => row.userId"
                      :actionColData="actionCol"
-                     :actionWidth="310"
+                     :actionWidth="220"
                      :pagination="tablePagination"
                      :loading="tableLoading"
                      @onPageChange="onPageChange"
@@ -24,8 +24,6 @@ import {defineComponent, onMounted, ref, watch} from "vue";
 import CommonTable from "@/components/commonTable/index.vue"
 import {userListColumns} from "@/views/pages/system/user/userListColumns";
 import {userController} from "@/api";
-import {SelectGroupOption, SelectOption} from "naive-ui";
-import {useStatusDict} from "@/dictionary/useSystemDict";
 import UserEditForm from "@/views/pages/system/user/userEditForm.vue";
 import UserQueryForm from "@/views/pages/system/user/userQueryForm.vue";
 import {useCommonTable} from "@/components/commonTable/useCommonTable";
@@ -44,12 +42,8 @@ export default defineComponent({
             onPageSizeChange,
             getDataList
         } = useCommonTable(userController.getUserList)
-
         const userEditFormRef = ref(null)
         const userId = ref<number | undefined>(undefined)
-
-        // 状态下拉配置项
-        const options = ref<Array<SelectOption | SelectGroupOption>>(useStatusDict)
         // 操作列
         const actionCol = ref<Array<any>>([
             {
@@ -60,7 +54,7 @@ export default defineComponent({
         ])
 
         // @ts-ignore
-        watch(() => {userEditFormRef?.value?.modalLoading}, () => getDataList(), {deep: true})
+        watch(() => userEditFormRef?.value?.modalLoading, () => getDataList(), {deep: true})
 
         const onEvent = (value: any) => {
             switch (value.type) {
@@ -112,7 +106,6 @@ export default defineComponent({
             onPageChange,
             onPageSizeChange,
             onEvent,
-            options,
             userEditFormRef,
             userId,
             onQuery,

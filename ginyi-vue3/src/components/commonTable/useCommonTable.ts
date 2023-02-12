@@ -34,6 +34,7 @@ export const useCommonTable = (getListApi: Function) => {
      * @param data
      */
     const getDataList = (data: any = {}) => {
+        tableLoading.value = true
         getListApi(data, {
             page: tablePagination.page,
             pageSize: tablePagination.pageSize
@@ -41,6 +42,8 @@ export const useCommonTable = (getListApi: Function) => {
             tableDataList.value = res.data.list
             tablePagination.itemCount = res.data.count
             tableLoading.value = false
+        }).catch((e: any) => {
+            tableLoading.value = true
         })
     }
 
