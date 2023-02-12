@@ -6,7 +6,7 @@
         positiveText="提交"
         negativeText="取消"
         @positive-click="onSubmit"
-        @negative-click="onCancel">
+        @negative-click="showModal = false">
         <div style="padding-top: 15px">
             <slot></slot>
         </div>
@@ -14,33 +14,32 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watch} from "vue";
-import {definedProps} from "@/components/commonModel/props";
+import {computed, defineComponent} from "vue";
+import {definedProps} from "@/components/commonModal/props";
 
 export default defineComponent({
-    name: "CommonModel",
+    name: "CommonModal",
     props: {
         ...definedProps
     },
-    emits: ["onSubmit", "onCancel"],
+    emits: ["onSubmit", "update:show"],
     setup(props, context) {
-        const showModal = ref<boolean>(false)
 
-        const onOpen = () => {
-            showModal.value = true
-        }
         const onSubmit = () => {
-            window.$message.success('onSubmit')
-        }
-        const onCancel = () => {
-            window.$message.success('onCancel')
+            context.emit("onSubmit")
         }
 
+        const showModal = computed({
+            get() {
+                return props.show
+            },
+            set(value) {
+                context.emit("update:show", value)
+            }
+        })
         return {
             onSubmit,
-            onCancel,
-            onOpen,
-            showModal,
+            showModal
         }
     }
 })

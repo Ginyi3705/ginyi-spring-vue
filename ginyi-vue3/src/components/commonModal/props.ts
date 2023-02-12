@@ -27,4 +27,8 @@ export const definedProps = {
         type: String,
         default: "取消"
     },
+    show: {
+        type: Boolean,
+        default: false
+    }
 }

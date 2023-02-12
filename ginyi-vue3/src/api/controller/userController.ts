@@ -57,4 +57,54 @@ export class userController {
             method: "get",
         })
     }
+
+
+    /**
+     * 新增用户
+     * @param data
+     */
+    static add(data: any): Promise<any> {
+        return useRequest({
+            url: "/api/user/add",
+            method: "post",
+            data
+        })
+    }
+
+
+    /**
+     * 更新用户
+     * @param data
+     */
+    static edit(data: any): Promise<any> {
+        return useRequest({
+            url: "/api/user/update",
+            method: "post",
+            data
+        })
+    }
+
+    /**
+     * 删除用户
+     * @param userId
+     */
+    static deleteById(userId: number | string): Promise<any> {
+        return useRequest({
+            url: `/api/user/delete/${userId}`,
+            method: "post"
+        })
+    }
+
+    /**
+     * 批量删除用户
+     * @param data
+     */
+    static deleteByIds(data: Array<number | string>): Promise<any> {
+        return useRequest({
+            url: "/api/user/delete",
+            method: "post",
+            data
+        })
+    }
+
 }

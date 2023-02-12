@@ -12,7 +12,7 @@
                     新增数据
                 </n-button>
                 <n-button type="error" :size="size"
-                          @click="onBatchDeleteEvent"
+                          @click="onEvent(3)"
                           :disabled="!hasSelect || checkedRowList.length === 0">
                     <template #icon>
                         <n-icon :component="TrashBinOutline"/>
@@ -107,7 +107,7 @@ import {Size} from "naive-ui/es/button/src/interface";
 
 export default defineComponent({
     name: "CommonTable",
-    emits: ["onBatchDeleteEvent", "onPageChange", "onPageSizeChange", "onEvent"],
+    emits: ["onPageChange", "onPageSizeChange", "onEvent"],
     props: {
         ...definedProps
     },
@@ -130,6 +130,10 @@ export default defineComponent({
                 title: "删除",
                 colorType: "error",
                 actionType: 2,
+            },
+            {
+                title: "批量删除",
+                actionType: 3
             }
         ])
         // 操作列添加完毕标志
@@ -185,7 +189,7 @@ export default defineComponent({
                 width: props.actionWidth,
                 render: (row: any) => {
                     return h(NSpace, null, () => [
-                            [...actionCol.value, ...props.actionColData].map((action) => {
+                            [...actionCol.value.slice(0, actionCol.value.length - 1), ...props.actionColData].map((action) => {
                                 return h(NButton, {
                                         size: props.size as Size,
                                         type: action.colorType,
@@ -232,11 +236,6 @@ export default defineComponent({
             }
         }
 
-        // 批量删除
-        const onBatchDeleteEvent = () => {
-            context.emit("onBatchDeleteEvent", checkedRowList.value)
-        }
-
         // 页码改变事件
         const handlePageChange = (page: number) => {
             context.emit("onPageChange", page)
@@ -247,14 +246,15 @@ export default defineComponent({
         }
 
         /**
-         * @param type 0新增、1编辑、2删除、其他为自定义传入的值
+         * @param type 0新增、1编辑、2删除、3批量删除、其他为自定义传入的值
          * @param row 操作的行
          */
         const onEvent = (type: number, row?: any) => {
-            context.emit("onEvent", {
-                type: type,
-                row: row
-            })
+            if ([0, 3].includes(type)) {
+                context.emit("onEvent", {type: type, data: type === 3 ? checkedRowList.value : undefined})
+            } else {
+                context.emit("onEvent", {type: type, row: row})
+            }
         }
 
         onMounted(() => {
@@ -279,7 +279,6 @@ export default defineComponent({
             checkedList,
             tableConfigColumns,
             checkedRowList,
-            onBatchDeleteEvent,
             handlePageChange,
             handlePageSizeChange,
             layoutHeaderHeight, clientHeight, layoutFooterHeight,

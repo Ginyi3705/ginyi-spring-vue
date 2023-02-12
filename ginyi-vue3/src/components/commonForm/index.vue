@@ -1,30 +1,16 @@
 <template>
-    <n-form
-        ref="formRef"
-        :inline="inline"
-        :rules="rules"
-        :model="model"
-        :label-width="labelWidth"
-        :label-placement="labelPlacement"
-        :label-align="labelAlign"
-        :size="size">
-        <div style="display: flex; flex-wrap: wrap">
-            <slot></slot>
-            <n-form-item>
-                <n-space>
-                    <n-button type="primary" attr-type="button" @click="handleValidate">{{ submitButtonText }}</n-button>
-                    <n-button attr-type="button" @click="handleReset">{{ cancelButtonText }}</n-button>
-                </n-space>
-            </n-form-item>
-        </div>
-    </n-form>
+    <slot></slot>
+    <div style="display: flex; justify-content: flex-end">
+        <n-space>
+            <n-button type="primary" attr-type="button" @click="onSubmit">{{ submitButtonText }}</n-button>
+            <n-button attr-type="button" @click="onReset">{{ cancelButtonText }}</n-button>
+        </n-space>
+    </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted} from "vue";
 import {definedProps} from "@/components/commonForm/props";
-import {FormInst} from "naive-ui";
-import {useDeepClone} from "@/hooks/useObject";
 
 
 export default defineComponent({
@@ -34,32 +20,20 @@ export default defineComponent({
         ...definedProps
     },
     setup(props, context) {
-        const formRef = ref<FormInst | null>(null)
-        const defaultValue = ref<object | undefined>(undefined)
 
-        const handleValidate = (e: MouseEvent) => {
-            e.preventDefault()
-            formRef.value?.validate((errors: any) => {
-                if (errors) {
-                    window.$message.error('校验失败')
-                }
-                context.emit("onSubmit", !errors)
-            })
+        const onSubmit = () => {
+            context.emit("onSubmit")
         }
-        const handleReset = () => {
-            formRef.value?.restoreValidation()
-            context.emit("onReset", defaultValue.value)
+        const onReset = () => {
+            context.emit("onReset")
         }
 
         onMounted(() => {
-            if (defaultValue.value === undefined) {
-                defaultValue.value = useDeepClone(props.model)
-            }
+
         })
         return {
-            handleValidate,
-            formRef,
-            handleReset
+            onSubmit,
+            onReset
         }
     }
 })
