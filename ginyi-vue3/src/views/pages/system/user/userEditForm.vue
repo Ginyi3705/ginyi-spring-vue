@@ -73,9 +73,8 @@ import {defineComponent, onMounted, ref} from "vue";
 import CommonModal from "@/components/commonModal/index.vue";
 import {useCommonModal} from "@/components/commonModal/useCommonModal";
 import {SelectOption, TreeSelectOption} from "naive-ui";
-import {useSexDict, useStatusDict} from "@/dictionary/useSystemDict";
-import {deptController, postController, roleController, userController} from "@/api";
-import {useRemoveEmptyChildrenField} from "@/hooks/useTree";
+import {useDeptDict, usePostDict, useRoleDict, useSexDict, useStatusDict} from "@/dictionary/useSystemDict";
+import {userController} from "@/api";
 
 export default defineComponent({
     name: "UserEditForm",
@@ -119,19 +118,20 @@ export default defineComponent({
         const postSelectDropDict = ref<Array<SelectOption>>([])
         const roleSelectDropDict = ref<Array<SelectOption>>([])
 
+
         const getDeptList = () => {
-            deptController.list({}).then(res => {
-                deptSelectDropDict.value = useRemoveEmptyChildrenField(res.data.list)
+            useDeptDict().then(res => {
+                deptSelectDropDict.value = res
             })
         }
         const getPostList = () => {
-            postController.list({}).then(res => {
-                postSelectDropDict.value = res.data.list
+            usePostDict().then(res => {
+                postSelectDropDict.value = res
             })
         }
         const getRoleList = () => {
-            roleController.list({}).then(res => {
-                roleSelectDropDict.value = res.data.list
+            useRoleDict().then(res => {
+                roleSelectDropDict.value = res
             })
         }
 

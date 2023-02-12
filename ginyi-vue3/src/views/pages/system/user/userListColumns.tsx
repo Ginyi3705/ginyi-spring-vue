@@ -10,7 +10,7 @@ export const userListColumns: DataTableColumns<any> = [
         key: "userName"
     },
     {
-        title: "部门ID",
+        title: "部门",
         key: "deptId"
     },
     {
