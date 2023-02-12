@@ -53,4 +53,7 @@ export const definedProps = {
         type: [Object, Boolean],
         default: () => false,
     },
+    loading: {
+        type: Boolean
+    }
 }

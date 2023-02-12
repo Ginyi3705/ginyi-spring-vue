@@ -1,12 +1,13 @@
 <template>
     <div>
         <CommonTable :columns="userListColumns"
-                     :dataList="dataList"
+                     :dataList="tableDataList"
                      :labelField="'title'"
                      :rowKey="(row) => row.userId"
                      :actionColData="actionCol"
                      :actionWidth="310"
-                     :pagination="pagination"
+                     :pagination="tablePagination"
+                     :loading="tableLoading"
                      @onPageChange="onPageChange"
                      @onPageSizeChange="onPageSizeChange"
                      @onEvent="onEvent">
@@ -23,26 +24,32 @@ import {defineComponent, onMounted, ref, watch} from "vue";
 import CommonTable from "@/components/commonTable/index.vue"
 import {userListColumns} from "@/views/pages/system/user/userListColumns";
 import {userController} from "@/api";
-import {usePagination} from "@/hooks/usePagination";
 import {SelectGroupOption, SelectOption} from "naive-ui";
 import {useStatusDict} from "@/dictionary/useSystemDict";
 import UserEditForm from "@/views/pages/system/user/userEditForm.vue";
 import UserQueryForm from "@/views/pages/system/user/userQueryForm.vue";
+import {useCommonTable} from "@/components/commonTable/useCommonTable";
 
 export default defineComponent({
     components: {
         UserEditForm, CommonTable, UserQueryForm
     },
     setup() {
+
+        const {
+            tableDataList,
+            tablePagination,
+            tableLoading,
+            onPageChange,
+            onPageSizeChange,
+            getDataList
+        } = useCommonTable(userController.getUserList)
+
         const userEditFormRef = ref(null)
         const userId = ref<number | undefined>(undefined)
 
         // 状态下拉配置项
         const options = ref<Array<SelectOption | SelectGroupOption>>(useStatusDict)
-        // 表格数据
-        const dataList = ref<Array<any>>([])
-        // 总条数
-        const total = ref<number>(0)
         // 操作列
         const actionCol = ref<Array<any>>([
             {
@@ -51,25 +58,11 @@ export default defineComponent({
                 actionType: 4,
             }
         ])
-        // 分页对象
-        const {pagination} = usePagination()
 
-        // todo 这里会和查询表单冲突！！！
-        watch(() => pagination, () => getUserList(), {deep: true})
-        watch(() => {
-            // @ts-ignore
-            userEditFormRef?.value?.modalLoading
-        }, () => getUserList(), {deep: true})
-
-        const onPageChange = (page: number) => {
-            pagination.page = page
-        }
-        const onPageSizeChange = (pageSize: number) => {
-            pagination.pageSize = pageSize
-        }
+        // @ts-ignore
+        watch(() => {userEditFormRef?.value?.modalLoading}, () => getDataList(), {deep: true})
 
         const onEvent = (value: any) => {
-            console.log('表格事件的回调信息：', value)
             switch (value.type) {
                 // 新增
                 case 0:
@@ -98,34 +91,24 @@ export default defineComponent({
             }
         }
 
-        const getUserList = (data: any = {}) => {
-            userController.getUserList(data, {
-                page: pagination.page,
-                pageSize: pagination.pageSize
-            }).then((res) => {
-                dataList.value = res.data.list
-                pagination.itemCount = res.data.count
-            })
-        }
-
         const onQuery = (value: any) => {
-            getUserList(value)
+            getDataList(value)
         }
 
         const onReset = (value: any) => {
-            getUserList(value)
+            getDataList(value)
         }
 
         onMounted(() => {
-            getUserList()
+            getDataList()
         })
 
         return {
             userListColumns,
-            dataList,
-            total,
+            tableDataList,
+            tablePagination,
+            tableLoading,
             actionCol,
-            pagination,
             onPageChange,
             onPageSizeChange,
             onEvent,

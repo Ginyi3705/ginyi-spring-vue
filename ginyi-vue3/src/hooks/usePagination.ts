@@ -15,6 +15,13 @@ export const usePagination = () => {
         }
     })
 
+    const onPageChange = (page: number) => {
+        pagination.page = page
+    }
+    const onPageSizeChange = (pageSize: number) => {
+        pagination.pageSize = pageSize
+    }
+
     return {
         pagination
     }

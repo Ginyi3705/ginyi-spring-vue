@@ -40,62 +40,75 @@ export const useCommonModal = (name: string,
 
     /**
      * 保存
+     * 返回 Promise，解决函数执行完后需要续写逻辑的需求
      */
-    const onSubmit = () => {
-        // @ts-ignore
-        modalFormRef.value?.validate(err => {
-            if(!err) {
-                if (modalTitle.value === actionEnum.ADD) {
-                    addApi(modalForm.value).then((res: any) => {
-                        window.$message.success(res.msg)
-                        modalLoading.value = true
-                    })
+    const onSubmit = (): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            // @ts-ignore
+            modalFormRef.value?.validate(err => {
+                if(!err) {
+                    if (modalTitle.value === actionEnum.ADD) {
+                        addApi(modalForm.value).then((res: any) => {
+                            window.$message.success(res.msg)
+                            modalLoading.value = true
+                            resolve(null)
+                        })
+                    }
+                    if (modalTitle.value === actionEnum.EDIT) {
+                        editApi(modalForm.value).then((res: any) => {
+                            window.$message.success(res.msg)
+                            modalLoading.value = true
+                            resolve(null)
+                        })
+                    }
+                }else {
+                    modalShow.value = true
                 }
-                if (modalTitle.value === actionEnum.EDIT) {
-                    editApi(modalForm.value).then((res: any) => {
-                        window.$message.success(res.msg)
-                        modalLoading.value = true
-                    })
-                }
-            }else {
-                modalShow.value = true
-            }
+            })
         })
     }
 
     /**
      * 删除
+     * 返回 Promise，解决函数执行完后需要续写逻辑的需求
      */
     const onDeleteById = (id: number | string) => {
-        window.$dialog.error({
-            title: "温馨提醒",
-            content: "删除操作不可逆，是否继续？",
-            positiveText: "确定",
-            negativeText: "取消",
-            onPositiveClick: () => {
-                deleteApi && deleteApi(id).then((res: any) => {
-                    window.$message.success(res.msg)
-                    modalLoading.value = true
-                })
-            }
+        return new Promise((resolve, reject) => {
+            window.$dialog.error({
+                title: "温馨提醒",
+                content: "删除操作不可逆，是否继续？",
+                positiveText: "确定",
+                negativeText: "取消",
+                onPositiveClick: () => {
+                    deleteApi && deleteApi(id).then((res: any) => {
+                        window.$message.success(res.msg)
+                        modalLoading.value = true
+                        resolve(null)
+                    })
+                }
+            })
         })
     }
 
     /**
      * 批量删除
+     * 返回 Promise，解决函数执行完后需要续写逻辑的需求
      */
     const onDeleteByIds = (ids: Array<number | string>) => {
-        window.$dialog.error({
-            title: "温馨提醒",
-            content: "删除操作不可逆，是否继续？",
-            positiveText: "确定",
-            negativeText: "取消",
-            onPositiveClick: () => {
-                batchDeleteApi && batchDeleteApi(ids).then((res: any) => {
-                    window.$message.success(res.msg)
-                    modalLoading.value = true
-                })
-            }
+        return new Promise((resolve, reject) => {
+            window.$dialog.error({
+                title: "温馨提醒",
+                content: "删除操作不可逆，是否继续？",
+                positiveText: "确定",
+                negativeText: "取消",
+                onPositiveClick: () => {
+                    batchDeleteApi && batchDeleteApi(ids).then((res: any) => {
+                        window.$message.success(res.msg)
+                        modalLoading.value = true
+                        resolve(null)
+                    })
+                }
+            })
         })
     }
 

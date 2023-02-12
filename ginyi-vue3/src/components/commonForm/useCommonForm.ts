@@ -35,8 +35,8 @@ export const useCommonForm = (formDefaultValue: any = {},
      * 查询
      */
     const onQuery = () => {
-        formActionType.value = actionEnum.QUERY
         return new Promise((resolve, reject) => {
+            formActionType.value = actionEnum.QUERY
             resolve(formValue.value)
         })
     }
@@ -44,20 +44,24 @@ export const useCommonForm = (formDefaultValue: any = {},
 
     /**
      * 保存
+     * 返回 Promise，解决函数执行完后需要续写逻辑的需求
      */
     const onSubmit = () => {
-        // @ts-ignore
-        formRef.value?.validate(err => {
-            if (!err) {
+        return new Promise((resolve, reject) => {
+            // @ts-ignore
+            formRef.value?.validate(err => {
+                if (!err) {
 
-            } else {
+                } else {
 
-            }
+                }
+            })
         })
     }
 
     /**
      * 重置
+     * 返回 Promise，解决函数执行完后需要续写逻辑的需求
      */
     const onReset = () => {
         return new Promise((resolve, reject) => {

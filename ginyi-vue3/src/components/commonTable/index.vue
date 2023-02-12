@@ -87,7 +87,7 @@
                       :pagination="pagination"
                       :row-key="rowKey"
                       :scroll-x="2000"
-                      :loading="dataList.length === 0"
+                      :loading="loading"
                       @update:page="handlePageChange"
                       @update:page-size="handlePageSizeChange"
                       @update:checked-row-keys="handleCheckRows"/>
