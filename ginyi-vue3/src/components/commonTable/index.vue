@@ -11,7 +11,7 @@
                     </template>
                     新增数据
                 </n-button>
-                <n-button type="error" :size="size"
+                <n-button type="error" :size="size" v-if="hasSelect"
                           @click="onEvent(3)"
                           :disabled="!hasSelect || checkedRowList.length === 0">
                     <template #icon>
