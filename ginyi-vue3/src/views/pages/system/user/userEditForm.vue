@@ -28,18 +28,18 @@
                               clearable
                               filterable
                               :multiple="true"
-                              :options="postSelectDropDict"/>
+                              :options="postDict"/>
                 </n-form-item-gi>
                 <n-form-item-gi :span="12" label="归属部门" path="deptId">
                     <n-tree-select label-field="deptName"
                                    key-field="deptId"
                                    v-model:value="modalForm.deptId"
                                    :default-expand-all="true"
-                                   :options="deptSelectDropDict"/>
+                                   :options="deptDict"/>
                 </n-form-item-gi>
                 <n-form-item-gi :span="12" label="性别" path="sex">
                     <n-radio-group v-model:value="modalForm.sex" size="small" name="radioGroup1">
-                        <n-radio-button v-for="(item, index) in sexSelectDropDict" :key="index" :value="item.value">
+                        <n-radio-button v-for="(item, index) in sexDict" :key="index" :value="item.value">
                             {{ item.label }}
                         </n-radio-button>
                     </n-radio-group>
@@ -51,11 +51,11 @@
                               clearable
                               filterable
                               :multiple="true"
-                              :options="roleSelectDropDict"/>
+                              :options="roleDict"/>
                 </n-form-item-gi>
                 <n-form-item-gi :span="12" label="状态" path="status">
                     <n-radio-group v-model:value="modalForm.status" name="radioGroup2" size="small">
-                        <n-radio-button v-for="(item, index) in statusSelectDropDict" :key="index" :value="item.value">
+                        <n-radio-button v-for="(item, index) in statusDict" :key="index" :value="item.value">
                             {{ item.label }}
                         </n-radio-button>
                     </n-radio-group>
@@ -69,12 +69,12 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent} from "vue";
 import CommonModal from "@/components/commonModal/index.vue";
 import {useCommonModal} from "@/components/commonModal/useCommonModal";
-import {SelectOption, TreeSelectOption} from "naive-ui";
-import {useDeptDict, usePostDict, useRoleDict, useSexDict, useStatusDict} from "@/dictionary/useSystemDict";
 import {userController} from "@/api";
+import {useDynamicDict} from "@/dictionary/useDynamicDict";
+import {useStaticDict} from "@/dictionary/useStaticDict";
 
 export default defineComponent({
     name: "UserEditForm",
@@ -103,6 +103,9 @@ export default defineComponent({
             userController.deleteByIds
         )
 
+        const {roleDict, deptDict, postDict} = useDynamicDict()
+        const {statusDict, sexDict} = useStaticDict()
+
         const rules = {
             deptId: {type: "number", required: true, message: "请选择归属部门", trigger: ['blur', 'change']},
             status: {type: "string", required: true, message: "请选择状态", trigger: ["blur", "change"]},
@@ -112,34 +115,6 @@ export default defineComponent({
             nickName: {type: "string", required: true, message: "请输入用户昵称", trigger: ["input", "blur"]},
         }
 
-        const sexSelectDropDict = ref<Array<any>>(useSexDict)
-        const statusSelectDropDict = ref<Array<any>>(useStatusDict)
-        const deptSelectDropDict = ref<TreeSelectOption | null | Array<TreeSelectOption | null>>([])
-        const postSelectDropDict = ref<Array<SelectOption>>([])
-        const roleSelectDropDict = ref<Array<SelectOption>>([])
-
-
-        const getDeptList = () => {
-            useDeptDict().then(res => {
-                deptSelectDropDict.value = res
-            })
-        }
-        const getPostList = () => {
-            usePostDict().then(res => {
-                postSelectDropDict.value = res
-            })
-        }
-        const getRoleList = () => {
-            useRoleDict().then(res => {
-                roleSelectDropDict.value = res
-            })
-        }
-
-        onMounted(() => {
-            getDeptList()
-            getPostList()
-            getRoleList()
-        })
 
         return {
             modalShow,
@@ -153,11 +128,11 @@ export default defineComponent({
             onSubmit,
             onDeleteById,
             onDeleteByIds,
-            sexSelectDropDict,
-            statusSelectDropDict,
-            deptSelectDropDict,
-            postSelectDropDict,
-            roleSelectDropDict
+            statusDict,
+            sexDict,
+            roleDict,
+            deptDict,
+            postDict
         }
     }
 })

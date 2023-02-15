@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CommonTable :columns="userListColumns"
+        <CommonTable :columns="columns"
                      :dataList="tableDataList"
                      :labelField="'title'"
                      :rowKey="(row) => row.userId"
@@ -22,7 +22,7 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref, watch} from "vue";
 import CommonTable from "@/components/commonTable/index.vue"
-import {userListColumns} from "@/views/pages/system/user/userListColumns";
+import {columns} from "@/views/pages/system/user/columns";
 import {userController} from "@/api";
 import UserEditForm from "@/views/pages/system/user/userEditForm.vue";
 import UserQueryForm from "@/views/pages/system/user/userQueryForm.vue";
@@ -98,7 +98,7 @@ export default defineComponent({
         })
 
         return {
-            userListColumns,
+            columns,
             tableDataList,
             tablePagination,
             tableLoading,

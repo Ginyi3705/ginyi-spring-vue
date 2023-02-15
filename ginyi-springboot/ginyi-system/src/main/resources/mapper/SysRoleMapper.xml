@@ -145,7 +145,7 @@
         remark
         from sys_role
         <where>
-            deleted = '0'
+            deleted = '0' and role_id != 1
             <if test="roleDto.roleName != null and roleDto.roleName != ''">
                 and role_name like concat('%', #{roleDto.roleName},'%')
             </if>

@@ -5,6 +5,8 @@
  * @param result  结果集
  * @returns {boolean|*[]}
  */
+import {useDeepClone} from "@/hooks/useObject";
+
 export const useFindParentName = (name: string, list: Array<any> = [], result: Array<string> = []): Array<string> | undefined => {
     for (let i = 0; i < list.length; i++) {
         const item = list[i];
@@ -88,4 +90,20 @@ export const useRemoveEmptyChildrenField = (list: Array<any>, fieldName: string 
         }
         return item
     })
+}
+
+/**
+ * 数组扁平化
+ * @param list
+ * @param result
+ * @param fieldName
+ */
+export const useTreeToArray = (list: Array<any>, result: Array<any> = [], fieldName: string = "children"): Array<any> => {
+    list.map(item => {
+        result.push(item)
+        if(item[fieldName]?.length > 0){
+            useTreeToArray(item[fieldName], result)
+        }
+    })
+    return result
 }

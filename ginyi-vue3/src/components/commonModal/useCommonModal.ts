@@ -23,6 +23,7 @@ export const useCommonModal = (name: string,
      */
     const onAdd = () => {
         modalShow.value = true
+        modalLoading.value = false
         modalTitle.value = actionEnum.ADD
         modalForm.value = {...formDefaultValue}
     }
@@ -33,6 +34,7 @@ export const useCommonModal = (name: string,
      */
     const onEdit = (row: any) => {
         modalShow.value = true
+        modalLoading.value = false
         modalTitle.value = actionEnum.EDIT
         modalForm.value = {...row}
     }

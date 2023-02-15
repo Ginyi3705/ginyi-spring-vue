@@ -15,7 +15,7 @@
                 <n-input v-model:value="formValue.nickName" placeholder="请输入昵称" clearable/>
             </n-form-item>
             <n-form-item label="状态" path="status">
-                <n-select v-model:value="formValue.status" clearable :options="options" style="width: 100px"/>
+                <n-select v-model:value="formValue.status" clearable :options="statusDict" style="width: 100px"/>
             </n-form-item>
             <n-form-item label="手机号码" path="phoneNumber">
                 <n-input v-model:value="formValue.phoneNumber" placeholder="请输入手机号码" clearable/>
@@ -31,11 +31,10 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import {defineComponent} from "vue";
 import CommonForm from "@/components/commonForm/index.vue";
 import {useCommonForm} from "@/components/commonForm/useCommonForm";
-import {SelectGroupOption, SelectOption} from "naive-ui";
-import {useStatusDict} from "@/dictionary/useSystemDict";
+import {useStaticDict} from "@/dictionary/useStaticDict";
 
 export default defineComponent({
     name: "UserQueryValue",
@@ -51,8 +50,7 @@ export default defineComponent({
             onQuery
         } = useCommonForm({})
 
-        // 状态下拉配置项
-        const options = ref<Array<SelectOption | SelectGroupOption>>(useStatusDict)
+        const {statusDict} = useStaticDict()
 
         const query = () => {
             onQuery().then(res => {
@@ -70,7 +68,7 @@ export default defineComponent({
             formRef, formValue,
             query,
             reset,
-            options
+            statusDict
         }
     }
 })
