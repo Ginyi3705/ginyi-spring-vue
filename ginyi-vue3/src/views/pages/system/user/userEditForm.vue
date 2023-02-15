@@ -31,11 +31,15 @@
                               :options="postDict"/>
                 </n-form-item-gi>
                 <n-form-item-gi :span="12" label="归属部门" path="deptId">
-                    <n-tree-select label-field="deptName"
-                                   key-field="deptId"
-                                   v-model:value="modalForm.deptId"
-                                   :default-expand-all="true"
-                                   :options="deptDict"/>
+                    <n-cascader value-field="deptId"
+                                label-field="deptName"
+                                v-model:value="modalForm.deptId"
+                                :expand-trigger="'click'"
+                                :options="deptDict"
+                                :check-strategy="'all'"
+                                :show-path="true"
+                                :filterable="true"
+                    />
                 </n-form-item-gi>
                 <n-form-item-gi :span="12" label="性别" path="sex">
                     <n-radio-group v-model:value="modalForm.sex" size="small" name="radioGroup1">
