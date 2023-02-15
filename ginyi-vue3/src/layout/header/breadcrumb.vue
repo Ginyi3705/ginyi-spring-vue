@@ -47,8 +47,8 @@ export default defineComponent({
          * 监听路由变化，实时更新面包屑导航的内容
          */
         watch(() => currentRoute.name, () => {
-            const list = useFindParentNodes(
-                currentRoute.name as string, useMenuFormat(useDeepClone(menuList?.value as Array<any>), false)
+            const list = useFindParentNodes("name", currentRoute.name as string, "children",
+                useMenuFormat(useDeepClone(menuList?.value as Array<any>), false)
             ) as Array<any>
             useSystemStore().setBreadMenuList(list)
         })
@@ -69,11 +69,13 @@ export default defineComponent({
 .bread-leave-active {
     transition: all 0.5s ease;
 }
+
 .bread-enter-from,
 .bread-leave-active {
     opacity: 0;
     transform: translateX(20px);
 }
+
 .bread-leave-active {
     position: absolute;
     z-index: -1;

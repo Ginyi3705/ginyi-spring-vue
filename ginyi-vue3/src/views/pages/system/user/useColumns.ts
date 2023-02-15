@@ -1,6 +1,6 @@
 import {useStaticDict} from "@/dictionary/useStaticDict";
 import {useDynamicDict} from "@/dictionary/useDynamicDict";
-import {useTreeToArray} from "@/hooks/useTree";
+import {useArraySeparator, useFindParentNodes, useTreeToArray} from "@/hooks/useTree";
 
 export const useColumns = () => {
     const {statusDict, sexDict} = useStaticDict()
@@ -21,11 +21,8 @@ export const useColumns = () => {
     }
 
     const useRenderDeptNameById = (deptId: string | number) => {
-        const dataList = useTreeToArray(deptDict.value)
-        const temp = dataList.filter(dept => {
-            return dept.deptId === deptId
-        })
-        return temp.length !== 0 ? temp[0].deptName : undefined;
+        const dataList = useFindParentNodes("deptId", deptId, "children", deptDict.value)
+        return useArraySeparator(dataList as Array<any>, "deptName")
     }
 
     const useRenderRoleNameByIds = (roleIds: Array<string | number>) => {

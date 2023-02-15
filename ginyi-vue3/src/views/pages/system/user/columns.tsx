@@ -21,6 +21,7 @@ export const columns: DataTableColumns<any> = [
     {
         title: "部门",
         key: "deptId",
+        width: 300,
         render: (row) => (
             <span>{ useRenderDeptNameById(row.deptId)}</span>
         )
