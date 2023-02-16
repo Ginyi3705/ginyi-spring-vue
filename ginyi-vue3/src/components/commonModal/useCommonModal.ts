@@ -10,7 +10,8 @@ export const useCommonModal = (name: string,
                                addApi: Function,
                                editApi: Function,
                                deleteApi?: Function,
-                               batchDeleteApi?: Function) => {
+                               batchDeleteApi?: Function,
+                               getDetailsById?: Function) => {
 
     const modalShow = ref<boolean>(false)
     const modalLoading = ref<boolean>(false)
@@ -31,12 +32,19 @@ export const useCommonModal = (name: string,
     /**
      * 编辑
      * @param row
+     * @param id
      */
-    const onEdit = (row: any) => {
+    const onEdit = (row: any, id: number | string) => {
         modalShow.value = true
         modalLoading.value = false
         modalTitle.value = actionEnum.EDIT
-        modalForm.value = {...row}
+        if(getDetailsById && id){
+            getDetailsById(id).then((res: any) => {
+                modalForm.value = {...res.data}
+            })
+        }else {
+            modalForm.value = {...row}
+        }
     }
 
 
@@ -48,7 +56,7 @@ export const useCommonModal = (name: string,
         return new Promise((resolve, reject) => {
             // @ts-ignore
             modalFormRef.value?.validate(err => {
-                if(!err) {
+                if (!err) {
                     if (modalTitle.value === actionEnum.ADD) {
                         addApi(modalForm.value).then((res: any) => {
                             window.$message.success(res.msg)
@@ -63,7 +71,7 @@ export const useCommonModal = (name: string,
                             resolve(null)
                         })
                     }
-                }else {
+                } else {
                     modalShow.value = true
                 }
             })
@@ -76,6 +84,7 @@ export const useCommonModal = (name: string,
      */
     const onDeleteById = (id: number | string) => {
         return new Promise((resolve, reject) => {
+            modalLoading.value = false
             window.$dialog.error({
                 title: "温馨提醒",
                 content: "删除操作不可逆，是否继续？",
@@ -98,6 +107,7 @@ export const useCommonModal = (name: string,
      */
     const onDeleteByIds = (ids: Array<number | string>) => {
         return new Promise((resolve, reject) => {
+            modalLoading.value = false
             window.$dialog.error({
                 title: "温馨提醒",
                 content: "删除操作不可逆，是否继续？",

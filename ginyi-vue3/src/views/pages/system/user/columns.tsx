@@ -22,6 +22,9 @@ export const columns: DataTableColumns<any> = [
         title: "部门",
         key: "deptId",
         width: 300,
+        ellipsis: {
+            tooltip: true
+        },
         render: (row) => (
             <span>{ useRenderDeptNameById(row.deptId)}</span>
         )
@@ -40,6 +43,9 @@ export const columns: DataTableColumns<any> = [
         title: "角色",
         key: "roleIds",
         width: 200,
+        ellipsis: {
+            tooltip: true
+        },
         render: (row) => (
             <NSpace>
                 {useRenderRoleNameByIds(row.roleIds)?.map(role => <NTag key={role}>{role}</NTag>)}

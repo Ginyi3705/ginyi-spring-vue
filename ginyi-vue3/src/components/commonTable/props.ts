@@ -55,5 +55,9 @@ export const definedProps = {
     },
     loading: {
         type: Boolean
+    },
+    scrollX: {
+        type: Number,
+        default: 2000
     }
 }

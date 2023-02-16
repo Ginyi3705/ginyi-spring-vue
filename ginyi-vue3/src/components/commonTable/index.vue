@@ -86,7 +86,7 @@
                       :max-height="(clientHeight - (layoutHeaderHeight + layoutFooterHeight)) / 2"
                       :pagination="pagination"
                       :row-key="rowKey"
-                      :scroll-x="2000"
+                      :scroll-x="scrollX"
                       :loading="loading"
                       @update:page="handlePageChange"
                       @update:page-size="handlePageSizeChange"

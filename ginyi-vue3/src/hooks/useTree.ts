@@ -1,14 +1,14 @@
 /**
  *
  * @param name 子节点 name
- * @param list  要查找的 list
+ * @param data  要查找的 list
  * @param result  结果集
  * @returns {boolean|*[]}
  */
 
-export const useFindParentName = (name: string, list: Array<any> = [], result: Array<string> = []): Array<string> | undefined => {
-    for (let i = 0; i < list.length; i++) {
-        const item = list[i];
+export const useFindParentName = (name: string, data: Array<any> = [], result: Array<string> = []): Array<string> | undefined => {
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
         if (item.name === name) {
             return result;
         }
@@ -27,11 +27,11 @@ export const useFindParentName = (name: string, list: Array<any> = [], result: A
  * 根据 name 查找匹配的 node
  *
  * @param name
- * @param list
+ * @param data
  */
-export const useFindNodeByName = (name: string, list: Array<any>): any => {
-    for (let i = 0; i < list.length; i++) {
-        const item = list[i];
+export const useFindNodeByName = (name: string, data: Array<any>): any => {
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
         if (item.name === name) {
             return item;
         } else {
@@ -51,16 +51,16 @@ export const useFindNodeByName = (name: string, list: Array<any>): any => {
  * @param key 如 userId: 123 中的 userId
  * @param value 如 userId: 123 中的 123
  * @param childrenField
- * @param list
+ * @param data
  * @param result
  */
 export const useFindParentNodes = (key: string,
                                    value: string | number,
                                    childrenField: string = "children",
-                                   list: Array<any> = [],
+                                   data: Array<any> = [],
                                    result: Array<any> = []): Array<any> | undefined => {
-    for (let i = 0; i < list.length; i++) {
-        const item = list[i];
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
         result.push(item);
         if (item[key] === value) {
             return result;
@@ -83,8 +83,8 @@ export const useFindParentNodes = (key: string,
 /**
  * 格式化树
  */
-export const useRemoveEmptyChildrenField = (list: Array<any>, childrenField: string = "children"): Array<any> => {
-    return list.map((item: any) => {
+export const useRemoveEmptyChildrenField = (data: Array<any>, childrenField: string = "children"): Array<any> => {
+    return data.map((item: any) => {
         if (item[childrenField]?.length > 0) {
             useRemoveEmptyChildrenField(item[childrenField], childrenField)
         } else {
@@ -96,12 +96,12 @@ export const useRemoveEmptyChildrenField = (list: Array<any>, childrenField: str
 
 /**
  * 数组扁平化
- * @param list
+ * @param data
  * @param result
  * @param childrenField
  */
-export const useTreeToArray = (list: Array<any>, result: Array<any> = [], childrenField: string = "children"): Array<any> => {
-    list.map(item => {
+export const useTreeToArray = (data: Array<any>, result: Array<any> = [], childrenField: string = "children"): Array<any> => {
+    data.map(item => {
         result.push(item)
         if (item[childrenField]?.length > 0) {
             useTreeToArray(item[childrenField], result)
@@ -116,14 +116,34 @@ export const useTreeToArray = (list: Array<any>, result: Array<any> = [], childr
  * 数组分割显示 如 总公司 / 市场部门 / 销售岗
  */
 
-export const useArraySeparator = (arr: Array<any>, key: string, separator: string = "/") => {
+export const useArraySeparator = (data: Array<any>, key: string, separator: string = "/") => {
     let result: string = "";
-    arr.forEach((item, index) => {
-        if (index === arr.length - 1) {
+    data.forEach((item, index) => {
+        if (index === data.length - 1) {
             result = `${result} ${item[key]}`
         } else {
             result = `${result} ${item[key]} ${separator}`
         }
     })
     return result;
+}
+
+/**
+ * 克隆出一个对象的属性
+ * @param data
+ * @param sourceField
+ * @param targetField
+ * @param childrenField
+ */
+export const useFieldClone = (data: Array<any>, sourceField: string, targetField: string, childrenField: string = "children") => {
+    const temp =  data.map((item: any) => {
+        item[targetField] = item[sourceField]
+        if (item[childrenField]?.length > 0) {
+            useFieldClone(item[childrenField], sourceField, targetField, childrenField)
+        } else {
+            delete item[childrenField]
+        }
+        return item
+    })
+    return temp
 }
