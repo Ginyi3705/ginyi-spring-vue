@@ -22,7 +22,7 @@ export class deptController {
      */
     static getDeptDetailsById(deptId: number | string): Promise<any> {
         return useRequest({
-            url: `/api/role/getDeptByDeptId/${deptId}`,
+            url: `/api/dept/getDeptByDeptId/${deptId}`,
             method: "get"
         })
     }
@@ -53,11 +53,11 @@ export class deptController {
 
     /**
      * 删除部门
-     * @param userId
+     * @param deptId
      */
-    static deleteById(userId: number | string): Promise<any> {
+    static deleteById(deptId: number | string): Promise<any> {
         return useRequest({
-            url: `/api/dept/delete/${userId}`,
+            url: `/api/dept/delete/${deptId}`,
             method: "post"
         })
     }

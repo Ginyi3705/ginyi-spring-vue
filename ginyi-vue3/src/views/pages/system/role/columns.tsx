@@ -1,7 +1,7 @@
 import {DataTableColumns, NTag} from "naive-ui";
-import {useColumns} from "@/views/pages/system/role/useColumns";
+import {useCommonColumns} from "@/hooks/useCommonColums";
 
-const {useRenderStateById} = useColumns()
+const {useRenderStateById} = useCommonColumns()
 
 export const columns: DataTableColumns<any> = [
     {

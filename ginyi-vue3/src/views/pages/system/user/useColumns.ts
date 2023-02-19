@@ -13,13 +13,6 @@ export const useColumns = () => {
         return temp.length !== 0 ? temp[0].label : undefined;
     }
 
-    const useRenderStateById = (stateId: string) => {
-        const temp = statusDict.value.filter(state => {
-            return state.value === stateId
-        })
-        return temp.length !== 0 ? temp[0].label : undefined;
-    }
-
     const useRenderDeptNameById = (deptId: string | number) => {
         const dataList = useFindParentNodes("deptId", deptId, "children", deptDict.value)
         return useArraySeparator(dataList as Array<any>, "deptName")
@@ -46,7 +39,6 @@ export const useColumns = () => {
 
     return {
         useRenderSexById,
-        useRenderStateById,
         useRenderDeptNameById,
         useRenderRoleNameByIds,
         useRenderPostNameByIds

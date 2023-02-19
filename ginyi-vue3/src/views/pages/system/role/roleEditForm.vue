@@ -91,10 +91,11 @@ export default defineComponent({
                 keyField: "menuId",
                 labelField: "menuName",
                 checkable: true,
+                cascade: true,
                 selectable: false,
                 blockLine: true,
                 checkOnClick: true,
-                defaultExpandAll: true,
+                defaultExpandAll: false,
                 data: menuList.value,
                 checkedKeys: modalForm.value.permissions,
                 pattern,
@@ -105,7 +106,7 @@ export default defineComponent({
         }
 
         const getMenuList = () => {
-            menuController.getRouterList().then(res => {
+            menuController.list({}).then(res => {
                 const temp = useFieldClone(res.data.list, "menuId", "value")
                 menuList.value = useFieldClone(temp, "menuName", "label")
                 options.value = useTreeToArray(menuList.value, [])

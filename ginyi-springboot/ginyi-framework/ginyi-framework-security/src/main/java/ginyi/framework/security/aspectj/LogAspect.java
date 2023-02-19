@@ -113,10 +113,10 @@ public class LogAspect {
                 operationLog.setStatus(BusinessStatus.FAIL.ordinal());
                 operationLog.setErrorMsg(msg);
                 log.info("[ Log日志记录 ] 请求结果: {}", operationLog.getStatus() == 0 ? colorPrint("成功", Ansi.Color.GREEN) : colorPrint("失败", Ansi.Color.RED));
-                log.info("[ Log日志记录 ] ===>>> 响应结果: {}\n", msg);
+                log.info("[ Log日志记录 ] 响应结果: {}\n", msg);
             } else {
                 log.info("[ Log日志记录 ] 请求结果: {}", operationLog.getStatus() == 0 ? colorPrint("成功", Ansi.Color.GREEN) : colorPrint("失败", Ansi.Color.RED));
-                log.info("[ Log日志记录 ] ===>>> 响应结果: {}\n", operationLog.getJsonResult());
+                log.info("[ Log日志记录 ] 响应结果: {}\n", operationLog.getJsonResult());
             }
             // 保存数据库
             AsyncManager.me().execute(AsyncFactory.recordOper(operationLog));

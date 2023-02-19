@@ -30,9 +30,52 @@ export const useStaticDict = () => {
         }
     ])
 
+    // 菜单类型字典
+    const menuTypeDict = ref<Array<any>>([
+        {
+            label: "目录",
+            value: "M",
+        },
+        {
+            label: "菜单",
+            value: "C"
+        },
+        {
+            label: "按钮",
+            value: "F"
+        }
+    ])
+
+    // 显示隐藏字典
+    const showDict = ref<Array<any>>([
+        {
+            label: "显示",
+            value: "0",
+        },
+        {
+            label: "隐藏",
+            value: "1"
+        }
+    ])
+
+    // 是否字典
+    const whetherDict = ref<Array<any>>([
+        {
+            label: "是",
+            value: "0",
+        },
+        {
+            label: "否",
+            value: "1"
+        }
+    ])
+
     return {
         statusDict,
-        sexDict
+        sexDict,
+        menuTypeDict,
+        showDict,
+        whetherDict
     }
 }
 

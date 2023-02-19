@@ -137,6 +137,7 @@
         update sys_menu
         <set>
             <if test="menuDto.menuName != null and menuDto.menuName != ''">menu_name = #{menuDto.menuName},</if>
+            <if test="menuDto.name != null and menuDto.name != ''">`name` = #{menuDto.name},</if>
             <if test="menuDto.parentId != null">parent_id = #{menuDto.parentId},</if>
             <if test="menuDto.sort != null and menuDto.sort != ''">sort = #{menuDto.sort},</if>
             <if test="menuDto.path != null and menuDto.path != ''">`path` = #{menuDto.path},</if>

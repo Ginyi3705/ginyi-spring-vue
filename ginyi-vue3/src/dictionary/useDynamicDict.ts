@@ -1,4 +1,4 @@
-import {deptController, postController, roleController} from "@/api";
+import {deptController, menuController, postController, roleController} from "@/api";
 import {useRemoveEmptyChildrenField} from "@/hooks/useTree";
 import {ref} from "vue";
 
@@ -11,6 +11,8 @@ export const useDynamicDict = () => {
     const postDict = ref<Array<any>>([])
     // 角色字典
     const roleDict = ref<Array<any>>([])
+    // 菜单字典
+    const menuDict = ref<Array<any>>([])
 
     /**
      * 获取部门字典
@@ -41,14 +43,26 @@ export const useDynamicDict = () => {
         }
     }
 
+    /**
+     * 获取菜单字典
+     */
+    const getMenuDict = async () => {
+        if (menuDict.value.length === 0) {
+            const {data} = await menuController.list({})
+            menuDict.value = data.list
+        }
+    }
+
     getDeptDict()
     getPostDict()
     getRoleDict()
+    getMenuDict()
 
     return {
         deptDict,
         postDict,
-        roleDict
+        roleDict,
+        menuDict
     }
 }
 
