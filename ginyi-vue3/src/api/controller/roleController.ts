@@ -16,6 +16,10 @@ export class roleController {
         })
     }
 
+    /**
+     * 获取角色详情
+     * @param roleId
+     */
     static getRoleDetailsById(roleId: number | string): Promise<any> {
         return useRequest({
             url: `/api/role/getRoleByRoleId/${roleId}`,

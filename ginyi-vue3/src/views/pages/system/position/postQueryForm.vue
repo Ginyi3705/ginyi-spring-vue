@@ -8,11 +8,11 @@
             :model="formValue"
             :inline="true"
             :label-width="80">
-            <n-form-item label="角色名称" path="roleName">
-                <n-input v-model:value="formValue.roleName" placeholder="请输入角色名称" clearable/>
+            <n-form-item label="岗位名称" path="postName">
+                <n-input v-model:value="formValue.postName" placeholder="请输入岗位名称" clearable/>
             </n-form-item>
-            <n-form-item label="角色权限字符串" path="roleKey">
-                <n-input v-model:value="formValue.roleKey" placeholder="请输入角色权限字符串" clearable/>
+            <n-form-item label="岗位编码" path="postCode">
+                <n-input v-model:value="formValue.postCode" placeholder="请输入岗位编码" clearable/>
             </n-form-item>
             <n-form-item label="状态" path="status">
                 <n-select v-model:value="formValue.status" clearable :options="statusDict" style="width: 100px"/>
