@@ -79,6 +79,10 @@ export default defineComponent({
                     break
                 // 新增子项
                 case 4:
+                    if(value.row.menuType === "F"){
+                        window.$message.error("按钮无法新增子项！")
+                        return
+                    }
                     // @ts-ignore
                     menuEditFormRef?.value?.addChildMenu(value.row)
                     break
