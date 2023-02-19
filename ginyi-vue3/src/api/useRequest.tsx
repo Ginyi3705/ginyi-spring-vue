@@ -7,6 +7,7 @@ import {setting} from "@/config/setting";
 import {useCommonRouter} from "@/router";
 import {storage} from "@/hooks/useStorage";
 import {useSystemStore} from "@/store/modules/useSystemStore";
+import {addPending, removePending} from "@/hooks/usePending";
 
 const {devBaseURL, prodBaseURL} = setting
 
@@ -47,16 +48,6 @@ service.interceptors.response.use(
     (response: AxiosResponse<any, any>) => {
         const res = response.data;
         if (res.code !== 200) {
-            window.$notification.error({
-                title: res.msg,
-                description: `From ${import.meta.env.DEV ? devBaseURL : prodBaseURL}`,
-                meta: useFormatTime(new Date().valueOf()),
-                content: () => (
-                    <span>{typeof res.data === "string" ? res.data : JSON.stringify(res.data)}</span>
-                ),
-                duration: 5000,
-                keepAliveOnHover: true
-            })
             switch (res.code) {
                 case 5005:
                     useUserStore(store).$reset()
@@ -64,7 +55,19 @@ service.interceptors.response.use(
                     useSystemStore(store).resetBreadMenuList()
                     storage.clear()
                     useCommonRouter("login")
+                    window.$message.warning(res.msg)
                     break;
+                default:
+                    window.$notification.error({
+                        title: res.msg,
+                        description: `From ${import.meta.env.DEV ? devBaseURL : prodBaseURL}`,
+                        meta: useFormatTime(new Date().valueOf()),
+                        content: () => (
+                            <span>{typeof res.data === "string" ? res.data : JSON.stringify(res.data)}</span>
+                        ),
+                        duration: 5000,
+                        keepAliveOnHover: true
+                    })
             }
             return Promise.reject(res);
         } else {

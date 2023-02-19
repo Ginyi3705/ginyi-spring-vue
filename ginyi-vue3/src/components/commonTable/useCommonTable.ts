@@ -8,8 +8,8 @@ export const useCommonTable = (getListApi: Function) => {
     const tableLoading = ref<boolean>(true)
     const tablePagination = reactive<PaginationInfo | any>({
         page: 1,
-        pageSize: 5,
-        pageSizes: [5, 10, 20, 50] as Array<number | PaginationSizeOption>,
+        pageSize: 10,
+        pageSizes: [10, 30, 50, 100] as Array<number | PaginationSizeOption>,
         itemCount: 0,
         size: "small",
         showQuickJumper: true,

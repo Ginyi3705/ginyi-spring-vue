@@ -1,6 +1,7 @@
 import {App} from 'vue';
 import {focus} from "@/directives/focus";
 import {loading} from "@/directives/loading";
+import {drag} from "@/directives/draggable"
 
 /**
  * 注册全局自定义指令
@@ -11,4 +12,5 @@ export const initDirectives = (app: App) => {
     // 自动获取焦点
     app.directive('focus', focus);
     app.directive('loading', loading);
+    app.directive('drag', drag);
 }

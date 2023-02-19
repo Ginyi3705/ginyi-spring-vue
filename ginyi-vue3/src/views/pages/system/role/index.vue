@@ -5,7 +5,7 @@
                      :loading="tableLoading"
                      :dataList="tableDataList"
                      :labelField="'title'"
-                     :actionWidth="220"
+                     :actionWidth="140"
                      :rowKey="(row) => row.roleId"
                      :scrollX="1000"
                      @onPageChange="onPageChange"
