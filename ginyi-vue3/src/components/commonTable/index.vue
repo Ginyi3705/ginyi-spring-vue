@@ -88,6 +88,7 @@
                       :row-key="rowKey"
                       :scroll-x="scrollX"
                       :loading="loading"
+                      :min-height="300"
                       default-expand-all
                       @update:page="handlePageChange"
                       @update:page-size="handlePageSizeChange"
