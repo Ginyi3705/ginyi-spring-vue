@@ -9,7 +9,7 @@
             :inline="true"
             :label-width="80">
             <n-form-item label="角色名称" path="roleName">
-                <n-input v-model:value="formValue.roleName" placeholder="请输入角色名称" clearable/>
+                <n-input v-model:value="formValue.roleName" placeholder="请输入角色名称" clearable v-focus/>
             </n-form-item>
             <n-form-item label="角色权限字符串" path="roleKey">
                 <n-input v-model:value="formValue.roleKey" placeholder="请输入角色权限字符串" clearable/>

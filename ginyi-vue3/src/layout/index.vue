@@ -22,7 +22,7 @@
                 </div>
             </n-layout-header>
             <n-layout-content :content-style="{padding: '15px 15px 15px 20px', height: clientHeight - (layoutHeaderHeight + layoutFooterHeight + tabsHeight) + 'px',
-            backgroundColor: darkTheme ? null : '#f1f1f1'}">
+            backgroundColor: darkTheme ? null : '#f3f3f3'}">
                 <router-view/>
             </n-layout-content>
             <n-layout-footer

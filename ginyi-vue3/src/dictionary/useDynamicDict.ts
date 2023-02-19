@@ -49,7 +49,7 @@ export const useDynamicDict = () => {
     const getMenuDict = async () => {
         if (menuDict.value.length === 0) {
             const {data} = await menuController.list({})
-            menuDict.value = data.list
+            menuDict.value = useRemoveEmptyChildrenField(data.list)
         }
     }
 

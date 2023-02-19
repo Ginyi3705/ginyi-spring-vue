@@ -80,6 +80,7 @@ import {useCommonModal} from "@/components/commonModal/useCommonModal";
 import {menuController} from "@/api";
 import {useStaticDict} from "@/dictionary/useStaticDict";
 import {useDynamicDict} from "@/dictionary/useDynamicDict";
+import {useRemoveEmptyChildrenField} from "@/hooks/useTree";
 
 export default defineComponent({
     name: "deptEditForm",
@@ -127,9 +128,9 @@ export default defineComponent({
             menuType: {type: "string", required: true, message: "请选择菜单类型", trigger: ["blur", "change"]},
         }
 
-        const addChildDept = (value: any) => {
+        const addChildMenu = (value: any) => {
             onAdd()
-            modalForm.value.parentId = value.deptId
+            modalForm.value.parentId = value.menuId
         }
 
         return {
@@ -144,7 +145,7 @@ export default defineComponent({
             onSubmit,
             onDeleteById,
             onDeleteByIds,
-            addChildDept,
+            addChildMenu,
             menuDict,
             statusDict,
             whetherDict,

@@ -9,7 +9,7 @@
             :inline="true"
             :label-width="80">
             <n-form-item label="部门名称" path="roleName">
-                <n-input v-model:value="formValue.deptName" placeholder="请输入部门名称" clearable/>
+                <n-input v-model:value="formValue.deptName" placeholder="请输入部门名称" clearable v-focus/>
             </n-form-item>
             <n-form-item label="状态" path="status">
                 <n-select v-model:value="formValue.status" clearable :options="statusDict" style="width: 100px"/>

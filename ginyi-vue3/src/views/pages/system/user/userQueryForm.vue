@@ -9,7 +9,7 @@
             :inline="true"
             :label-width="80">
             <n-form-item label="用户账号" path="userName">
-                <n-input v-model:value="formValue.userName" placeholder="请输入用户账号" clearable/>
+                <n-input v-model:value="formValue.userName" placeholder="请输入用户账号" clearable v-focus/>
             </n-form-item>
             <n-form-item label="用户昵称" path="user.nickName">
                 <n-input v-model:value="formValue.nickName" placeholder="请输入昵称" clearable/>

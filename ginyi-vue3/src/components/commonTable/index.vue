@@ -1,99 +1,102 @@
 <template>
-    <n-card title="查询条件" :size="size" v-if="hasQuerySlot('query')" style="margin-bottom: 15px">
-        <slot name="query"></slot>
-    </n-card>
-    <n-card>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 5px">
-            <n-space>
-                <n-button type="primary" :size="size" @click="onEvent(0)">
-                    <template #icon>
-                        <n-icon :component="AddCircleOutline"/>
-                    </template>
-                    新增数据
-                </n-button>
-                <n-button type="error" :size="size" v-if="hasSelect"
-                          @click="onEvent(3)"
-                          :disabled="!hasSelect || checkedRowList.length === 0">
-                    <template #icon>
-                        <n-icon :component="TrashBinOutline"/>
-                    </template>
-                    批量删除
-                </n-button>
-            </n-space>
-            <div style="display: flex; align-items: center">
-                <n-radio-group :size="size" v-model:value="tableSize">
-                    <n-radio-button label="紧凑" value="small"/>
-                    <n-radio-button label="默认" value="medium"/>
-                    <n-radio-button label="宽松" value="large"/>
-                </n-radio-group>
-                <n-space style="margin-left: 10px; cursor: pointer">
-                    <n-popover :show-arrow="false" placement="bottom-end" trigger="click">
-                        <template #trigger>
-                            <n-icon style=" display: flex; align-items: center" :size="20">
-                                <SettingsOutline/>
-                            </n-icon>
+    <div style="display: flex; flex-direction: column;"
+         :style="{height: (clientHeight - layoutHeaderHeight - layoutFooterHeight - 50) + 'px'}">
+        <n-card title="查询条件" :size="size" v-if="hasQuerySlot('query')" style="margin-bottom: 15px">
+            <slot name="query"></slot>
+        </n-card>
+        <n-card style="flex: 1">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px">
+                <n-space>
+                    <n-button type="primary" :size="size" @click="onEvent(0)">
+                        <template #icon>
+                            <n-icon :component="AddCircleOutline"/>
                         </template>
-                        <div style="width: 350px; height: 400px;">
-                            <n-divider title-placement="center">其他配置</n-divider>
-                            <div style="display: flex; justify-content: space-between">
-                                <div>
-                                    <span style="margin-right: 10px">序号</span>
-                                    <n-radio-group :size="size" v-model:value="hasIndex">
-                                        <n-radio-button label="开启" :value="true"/>
-                                        <n-radio-button label="隐藏" :value="false"/>
-                                    </n-radio-group>
-                                </div>
-                                <div>
-                                    <span style="margin-right: 10px">可选列</span>
-                                    <n-radio-group :size="size" v-model:value="hasSelect">
-                                        <n-radio-button label="开启" :value="true"/>
-                                        <n-radio-button label="隐藏" :value="false"/>
-                                    </n-radio-group>
-                                </div>
-                            </div>
-                            <n-divider title-placement="center">列的排序</n-divider>
-                            <n-scrollbar style="max-height: 240px">
-                                <div>
-                                    <n-checkbox-group v-model:value="checkedList" @update:value="handleChecked">
-                                        <Draggable v-model="tableConfigColumns" group="people"
-                                                   @start="drag = true" @end="onDragEnd"
-                                                   item-key="id"
-                                                   animation="300"
-                                                   chosen-class="chosenClass">
-                                            <template #item="{element}">
-                                                <div class="item" :style="{borderColor: themeColor}">
-                                                    <n-space item-style="display: flex;" align="center">
-                                                        <n-icon :component="Move"></n-icon>
-                                                        <n-checkbox :value="element[labelField]"
-                                                                    :label="[undefined, null, ''].includes(element[labelField])
-                                                                ? '可选列' : element[labelField]"/>
-                                                    </n-space>
-                                                </div>
-                                            </template>
-                                        </Draggable>
-                                    </n-checkbox-group>
-                                </div>
-                            </n-scrollbar>
-                        </div>
-                    </n-popover>
+                        新增数据
+                    </n-button>
+                    <n-button type="error" :size="size" v-if="hasSelect"
+                              @click="onEvent(3)"
+                              :disabled="!hasSelect || checkedRowList.length === 0">
+                        <template #icon>
+                            <n-icon :component="TrashBinOutline"/>
+                        </template>
+                        批量删除
+                    </n-button>
                 </n-space>
+                <div style="display: flex; align-items: center">
+                    <n-radio-group :size="size" v-model:value="tableSize">
+                        <n-radio-button label="紧凑" value="small"/>
+                        <n-radio-button label="默认" value="medium"/>
+                        <n-radio-button label="宽松" value="large"/>
+                    </n-radio-group>
+                    <n-space style="margin-left: 10px; cursor: pointer">
+                        <n-popover :show-arrow="false" placement="bottom-end" trigger="click">
+                            <template #trigger>
+                                <n-icon style=" display: flex; align-items: center" :size="20">
+                                    <SettingsOutline/>
+                                </n-icon>
+                            </template>
+                            <div style="width: 350px; height: 400px;">
+                                <n-divider title-placement="center">其他配置</n-divider>
+                                <div style="display: flex; justify-content: space-between">
+                                    <div>
+                                        <span style="margin-right: 10px">序号</span>
+                                        <n-radio-group :size="size" v-model:value="hasIndex">
+                                            <n-radio-button label="开启" :value="true"/>
+                                            <n-radio-button label="隐藏" :value="false"/>
+                                        </n-radio-group>
+                                    </div>
+                                    <div>
+                                        <span style="margin-right: 10px">可选列</span>
+                                        <n-radio-group :size="size" v-model:value="hasSelect">
+                                            <n-radio-button label="开启" :value="true"/>
+                                            <n-radio-button label="隐藏" :value="false"/>
+                                        </n-radio-group>
+                                    </div>
+                                </div>
+                                <n-divider title-placement="center">列的排序</n-divider>
+                                <n-scrollbar style="max-height: 240px">
+                                    <div>
+                                        <n-checkbox-group v-model:value="checkedList" @update:value="handleChecked">
+                                            <Draggable v-model="tableConfigColumns" group="people"
+                                                       @start="drag = true" @end="onDragEnd"
+                                                       item-key="id"
+                                                       animation="300"
+                                                       chosen-class="chosenClass">
+                                                <template #item="{element}">
+                                                    <div class="item" :style="{borderColor: themeColor}">
+                                                        <n-space item-style="display: flex;" align="center">
+                                                            <n-icon :component="Move"></n-icon>
+                                                            <n-checkbox :value="element[labelField]"
+                                                                        :label="[undefined, null, ''].includes(element[labelField])
+                                                                ? '可选列' : element[labelField]"/>
+                                                        </n-space>
+                                                    </div>
+                                                </template>
+                                            </Draggable>
+                                        </n-checkbox-group>
+                                    </div>
+                                </n-scrollbar>
+                            </div>
+                        </n-popover>
+                    </n-space>
+                </div>
             </div>
-        </div>
-        <n-data-table :remote="true"
-                      :columns="tableColumns"
-                      :data="dataList"
-                      :size="tableSize"
-                      :max-height="(clientHeight - (layoutHeaderHeight + layoutFooterHeight)) / 2"
-                      :pagination="pagination"
-                      :row-key="rowKey"
-                      :scroll-x="scrollX"
-                      :loading="loading"
-                      :min-height="300"
-                      default-expand-all
-                      @update:page="handlePageChange"
-                      @update:page-size="handlePageSizeChange"
-                      @update:checked-row-keys="handleCheckRows"/>
-    </n-card>
+            <n-data-table :remote="true"
+                          :columns="tableColumns"
+                          :data="dataList"
+                          :size="tableSize"
+                          :max-height="(clientHeight - (layoutHeaderHeight + layoutFooterHeight)) / 2"
+                          :pagination="pagination"
+                          :row-key="rowKey"
+                          :scroll-x="scrollX"
+                          :loading="loading"
+                          :min-height="300"
+                          default-expand-all
+                          @update:page="handlePageChange"
+                          @update:page-size="handlePageSizeChange"
+                          @update:checked-row-keys="handleCheckRows"/>
+        </n-card>
+    </div>
 </template>
 
 <script lang="ts">

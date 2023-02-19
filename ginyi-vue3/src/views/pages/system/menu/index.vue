@@ -70,7 +70,7 @@ export default defineComponent({
                 // 删除
                 case 2:
                     // @ts-ignore
-                    menuEditFormRef?.value?.onDeleteById(value.row.deptId)
+                    menuEditFormRef?.value?.onDeleteById(value.row.menuId)
                     break
                 // 批量删除
                 case 3:
@@ -80,7 +80,7 @@ export default defineComponent({
                 // 新增子项
                 case 4:
                     // @ts-ignore
-                    menuEditFormRef?.value?.addChildDept(value.row)
+                    menuEditFormRef?.value?.addChildMenu(value.row)
                     break
             }
         }

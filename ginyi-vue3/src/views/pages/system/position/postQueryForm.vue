@@ -9,7 +9,7 @@
             :inline="true"
             :label-width="80">
             <n-form-item label="岗位名称" path="postName">
-                <n-input v-model:value="formValue.postName" placeholder="请输入岗位名称" clearable/>
+                <n-input v-model:value="formValue.postName" placeholder="请输入岗位名称" clearable v-focus/>
             </n-form-item>
             <n-form-item label="岗位编码" path="postCode">
                 <n-input v-model:value="formValue.postCode" placeholder="请输入岗位编码" clearable/>
