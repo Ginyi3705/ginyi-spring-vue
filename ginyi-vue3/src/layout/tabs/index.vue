@@ -371,22 +371,6 @@ export default defineComponent({
         .tabs:hover {
             cursor: pointer;
         }
-
-        .tab-move,
-        .tab-enter-active,
-        .tab-leave-active {
-            transition: all 0.3s ease;
-        }
-
-        .tab-enter-from,
-        .tab-leave-to {
-            opacity: 0;
-            transform: translateX(-30px);
-        }
-
-        .tab-leave-active {
-            position: absolute;
-        }
     }
 }
 
