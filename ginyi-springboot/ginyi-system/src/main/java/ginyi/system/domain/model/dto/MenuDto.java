@@ -74,4 +74,7 @@ public class MenuDto extends BaseEntity {
     @ApiModelProperty("菜单图标")
     private String icon;
 
+    @ApiModelProperty("过滤按钮（0过滤 1不过滤）")
+    private String filterButton;
+
 }

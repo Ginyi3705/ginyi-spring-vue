@@ -86,6 +86,9 @@
     <!-- 查询菜单 - admin -->
     <select id="selectMenuListByAdmin" resultMap="sysMenuResult">
         <include refid="selectMenuRef"/>
+        <if test="menuDto.filterButton != null and menuDto.filterButton != '' and menuDto.filterButton == 0">
+            where sm.menu_type != 'F'
+        </if>
     </select>
 
     <!-- 新增菜单 -->

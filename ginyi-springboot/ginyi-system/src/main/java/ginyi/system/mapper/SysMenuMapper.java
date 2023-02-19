@@ -40,7 +40,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * 管理员查询（管理）菜单列表
      * @return
      */
-    public List<SysMenu> selectMenuListByAdmin();
+    public List<SysMenu> selectMenuListByAdmin(@Param("menuDto") MenuDto menuDto);
 
     /**
      * 添加菜单
