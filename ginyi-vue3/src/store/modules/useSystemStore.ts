@@ -121,6 +121,9 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
             const hasHome = this.menuList?.some(menu => {
                 return menu.name === "home"
             })
+            const has404 = this.menuList?.some(menu => {
+                return menu.name === "404"
+            })
             if (!hasHome) {
                 this.menuList?.unshift({
                     menuId: 0,
@@ -129,6 +132,18 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
                     icon: "Home",
                     menuName: "首页",
                     component: "home/index",
+                    menuType: "C",
+                })
+            }
+            if (!has404) {
+                this.menuList?.push({
+                    menuId: 199999,
+                    path: "404",
+                    name: "404",
+                    icon: "Bug",
+                    show: false,
+                    menuName: "404",
+                    component: "404/index",
                     menuType: "C",
                 })
             }

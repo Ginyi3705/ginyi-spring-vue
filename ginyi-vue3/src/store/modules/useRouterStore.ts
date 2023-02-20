@@ -7,7 +7,8 @@ import router from "@/router";
 
 export const useRouterStore = defineStore(storeKeyEnums.ROUTER, {
     state: (): IRouterType => ({
-        routesList: []
+        routesList: [],
+        routesKeepAliveList: []
     }),
     actions: {
         setRoutesList(data: Array<any>, prevRoute?: RouteRecordRaw) {
@@ -17,8 +18,14 @@ export const useRouterStore = defineStore(storeKeyEnums.ROUTER, {
                 }
                 // C代表菜单，其余是目录和按钮
                 if (menu.menuType.toUpperCase() === "C") {
-                    menu.meta = {title: menu.menuName}
+                    menu.meta = {
+                        title: menu.menuName,
+                        keepAlive: menu.isCache === "0"
+                    }
                     this.routesList?.push(menu);
+                }
+                if (menu.name && menu.isCache === "0") {
+                    this.routesKeepAliveList?.push(menu.name);
                 }
                 if (menu.children?.length > 0) {
                     this.setRoutesList(menu.children, menu)
@@ -35,6 +42,11 @@ export const useRouterStore = defineStore(storeKeyEnums.ROUTER, {
                     component: modules[`../../views/${route.component}.vue`]
                 }
                 router.addRoute("Layout", temp)
+            })
+            router.addRoute("Layout", {
+                path: "/:path(.*)",
+                name: "404",
+                component: () => import("@/views/404/index.vue")
             })
         }
     }

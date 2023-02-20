@@ -65,6 +65,8 @@ export interface ITabType {
 export interface IRouterType {
     // 路由列表
     routesList?: Array<any>;
+    // 需要被缓存的路由列表
+    routesKeepAliveList?: Array<any>
 }
 
 /**

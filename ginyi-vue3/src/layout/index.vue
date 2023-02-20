@@ -25,7 +25,9 @@
             backgroundColor: darkTheme ? null : '#f3f3f3'}">
                 <router-view v-slot="{ Component }">
                     <transition name="fade-main" mode="out-in">
-                        <component :is="Component"/>
+                        <keep-alive>
+                            <component :is="Component"/>
+                        </keep-alive>
                     </transition>
                 </router-view>
             </n-layout-content>
@@ -49,6 +51,7 @@ import {setting} from "@/config/setting";
 import TabsView from "@/layout/tabs/index.vue";
 import Theme from "@/layout/theme/index.vue";
 import Menu from "@/layout/menu/index.vue";
+import {useRouterStore} from "@/store/modules/useRouterStore";
 
 export default defineComponent({
     name: "Layout",
@@ -69,6 +72,7 @@ export default defineComponent({
             darkTheme,
             tabsHeight
         } = storeToRefs(useSystemStore());
+        const {routesKeepAliveList} = storeToRefs(useRouterStore())
         const {title, author} = setting;
         const {setCollapsed} = useSystemStore();
 
@@ -87,7 +91,8 @@ export default defineComponent({
             Logo,
             Headers,
             CaretDownOutline,
-            SparklesOutline
+            SparklesOutline,
+            routesKeepAliveList
         }
     }
 })

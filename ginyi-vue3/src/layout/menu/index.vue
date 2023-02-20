@@ -52,10 +52,10 @@ export default defineComponent({
         watch(() => currentRoute.name, () => {
             const clickedMenu = useFindNodeByName(currentRoute.name as string, useDeepClone(menuList?.value as Array<any>))
             const bread: ITabType = {
-                id: clickedMenu.menuId,
-                icon: clickedMenu.icon,
-                tabKey: clickedMenu.name,
-                tabName: clickedMenu.menuName,
+                id: clickedMenu?.menuId,
+                icon: clickedMenu?.icon,
+                tabKey: clickedMenu?.name,
+                tabName: clickedMenu?.menuName,
             }
             useSystemStore().addTab(bread)
         })
