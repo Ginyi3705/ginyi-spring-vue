@@ -37,7 +37,7 @@
                         <n-icon :component="QrCode"/>
                     </template>
                 </n-input>
-                <img src="src/assets/base64.png" width="120" height="35">
+<!--                <img src="src/assets/base64.png" width="120" height="35">-->
             </n-input-group>
         </n-form-item-row>
     </n-form>
