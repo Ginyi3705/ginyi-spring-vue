@@ -2,8 +2,11 @@ package ginyi.framework.security.service;
 
 import cn.hutool.json.JSONUtil;
 import ginyi.common.constant.CacheConstants;
+import ginyi.common.constant.CommonMessageConstants;
+import ginyi.common.exception.CommonException;
 import ginyi.common.mysql.MyPage;
 import ginyi.common.redis.cache.RedisCache;
+import ginyi.common.result.StateCode;
 import ginyi.system.domain.LoginUser;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.SessionUserVo;
@@ -52,5 +55,26 @@ public class MonitorServiceImpl implements ISysMonitorService {
         baseVo.setList(list);
         baseVo.setCount(list.size());
         return baseVo;
+    }
+
+    @Override
+    public void removeUser(String sessionId) {
+        if(!redisCache.hasKey(CacheConstants.LOGIN_TOKEN_KEY + sessionId)){
+            throw  new CommonException(StateCode.ERROR_NOT_EXIST, sessionId + CommonMessageConstants.USER_NOT_EXIST);
+        }
+        redisCache.removeCacheObject(CacheConstants.LOGIN_TOKEN_KEY + sessionId);
+    }
+
+    @Override
+    public void removeUser(Set<String> ids) {
+        for (String sessionId : ids) {
+            if(!redisCache.hasKey(CacheConstants.LOGIN_TOKEN_KEY + sessionId)){
+                throw  new CommonException(StateCode.ERROR_NOT_EXIST, sessionId + CommonMessageConstants.USER_NOT_EXIST);
+            }
+        }
+        // 全部没问题再执行
+        for (String sessionId : ids) {
+            redisCache.removeCacheObject(CacheConstants.LOGIN_TOKEN_KEY + sessionId);
+        }
     }
 }
