@@ -12,7 +12,7 @@ public class MyPage {
     /**
      * 当前页
      */
-    private Long page;
+    private Long pageNum;
     /**
      * 每页条数
      */
@@ -27,14 +27,18 @@ public class MyPage {
 
     public MyPage(Long page, Long pageSize) {
         if ((page != null && page > 0) && (pageSize != null && pageSize > 0)) {
-            this.page = page;
+            this.pageNum = page;
             this.pageSize = pageSize;
             this.isPage = true;
+        }else {
+            this.pageNum = 1L;
+            this.pageSize = 10L;
+            this.isPage = false;
         }
     }
 
     public Page getPage(){
-        return this.isPage ? new Page(this.page, this.pageSize) : new Page().setSize(10000L);
+        return this.isPage ? new Page(this.pageNum, this.pageSize) : new Page().setSize(10000L);
     }
 
 }

@@ -121,6 +121,15 @@ public class RedisCache {
     }
 
     /**
+     * 获取指定前缀的所有key
+     *
+     * @param key
+     */
+    public Set<String> getKeys(final String key) {
+        return redisTemplate.keys(key);
+    }
+
+    /**
      * 缓存List数据
      *
      * @param key      缓存的键值
