@@ -66,6 +66,16 @@ export const definedProps = {
         type: Number,
         default: 2000
     },
+    /**
+     * 是否显示操作列
+     */
+    showActionCol: {
+      type: Boolean,
+      default: true
+    },
+    /**
+     * 按钮配置
+     */
     buttonConfig: {
         type: Object,
         default: () => {

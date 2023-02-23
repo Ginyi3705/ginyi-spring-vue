@@ -136,10 +136,7 @@ export default defineComponent({
         const actionCol = ref<Array<IButtonConfig>>([
             props.buttonConfig.editButton,
             props.buttonConfig.deleteButton,
-            props.buttonConfig.batchDeleteButton
         ])
-        // 操作列添加完毕标志
-        const actionColFlag = ref<boolean>(false)
         // draggable 配置项
         const dragData = reactive({
             drag: false,
@@ -185,17 +182,14 @@ export default defineComponent({
 
         // 渲染操作列
         const renderActionCol = () => {
-            return [{
+            return props.showActionCol ? [{
                 title: "操作",
                 key: "action",
                 fixed: "right",
                 width: props.actionWidth,
                 render: (row: any) => {
                     return h(NSpace, null, () => [
-                            // 过滤批量删除和 show !== true 的
-                            [...actionCol.value.filter(action => action.type !== "batchDelete" && action.show),
-                                ...props.actionColData
-                            ].map((action) => {
+                            [...actionCol.value.filter(action => action.show), ...props.actionColData].map((action) => {
                                 return h(NButton, {
                                         size: props.size as Size,
                                         type: action.colorType,
@@ -207,7 +201,7 @@ export default defineComponent({
                         ]
                     )
                 }
-            }]
+            }] : []
         }
 
         // 检查插槽是否有内容

@@ -9,6 +9,7 @@
                      :rowKey="(row) => row.token"
                      :scrollX="1200"
                      :buttonConfig="buttonConfig"
+                     :showActionCol="true"
                      @onPageChange="onPageChange"
                      @onPageSizeChange="onPageSizeChange"
                      @onEvent="onEvent">>
