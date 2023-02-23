@@ -53,11 +53,52 @@ export const definedProps = {
         type: [Object, Boolean],
         default: () => false,
     },
+    /**
+     * 是否启用loading加载
+     */
     loading: {
         type: Boolean
     },
+    /**
+     * 横屏滚动区域，启用固定列时必须设置值
+     */
     scrollX: {
         type: Number,
         default: 2000
+    },
+    buttonConfig: {
+        type: Object,
+        default: () => {
+            return {
+                addButton: {
+                    type: "add",
+                    title: "新增数据",
+                    actionType: 0,
+                    show: true,
+                    colorType: "primary",
+                },
+                editButton: {
+                    type: "edit",
+                    title: "编辑",
+                    actionType: 1,
+                    show: true,
+                    colorType: "primary",
+                },
+                deleteButton: {
+                    type: "delete",
+                    title: "删除",
+                    actionType: 2,
+                    show: true,
+                    colorType: "error",
+                },
+                batchDeleteButton: {
+                    type: "batchDelete",
+                    colorType: "error",
+                    actionType: 3,
+                    show: true,
+                    title: "批量删除",
+                }
+            }
+        }
     }
 }

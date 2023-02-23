@@ -123,3 +123,20 @@ export interface IPage {
     page: number | string;
     pageSize: number | string
 }
+
+/**
+ * CommonTable按钮配置
+ */
+export interface IButtonConfig {
+    type: string,
+    title: string,
+    actionType: number,
+    show: boolean,
+    colorType: string,
+}
+export interface IButtonType {
+    addButton: IButtonConfig,
+    editButton: IButtonConfig,
+    deleteButton: IButtonConfig,
+    batchDeleteButton:IButtonConfig
+}

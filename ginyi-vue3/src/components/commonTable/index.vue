@@ -7,22 +7,29 @@
         <n-card style="flex: 1">
             <div style="display: flex; justify-content: space-between; margin-bottom: 5px">
                 <n-space>
-                    <n-button type="primary" :size="size" @click="onEvent(0)">
+                    <n-button :type="buttonConfig.addButton.colorType" :size="size" @click="onEvent(0)"
+                              v-if="buttonConfig.addButton.show">
                         <template #icon>
                             <n-icon :component="AddCircleOutline"/>
                         </template>
-                        新增数据
+                        {{ buttonConfig.addButton.title }}
                     </n-button>
-                    <n-button type="error" :size="size" v-if="hasSelect"
+                    <n-button :type="buttonConfig.batchDeleteButton.colorType"
+                              :size="size" v-if="hasSelect"
+                              v-show="buttonConfig.batchDeleteButton.show"
                               @click="onEvent(3)"
                               :disabled="!hasSelect || checkedRowList.length === 0">
                         <template #icon>
                             <n-icon :component="TrashBinOutline"/>
                         </template>
-                        批量删除
+                        {{ buttonConfig.batchDeleteButton.title }}
                     </n-button>
                 </n-space>
-                <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center;"
+                     :style="{
+                        width: !buttonConfig.addButton.show ? '100%' : null,
+                        justifyContent: !buttonConfig.addButton.show ? 'flex-end' : null
+                     }">
                     <n-radio-group :size="size" v-model:value="tableSize">
                         <n-radio-button label="紧凑" value="small"/>
                         <n-radio-button label="默认" value="medium"/>
@@ -109,6 +116,7 @@ import Draggable from 'vuedraggable'
 import {useDeepClone} from "@/hooks/useObject";
 import {definedProps} from "@/components/commonTable/props";
 import {Size} from "naive-ui/es/button/src/interface";
+import {IButtonConfig} from "@/interface/modules/system";
 
 export default defineComponent({
     name: "CommonTable",
@@ -125,21 +133,10 @@ export default defineComponent({
             type: 'selection'
         }])
         // 操作列
-        const actionCol = ref<Array<any>>([
-            {
-                title: "编辑",
-                colorType: "primary",
-                actionType: 1,
-            },
-            {
-                title: "删除",
-                colorType: "error",
-                actionType: 2,
-            },
-            {
-                title: "批量删除",
-                actionType: 3
-            }
+        const actionCol = ref<Array<IButtonConfig>>([
+            props.buttonConfig.editButton,
+            props.buttonConfig.deleteButton,
+            props.buttonConfig.batchDeleteButton
         ])
         // 操作列添加完毕标志
         const actionColFlag = ref<boolean>(false)
@@ -185,6 +182,7 @@ export default defineComponent({
             tableColumns.value = [...tableColumns.value, ...renderActionCol()]
         }
 
+
         // 渲染操作列
         const renderActionCol = () => {
             return [{
@@ -194,7 +192,10 @@ export default defineComponent({
                 width: props.actionWidth,
                 render: (row: any) => {
                     return h(NSpace, null, () => [
-                            [...actionCol.value.slice(0, actionCol.value.length - 1), ...props.actionColData].map((action) => {
+                            // 过滤批量删除和 show !== true 的
+                            [...actionCol.value.filter(action => action.type !== "batchDelete" && action.show),
+                                ...props.actionColData
+                            ].map((action) => {
                                 return h(NButton, {
                                         size: props.size as Size,
                                         type: action.colorType,
