@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import {logController, monitorController} from "@/api";
+import {logController, onlineController} from "@/api";
 
 export default defineComponent({
     setup() {
@@ -24,7 +24,7 @@ export default defineComponent({
             })
         }
         const getOnlineUserList = () => {
-            monitorController.getOnlineUserList({}, {page: 1, pageSize: 20}).then(res => {
+            onlineController.getOnlineUserList({}, {page: 1, pageSize: 20}).then(res => {
                 console.log('在线用户', res)
             })
         }

@@ -3,10 +3,9 @@ package ginyi.system.service;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.SessionUserVo;
 
-import java.util.List;
 import java.util.Set;
 
-public interface ISysMonitorService {
+public interface ISysOnlineService {
 
     /**
      * 当前在线用户列表

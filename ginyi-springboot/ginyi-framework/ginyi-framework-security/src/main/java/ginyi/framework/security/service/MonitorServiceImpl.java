@@ -1,6 +1,5 @@
 package ginyi.framework.security.service;
 
-import cn.hutool.json.JSONUtil;
 import ginyi.common.constant.CacheConstants;
 import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.exception.CommonException;
@@ -10,20 +9,19 @@ import ginyi.common.result.StateCode;
 import ginyi.system.domain.LoginUser;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.SessionUserVo;
-import ginyi.system.service.ISysMonitorService;
+import ginyi.system.service.ISysOnlineService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 @Slf4j
 @Service
-public class MonitorServiceImpl implements ISysMonitorService {
+public class MonitorServiceImpl implements ISysOnlineService {
 
     @Resource
     private RedisCache redisCache;
@@ -53,7 +51,7 @@ public class MonitorServiceImpl implements ISysMonitorService {
         }
 
         baseVo.setList(list);
-        baseVo.setCount(list.size());
+        baseVo.setCount(keys.size());
         return baseVo;
     }
 

@@ -1,7 +1,7 @@
 import useRequest from "@/api/useRequest";
 import {IPage} from "@/interface/modules/system";
 
-export class monitorController {
+export class onlineController {
     /**
      * 获取在线用户
      * @param data
