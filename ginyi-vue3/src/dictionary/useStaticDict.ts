@@ -14,6 +14,18 @@ export const useStaticDict = () => {
         }
     ])
 
+    // 成功与否字典
+    const successDict = ref<Array<any>>([
+        {
+            label: "成功",
+            value: "0",
+        },
+        {
+            label: "失败",
+            value: "1"
+        }
+    ])
+
     // 性别字典
     const sexDict = ref<Array<any>>([
         {
@@ -72,6 +84,7 @@ export const useStaticDict = () => {
 
     return {
         statusDict,
+        successDict,
         sexDict,
         menuTypeDict,
         showDict,

@@ -15,7 +15,7 @@ public class SysLogLogin extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("ID")
-    private Long infoId;
+    private String id;
 
     @ApiModelProperty("用户账号")
     private String userName;
@@ -39,7 +39,7 @@ public class SysLogLogin extends BaseEntity {
     private String msg;
 
     @JsonFormat
-    @ApiModelProperty("访问时间")
+    @ApiModelProperty("登录时间")
     private Date loginTime;
 
 }
