@@ -47,15 +47,15 @@ router.beforeEach((to, from, next) => {
     if (to.name === "login") {
         if (token) {
             window.$dialog.warning({
-                title: '温馨提醒',
-                content: '当前状态【已登录】，是否退出登录回到登录页面？',
-                positiveText: '确定',
-                negativeText: '取消',
+                title: "温馨提醒",
+                content: "当前状态【已登录】，是否退出登录回到登录页面？",
+                positiveText: "确定",
+                negativeText: "取消",
                 onPositiveClick: () => {
                     useUserStore(store).logout().then(() => {
                         useRouterStore(store).$reset()
                         next({name: to.name as string})
-                        window.$message.success('退出成功')
+                        window.$message.success("退出成功")
                     })
                 },
                 onNegativeClick: () => {

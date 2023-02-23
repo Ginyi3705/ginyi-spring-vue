@@ -15,4 +15,27 @@ export class onlineController {
         })
     }
 
+    /**
+     * 强制退出
+     * @param token
+     */
+    static removeUser(token: any): Promise<any> {
+        return useRequest({
+            url: `/api/online/removeUser/${token}`,
+            method: "post",
+        })
+    }
+
+    /**
+     * 批量强制退出
+     * @param data
+     */
+    static batchRemoveUser(data: any): Promise<any> {
+        return useRequest({
+            url: "/api/online/removeUser",
+            method: "post",
+            data
+        })
+    }
+
 }

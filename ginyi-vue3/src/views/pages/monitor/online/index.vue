@@ -69,7 +69,39 @@ export default defineComponent({
         })
 
         const onEvent = (value: any) => {
-
+            switch (value.type) {
+                // 强制退出
+                case 2:
+                    console.log(value.row.token)
+                    window.$dialog.warning({
+                        title: "温馨提醒",
+                        content: "是否确认强制该用户下线？",
+                        positiveText: "确定",
+                        negativeText: "取消",
+                        onPositiveClick: () => {
+                            onlineController.removeUser(value.row.token).then(res => {
+                                window.$message.success(res.msg)
+                                getDataList()
+                            })
+                        }
+                    })
+                    break
+                // 批量强制退出
+                case 3:
+                    window.$dialog.warning({
+                        title: "温馨提醒",
+                        content: "是否确认强制将选中的用户下线？",
+                        positiveText: "确定",
+                        negativeText: "取消",
+                        onPositiveClick: () => {
+                            onlineController.batchRemoveUser(value.data).then(res => {
+                                window.$message.success(res.msg)
+                                getDataList()
+                            })
+                        }
+                    })
+                    break
+            }
         }
 
         onMounted(() => {
