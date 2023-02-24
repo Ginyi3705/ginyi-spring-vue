@@ -5,10 +5,11 @@
 <h5 align="center">基于对优秀开源项目RuoYi-Vue的喜爱，决定重构若依，打造属于自己的快速开发平台！</h5>
 <p align="right">————向优秀致敬，向榜样学习！</p>
 <p align="center">
-	<a href="https://gitee.com/y_project/RuoYi-Vue/stargazers"><img src="https://img.shields.io/badge/license-MIT-brightgreen"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue"><img src="https://img.shields.io/badge/Ginyi-v1.0.0-red"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
+	<a href="https://gitee.com/Ginyi/ginyi-spring-vue"><img src="https://img.shields.io/badge/license-MIT-red"></a>
+	<a href="https://gitee.com/Ginyi/ginyi-spring-vue"><img src="https://img.shields.io/badge/Ginyi-v1.0.0-red"></a>
+	<a href="https://gitee.com/Ginyi/ginyi-spring-vue"><img src="https://img.shields.io/badge/SpringBoot-Vue3-red"></a>
 </p>
+
 
 
 
@@ -22,6 +23,14 @@
 
 - [RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue?_from=gitee_search)
 - [Naive UI](https://www.naiveui.com/)
+
+
+
+### 项目地址
+
+演示地址：http://114.132.120.190:3800
+
+接口地址：http://114.132.120.190:8066/doc.html
 
 
 

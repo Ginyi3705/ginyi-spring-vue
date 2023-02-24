@@ -1,8 +1,8 @@
 ### 项目地址
 
-接口文档：http://www.baidu.com
+接口文档：http://114.132.120.190:8066/doc.html
 
-代码仓库：https://gitee.com/Ginyi/ginyi-spring-vue 
+代码仓库：https://gitee.com/Ginyi/ginyi-spring-vue
 
 帮助文档：没有~但是可以参考`Ruoyi`的文档 http://doc.ruoyi.vip/
 
@@ -36,4 +36,37 @@
 1. `JDK1.8`
 2. `MySQL8.0`
 3. `IntelliJ IDEA`
+
+
+
+### 项目结构
+
+```bash
+ginyi-springboot
+|
+├─ ginyi-common  # 通用模块
+│  ├─ ginyi-common-annotation      # 通用注解
+│  ├─ ginyi-common-constants       # 通用常量
+│  ├─ ginyi-common-enums           # 通用枚举
+│  ├─ ginyi-common-exception       # 通用异常处理
+│  ├─ ginyi-common-mysql           # 通用MySql配置
+│  ├─ ginyi-common-redis           # 通用Redis配置
+│  ├─ ginyi-common-result          # 通用结果集
+│  ├─ ginyi-common-swagger         # 通用在线接口文档配置
+│  └─ ginyi-common-utils           # 通用工具类
+|
+├─ ginyi-framework  #  框架模块
+│  ├─ ginyi-framework-core         # 框架核心
+│  ├─ ginyi-framework-security     # 安全框架
+│  └─ ginyi-framework-websocket    # 实时通讯框架
+|
+├─ ginyi-server   # 服务模块（对外提供api接口）
+│  ├─ ginyi-server-admin           # 后台系统端
+│  ├─ ginyi-server-common          # 通用服务（供其他server提供通用接口）
+│  └─ ginyi-server-web             # 前台应用端
+|
+├─ ginyi-system  # 系统服务模块（包含yaml配置、系统Entity、系统Service、系统Mapper等）
+|
+└─ sql  # 数据库文件
+```
 

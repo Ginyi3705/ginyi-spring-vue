@@ -7,7 +7,7 @@
 
 ### 项目地址
 
-演示地址：http://www.baidu.com
+演示地址：http://114.132.120.190:3800
 
 代码仓库：https://gitee.com/Ginyi/ginyi-spring-vue
 
@@ -31,7 +31,7 @@
 
 - 提供多个自定义指令：`v-focus、v-draggable、v-permission`等，同时提供多个常用数据字典：`是否、正常禁用、性别`等，减少重复代码！
 
-  
+
 
 ### 前置知识
 
@@ -65,5 +65,32 @@ yarn dev 或者 npm run dev
 
 # 打包项目
 yarn build 或者 npm run build
+```
+
+
+
+### 目录结构
+
+```bash
+ginyi-vue3 
+|
+├─ src  # 源文件夹
+│  ├─ api           # 网络请求
+│  ├─ assets        # 静态资源文件，参与打包
+│  ├─ components    # 全局组件
+│  ├─ config        # 项目配置
+│  ├─ dictionary    # 全局字典
+│  ├─ directives    # 全局指令
+│  ├─ enums         # 全局枚举
+│  ├─ hooks         # 钩子函数（包含工具类）
+│  ├─ interface     # 接口类型
+│  ├─ layout        # 布局
+│  ├─ plugins       # 插件
+│  ├─ router        # 路由
+│  ├─ store         # 状态管理
+│  ├─ style         # 全局样式
+│  └─ views         # 视图文件
+|
+└─ public  # 静态资源文件，不参与打包
 ```
 
