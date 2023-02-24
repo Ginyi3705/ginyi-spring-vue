@@ -33,7 +33,7 @@ public class AppConfig {
                 " /  _____||  | |  \\ |  | \\   \\  /   / |  | 项目名称：" + projectName + "\n" +
                 "|  |  __  |  | |   \\|  |  \\   \\/   /  |  | 服务地址：" + baseUrl + "\n" +
                 "|  | |_ | |  | |       |   \\_    _/   |  | 接口文档：" + knife4jDoc + " or " + swaggerDoc + "\n" +
-                "|  |__| | |  | |  |\\   |     |  |     |  | 如果你喜欢这个项目，欢迎Star！https://www.gitee.com \n" +
+                "|  |__| | |  | |  |\\   |     |  |     |  | 如果你喜欢这个项目，欢迎Star！https://gitee.com/Ginyi/ginyi-spring-vue \n" +
                 " \\______| |__| |__| \\__|     |__|     |__| 启动成功...\n";
 
         log.info("\n{}", colorPrint(startSuccess, Ansi.Color.CYAN));
