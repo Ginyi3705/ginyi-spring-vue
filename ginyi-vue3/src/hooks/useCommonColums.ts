@@ -21,7 +21,7 @@ export const useCommonColumns = () => {
      */
     const useRenderSuccessById = (successId: string) => {
         const temp = successDict.value.filter(state => {
-            return state.value === successId
+            return state.value === successId.toString()
         })
         return temp.length !== 0 ? temp[0].label : undefined;
     }

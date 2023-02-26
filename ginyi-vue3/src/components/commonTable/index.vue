@@ -92,7 +92,7 @@
                           :columns="tableColumns"
                           :data="dataList"
                           :size="tableSize"
-                          :max-height="(clientHeight - (layoutHeaderHeight + layoutFooterHeight)) / 2"
+                          :max-height="(clientHeight - (layoutHeaderHeight + layoutFooterHeight)) - 200"
                           :pagination="pagination"
                           :row-key="rowKey"
                           :scroll-x="scrollX"

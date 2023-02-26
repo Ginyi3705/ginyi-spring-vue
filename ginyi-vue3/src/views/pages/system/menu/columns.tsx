@@ -22,8 +22,13 @@ export const columns: DataTableColumns<any> = [
         }
     },
     {
-        title: "排序",
-        key: "sort",
+        title: "状态",
+        key: "status",
+        render: (row) => (
+            <NTag type={row.status === "0" ? "success" : "error"}>
+                {useRenderStateById(row.status)}
+            </NTag>
+        )
     },
     {
         title: "菜单类型",
@@ -69,13 +74,8 @@ export const columns: DataTableColumns<any> = [
         )
     },
     {
-        title: "状态",
-        key: "status",
-        render: (row) => (
-            <NTag type={row.status === "0" ? "success" : "error"}>
-                {useRenderStateById(row.status)}
-            </NTag>
-        )
+        title: "排序",
+        key: "sort",
     },
     {
         title: "创建时间",
