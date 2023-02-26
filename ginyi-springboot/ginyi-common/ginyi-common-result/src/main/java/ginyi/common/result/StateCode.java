@@ -12,6 +12,7 @@ public enum StateCode {
     ERROR_INVALID_SIGN(5004, "无效签名"),
     ERROR_AUTHENTICATION_VALID(5005, "认证失败或令牌已过期"),
     ERROR_NOT_PERMISSION(5006, "权限不足"),
+    ERROR_LIMITED(5007, "操作受限"),
 
     ERROR_BUSINESS(6000,"业务逻辑异常"),
     ERROR_PARAMS(6001,"参数校验错误"),

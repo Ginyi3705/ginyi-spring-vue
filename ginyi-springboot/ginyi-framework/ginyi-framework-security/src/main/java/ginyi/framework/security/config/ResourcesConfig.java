@@ -3,6 +3,7 @@ package ginyi.framework.security.config;
 
 import ginyi.framework.core.config.GinyiConfig;
 import ginyi.common.utils.Constants;
+import ginyi.framework.security.interceptor.PreviewEnvInterceptor;
 import ginyi.framework.security.interceptor.RepeatSubmitInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,8 @@ public class ResourcesConfig implements WebMvcConfigurer {
 
     @Resource
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
+    @Resource
+    private PreviewEnvInterceptor previewEnvInterceptor;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -47,6 +50,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(previewEnvInterceptor).addPathPatterns("/**");
     }
 
     /**

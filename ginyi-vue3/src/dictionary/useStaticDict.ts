@@ -82,13 +82,34 @@ export const useStaticDict = () => {
         }
     ])
 
+    // 操作类型
+    const operationType = ref<Array<any>>([
+        {
+            label: "其他",
+            value: "0",
+        },
+        {
+            label: "新增",
+            value: "1",
+        },
+        {
+            label: "修改",
+            value: "2",
+        },
+        {
+            label: "删除",
+            value: "3",
+        }
+    ])
+
     return {
         statusDict,
         successDict,
         sexDict,
         menuTypeDict,
         showDict,
-        whetherDict
+        whetherDict,
+        operationType
     }
 }
 

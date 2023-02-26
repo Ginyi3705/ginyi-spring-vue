@@ -37,7 +37,10 @@
                         <n-icon :component="QrCode"/>
                     </template>
                 </n-input>
-<!--                <img src="src/assets/base64.png" width="120" height="35">-->
+                <img :src="`data:image/png;base64,${captchaCode ?? null}`"
+                     @click="() => getCaptcha()"
+                     style="width: 120px; height: 34px; cursor: pointer"
+                     alt="重新获取">
             </n-input-group>
         </n-form-item-row>
     </n-form>
@@ -45,9 +48,10 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive} from "vue";
+import {defineComponent, onMounted, reactive, ref} from "vue";
 import {IRegisterFormType} from "@/interface/modules/system";
 import {BagOutline, Moon, Person, QrCode, SunnySharp} from '@vicons/ionicons5';
+import {userController} from "@/api";
 
 export default defineComponent({
     name: "RegisterForm",
@@ -59,6 +63,20 @@ export default defineComponent({
             password2: undefined,
             code: undefined
         })
+        // 验证码
+        const captchaCode = ref<string | undefined>(undefined)
+
+        // 获取验证码
+        const getCaptcha = () => {
+            userController.captcha().then(res => {
+                captchaCode.value = res.data.img
+            })
+        }
+
+        onMounted(() => {
+            getCaptcha()
+        })
+
         // 注册
         const handleRegister = () => {
             emit("doRegister", registerForm)
@@ -66,6 +84,8 @@ export default defineComponent({
         return {
             registerForm,
             handleRegister,
+            captchaCode,
+            getCaptcha,
             BagOutline, Moon, Person, QrCode, SunnySharp
         }
     }

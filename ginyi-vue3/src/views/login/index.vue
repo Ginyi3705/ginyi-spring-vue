@@ -35,48 +35,64 @@
     </n-card>
 </template>
 
-<script setup lang="ts">
-import {Moon, SunnySharp} from '@vicons/ionicons5';
+<script lang="ts">
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {ILoginFormType, IRegisterFormType} from "@/interface/modules/system";
-import LoginForm from "@/views/login/loginForm.vue";
-import RegisterForm from "@/views/login/RegisterForm.vue";
 import {useUserStore} from "@/store/modules/useUserStore";
 import {useCommonRouter} from "@/router";
 import {menuController, userController} from "@/api";
-import {ref} from "vue";
+import {defineComponent, ref} from "vue";
 import {storeToRefs} from "pinia";
 import {useRouterStore} from "@/store/modules/useRouterStore";
+import LoginForm from "@/views/login/loginForm.vue";
+import {Moon, SunnySharp} from "@vicons/ionicons5";
+import RegisterForm from "@/views/login/registerForm.vue";
 
-// 系统深色主题
-const {darkTheme, clientHeight} = storeToRefs(useSystemStore())
-// 登录状态
-const isLoginSuccess = ref<boolean | string>(false)
-// 登录
-const doLogin = (data: ILoginFormType) => {
-    userController.login(data).then(res => {
-        return useUserStore().login(data.username, res.data)
-    }).then(() => {
-        isLoginSuccess.value = true
-        return menuController.getRouterList()
-    }).then(res => {
-        useSystemStore().setMenuList(res.data.list)
-        useRouterStore().setRoutesList(res.data.list)
-        window.$notification.success({
-            title: "登录成功",
-            content: "工作顺利，快乐摸鱼！",
-            duration: 2500,
-        })
-        useCommonRouter("home")
-    }).catch(() => {
-        // 用于更新验证码
-        isLoginSuccess.value = `${false}_${new Date().valueOf()}`
-    })
-}
-// 注册
-const doRegister = (data: IRegisterFormType) => {
-    console.log('注册data', data)
-}
+export default defineComponent({
+    components: {
+        LoginForm, RegisterForm, SunnySharp, Moon
+    },
+    setup() {
+        // 系统深色主题
+        const {darkTheme, clientHeight} = storeToRefs(useSystemStore())
+        // 登录状态
+        const isLoginSuccess = ref<boolean | string>(false)
+
+        // 登录
+        const doLogin = (data: ILoginFormType) => {
+            userController.login(data).then(res => {
+                return useUserStore().login(data.username, res.data)
+            }).then(() => {
+                isLoginSuccess.value = true
+                return menuController.getRouterList()
+            }).then(res => {
+                useSystemStore().setMenuList(res.data.list)
+                useRouterStore().setRoutesList(res.data.list)
+                window.$notification.success({
+                    title: "登录成功",
+                    content: "工作顺利，快乐摸鱼！",
+                    duration: 2500,
+                })
+                useCommonRouter("home")
+            }).catch(() => {
+                // 用于更新验证码
+                isLoginSuccess.value = `${false}_${new Date().valueOf()}`
+            })
+        }
+        // 注册
+        const doRegister = (data: IRegisterFormType) => {
+            console.log('注册data', data)
+        }
+        return {
+            isLoginSuccess,
+            darkTheme, clientHeight,
+            doLogin,
+            doRegister,
+            SunnySharp, Moon
+        }
+    }
+})
+
 
 </script>
 

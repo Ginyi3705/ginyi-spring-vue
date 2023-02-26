@@ -1,7 +1,9 @@
 import {DataTableColumns, NTag} from "naive-ui";
 import {useCommonColumns} from "@/hooks/useCommonColums";
+import {useColumns} from "@/views/pages/system/log/operation/useColumns";
 
 const {useRenderSuccessById} = useCommonColumns()
+const {useRenderOperationType} = useColumns()
 
 
 export const columns: DataTableColumns<any> = [
@@ -24,6 +26,14 @@ export const columns: DataTableColumns<any> = [
     {
         title: "操作类型",
         key: "businessType",
+        render: (row) => (
+            <NTag type={
+                row.businessType.toString() === "1" ? "info"
+                    : row.businessType.toString() === "2" ? "warning"
+                        : row.businessType.toString() === "3" ? "error" : "default"}>
+                {useRenderOperationType(row.businessType.toString())}
+            </NTag>
+        )
     },
     {
         title: "请求方式",
