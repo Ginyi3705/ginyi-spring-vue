@@ -13,6 +13,7 @@ public class CommonMessageConstants {
     public static final String SYS_REQUEST_ILLEGAL = "请求参数错误，请仔细检查！";
     public static final String SYS_CAPTCHA_NOT_EXIST = "验证码不能为空！";
     public static final String SYS_PREVIEW_ENV = "演示环境不允许进行此操作！";
+    public static final String SYS_BED_REQUEST = "恶意请求！该请求已被终止！";
 
     public static final String UPLOAD_FILE_ERROR = "文件上传业务异常";
     public static final String UPLOAD_SIZE_EXCEED = "单文件大小不得大于5MB，总文件大小不得大于50MB";

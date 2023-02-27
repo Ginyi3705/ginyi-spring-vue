@@ -31,6 +31,9 @@ public class CacheConstants {
      */
     public static final String REPEAT_SUBMIT_KEY = "repeat_submit:";
 
+    /** 防止恶意请求 */
+    public static final String API_REQUEST = "api_request:";
+
 
 
     /** 菜单前缀，用于批量删除 */
