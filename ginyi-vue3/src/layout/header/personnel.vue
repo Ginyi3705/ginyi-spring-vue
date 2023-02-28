@@ -25,7 +25,6 @@ export default defineComponent({
         Moon, SunnySharp
     },
     setup() {
-        // 系统深色主题
         const {username} = storeToRefs(useUserStore());
         const {logo} = setting;
         const options = ref<Array<{ label: string, key: string, icon?: Function }>>([

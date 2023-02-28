@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, watch} from "vue";
 import CommonModal from "@/components/commonModal/index.vue";
 import {useCommonModal} from "@/components/commonModal/useCommonModal";
 import {menuController} from "@/api";
@@ -132,6 +132,8 @@ export default defineComponent({
             onAdd()
             modalForm.value.parentId = value.menuId
         }
+
+        watch(() => modalForm.value, () => modalForm.value.path = modalForm.value.name, {deep: true})
 
         return {
             modalShow,

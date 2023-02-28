@@ -91,7 +91,7 @@ export default defineComponent({
                 keyField: "menuId",
                 labelField: "menuName",
                 checkable: true,
-                cascade: true,
+                cascade: false,
                 selectable: false,
                 blockLine: true,
                 checkOnClick: true,

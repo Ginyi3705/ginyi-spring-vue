@@ -126,10 +126,3 @@ export default defineComponent({
 })
 
 </script>
-
-<style>
-.n-drawer .n-drawer-content .n-drawer-body-content-wrapper {
-    box-sizing: border-box;
-    padding: 0;
-}
-</style>

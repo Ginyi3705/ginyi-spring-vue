@@ -67,6 +67,7 @@ export default defineComponent({
                 return menuController.getRouterList()
             }).then(res => {
                 useSystemStore().setMenuList(res.data.list)
+                useSystemStore().resetBreadMenuList()
                 useRouterStore().setRoutesList(res.data.list)
                 window.$notification.success({
                     title: "登录成功",

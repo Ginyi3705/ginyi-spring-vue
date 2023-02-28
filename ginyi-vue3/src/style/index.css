@@ -37,4 +37,9 @@
     position: absolute;
 }
 
+/* 抽屉面板内容区 */
+.n-drawer .n-drawer-content .n-drawer-body-content-wrapper {
+    box-sizing: border-box;
+    padding: 0;
+}
 

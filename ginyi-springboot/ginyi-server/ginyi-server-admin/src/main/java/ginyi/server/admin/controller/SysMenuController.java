@@ -63,7 +63,6 @@ public class SysMenuController {
     @ApiOperation("菜单列表")
     @PostMapping("/list")
     @PreAuthorize("@ss.hasPermission('system:menu:list')")
-    @Log(title = "菜单模块", businessType = BusinessType.OTHER)
     @ApiOperationSupport(ignoreParameters = {
             "menuDto.updateBy",
             "menuDto.updateTime",
