@@ -99,7 +99,7 @@ export default defineComponent({
 <style scoped lang="less">
 .login-box {
     border-radius: 0;
-    background-image: url("../src/assets/bg-light.svg");
+    background-image: url("../../../src/assets/bg-light.svg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }

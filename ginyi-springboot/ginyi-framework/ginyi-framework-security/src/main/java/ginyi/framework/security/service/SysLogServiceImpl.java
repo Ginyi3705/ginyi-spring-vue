@@ -6,6 +6,7 @@ import ginyi.system.domain.SysLogOperation;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.service.ISysLogService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class SysLogServiceImpl implements ISysLogService {
 
         query.skip((int) (IPage.getPageSize() * (IPage.getPageNum() - 1)));
         query.limit(IPage.getPageSize().intValue());
-
+        query.with(Sort.by(Sort.Order.desc("createTime")));
         List<SysLogLogin> list = mongoTemplate.find(query, SysLogLogin.class);
 
         baseVo.setList(list);
@@ -49,7 +50,7 @@ public class SysLogServiceImpl implements ISysLogService {
 
         int skip = (int) (IPage.getPageSize() * (IPage.getPageNum() - 1));
         query.skip(skip).limit(IPage.getPageSize().intValue());
-
+        query.with(Sort.by(Sort.Order.desc("createTime")));
         List<SysLogOperation> list = mongoTemplate.find(query, SysLogOperation.class);
 
         baseVo.setList(list);
