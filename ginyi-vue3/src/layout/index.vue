@@ -22,7 +22,7 @@
                 </div>
             </n-layout-header>
             <n-layout-content :content-style="{padding: '15px 15px 15px 20px', height: clientHeight - (layoutHeaderHeight + layoutFooterHeight + tabsHeight) + 'px',
-            backgroundColor: darkTheme ? null : '#f3f3f3'}">
+            backgroundColor: darkTheme ? null : '#f5f6fa'}">
                 <router-view v-slot="{ Component }">
                     <transition name="fade-main" mode="out-in">
                         <keep-alive>

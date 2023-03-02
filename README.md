@@ -5,10 +5,11 @@
 <h5 align="center">基于对优秀开源项目RuoYi-Vue的喜爱，决定重构若依，打造属于自己的快速开发平台！</h5>
 <p align="right">————向优秀致敬，向榜样学习！</p>
 <p align="center">
-	<a href="https://gitee.com/Ginyi/ginyi-spring-vue"><img src="https://img.shields.io/badge/license-MIT-red"></a>
+	<a href="https://gitee.com/Ginyi/ginyi-spring-vue"><img src="https://img.shields.io/badge/license-Apache 2-red"></a>
 	<a href="https://gitee.com/Ginyi/ginyi-spring-vue"><img src="https://img.shields.io/badge/Ginyi-v1.0.0-red"></a>
 	<a href="https://gitee.com/Ginyi/ginyi-spring-vue"><img src="https://img.shields.io/badge/SpringBoot-Vue3-red"></a>
 </p>
+
 
 
 
@@ -31,6 +32,12 @@
 演示地址：http://114.132.120.190:3800
 
 接口地址：http://114.132.120.190:8066/doc.html
+
+
+
+### 帮助文档
+
+没有~考虑中...如果`Star`数量破`1k`，立马安排！
 
 
 

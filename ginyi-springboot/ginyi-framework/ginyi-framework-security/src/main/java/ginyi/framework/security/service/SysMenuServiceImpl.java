@@ -1,6 +1,7 @@
 package ginyi.framework.security.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import ginyi.common.constant.CacheConstants;
 import ginyi.common.constant.CommonMessageConstants;
 import ginyi.common.exception.CommonException;
@@ -97,7 +98,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
         }
         boolean isAdmin = SysUser.isAdmin(user.getUserId());
         // 管理员返回全部，普通用户则对应的菜单
-        List<SysMenu> list = isAdmin ? menuMapper.selectList(null) : menuMapper.selectMenuListByUserId(user.getUserId());
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysMenu::getMenuType, "M").or().eq(SysMenu::getMenuType, "C");
+        List<SysMenu> list = isAdmin ? menuMapper.selectList(queryWrapper) : menuMapper.selectMenuListByUserId(user.getUserId());
         // 转成树
         menuList = list.stream()
                 .filter(menu -> menu.getParentId().equals(0L))

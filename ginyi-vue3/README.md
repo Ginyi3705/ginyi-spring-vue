@@ -11,7 +11,7 @@
 
 代码仓库：https://gitee.com/Ginyi/ginyi-spring-vue
 
-帮助文档：没有~考虑中...
+帮助文档：没有~考虑中...如果`Star`数量破`1k`，立马安排！
 
 
 

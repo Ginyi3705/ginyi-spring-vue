@@ -4,7 +4,7 @@
 
 代码仓库：https://gitee.com/Ginyi/ginyi-spring-vue
 
-帮助文档：没有~但是可以参考`Ruoyi`的文档 http://doc.ruoyi.vip/
+帮助文档：没有~考虑中...如果`Star`数量破`1k`，立马安排！但是现在可以参考`Ruoyi`的文档 http://doc.ruoyi.vip/
 
 
 
