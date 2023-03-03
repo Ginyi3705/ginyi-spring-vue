@@ -8,7 +8,7 @@
                      :actionWidth="220"
                      :pagination="tablePagination"
                      :loading="tableLoading"
-                     :scrollX="2000"
+                     :scrollX="2200"
                      @onPageChange="onPageChange"
                      @onPageSizeChange="onPageSizeChange"
                      @onEvent="onEvent">

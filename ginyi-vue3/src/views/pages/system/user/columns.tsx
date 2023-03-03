@@ -1,6 +1,10 @@
-import {DataTableColumns, NSpace, NTag} from "naive-ui";
+import {DataTableColumns, NImage, NSpace, NTag} from "naive-ui";
 import {useColumns} from "@/views/pages/system/user/useColumns";
 import {useCommonColumns} from "@/hooks/useCommonColums";
+import {setting} from "@/config/setting";
+
+const {logo} = setting
+const {useRenderStateById} = useCommonColumns()
 
 const {
     useRenderSexById,
@@ -8,7 +12,6 @@ const {
     useRenderRoleNameByIds,
     useRenderPostNameByIds
 } = useColumns()
-const {useRenderStateById} = useCommonColumns()
 
 export const columns: DataTableColumns<any> = [
     {
@@ -18,6 +21,13 @@ export const columns: DataTableColumns<any> = [
     {
         title: "用户账号",
         key: "userName"
+    },
+    {
+        title: "头像",
+        key: "avatar",
+        render: (row) => (
+            <NImage width="30" style="border-radius: 50%;" src={logo}/>
+        )
     },
     {
         title: "部门",

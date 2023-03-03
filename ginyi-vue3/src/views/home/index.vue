@@ -5,7 +5,7 @@
                 <div class="item1-main-content">
                     <n-avatar round :size="105" :src="logo"/>
                     <div style="margin-left: 20px">
-                        <h1 style="font-weight: 400; margin: 0">下午好，欢迎登录！</h1>
+                        <h1 style="font-weight: 400; margin: 5px 0">下午好，欢迎登录！</h1>
                         <span>做点喜欢的事情，学点不一样的知识，挺好！</span>
                         <br>
                         <span>努力坚持吧！希望未来咱都能笑着直面生活的全部！</span>
@@ -107,8 +107,8 @@
                 </div>
             </div>
         </n-card>
-        <n-card class="card item9" title="给个star呗">
-            <n-result status="404" title="怎么样暗示老板升职加薪？" description="生活总归带点荒谬" />
+        <n-card class="card item9" title="不知道写点什么">
+            <n-result status="404" title="这个位置留给你头脑风暴吧！" description="生活总归带点荒谬" />
         </n-card>
         <n-card class="card item10" title="留言板">
             <div class="item11-main">
@@ -232,32 +232,32 @@ export default defineComponent({
 
     .item2 {
         grid-area: bbb;
-        max-height: 200px;
+        max-height: 400px;
     }
 
     .item3 {
         grid-area: ccc;
-        max-height: 200px;
+        max-height: 400px;
     }
 
     .item4 {
         grid-area: ddd;
-        max-height: 200px;
+        max-height: 400px;
     }
 
     .item5 {
         grid-area: eee;
-        max-height: 200px;
+        max-height: 400px;
     }
 
     .item6 {
         grid-area: fff;
-        max-height: 200px;
+        max-height: 400px;
     }
 
     .item7 {
         grid-area: ggg;
-        max-height: 200px;
+        max-height: 400px;
     }
 
     .item8 {
