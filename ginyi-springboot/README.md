@@ -4,7 +4,12 @@
 
 代码仓库：https://gitee.com/Ginyi/ginyi-spring-vue
 
-帮助文档：没有~考虑中...如果`Star`数量破`1k`，立马安排！但是现在可以参考`Ruoyi`的文档 http://doc.ruoyi.vip/
+
+
+### 帮助文档
+
+- 没有~不想写文档...如果`Star`数量破`1k`，可以考虑一下！
+- 可以参考`Ruoyi`的文档 http://doc.ruoyi.vip/
 
 
 
@@ -33,9 +38,10 @@
 
 **注意：**使用本项目时，为了你能愉快地进行开发，请尽可能使用以下环境进行开发：
 
-1. `JDK1.8`
-2. `MySQL8.0`
-3. `IntelliJ IDEA`
+1. `JDK v1.8`
+2. `Maven v3.6.3`
+3. `MySQL v8.0`
+4. `IntelliJ IDEA`
 
 
 
@@ -61,7 +67,7 @@ ginyi-springboot
 │  └─ ginyi-framework-websocket    # 实时通讯框架
 |
 ├─ ginyi-server   # 服务模块（对外提供api接口）
-│  ├─ ginyi-server-admin           # 后台系统端
+│  ├─ ginyi-server-admin           # 后台系统端（包含系统接口）
 │  ├─ ginyi-server-common          # 通用服务（供其他server提供通用接口）
 │  └─ ginyi-server-web             # 前台应用端
 |

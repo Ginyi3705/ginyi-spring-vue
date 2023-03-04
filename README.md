@@ -40,11 +40,14 @@
 | `order / 123456`   | 订单管理员，具有订单管理权限 |
 | `product / 123456` | 商品管理员，具有商品管理权限 |
 
+**注：**学生机服务器，5月份到期~ 请珍惜公用资源，请勿攻击~ 拜托拜托！😘😘😘 
+
 
 
 ### 帮助文档
 
-没有~考虑中...如果`Star`数量破`1k`，立马安排！
+- 没有~不想写文档...如果`Star`数量破`1k`，可以考虑一下！
+- 可以参考`Ruoyi`的文档 http://doc.ruoyi.vip/（仅后端）
 
 
 
@@ -91,4 +94,49 @@
 - 尚未实现的功能，有时间将继续更新！
 
 
+
+### 效果预览
+
+<table>
+    <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304205119918.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304205215244.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304205342498.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304205431871.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304205625969.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304205559401.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304205741700.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304205852077.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304210204690.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304210228094.png"/></td>
+    </tr>
+     <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304210302388.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304210337478.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304210613278.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304210651948.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304210953736.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304211003628.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304211123371.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304211109116.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304211300287.png"/></td>
+        <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230304211308424.png"/></td>
+    </tr>
+</table>
 
