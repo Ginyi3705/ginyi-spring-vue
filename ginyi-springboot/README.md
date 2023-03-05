@@ -61,14 +61,14 @@ ginyi-springboot
 │  ├─ ginyi-common-swagger         # 通用在线接口文档配置
 │  └─ ginyi-common-utils           # 通用工具类
 |
-├─ ginyi-framework  #  框架模块
+├─ ginyi-framework  # 框架模块
 │  ├─ ginyi-framework-core         # 框架核心
 │  ├─ ginyi-framework-security     # 安全框架
 │  └─ ginyi-framework-websocket    # 实时通讯框架
 |
 ├─ ginyi-server   # 服务模块（对外提供api接口）
 │  ├─ ginyi-server-admin           # 后台系统端（包含系统接口）
-│  ├─ ginyi-server-common          # 通用服务（供其他server提供通用接口）
+│  ├─ ginyi-server-common          # 通用服务
 │  └─ ginyi-server-web             # 前台应用端
 |
 ├─ ginyi-system  # 系统服务模块（包含yaml配置、系统Entity、系统Service、系统Mapper等）
