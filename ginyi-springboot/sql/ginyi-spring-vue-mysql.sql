@@ -3,15 +3,15 @@
 
  Source Server         : Ubuntu - MySQL8.0
  Source Server Type    : MySQL
- Source Server Version : 80027
- Source Host           : localhost:3306
+ Source Server Version : 80032
+ Source Host           : 127.0.0.1:3306
  Source Schema         : ginyi-spring-vue
 
  Target Server Type    : MySQL
- Target Server Version : 80027
+ Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 20/02/2023 22:41:57
+ Date: 09/03/2023 21:39:02
 */
 
 SET NAMES utf8mb4;
@@ -308,15 +308,14 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2031 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2035 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 'system', 1, 'system', NULL, '', 1, 0, 'M', '0', '0', '', 'AccessibilitySharp', 'admin', '2022-12-03 07:21:33', '', NULL, '系统管理目录');
-INSERT INTO `sys_menu` VALUES (2, '系统监控', 0, 'sysmonitor', 2, 'monitor', NULL, '', 1, 0, 'M', '1', '0', '', 'PersonOutline', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-19 15:45:43', '系统监控目录');
-INSERT INTO `sys_menu` VALUES (3, '系统工具', 0, 'systools', 3, 'tool', NULL, '', 1, 0, 'M', '1', '0', '', 'Airplane', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-19 15:44:49', '系统工具目录');
-INSERT INTO `sys_menu` VALUES (4, '若依官网', 0, NULL, 4, 'http://ruoyi.vip', NULL, '', 0, 0, 'M', '1', '0', '', 'Bulb', 'admin', '2022-12-03 07:21:33', '', NULL, '若依官网地址');
+INSERT INTO `sys_menu` VALUES (2, '系统监控', 0, 'sysmonitor', 2, 'sysmonitor', NULL, '', 1, 0, 'M', '0', '0', '', 'PersonOutline', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-23 21:14:26', '系统监控目录');
+INSERT INTO `sys_menu` VALUES (3, '系统工具', 0, 'systools', 3, 'systools', NULL, '', 1, 0, 'M', '0', '0', '', 'BuildSharp', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 17:01:21', '系统工具目录');
 INSERT INTO `sys_menu` VALUES (100, '用户管理', 1, 'user', 1, 'user', 'pages/system/user/index', '', 1, 0, 'C', '0', '0', 'system:user:list', 'Duplicate', 'admin', '2022-12-03 07:21:33', '', NULL, '用户管理菜单');
 INSERT INTO `sys_menu` VALUES (101, '角色管理', 1, 'role', 2, 'role', 'pages/system/role/index', '', 1, 0, 'C', '0', '0', 'system:role:list', 'FishSharp', 'admin', '2022-12-03 07:21:33', '', NULL, '角色管理菜单');
 INSERT INTO `sys_menu` VALUES (102, '菜单管理', 1, 'menu', 3, 'menu', 'pages/system/menu/index', '', 1, 0, 'C', '0', '0', 'system:menu:list', 'Heart', 'admin', '2022-12-03 07:21:33', '', NULL, '菜单管理菜单');
@@ -326,17 +325,15 @@ INSERT INTO `sys_menu` VALUES (105, '字典管理', 1, 'dict', 6, 'dict', 'pages
 INSERT INTO `sys_menu` VALUES (106, '参数设置', 1, 'params', 7, 'params', 'pages/system/params/index', '', 1, 0, 'C', '0', '0', 'system:config:list', 'LogoWechat', 'admin', '2022-12-03 07:21:33', '', NULL, '参数设置菜单');
 INSERT INTO `sys_menu` VALUES (107, '通知公告', 1, 'notice', 8, 'notice', 'pages/system/notice/index', '', 1, 0, 'C', '0', '0', 'system:notice:list', 'MailUnreadOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '通知公告菜单');
 INSERT INTO `sys_menu` VALUES (108, '日志管理', 1, 'log', 9, 'log', '', '', 1, 0, 'M', '0', '0', '', 'Mic', 'admin', '2022-12-03 07:21:33', '', NULL, '日志管理菜单');
-INSERT INTO `sys_menu` VALUES (109, '在线用户', 2, NULL, 1, 'online', 'monitor/online/index', '', 1, 0, 'C', '1', '0', 'monitor:online:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '在线用户菜单');
-INSERT INTO `sys_menu` VALUES (110, '定时任务', 2, NULL, 2, 'job', 'monitor/job/index', '', 1, 0, 'C', '1', '0', 'monitor:job:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '定时任务菜单');
-INSERT INTO `sys_menu` VALUES (111, '数据监控', 2, NULL, 3, 'druid', 'monitor/druid/index', '', 1, 0, 'C', '1', '0', 'monitor:druid:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '数据监控菜单');
-INSERT INTO `sys_menu` VALUES (112, '服务监控', 2, NULL, 4, 'server', 'monitor/server/index', '', 1, 0, 'C', '1', '0', 'monitor:server:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '服务监控菜单');
-INSERT INTO `sys_menu` VALUES (113, '缓存监控', 2, NULL, 5, 'cache', 'monitor/cache/index', '', 1, 0, 'C', '1', '0', 'monitor:cache:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '缓存监控菜单');
-INSERT INTO `sys_menu` VALUES (114, '缓存列表', 2, NULL, 6, 'cacheList', 'monitor/cache/list', '', 1, 0, 'C', '1', '0', 'monitor:cache:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '缓存列表菜单');
-INSERT INTO `sys_menu` VALUES (115, '表单构建', 3, NULL, 1, 'build', 'tool/build/index', '', 1, 0, 'C', '1', '0', 'tool:build:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '表单构建菜单');
-INSERT INTO `sys_menu` VALUES (116, '代码生成', 3, NULL, 2, 'gen', 'tool/gen/index', '', 1, 0, 'C', '1', '0', 'tool:gen:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '代码生成菜单');
-INSERT INTO `sys_menu` VALUES (117, '系统接口', 3, NULL, 3, 'swagger', 'tool/swagger/index', '', 1, 0, 'C', '1', '0', 'tool:swagger:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '系统接口菜单');
-INSERT INTO `sys_menu` VALUES (500, '操作日志', 108, 'operationLog', 1, 'operationLog', 'pages/system/log/operation/index', '', 1, 0, 'C', '0', '0', 'monitor:operlog:list', 'NavigateCircleSharp', 'admin', '2022-12-03 07:21:33', '', NULL, '操作日志菜单');
-INSERT INTO `sys_menu` VALUES (501, '登录日志', 108, 'loginLog', 2, 'loginLog', 'pages/system/log/login/index', '', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'PlanetOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '登录日志菜单');
+INSERT INTO `sys_menu` VALUES (109, '在线用户', 2, 'online', 1, 'online', 'pages/monitor/online/index', '', 1, 0, 'C', '0', '0', 'monitor:online:list', 'Disc', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-23 21:14:13', '在线用户菜单');
+INSERT INTO `sys_menu` VALUES (110, '定时任务', 2, 'task', 2, 'task', 'pages/monitor/task/index', '', 1, 0, 'C', '0', '0', 'monitor:job:list', 'ExtensionPuzzleSharp', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:59:34', '定时任务菜单');
+INSERT INTO `sys_menu` VALUES (111, '数据监控', 2, 'data', 3, 'data', 'pages/monitor/data/index', '', 1, 0, 'C', '0', '1', 'monitor:druid:list', 'FilterCircle', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:56:44', '数据监控菜单');
+INSERT INTO `sys_menu` VALUES (112, '服务监控', 2, 'service', 4, 'service', 'pages/monitor/service/index', '', 1, 0, 'C', '0', '1', 'monitor:server:list', 'FootballSharp', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:56:58', '服务监控菜单');
+INSERT INTO `sys_menu` VALUES (113, '缓存监控', 2, 'cache', 5, 'cache', 'pages/monitor/cache/index', '', 1, 0, 'C', '0', '1', 'monitor:cache:list', 'Leaf', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:57:11', '缓存监控菜单');
+INSERT INTO `sys_menu` VALUES (114, '缓存列表', 2, 'cacheList', 6, 'cacheList', 'pages/monitor/cacheList/index', '', 1, 0, 'C', '0', '1', 'monitor:cache:list', 'LogoOctocat', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:57:28', '缓存列表菜单');
+INSERT INTO `sys_menu` VALUES (116, '代码生成', 3, 'code', 2, 'code', 'pages/systools/code/index', '', 1, 0, 'C', '0', '0', 'tool:gen:list', 'Mail', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 17:05:52', '代码生成菜单');
+INSERT INTO `sys_menu` VALUES (500, '操作日志', 108, 'operationLog', 1, 'operationLog', 'pages/system/log/operation/index', '', 1, 0, 'C', '0', '0', 'monitor:operlog:list', 'Notifications', 'admin', '2022-12-03 07:21:33', '', NULL, '操作日志菜单');
+INSERT INTO `sys_menu` VALUES (501, '登录日志', 108, 'loginLog', 2, 'loginLog', 'pages/system/log/login/index', '', 1, 0, 'C', '0', '0', 'monitor:loginlog:list', 'Planet', 'admin', '2022-12-03 07:21:33', '', NULL, '登录日志菜单');
 INSERT INTO `sys_menu` VALUES (1000, '用户查询', 100, NULL, 1, '', '', '', 1, 0, 'F', '1', '0', 'system:user:list', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1001, '用户新增', 100, NULL, 2, '', '', '', 1, 0, 'F', '1', '0', 'system:user:add', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1002, '用户修改', 100, NULL, 3, '', '', '', 1, 0, 'F', '1', '0', 'system:user:edit', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
@@ -379,10 +376,10 @@ INSERT INTO `sys_menu` VALUES (1038, '公告删除', 107, NULL, 4, '#', '', '', 
 INSERT INTO `sys_menu` VALUES (1039, '操作查询', 500, NULL, 1, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:operlog:query', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1040, '操作删除', 500, NULL, 2, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:operlog:remove', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1041, '日志导出', 500, NULL, 3, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:operlog:export', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (1042, '登录查询', 501, NULL, 1, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:logininfor:query', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (1043, '登录删除', 501, NULL, 2, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:logininfor:remove', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (1044, '日志导出', 501, NULL, 3, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:logininfor:export', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
-INSERT INTO `sys_menu` VALUES (1045, '账户解锁', 501, NULL, 4, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:logininfor:unlock', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1042, '登录查询', 501, NULL, 1, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:loginlog:query', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1043, '登录删除', 501, NULL, 2, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:loginlog:remove', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1044, '日志导出', 501, NULL, 3, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:loginlog:export', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (1045, '账户解锁', 501, NULL, 4, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:loginlog:unlock', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1046, '在线查询', 109, NULL, 1, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:online:query', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1047, '批量强退', 109, NULL, 2, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:online:batchLogout', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1048, '单条强退', 109, NULL, 3, '#', '', '', 1, 0, 'F', '1', '0', 'monitor:online:forceLogout', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
@@ -398,6 +395,10 @@ INSERT INTO `sys_menu` VALUES (1057, '生成删除', 116, NULL, 3, '#', '', '', 
 INSERT INTO `sys_menu` VALUES (1058, '导入代码', 116, NULL, 4, '#', '', '', 1, 0, 'F', '1', '0', 'tool:gen:import', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1059, '预览代码', 116, NULL, 5, '#', '', '', 1, 0, 'F', '1', '0', 'tool:gen:preview', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1060, '生成代码', 116, NULL, 6, '#', '', '', 1, 0, 'F', '1', '0', 'tool:gen:code', 'PersonOutline', 'admin', '2022-12-03 07:21:33', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2031, '订单管理', 0, 'order', 4, 'order', '', NULL, 1, 0, 'M', '0', '0', '', 'BarChartSharp', 'Ginyi', '2023-02-28 21:19:38', 'Ginyi', '2023-02-28 21:20:28', '');
+INSERT INTO `sys_menu` VALUES (2032, '订单列表', 2031, 'orderList', 1, 'orderList', 'pages/order/index', NULL, 1, 0, 'C', '0', '0', 'order:list', 'Card', 'Ginyi', '2023-02-28 21:22:53', 'Ginyi', '2023-02-28 21:28:47', '');
+INSERT INTO `sys_menu` VALUES (2033, '商品管理', 0, 'product', 5, 'product', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'Cart', 'Ginyi', '2023-02-28 21:35:33', 'Ginyi', '2023-02-28 21:38:19', '');
+INSERT INTO `sys_menu` VALUES (2034, '商品列表', 2033, 'productList', 1, 'productList', 'pages/product/index', NULL, 1, 0, 'C', '0', '0', 'product:list', 'Documents', 'Ginyi', '2023-02-28 21:37:50', 'Ginyi', '2023-02-28 21:38:30', '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -470,17 +471,15 @@ CREATE TABLE `sys_role`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, '超级管理员', 'admin', 1, '1', 1, 1, '0', '0', 'admin', '2022-12-03 07:21:33', '', NULL, '超级管理员');
-INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 1, '2', 1, 1, '0', '0', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-19 13:57:27', '普通角色');
-INSERT INTO `sys_role` VALUES (107, '测试角色', 'test', 2, '1', 1, 1, '0', '1', 'Ginyi', '2023-02-16 23:50:17', '', NULL, '测试专用的');
-INSERT INTO `sys_role` VALUES (108, '测试角色2', 'test2', 1, '1', 1, 1, '0', '1', 'Ginyi', '2023-02-16 23:51:26', '', NULL, NULL);
-INSERT INTO `sys_role` VALUES (109, '测试角色3', 'test3', 3, '1', 1, 1, '0', '1', 'Ginyi', '2023-02-16 23:51:49', '', NULL, NULL);
-INSERT INTO `sys_role` VALUES (110, '测试角色', 'test', 2, '1', 1, 1, '0', '1', 'Ginyi', '2023-02-16 23:53:49', '', NULL, NULL);
+INSERT INTO `sys_role` VALUES (2, '系统管理员', 'system', 1, '2', 1, 1, '0', '0', 'admin', '2022-12-03 07:21:33', 'admin', '2023-03-03 21:57:45', '专门管理系统的');
+INSERT INTO `sys_role` VALUES (111, '订单管理员', 'order', 0, '1', 1, 1, '0', '0', 'Ginyi', '2023-02-26 16:05:39', 'Ginyi', '2023-02-28 21:33:53', '专门管理订单的');
+INSERT INTO `sys_role` VALUES (112, '商品管理员', 'conduct', 2, '1', 1, 1, '0', '0', 'Ginyi', '2023-02-26 16:06:28', 'Ginyi', '2023-02-28 21:39:08', '专门管理商品的');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -512,12 +511,9 @@ CREATE TABLE `sys_role_menu`  (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES (2, '[1, 100, 101, 102, 103, 104, 105, 106, 107, 108, 500, 501, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045]');
-INSERT INTO `sys_role_menu` VALUES (105, '[1]');
-INSERT INTO `sys_role_menu` VALUES (107, '[1, 100, 101]');
-INSERT INTO `sys_role_menu` VALUES (108, '[1, 100]');
-INSERT INTO `sys_role_menu` VALUES (109, '[1, 100, 101, 102, 103, 104]');
-INSERT INTO `sys_role_menu` VALUES (110, '[1, 100, 101]');
+INSERT INTO `sys_role_menu` VALUES (2, '[1, 100, 101, 102, 103, 104, 105, 106, 107, 108, 500, 501, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 2, 109, 1046, 1047, 1048, 110, 1049, 1050, 1051, 1052, 1053, 1054, 111, 112, 113, 114, 3, 116, 1055, 1056, 1057, 1058, 1059, 1060]');
+INSERT INTO `sys_role_menu` VALUES (111, '[2031, 2032]');
+INSERT INTO `sys_role_menu` VALUES (112, '[2033, 2034]');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -544,25 +540,19 @@ CREATE TABLE `sys_user`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 145 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.101', '2022-12-29 23:14:54', 'admin', '2022-12-03 07:21:32', '', '2022-12-29 23:14:54', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'Ginyi', '(´･_･`)', '00', 'Ginyi@aliyun.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '127.0.0.1', '2023-02-20 21:50:37', 'admin', '2022-12-03 07:21:32', 'ginyi', '2023-02-20 21:50:37', '测试员');
-INSERT INTO `sys_user` VALUES (133, 101, 'zhangsans', '测试用户1', '00', '', '13800138000', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:40:55', 'Ginyi', '2023-02-19 18:08:46', NULL);
-INSERT INTO `sys_user` VALUES (134, 104, 'list', '测试用户2', '00', '', '13800138000', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:02', 'ginyi', '2023-02-14 22:10:22', NULL);
-INSERT INTO `sys_user` VALUES (135, 101, 'wangwu', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 07:41:08', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (136, 101, 'zhaoliu', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 07:41:12', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (137, 101, 'tom', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 07:41:21', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (138, 106, 'tony', '测试用户3', '00', '', '13800138000', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:28', 'Ginyi', '2023-02-19 18:08:04', NULL);
-INSERT INTO `sys_user` VALUES (139, 109, 'lucy', '测试用户4', '00', '', '13800138000', '0', '', '', '1', '0', '', NULL, 'ginyi', '2022-12-23 13:31:22', 'ginyi', '2023-02-14 22:10:52', NULL);
-INSERT INTO `sys_user` VALUES (140, 101, 'carry', '测试用户5', '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 21:35:13', 'Ginyi', '2023-02-19 18:08:10', NULL);
-INSERT INTO `sys_user` VALUES (141, 101, 'abc', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 21:38:58', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (142, 101, 'asdasd', NULL, '00', '', '', '0', '', '', '0', '1', '', NULL, 'ginyi', '2022-12-23 21:40:56', '', NULL, NULL);
-INSERT INTO `sys_user` VALUES (143, 103, 'test001', '测试用户6', '00', '', '', '0', '', '', '1', '0', '', NULL, 'ginyi', '2023-02-12 00:31:47', 'Ginyi', '2023-02-19 18:08:16', NULL);
-INSERT INTO `sys_user` VALUES (144, 103, 'ruoyi', '测试用户7', '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2023-02-12 23:10:13', 'Ginyi', '2023-02-19 18:08:28', NULL);
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '116.21.30.191', '2023-03-04 00:00:29', 'admin', '2022-12-03 07:21:32', 'Ginyi', '2023-03-04 00:00:29', '管理员');
+INSERT INTO `sys_user` VALUES (2, 105, 'Ginyi', '(´･_･`)', '00', 'Ginyi@aliyun.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '116.21.29.237', '2023-03-09 21:27:41', 'admin', '2022-12-03 07:21:32', 'Ginyi', '2023-03-09 21:27:41', '测试员');
+INSERT INTO `sys_user` VALUES (133, 101, 'order', '订单管理员', '00', '', '13800138000', '0', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '127.0.0.1', '2023-03-02 23:06:23', 'ginyi', '2022-12-23 07:40:55', 'Ginyi', '2023-03-02 23:06:23', NULL);
+INSERT INTO `sys_user` VALUES (134, 104, 'product', '商品管理员', '00', '', '13800138000', '0', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '127.0.0.1', '2023-03-02 23:06:47', 'ginyi', '2022-12-23 07:41:02', 'Ginyi', '2023-03-02 23:06:47', NULL);
+INSERT INTO `sys_user` VALUES (138, 106, 'tony', '测试用户3', '00', '', '13800138000', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:28', 'admin', '2023-03-03 21:50:14', '没有初始化密码，不能登录');
+INSERT INTO `sys_user` VALUES (139, 109, 'lucy', '测试用户4', '00', '', '13800138000', '0', '', '', '1', '0', '', NULL, 'ginyi', '2022-12-23 13:31:22', 'admin', '2023-03-03 21:50:20', '没有初始化密码，不能登录');
+INSERT INTO `sys_user` VALUES (140, 101, 'carry', '测试用户5', '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 21:35:13', 'admin', '2023-03-03 21:50:26', '没有初始化密码，不能登录');
+INSERT INTO `sys_user` VALUES (145, 109, 'test6', '测试用户6', '00', '', '', '0', '', '', '0', '0', '', NULL, 'Ginyi', '2023-02-26 16:40:51', 'admin', '2023-03-03 21:50:37', '没有初始化密码，不能登录');
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -580,17 +570,11 @@ CREATE TABLE `sys_user_post`  (
 INSERT INTO `sys_user_post` VALUES (1, '[1]');
 INSERT INTO `sys_user_post` VALUES (2, '[2]');
 INSERT INTO `sys_user_post` VALUES (133, '[4]');
-INSERT INTO `sys_user_post` VALUES (134, '[1, 2]');
-INSERT INTO `sys_user_post` VALUES (135, '[1, 2]');
-INSERT INTO `sys_user_post` VALUES (136, '[1, 2]');
-INSERT INTO `sys_user_post` VALUES (137, '[1, 2]');
+INSERT INTO `sys_user_post` VALUES (134, '[4]');
 INSERT INTO `sys_user_post` VALUES (138, '[2, 4]');
 INSERT INTO `sys_user_post` VALUES (139, '[1, 2]');
 INSERT INTO `sys_user_post` VALUES (140, '[2, 9]');
-INSERT INTO `sys_user_post` VALUES (141, '[1, 2]');
-INSERT INTO `sys_user_post` VALUES (142, '[1, 2]');
-INSERT INTO `sys_user_post` VALUES (143, '[2, 3]');
-INSERT INTO `sys_user_post` VALUES (144, '[3, 4]');
+INSERT INTO `sys_user_post` VALUES (145, '[9]');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -607,17 +591,11 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES (1, '[1]');
 INSERT INTO `sys_user_role` VALUES (2, '[2]');
-INSERT INTO `sys_user_role` VALUES (133, '[2]');
-INSERT INTO `sys_user_role` VALUES (134, '[2]');
-INSERT INTO `sys_user_role` VALUES (135, '[2]');
-INSERT INTO `sys_user_role` VALUES (136, '[2]');
-INSERT INTO `sys_user_role` VALUES (137, '[2]');
-INSERT INTO `sys_user_role` VALUES (138, '[2]');
-INSERT INTO `sys_user_role` VALUES (139, '[2]');
-INSERT INTO `sys_user_role` VALUES (140, '[2]');
-INSERT INTO `sys_user_role` VALUES (141, '[2]');
-INSERT INTO `sys_user_role` VALUES (142, '[2]');
-INSERT INTO `sys_user_role` VALUES (143, '[2]');
-INSERT INTO `sys_user_role` VALUES (144, '[2]');
+INSERT INTO `sys_user_role` VALUES (133, '[111]');
+INSERT INTO `sys_user_role` VALUES (134, '[112]');
+INSERT INTO `sys_user_role` VALUES (138, '[111]');
+INSERT INTO `sys_user_role` VALUES (139, '[112]');
+INSERT INTO `sys_user_role` VALUES (140, '[111]');
+INSERT INTO `sys_user_role` VALUES (145, '[112]');
 
 SET FOREIGN_KEY_CHECKS = 1;
