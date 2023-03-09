@@ -7,7 +7,7 @@
 
 ### 项目地址
 
-演示地址：http://114.132.120.190:3800
+演示地址：http://114.132.120.190:3800 （`仅PC端`）
 
 代码仓库：https://gitee.com/Ginyi/ginyi-spring-vue
 

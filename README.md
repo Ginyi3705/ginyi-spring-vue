@@ -29,7 +29,7 @@
 
 ### 项目地址
 
-演示地址：http://114.132.120.190:3800
+演示地址：http://114.132.120.190:3800 （`仅PC端`）
 
 接口地址：http://114.132.120.190:8066/doc.html
 
@@ -139,4 +139,3 @@
         <td><img src="https://gitee.com/my-images/typora-imgs/raw/master/image-20230305142737090.png"/></td>
     </tr>
 </table>
-
