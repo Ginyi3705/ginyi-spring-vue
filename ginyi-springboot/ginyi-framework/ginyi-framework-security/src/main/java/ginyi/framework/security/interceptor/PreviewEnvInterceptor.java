@@ -42,9 +42,10 @@ public class PreviewEnvInterceptor implements HandlerInterceptor {
         // 记录ip请求，防止被恶意请求接口
         String clientIP = ServletUtil.getClientIP(request);
         String userAgent = ServletUtil.getHeader(request, "User-Agent", "utf-8");
-        String key = CacheConstants.API_REQUEST + SecureUtil.md5(clientIP + userAgent) + ":" + clientIP + request.getRequestURI();
+        String key = CacheConstants.API_REQUEST + SecureUtil.md5(clientIP + userAgent) + ":" + clientIP + ":" + request.getRequestURI();
         Integer count = redisCache.getCacheObject(key, Integer.class);
         long expire = redisCache.getExpire(key);
+
         if (StringUtils.isNull(count)) {
             redisCache.setCacheObject(key, 1, 300, TimeUnit.SECONDS);
         } else {
