@@ -72,4 +72,10 @@ public interface ISysMenuService {
      * @param ids
      */
     public void removeMenuByIds(Set<Long> ids);
+
+    /**
+     * 更改状态（0正常 1停用）
+     * @param menuDto
+     */
+    public void updateStatus(MenuDto menuDto);
 }

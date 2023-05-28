@@ -54,4 +54,10 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @param menuDto
      */
     public void updateMenu(@Param("menuDto") MenuDto menuDto);
+
+    /**
+     * 更新状态
+     * @param menuDto
+     */
+    public void updateMenuStatus(@Param("menuDto") MenuDto menuDto);
 }

@@ -30,4 +30,11 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
      * @param deptDto
      */
     public void updateDept(@Param("deptDto") DeptDto deptDto);
+
+    /**
+     * 更新状态
+     *
+     * @param deptDto
+     */
+    public void updateDeptStatus(@Param("deptDto") DeptDto deptDto);
 }

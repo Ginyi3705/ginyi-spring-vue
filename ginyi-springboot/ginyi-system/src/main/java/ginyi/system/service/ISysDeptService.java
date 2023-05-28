@@ -50,4 +50,10 @@ public interface ISysDeptService {
      * @param ids
      */
     public void removeDeptByIds(Set<Long> ids);
+
+    /**
+     * 更改状态（0正常 1停用）
+     * @param deptDto
+     */
+    public void updateStatus(DeptDto deptDto);
 }

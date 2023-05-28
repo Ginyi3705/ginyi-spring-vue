@@ -38,21 +38,31 @@ public class CommonMessageConstants {
     public static final String MENU_NAME_USED = "菜单名称已被使用！";
     public static final String MENU_NOT_EXIST = "菜单不存在！";
     public static final String MENU_PARENT_NOT_EXIST = "上级菜单不存在！";
+    public static final String MENU_ID_NOT_FOUND = "请求参数错误，菜单ID不能为空！";
+    public static final String MENU_STATUS_ILLEGAL = "请求参数错误，菜单状态不合法！";
 
 
     public static final String POST_NOT_EXIST = "岗位不存在！";
     public static final String POST_NAME_USED = "岗位名称已被使用！";
     public static final String POST_CODE_USED = "岗位编码已被使用！";
+    public static final String POST_ID_NOT_FOUND = "请求参数错误，岗位ID不能为空！";
+    public static final String POST_STATUS_ILLEGAL = "请求参数错误，岗位状态不合法！";
 
 
     public static final String ROLE_NOT_EXIST = "角色不存在！";
     public static final String ROLE_NAME_USED = "角色名称已被使用！";
     public static final String ROLE_PERMISSION_CODE_USED = "角色权限字符已被使用！";
     public static final String ROLE_MENU_NOT_EXIST = "菜单权限不存在！";
+    public static final String ROLE_ID_NOT_FOUND = "请求参数错误，角色ID不能为空！";
+    public static final String ROLE_STATUS_ILLEGAL = "请求参数错误，角色状态不合法！";
 
 
     public static final String DEPT_NOT_EXIST = "部门不存在！";
     public static final String DEPT_NAME_USED = "同分支下部门名称已被使用！";
     public static final String DEPT_PARENT_NOT_EXIST = "上级部门不存在！";
+    public static final String DEPT_ID_NOT_FOUND = "请求参数错误，部门ID不能为空！";
+    public static final String DEPT_STATUS_ILLEGAL = "请求参数错误，部门状态不合法！";
+
+
 
 }

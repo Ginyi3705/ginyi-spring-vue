@@ -191,12 +191,12 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     /**
-     * 更改用户状态（正常 or 停用）
+     * 更改用户状态（0正常 1停用）
      *
      * @param userDto
      */
     @Override
-    public void disable(UserDto userDto) {
+    public void updateStatus(UserDto userDto) {
         if (StringUtils.isNull(userDto.getUserId())) {
             throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.USER_ID_NOT_FOUND);
         }

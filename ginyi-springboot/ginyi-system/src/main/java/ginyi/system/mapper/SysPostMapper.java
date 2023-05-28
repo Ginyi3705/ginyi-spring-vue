@@ -35,4 +35,10 @@ public interface SysPostMapper extends BaseMapper<SysPost> {
      * @param postDto
      */
     public void updatePost(@Param("postDto") PostDto postDto);
+
+    /**
+     * 更新状态
+     * @param postDto
+     */
+    public void updatePostStatus(@Param("postDto") PostDto postDto);
 }

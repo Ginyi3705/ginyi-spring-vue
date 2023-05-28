@@ -10,6 +10,7 @@ import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
 import ginyi.system.domain.SysDept;
+import ginyi.system.domain.SysUser;
 import ginyi.system.domain.model.dto.DeptDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.DeptVo;
@@ -206,6 +207,33 @@ public class SysDeptServiceImpl implements ISysDeptService {
         } else {
             throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
         }
+    }
+
+    /**
+     * 更新状态
+     * @param deptDto
+     */
+    @Override
+    public void updateStatus(DeptDto deptDto) {
+        if (StringUtils.isNull(deptDto.getDeptId())) {
+            throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.DEPT_ID_NOT_FOUND);
+        }
+        // 状态参数是否合法
+        if (!("0".equals(deptDto.getStatus()) || "1".equals(deptDto.getStatus()))) {
+            throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.DEPT_STATUS_ILLEGAL);
+        }
+        // 检查缓存中是否标记着空id
+        if (redisCache.hasKey(CacheConstants.DEPT_NOT_EXIST_KEY + deptDto.getDeptId())) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptDto.getDeptId() + CommonMessageConstants.DEPT_NOT_EXIST);
+        }
+        LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysDept::getDeptId, deptDto.getDeptId());
+        SysDept dept = deptMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(dept)) {
+            redisCache.setCacheObject(CacheConstants.DEPT_NOT_EXIST_KEY + deptDto.getDeptId(), null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, deptDto.getDeptId() + CommonMessageConstants.DEPT_NOT_EXIST);
+        }
+        deptMapper.updateDeptStatus(deptDto);
     }
 
     /**

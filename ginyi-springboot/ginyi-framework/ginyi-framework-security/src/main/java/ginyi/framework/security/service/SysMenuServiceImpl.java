@@ -309,4 +309,31 @@ public class SysMenuServiceImpl implements ISysMenuService {
             throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
         }
     }
+
+    /**
+     * 更新状态
+     * @param menuDto
+     */
+    @Override
+    public void updateStatus(MenuDto menuDto) {
+        if (StringUtils.isNull(menuDto.getMenuId())) {
+            throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.MENU_ID_NOT_FOUND);
+        }
+        // 状态参数是否合法
+        if (!("0".equals(menuDto.getStatus()) || "1".equals(menuDto.getStatus()))) {
+            throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.MENU_STATUS_ILLEGAL);
+        }
+        // 检查缓存中是否标记着空id
+        if (redisCache.hasKey(CacheConstants.MENU_NOT_EXIST_KEY + menuDto.getMenuId())) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, menuDto.getMenuId() + CommonMessageConstants.MENU_NOT_EXIST);
+        }
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysMenu::getMenuId, menuDto.getMenuId());
+        SysMenu menu = menuMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(menu)) {
+            redisCache.setCacheObject(CacheConstants.MENU_NOT_EXIST_KEY + menuDto.getMenuId(), null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, menuDto.getMenuId() + CommonMessageConstants.MENU_NOT_EXIST);
+        }
+        menuMapper.updateMenuStatus(menuDto);
+    }
 }

@@ -8,6 +8,7 @@ import ginyi.common.swagger.AddGroup;
 import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.SysMenu;
 import ginyi.system.domain.model.dto.MenuDto;
+import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.service.ISysMenuService;
 import io.swagger.annotations.Api;
@@ -105,6 +106,19 @@ public class SysMenuController {
     })
     public CommonResult update(@RequestBody @Validated({UpdateGroup.class}) MenuDto menuDto) {
         menuService.updateMenu(menuDto);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("更新菜单状态")
+    @PostMapping("/updateStatus")
+    @PreAuthorize("@ss.hasPermission('system:menu:edit')")
+    @Log(title = "菜单模块", businessType = BusinessType.UPDATE)
+    @ApiOperationSupport(includeParameters = {
+            "menuDto.menuId",
+            "menuDto.status"
+    })
+    public CommonResult updateStatus(@RequestBody MenuDto menuDto){
+        menuService.updateStatus(menuDto);
         return CommonResult.success();
     }
 }

@@ -8,6 +8,7 @@ import ginyi.common.swagger.AddGroup;
 import ginyi.common.swagger.UpdateGroup;
 import ginyi.system.domain.SysDept;
 import ginyi.system.domain.model.dto.DeptDto;
+import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.DeptVo;
 import ginyi.system.service.ISysDeptService;
@@ -110,6 +111,19 @@ public class SysDeptController {
     })
     public CommonResult update(@RequestBody @Validated(UpdateGroup.class) DeptDto deptDto) {
         deptService.updateDept(deptDto);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("更新部门状态")
+    @PostMapping("/updateStatus")
+    @PreAuthorize("@ss.hasPermission('system:dept:edit')")
+    @Log(title = "部门模块", businessType = BusinessType.UPDATE)
+    @ApiOperationSupport(includeParameters = {
+            "deptDto.deptId",
+            "deptDto.status"
+    })
+    public CommonResult updateStatus(@RequestBody DeptDto deptDto){
+        deptService.updateStatus(deptDto);
         return CommonResult.success();
     }
 

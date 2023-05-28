@@ -5,6 +5,7 @@ import ginyi.common.annotation.Log;
 import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
+import ginyi.system.domain.model.dto.DeptDto;
 import ginyi.system.domain.model.dto.PostDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.PostVo;
@@ -109,4 +110,16 @@ public class SysPostController {
         return CommonResult.success();
     }
 
+    @ApiOperation("更新岗位状态")
+    @PostMapping("/updateStatus")
+    @PreAuthorize("@ss.hasPermission('system:post:edit')")
+    @Log(title = "岗位模块", businessType = BusinessType.UPDATE)
+    @ApiOperationSupport(includeParameters = {
+            "postDto.postId",
+            "postDto.status"
+    })
+    public CommonResult updateStatus(@RequestBody PostDto postDto){
+        postService.updateStatus(postDto);
+        return CommonResult.success();
+    }
 }

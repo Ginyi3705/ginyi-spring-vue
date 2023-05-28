@@ -69,4 +69,10 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @return
      */
     public RoleVo selectRoleByRoleId(Long roleId);
+
+    /**
+     * 更新状态
+     * @param roleDto
+     */
+    public void updateRoleStatus(@Param("roleDto") RoleDto roleDto);
 }

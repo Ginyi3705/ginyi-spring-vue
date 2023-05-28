@@ -162,5 +162,16 @@
         where menu_id = #{menuDto.menuId}
     </update>
 
+    <!-- 更新状态 -->
+    <update id="updateMenuStatus">
+        update sys_menu
+        <set>
+            `status` = #{menuDto.status},
+            <if test="menuDto.updateBy != null and menuDto.updateBy != ''">update_by = #{menuDto.updateBy},</if>
+            <if test="menuDto.updateTime != null">update_time = #{menuDto.updateTime},</if>
+        </set>
+        where menu_id = #{menuDto.menuId} and deleted = '0'
+    </update>
+
 
 </mapper>

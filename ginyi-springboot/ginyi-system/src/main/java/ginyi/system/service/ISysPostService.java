@@ -1,6 +1,7 @@
 package ginyi.system.service;
 
 import ginyi.system.domain.model.dto.PostDto;
+import ginyi.system.domain.model.dto.RoleDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.PostVo;
 
@@ -53,4 +54,10 @@ public interface ISysPostService {
      * @param ids
      */
     void removeDeptByIds(Set<Long> ids);
+
+    /**
+     * 更改状态（0正常 1停用）
+     * @param postDto
+     */
+    public void updateStatus(PostDto postDto);
 }

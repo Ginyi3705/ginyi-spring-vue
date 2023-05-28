@@ -74,6 +74,17 @@
         where dept_id = #{deptDto.deptId}
     </update>
 
+    <!-- 更新状态 -->
+    <update id="updateDeptStatus">
+        update sys_dept
+        <set>
+            `status` = #{deptDto.status},
+            <if test="deptDto.updateBy != null and deptDto.updateBy != ''">update_by = #{deptDto.updateBy},</if>
+            <if test="deptDto.updateTime != null">update_time = #{deptDto.updateTime},</if>
+        </set>
+        where dept_id = #{deptDto.deptId} and deleted = '0'
+    </update>
+
     <!-- 查询部门列表 -->
     <select id="list" resultMap="SysDeptResult">
         select dept_id,

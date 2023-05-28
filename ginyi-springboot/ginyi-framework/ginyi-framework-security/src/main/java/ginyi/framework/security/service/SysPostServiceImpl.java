@@ -9,6 +9,7 @@ import ginyi.common.mysql.MyPage;
 import ginyi.common.redis.cache.RedisCache;
 import ginyi.common.result.StateCode;
 import ginyi.common.utils.StringUtils;
+import ginyi.system.domain.SysMenu;
 import ginyi.system.domain.SysPost;
 import ginyi.system.domain.model.dto.PostDto;
 import ginyi.system.domain.model.vo.BaseVo;
@@ -201,5 +202,32 @@ public class SysPostServiceImpl implements ISysPostService {
         } else {
             throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
         }
+    }
+
+    /**
+     * 更新状态
+     * @param postDto
+     */
+    @Override
+    public void updateStatus(PostDto postDto) {
+        if (StringUtils.isNull(postDto.getPostId())) {
+            throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.POST_ID_NOT_FOUND);
+        }
+        // 状态参数是否合法
+        if (!("0".equals(postDto.getStatus()) || "1".equals(postDto.getStatus()))) {
+            throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.POST_STATUS_ILLEGAL);
+        }
+        // 检查缓存中是否标记着空id
+        if (redisCache.hasKey(CacheConstants.USER_NOT_EXIST_KEY + postDto.getPostId())) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postDto.getPostId() + CommonMessageConstants.POST_NOT_EXIST);
+        }
+        LambdaQueryWrapper<SysPost> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysPost::getPostId, postDto.getPostId());
+        SysPost post = postMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(post)) {
+            redisCache.setCacheObject(CacheConstants.POST_NOT_EXIST_KEY + postDto.getPostId(), null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, postDto.getPostId() + CommonMessageConstants.POST_NOT_EXIST);
+        }
+        postMapper.updatePostStatus(postDto);
     }
 }

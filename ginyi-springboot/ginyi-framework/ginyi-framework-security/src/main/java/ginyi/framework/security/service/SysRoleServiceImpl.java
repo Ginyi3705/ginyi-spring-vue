@@ -253,4 +253,31 @@ public class SysRoleServiceImpl implements ISysRoleService {
             throw new CommonException(StateCode.ERROR_REQUEST_PARAMS, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
         }
     }
+
+    /**
+     * 更新状态
+     * @param roleDto
+     */
+    @Override
+    public void updateStatus(RoleDto roleDto) {
+        if (StringUtils.isNull(roleDto.getRoleId())) {
+            throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.ROLE_ID_NOT_FOUND);
+        }
+        // 状态参数是否合法
+        if (!("0".equals(roleDto.getStatus()) || "1".equals(roleDto.getStatus()))) {
+            throw new CommonException(StateCode.ERROR_PARAMS, CommonMessageConstants.ROLE_STATUS_ILLEGAL);
+        }
+        // 检查缓存中是否标记着空id
+        if (redisCache.hasKey(CacheConstants.ROLE_NOT_EXIST_KEY + roleDto.getRoleId())) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, roleDto.getRoleId() + CommonMessageConstants.ROLE_NOT_EXIST);
+        }
+        LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysRole::getRoleId, roleDto.getRoleId());
+        SysRole menu = roleMapper.selectOne(queryWrapper);
+        if (StringUtils.isNull(menu)) {
+            redisCache.setCacheObject(CacheConstants.ROLE_NOT_EXIST_KEY + roleDto.getRoleId(), null);
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, roleDto.getRoleId() + CommonMessageConstants.ROLE_NOT_EXIST);
+        }
+        roleMapper.updateRoleStatus(roleDto);
+    }
 }

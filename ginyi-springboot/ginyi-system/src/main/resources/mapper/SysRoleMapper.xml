@@ -126,6 +126,17 @@
         where role_id = #{roleDto.roleId}
     </update>
 
+    <!-- 更新状态 -->
+    <update id="updateRoleStatus">
+        update sys_role
+        <set>
+            `status` = #{roleDto.status},
+            <if test="roleDto.updateBy != null and roleDto.updateBy != ''">update_by = #{roleDto.updateBy},</if>
+            <if test="roleDto.updateTime != null">update_time = #{roleDto.updateTime},</if>
+        </set>
+        where role_id = #{roleDto.roleId} and deleted = '0'
+    </update>
+
     <select id="selectRolePermissionByUserId" parameterType="Long" resultMap="SysRoleResult">
         <include refid="selectRoleVo"/>
         WHERE r.deleted = '0' and ur.user_id = #{userId}
@@ -194,4 +205,4 @@
     </select>
 
 
-</mapper> 
+</mapper>

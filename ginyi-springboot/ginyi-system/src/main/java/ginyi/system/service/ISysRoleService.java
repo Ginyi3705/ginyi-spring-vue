@@ -1,6 +1,7 @@
 package ginyi.system.service;
 
 import ginyi.system.domain.model.dto.RoleDto;
+import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.RoleVo;
 
@@ -60,4 +61,10 @@ public interface ISysRoleService {
      * @param ids
      */
     public void removeByRoleIds(Set<Long> ids);
+
+    /**
+     * 更改状态（0正常 1停用）
+     * @param roleDto
+     */
+    public void updateStatus(RoleDto roleDto);
 }

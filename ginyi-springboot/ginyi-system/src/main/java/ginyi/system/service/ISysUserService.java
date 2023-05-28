@@ -76,8 +76,8 @@ public interface ISysUserService {
     public void removeUserByIds(Set<Long> ids);
 
     /**
-     * 更改用户状态（正常 or 停用）
+     * 更改状态（0正常 1停用）
      * @param userDto
      */
-    public void disable(UserDto userDto);
+    public void updateStatus(UserDto userDto);
 }

@@ -6,6 +6,7 @@ import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
 import ginyi.common.swagger.UpdateGroup;
+import ginyi.system.domain.model.dto.PostDto;
 import ginyi.system.domain.model.dto.RoleDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.RoleVo;
@@ -106,6 +107,19 @@ public class SysRoleController {
     @Log(title = "角色模块", businessType = BusinessType.DELETE)
     public CommonResult delete(@RequestBody Set<Long> ids){
         roleService.removeByRoleIds(ids);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("更新角色状态")
+    @PostMapping("/updateStatus")
+    @PreAuthorize("@ss.hasPermission('system:post:edit')")
+    @Log(title = "角色模块", businessType = BusinessType.UPDATE)
+    @ApiOperationSupport(includeParameters = {
+            "roleDto.roleId",
+            "roleDto.status"
+    })
+    public CommonResult updateStatus(@RequestBody RoleDto roleDto){
+        roleService.updateStatus(roleDto);
         return CommonResult.success();
     }
 

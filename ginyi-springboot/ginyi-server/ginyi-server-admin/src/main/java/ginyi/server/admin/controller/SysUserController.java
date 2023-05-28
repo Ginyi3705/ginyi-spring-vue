@@ -55,16 +55,16 @@ public class SysUserController {
         return CommonResult.success();
     }
 
-    @ApiOperation("禁用用户")
-    @PostMapping("/disable")
+    @ApiOperation("更新用户状态")
+    @PostMapping("/updateStatus")
     @PreAuthorize("@ss.hasPermission('system:user:edit')")
     @Log(title = "用户模块", businessType = BusinessType.UPDATE)
     @ApiOperationSupport(includeParameters = {
             "userDto.userId",
             "userDto.status"
     })
-    public CommonResult disable(@RequestBody UserDto userDto){
-        userService.disable(userDto);
+    public CommonResult updateStatus(@RequestBody UserDto userDto){
+        userService.updateStatus(userDto);
         return CommonResult.success();
     }
 
@@ -133,8 +133,8 @@ public class SysUserController {
             "userDto.roleIds",
     })
     public CommonResult<BaseVo<UserVo>> list(@RequestBody UserDto userDto,
-                             @RequestParam(value = "page", required = false) Long page,
-                             @RequestParam(value = "pageSize", required = false) Long pageSize) {
+                                             @RequestParam(value = "page", required = false) Long page,
+                                             @RequestParam(value = "pageSize", required = false) Long pageSize) {
         BaseVo<UserVo> baseVo = userService.list(userDto, page, pageSize);
         return CommonResult.success(baseVo);
     }
