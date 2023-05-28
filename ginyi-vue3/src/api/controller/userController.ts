@@ -85,6 +85,18 @@ export class userController {
     }
 
     /**
+     * 更新用户状态
+     * @param data
+     */
+    static updateStatus(data: any): Promise<any> {
+        return useRequest({
+            url: "/api/user/updateStatus",
+            method: "post",
+            data
+        })
+    }
+
+    /**
      * 删除用户
      * @param userId
      */

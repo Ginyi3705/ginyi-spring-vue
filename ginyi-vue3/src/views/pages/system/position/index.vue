@@ -20,10 +20,10 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, watch} from "vue";
+import {defineComponent, onMounted, onUnmounted, ref, watch} from "vue";
 import CommonTable from "@/components/commonTable/index.vue";
 import {useCommonTable} from "@/components/commonTable/useCommonTable";
-import {postController} from "@/api";
+import {menuController, postController} from "@/api";
 import {columns} from "@/views/pages/system/position/columns";
 import PostQueryForm from "@/views/pages/system/position/postQueryForm.vue";
 import PostEditForm from "@/views/pages/system/position/postEditForm.vue";
@@ -84,8 +84,18 @@ export default defineComponent({
         onMounted(() => {
             getDataList()
             eventBus.on("handlePostStatusSwitchClick", (row: any) => {
-                window.$message.warning("暂时没用提供单独更新的接口，不过可以使用【操作列 - 更新】按钮进行更新数据！")
+                postController.updateStatus({
+                    postId: row.postId,
+                    status: [0, "0"].includes(row.status) ? "1" : "0"
+                }).then(res => {
+                    window.$message.success(res.msg)
+                    getDataList()
+                })
             })
+        })
+
+        onUnmounted(() => {
+            eventBus.off("handlePostStatusSwitchClick",() => {})
         })
 
         return {

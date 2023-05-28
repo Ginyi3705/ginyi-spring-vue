@@ -75,4 +75,16 @@ export class postController {
         })
     }
 
+    /**
+     * 更新岗位状态
+     * @param data
+     */
+    static updateStatus(data: any): Promise<any> {
+        return useRequest({
+            url: "/api/post/updateStatus",
+            method: "post",
+            data
+        })
+    }
+
 }

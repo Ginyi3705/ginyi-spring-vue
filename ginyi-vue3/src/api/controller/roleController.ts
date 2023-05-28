@@ -75,4 +75,16 @@ export class roleController {
         })
     }
 
+    /**
+     * 更新角色状态
+     * @param data
+     */
+    static updateStatus(data: any): Promise<any> {
+        return useRequest({
+            url: "/api/role/updateStatus",
+            method: "post",
+            data
+        })
+    }
+
 }

@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, watch} from "vue";
+import {defineComponent, onMounted, onUnmounted, ref, watch} from "vue";
 import {useCommonTable} from "@/components/commonTable/useCommonTable";
 import {deptController} from "@/api";
 import {columns} from "@/views/pages/system/department/columns";
@@ -97,9 +97,20 @@ export default defineComponent({
         onMounted(() => {
             getDataList()
             eventBus.on("handleDeptStatusSwitchClick", (row: any) => {
-                window.$message.warning("暂时没用提供单独更新的接口，不过可以使用【操作列 - 更新】按钮进行更新数据！")
+                deptController.updateStatus({
+                    deptId: row.deptId,
+                    status: [0, "0"].includes(row.status) ? "1" : "0"
+                }).then(res => {
+                    window.$message.success(res.msg)
+                    getDataList()
+                })
             })
         })
+
+        onUnmounted(() => {
+            eventBus.off("handleDeptStatusSwitchClick",() => {})
+        })
+
         return {
             columns,
             tableDataList,

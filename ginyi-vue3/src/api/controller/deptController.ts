@@ -74,4 +74,16 @@ export class deptController {
         })
     }
 
+    /**
+     * 更新部门状态
+     * @param data
+     */
+    static updateStatus(data: any): Promise<any> {
+        return useRequest({
+            url: "/api/dept/updateStatus",
+            method: "post",
+            data
+        })
+    }
+
 }

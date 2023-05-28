@@ -73,12 +73,24 @@ export class menuController {
     }
 
     /**
-     * 批量删除部门
+     * 批量删除菜单
      * @param data
      */
     static deleteByIds(data: Array<number | string>): Promise<any> {
         return useRequest({
             url: "/api/menu/delete",
+            method: "post",
+            data
+        })
+    }
+
+    /**
+     * 更新菜单状态
+     * @param data
+     */
+    static updateStatus(data: any): Promise<any> {
+        return useRequest({
+            url: "/api/menu/updateStatus",
             method: "post",
             data
         })
