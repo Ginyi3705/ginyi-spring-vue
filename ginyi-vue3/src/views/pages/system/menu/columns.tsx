@@ -1,10 +1,18 @@
-import {DataTableColumns, NTag} from "naive-ui";
+import {DataTableColumns, NSwitch, NTag} from "naive-ui";
 import {useColumns} from "@/views/pages/system/menu/useColumns";
 import {useCommonColumns} from "@/hooks/useCommonColums";
+import {h} from "vue";
+import {eventBus} from "@/config/eventBus";
 
 const {useRenderStateById} = useCommonColumns()
 const {useRenderMenuType} = useColumns()
-
+/**
+ * 状态的点击事件
+ * @param row
+ */
+const handleSwitchClick = (row: any) => {
+    eventBus.emit("handleMenuStatusSwitchClick", row)
+}
 
 export const columns: DataTableColumns<any> = [
     {
@@ -24,10 +32,15 @@ export const columns: DataTableColumns<any> = [
     {
         title: "状态",
         key: "status",
+        width: 150,
         render: (row) => (
-            <NTag type={row.status === "0" ? "success" : "error"}>
-                {useRenderStateById(row.status)}
-            </NTag>
+            h(NSwitch, {
+                value: row.status === "0",
+                onClick: () => handleSwitchClick(row)
+            }, {
+                checked: () => "正常",
+                unchecked: () => "禁用"
+            })
         )
     },
     {

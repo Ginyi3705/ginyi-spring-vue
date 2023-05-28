@@ -24,9 +24,10 @@ import {defineComponent, onMounted, ref, watch} from "vue";
 import CommonTable from "@/components/commonTable/index.vue";
 import {columns} from "@/views/pages/system/role/columns";
 import {useCommonTable} from "@/components/commonTable/useCommonTable";
-import {roleController} from "@/api";
+import {roleController, userController} from "@/api";
 import RoleQueryForm from "@/views/pages/system/role/roleQueryForm.vue";
 import RoleEditForm from "@/views/pages/system/role/roleEditForm.vue";
+import {eventBus} from "@/config/eventBus";
 
 export default defineComponent({
     components: {
@@ -82,6 +83,9 @@ export default defineComponent({
 
         onMounted(() => {
             getDataList()
+            eventBus.on("handleRoleStatusSwitchClick", (row: any) => {
+                window.$message.warning("暂时没用提供单独更新的接口，不过可以使用【操作列 - 更新】按钮进行更新数据！")
+            })
         })
 
         return {

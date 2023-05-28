@@ -1,10 +1,10 @@
-import {DataTableColumns, NImage, NSpace, NTag} from "naive-ui";
+import {DataTableColumns, NImage, NSpace, NSwitch, NTag} from "naive-ui";
 import {useColumns} from "@/views/pages/system/user/useColumns";
-import {useCommonColumns} from "@/hooks/useCommonColums";
 import {setting} from "@/config/setting";
+import {h} from "vue";
+import {eventBus} from "@/config/eventBus";
 
 const {logo} = setting
-const {useRenderStateById} = useCommonColumns()
 
 const {
     useRenderSexById,
@@ -12,6 +12,14 @@ const {
     useRenderRoleNameByIds,
     useRenderPostNameByIds
 } = useColumns()
+
+/**
+ * 状态的点击事件
+ * @param row
+ */
+const handleSwitchClick = (row: any) => {
+    eventBus.emit("handleUserStatusSwitchClick", row)
+}
 
 export const columns: DataTableColumns<any> = [
     {
@@ -25,8 +33,31 @@ export const columns: DataTableColumns<any> = [
     {
         title: "头像",
         key: "avatar",
+        width: 80,
         render: (row) => (
             <NImage width="30" style="border-radius: 50%;" src={logo}/>
+        )
+    },
+    {
+        title: "性别",
+        key: "sex",
+        width: 80,
+        render: (row) => (
+            <span>{useRenderSexById(row.sex)}</span>
+        )
+    },
+    {
+        title: "状态",
+        key: "status",
+        width: 150,
+        render: (row) => (
+            h(NSwitch, {
+                value: row.status === "0",
+                onClick: () => handleSwitchClick(row)
+            }, {
+                checked: () => "正常",
+                unchecked: () => "禁用"
+            })
         )
     },
     {
@@ -37,7 +68,7 @@ export const columns: DataTableColumns<any> = [
             tooltip: true
         },
         render: (row) => (
-            <span>{ useRenderDeptNameById(row.deptId)}</span>
+            <span>{useRenderDeptNameById(row.deptId)}</span>
         )
     },
     {
@@ -66,22 +97,6 @@ export const columns: DataTableColumns<any> = [
     {
         title: "手机号码",
         key: "phoneNumber"
-    },
-    {
-        title: "状态",
-        key: "status",
-        render: (row) => (
-            <NTag type={row.status === "0" ? "success" : "error"}>
-                {useRenderStateById(row.status)}
-            </NTag>
-        )
-    },
-    {
-        title: "性别",
-        key: "sex",
-        render: (row) => (
-            <span>{useRenderSexById(row.sex)}</span>
-        )
     },
     {
         title: "创建时间",
