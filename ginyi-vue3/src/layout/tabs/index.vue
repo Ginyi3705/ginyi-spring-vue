@@ -1,6 +1,10 @@
 <template>
     <div style="display: flex; align-items: center;">
-        <n-icon :component="ChevronBack" size="20" class="both-icon" @click="onBothSideIcons('left')"/>
+        <n-button strong secondary circle size="tiny" @click="onBothSideIcons('left')" style="margin-right: 8px">
+            <template #icon>
+                <n-icon :component="ArrowBackOutline" />
+            </template>
+        </n-button>
         <div class="tabsView" id="tabsView">
             <div id="tabsTransition">
                 <transition-group name="tab" tag="div" class="tabs-transition">
@@ -35,8 +39,16 @@
                 </transition-group>
             </div>
         </div>
-        <n-icon :component="ChevronForward" size="20" class="both-icon" @click="onBothSideIcons('right')"/>
-        <n-icon :component="LocateOutline" size="16" class="both-icon" @click="location"/>
+        <n-button strong secondary circle size="tiny" @click="onBothSideIcons('right')" style="margin: 0 8px">
+            <template #icon>
+                <n-icon :component="ArrowForwardOutline" />
+            </template>
+        </n-button>
+        <n-button strong secondary circle size="tiny" @click="location">
+            <template #icon>
+                <n-icon :component="LocateOutline" />
+            </template>
+        </n-button>
     </div>
     <n-dropdown
         placement="bottom-start"
@@ -61,14 +73,15 @@ import {
     GameController,
     LocateOutline,
     PlaySkipBack,
-    PlaySkipForward
+    PlaySkipForward,
+    ArrowBackOutline,
+    ArrowForwardOutline,
 } from '@vicons/ionicons5'
 import {storeToRefs} from "pinia";
 import {useSystemStore} from "@/store/modules/useSystemStore";
 import {useHexToRgba} from "@/hooks/useColor";
 import {useRenderIcon} from "@/plugins/naive-ui/common";
 import {useCommonRouter} from "@/router";
-import {ITabType} from "@/interface/modules/system";
 
 export default defineComponent({
     name: "TabsView",
@@ -273,7 +286,7 @@ export default defineComponent({
             activeFontColor,
             CloseOutline, CloseCircleOutline,
             ChevronBack, ChevronForward, LocateOutline,
-            PlaySkipForward, PlaySkipBack, CodeWorking,
+            PlaySkipForward, PlaySkipBack, CodeWorking, ArrowBackOutline, ArrowForwardOutline,
             onClickTag: onClickTab,
             useHexToRgba,
             removeTab,
@@ -293,13 +306,10 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-.both-icon:hover {
-    cursor: pointer;
-}
-
 .tabsView {
     width: 100%;
     display: flex;
+    align-items: center;
     padding: 0 5px 0 5px;
     overflow: hidden;
 

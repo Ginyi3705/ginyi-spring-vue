@@ -16,7 +16,7 @@ export const useSystemStore = defineStore(storeKeyEnums.SYSTEM, {
         layoutFooterHeight: 40,
         collapsed: false,
         logoHeight: 60,
-        tabsHeight: 20,
+        tabsHeight: 22,
         tabIndex: tabsList[0].id,
         tabsList: tabsList,
         menuList: [],

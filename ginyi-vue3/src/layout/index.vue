@@ -12,17 +12,16 @@
             :native-scrollbar="false"
             :on-update:collapsed="(val) => setCollapsed(val)">
             <Logo :style="{height: logoHeight + 'px'}"/>
-            <Menu :style="{height: (clientHeight - logoHeight) + 'px'}"/>
+            <Menu/>
         </n-layout-sider>
-        <n-layout>
+        <n-layout content-style="display: flex;flex-direction: column;">
             <n-layout-header :style="{height: (layoutHeaderHeight + tabsHeight) + 'px', padding: '0px 10px 10px 10px'}">
                 <div>
                     <Headers :style="{height: layoutHeaderHeight - 10 + 'px'}"/>
                     <TabsView/>
                 </div>
             </n-layout-header>
-            <n-layout-content :content-style="{padding: '15px 15px 15px 20px', height: clientHeight - (layoutHeaderHeight + layoutFooterHeight + tabsHeight) + 'px',
-            backgroundColor: darkTheme ? null : '#f5f6fa'}">
+            <n-layout-content :content-style="{padding: '15px 15px 15px 20px', backgroundColor: darkTheme ? null : '#f5f6fa'}">
                 <router-view v-slot="{ Component }">
                     <transition name="fade-main" mode="out-in">
                         <keep-alive>
@@ -98,8 +97,13 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .layout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     &-side {
         box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
         transition: all 0.3s ease-in-out;

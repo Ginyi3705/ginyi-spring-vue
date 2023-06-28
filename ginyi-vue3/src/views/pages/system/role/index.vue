@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CommonTable :columns="columns"
+        <CommonTable :columns="columns" style="height: 100% !important; background-color: red !important;"
                      :pagination="tablePagination"
                      :loading="tableLoading"
                      :dataList="tableDataList"
