@@ -5,6 +5,7 @@ import {postController} from "@/api/controller/postController";
 import {roleController} from "@/api/controller/roleController";
 import {logController} from "@/api/controller/logController";
 import {onlineController} from "@/api/controller/onlineController";
+import {monitorController} from "@/api/controller/monitorController";
 
 export {
     userController,
@@ -13,5 +14,6 @@ export {
     postController,
     roleController,
     logController,
-    onlineController
+    onlineController,
+    monitorController
 }
