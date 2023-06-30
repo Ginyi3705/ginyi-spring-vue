@@ -290,7 +290,6 @@ public class SysMenuServiceImpl implements ISysMenuService {
             if (StringUtils.isNull(menuList) || menuList.size() == 0) {
                 LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
                 menuList = menuMapper.selectList(queryWrapper);
-                redisCache.setCacheList(CacheConstants.MENU_LIST_KEY, menuList);
             }
             for (Long menuId : ids) {
                 // 缓存中是否标记空id

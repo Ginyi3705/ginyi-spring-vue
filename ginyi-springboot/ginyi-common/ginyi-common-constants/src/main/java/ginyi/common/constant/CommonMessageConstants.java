@@ -7,6 +7,8 @@ public class CommonMessageConstants {
 
     public static final String LOGIN_SUCCESS = "登录成功";
     public static final String REGISTER_SUCCESS = "注册成功";
+    public static final String REDIS_KEY_NOT_EXIST = "该Key不存在，请仔细检查！";
+    public static final String REDIS_VALUE_TYPE_NOT_MATCH = "数据类型不匹配，请联系管理人员！";
 
     public static final String SYS_ERROR = "请联系管理人员！";
     public static final String SYS_AUTHENTICATION_VALID = "权限不足，无法访问系统资源！";

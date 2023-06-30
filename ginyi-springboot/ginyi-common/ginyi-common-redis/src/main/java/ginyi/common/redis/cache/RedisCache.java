@@ -2,6 +2,7 @@ package ginyi.common.redis.cache;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -87,6 +88,15 @@ public class RedisCache {
     }
 
     /**
+     * 获取数据类型
+     * @param key
+     * @return
+     */
+    public DataType getType(String key){
+        return redisTemplate.type(key);
+    }
+
+    /**
      * 获得缓存的基本对象。
      *
      * @param key 缓存键值
@@ -127,6 +137,15 @@ public class RedisCache {
      */
     public Set<String> getKeys(final String key) {
         return redisTemplate.keys(key);
+    }
+
+    /**
+     * 获取数据
+     * @param key
+     * @return
+     */
+    public Object getValue(String key){
+        return redisTemplate.opsForValue().get(key);
     }
 
     /**

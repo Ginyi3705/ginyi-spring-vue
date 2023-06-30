@@ -52,12 +52,19 @@
         <bitwalker.version>1.21</bitwalker.version>
         <fastjson.version>2.0.16</fastjson.version>
         <redis.version>3.0.1</redis.version>
-
+        <oshi.version>6.4.3</oshi.version>
 
     </properties>
 
     <!-- 以下依赖 全局所有的模块都会引入  -->
     <dependencies>
+
+        <!-- 获取系统信息 -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>${oshi.version}</version>
+        </dependency>
 
         <!-- Java工具类 -->
         <dependency>
