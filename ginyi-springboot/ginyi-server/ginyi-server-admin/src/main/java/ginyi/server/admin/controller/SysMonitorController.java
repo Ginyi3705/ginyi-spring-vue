@@ -48,7 +48,7 @@ public class SysMonitorController {
     }
 
     @ApiOperation("删除缓存")
-    @PostMapping("/delete/{key}")
+    @PostMapping("/removeCache/{key}")
     @Log(title = "缓存模块")
     @PreAuthorize("@ss.hasPermission('monitor:cache:remove')")
     public CommonResult removeCache(@PathVariable String key){
