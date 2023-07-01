@@ -18,7 +18,7 @@ public class SysLogOperation extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("ID")
-    private Long Id;
+    private String id;
 
     @ApiModelProperty("操作模块")
     private String title;
