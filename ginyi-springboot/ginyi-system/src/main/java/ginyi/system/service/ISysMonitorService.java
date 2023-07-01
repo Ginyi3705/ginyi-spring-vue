@@ -18,14 +18,16 @@ public interface ISysMonitorService {
 
     /**
      * 获取缓存列表
-     *
-     * @return
      */
     public BaseVo<CacheKeyVo> getCacheList();
 
     /**
      * 获取缓存详情
-     * @return
      */
     public CacheVo getCacheDetails(CacheDto cacheDto);
+
+    /**
+     * 删除缓存
+     */
+    public void removeCache(String key);
 }

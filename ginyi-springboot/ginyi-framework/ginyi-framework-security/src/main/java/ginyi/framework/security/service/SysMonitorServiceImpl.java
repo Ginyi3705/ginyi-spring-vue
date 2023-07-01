@@ -155,8 +155,6 @@ public class SysMonitorServiceImpl implements ISysMonitorService {
 
     /**
      * 获取缓存详情
-     *
-     * @return
      */
     @Override
     public CacheVo getCacheDetails(CacheDto cacheDto) {
@@ -173,7 +171,7 @@ public class SysMonitorServiceImpl implements ISysMonitorService {
             if ("list".equalsIgnoreCase(cacheDto.getType())) {
                 object = redisCache.getCacheList(cacheDto.getKey(), Object.class);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CommonException(StateCode.ERROR_BUSINESS, CommonMessageConstants.REDIS_VALUE_TYPE_NOT_MATCH);
         }
 
@@ -186,5 +184,16 @@ public class SysMonitorServiceImpl implements ISysMonitorService {
         cacheVo.setExpire(redisCache.getExpire(cacheDto.getKey()));
         cacheVo.setValue(object);
         return cacheVo;
+    }
+
+    /**
+     * 删除缓存
+     */
+    @Override
+    public void removeCache(String key) {
+        if (!redisCache.hasKey(key)) {
+            throw new CommonException(StateCode.ERROR_NOT_EXIST, CommonMessageConstants.REDIS_KEY_NOT_EXIST);
+        }
+        redisCache.removeCacheObject(key);
     }
 }

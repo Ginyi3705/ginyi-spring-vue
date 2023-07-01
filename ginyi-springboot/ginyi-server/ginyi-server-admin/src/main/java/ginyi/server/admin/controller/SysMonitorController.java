@@ -41,10 +41,19 @@ public class SysMonitorController {
 
     @ApiOperation("获取缓存详情")
     @PostMapping("/getCacheValue")
-    @PreAuthorize("@ss.hasPermission('monitor:cache:list')")
+    @PreAuthorize("@ss.hasPermission('monitor:cache:details')")
     public CommonResult<CacheVo> getCacheDetails(@RequestBody CacheDto cacheDto){
         CacheVo cacheVo = monitorService.getCacheDetails(cacheDto);
         return CommonResult.success(cacheVo);
+    }
+
+    @ApiOperation("删除缓存")
+    @PostMapping("/delete/{key}")
+    @Log(title = "缓存模块")
+    @PreAuthorize("@ss.hasPermission('monitor:cache:remove')")
+    public CommonResult removeCache(@PathVariable String key){
+        monitorService.removeCache(key);
+        return CommonResult.success();
     }
 
 }
