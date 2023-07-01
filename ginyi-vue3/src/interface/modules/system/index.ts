@@ -128,11 +128,16 @@ export interface IPage {
  * CommonTable按钮配置
  */
 export interface IButtonConfig {
-    type: string,
-    title: string,
-    actionType: number,
+    // 按钮类型，如 add 新增
+    type?: string,
+    // 按钮文本，如 新增
+    title?: string,
+    // 按钮事件类型
+    actionType?: any,
+    // 是否显示，必传
     show: boolean,
-    colorType: string,
+    // 按钮颜色类型
+    colorType?: "default" | "tertiary" | "primary" | "success" | "warning" | "error" | "info",
 }
 export interface IButtonType {
     addButton: IButtonConfig,

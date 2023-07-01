@@ -70,8 +70,8 @@ export const definedProps = {
      * 是否显示操作列
      */
     showActionCol: {
-      type: Boolean,
-      default: true
+        type: Boolean,
+        default: true
     },
     /**
      * 按钮配置

@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
+import axios, {AxiosResponse, InternalAxiosRequestConfig} from "axios";
 import {useUserStore} from "@/store/modules/useUserStore";
 import {useFormatTime} from "@/hooks/useFormat";
 import {storeToRefs} from "pinia";
@@ -7,7 +7,6 @@ import {setting} from "@/config/setting";
 import {useCommonRouter} from "@/router";
 import {storage} from "@/hooks/useStorage";
 import {useSystemStore} from "@/store/modules/useSystemStore";
-import {addPending, removePending} from "@/hooks/usePending";
 
 const {devBaseURL, prodBaseURL} = setting
 
@@ -22,7 +21,7 @@ const service = axios.create({
 /**
  * 请求拦截
  */
-service.interceptors.request.use((config: AxiosRequestConfig<any>) => {
+service.interceptors.request.use((config: InternalAxiosRequestConfig<any>) => {
     const {tokenKey, authorization} = storeToRefs(useUserStore(store));
     if (authorization && config && config.headers) {
         typeof config.headers.set === 'function' && config.headers.set(tokenKey?.value, authorization.value)

@@ -29,6 +29,12 @@ import {columns} from "@/views/pages/system/menu/columns";
 import MenuQueryForm from "@/views/pages/system/menu/menuQueryForm.vue";
 import MenuEditForm from "@/views/pages/system/menu/menuEditForm.vue";
 import {eventBus} from "@/config/eventBus";
+import {tableActionEnums} from "@/enums/tableActionEnums";
+
+enum actionEnums {
+    // 新增子项
+    ADD_CHILD = "add_child",
+}
 
 export default defineComponent({
     components: {
@@ -49,7 +55,7 @@ export default defineComponent({
             {
                 title: "新增子项",
                 colorType: "success",
-                actionType: 4,
+                actionType: actionEnums.ADD_CHILD,
             }
         ])
 
@@ -58,28 +64,23 @@ export default defineComponent({
 
         const onEvent = (value: any) => {
             switch (value.type) {
-                // 新增
-                case 0:
+                case tableActionEnums.ADD:
                     // @ts-ignore
                     menuEditFormRef?.value?.onAdd()
                     break
-                // 编辑
-                case 1:
+                case tableActionEnums.EDIT:
                     // @ts-ignore
                     menuEditFormRef?.value?.onEdit(value.row)
                     break
-                // 删除
-                case 2:
+                case tableActionEnums.DELETE:
                     // @ts-ignore
                     menuEditFormRef?.value?.onDeleteById(value.row.menuId)
                     break
-                // 批量删除
-                case 3:
+                case tableActionEnums.BATCH_DELETE:
                     // @ts-ignore
                     menuEditFormRef?.value?.onDeleteByIds(value.data)
                     break
-                // 新增子项
-                case 4:
+                case actionEnums.ADD_CHILD:
                     if(value.row.menuType === "F"){
                         window.$message.error("按钮无法新增子项！")
                         return

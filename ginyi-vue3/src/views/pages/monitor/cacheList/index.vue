@@ -92,6 +92,20 @@ export default defineComponent({
                     getDataList()
                 })
             })
+            eventBus.on("handleClickDelete", (row: any) => {
+                window.$dialog.error({
+                    title: "温馨提醒",
+                    content: "删除操作不可逆，是否继续？",
+                    positiveText: "确定",
+                    negativeText: "取消",
+                    onPositiveClick: () => {
+                        monitorController.removeCache(row.key).then(res => {
+                            window.$message.success(res.msg)
+                            getDataList()
+                        })
+                    }
+                })
+            })
         })
 
         return {
@@ -109,7 +123,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.load-icon:hover{
+.load-icon:hover {
     cursor: pointer;
 }
 </style>

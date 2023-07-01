@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CommonTable :columns="columns" style="height: 100% !important; background-color: red !important;"
+        <CommonTable :columns="columns"
                      :pagination="tablePagination"
                      :loading="tableLoading"
                      :dataList="tableDataList"
@@ -28,6 +28,7 @@ import {roleController} from "@/api";
 import RoleQueryForm from "@/views/pages/system/role/roleQueryForm.vue";
 import RoleEditForm from "@/views/pages/system/role/roleEditForm.vue";
 import {eventBus} from "@/config/eventBus";
+import {tableActionEnums} from "@/enums/tableActionEnums";
 
 export default defineComponent({
     components: {
@@ -50,23 +51,19 @@ export default defineComponent({
 
         const onEvent = (value: any) => {
             switch (value.type) {
-                // 新增
-                case 0:
+                case tableActionEnums.ADD:
                     // @ts-ignore
                     roleEditFormRef?.value?.onAdd()
                     break
-                // 编辑
-                case 1:
+                case tableActionEnums.EDIT:
                     // @ts-ignore
                     roleEditFormRef?.value?.onEdit(value.row, value.row.roleId)
                     break
-                // 删除
-                case 2:
+                case tableActionEnums.DELETE:
                     // @ts-ignore
                     roleEditFormRef?.value?.onDeleteById(value.row.roleId)
                     break
-                // 批量删除
-                case 3:
+                case tableActionEnums.BATCH_DELETE:
                     // @ts-ignore
                     roleEditFormRef?.value?.onDeleteByIds(value.data)
                     break

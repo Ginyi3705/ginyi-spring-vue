@@ -29,6 +29,7 @@ import UserEditForm from "@/views/pages/system/user/userEditForm.vue";
 import UserQueryForm from "@/views/pages/system/user/userQueryForm.vue";
 import {useCommonTable} from "@/components/commonTable/useCommonTable";
 import {eventBus} from "@/config/eventBus";
+import {tableActionEnums} from "@/enums/tableActionEnums";
 
 export default defineComponent({
     components: {
@@ -60,23 +61,19 @@ export default defineComponent({
 
         const onEvent = (value: any) => {
             switch (value.type) {
-                // 新增
-                case 0:
+                case tableActionEnums.ADD:
                     // @ts-ignore
                     userEditFormRef?.value?.onAdd()
                     break
-                // 编辑
-                case 1:
+                case tableActionEnums.EDIT:
                     // @ts-ignore
                     userEditFormRef?.value?.onEdit(value.row)
                     break
-                // 删除
-                case 2:
+                case tableActionEnums.DELETE:
                     // @ts-ignore
                     userEditFormRef?.value?.onDeleteById(value.row.userId)
                     break
-                // 批量删除
-                case 3:
+                case tableActionEnums.BATCH_DELETE:
                     // @ts-ignore
                     userEditFormRef?.value?.onDeleteByIds(value.data)
                     break

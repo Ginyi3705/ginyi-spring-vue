@@ -28,6 +28,7 @@ import {columns} from "@/views/pages/system/position/columns";
 import PostQueryForm from "@/views/pages/system/position/postQueryForm.vue";
 import PostEditForm from "@/views/pages/system/position/postEditForm.vue";
 import {eventBus} from "@/config/eventBus";
+import {tableActionEnums} from "@/enums/tableActionEnums";
 
 export default defineComponent({
     components: {
@@ -50,23 +51,19 @@ export default defineComponent({
 
         const onEvent = (value: any) => {
             switch (value.type) {
-                // 新增
-                case 0:
+                case tableActionEnums.ADD:
                     // @ts-ignore
                     postEditFormRef?.value?.onAdd()
                     break
-                // 编辑
-                case 1:
+                case tableActionEnums.EDIT:
                     // @ts-ignore
                     postEditFormRef?.value?.onEdit(value.row, value.row.roleId)
                     break
-                // 删除
-                case 2:
+                case tableActionEnums.DELETE:
                     // @ts-ignore
                     postEditFormRef?.value?.onDeleteById(value.row.roleId)
                     break
-                // 批量删除
-                case 3:
+                case tableActionEnums.BATCH_DELETE:
                     // @ts-ignore
                     postEditFormRef?.value?.onDeleteByIds(value.data)
                     break

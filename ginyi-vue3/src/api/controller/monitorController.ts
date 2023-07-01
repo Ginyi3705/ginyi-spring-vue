@@ -32,4 +32,14 @@ export class monitorController {
         })
     }
 
+    /**
+     * 删除缓存
+     */
+    static removeCache(key: string): Promise<any> {
+        return useRequest({
+            url: `/api/monitor/removeCache/${key}`,
+            method: "post",
+        })
+    }
+
 }

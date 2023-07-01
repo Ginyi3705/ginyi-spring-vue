@@ -24,6 +24,7 @@ import {useCommonTable} from "@/components/commonTable/useCommonTable";
 import {onlineController} from "@/api";
 import {columns} from "@/views/pages/monitor/online/columns";
 import {IButtonType} from "@/interface/modules/system";
+import {tableActionEnums} from "@/enums/tableActionEnums";
 
 export default defineComponent({
     name: "OnlineUser",
@@ -39,30 +40,22 @@ export default defineComponent({
         } = useCommonTable(onlineController.getOnlineUserList)
         const buttonConfig = reactive<IButtonType>({
             addButton: {
-                type: "add",
-                title: "新增数据",
-                actionType: 0,
                 show: false,
-                colorType: "primary",
             },
             editButton: {
-                type: "edit",
-                title: "编辑",
-                actionType: 1,
                 show: false,
-                colorType: "primary",
             },
             deleteButton: {
                 type: "delete",
                 title: "强制退出",
-                actionType: 2,
+                actionType: tableActionEnums.DELETE,
                 show: true,
                 colorType: "error",
             },
             batchDeleteButton: {
                 type: "batchDelete",
                 colorType: "error",
-                actionType: 3,
+                actionType: tableActionEnums.BATCH_DELETE,
                 show: true,
                 title: "批量强制退出",
             }
@@ -71,7 +64,7 @@ export default defineComponent({
         const onEvent = (value: any) => {
             switch (value.type) {
                 // 强制退出
-                case 2:
+                case tableActionEnums.DELETE:
                     console.log(value.row.token)
                     window.$dialog.warning({
                         title: "温馨提醒",
@@ -87,7 +80,7 @@ export default defineComponent({
                     })
                     break
                 // 批量强制退出
-                case 3:
+                case tableActionEnums.BATCH_DELETE:
                     window.$dialog.warning({
                         title: "温馨提醒",
                         content: "是否确认强制将选中的用户下线？",
