@@ -47,7 +47,6 @@ public class SysMonitorServiceImpl implements ISysMonitorService {
         SystemInfo systemInfo = new SystemInfo();
         HardwareAbstractionLayer hardware = systemInfo.getHardware();
 
-
         // CPU信息
         long[] prevTicks = hardware.getProcessor().getSystemCpuLoadTicks();
         Thread.sleep(1000);
@@ -75,6 +74,7 @@ public class SysMonitorServiceImpl implements ISysMonitorService {
         sysMemory.setTotal(NumberUtils.round((double) hardware.getMemory().getTotal() / (1024 * 1024 * 1024), 2));
         sysMemory.setUsed(NumberUtils.round((double) (hardware.getMemory().getTotal() - hardware.getMemory().getAvailable()) / (1024 * 1024 * 1024), 2));
         sysMemory.setFree(NumberUtils.round((double) hardware.getMemory().getAvailable() / (1024 * 1024 * 1024), 2));
+        sysMemory.setUsage(NumberUtils.round((sysMemory.getUsed() / sysMemory.getTotal()) * 100, 2));
 
 
         // Java虚拟机

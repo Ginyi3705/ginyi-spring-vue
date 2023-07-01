@@ -29,4 +29,10 @@ public class SysMemory {
     @ApiModelProperty("可用内存，单位G")
     private double free;
 
+    /**
+     * 内存使用率
+     */
+    @ApiModelProperty("使用率")
+    private double usage;
+
 }
