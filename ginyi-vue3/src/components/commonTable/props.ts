@@ -1,3 +1,5 @@
+import {tableActionEnums} from "@/enums/tableActionEnums";
+
 export const definedProps = {
     /**
      * 表格的列
@@ -83,28 +85,28 @@ export const definedProps = {
                 addButton: {
                     type: "add",
                     title: "新增数据",
-                    actionType: 0,
+                    actionType: tableActionEnums.ADD,
                     show: true,
                     colorType: "primary",
                 },
                 editButton: {
                     type: "edit",
                     title: "编辑",
-                    actionType: 1,
+                    actionType: tableActionEnums.EDIT,
                     show: true,
                     colorType: "primary",
                 },
                 deleteButton: {
                     type: "delete",
                     title: "删除",
-                    actionType: 2,
+                    actionType: tableActionEnums.DELETE,
                     show: true,
                     colorType: "error",
                 },
                 batchDeleteButton: {
                     type: "batchDelete",
                     colorType: "error",
-                    actionType: 3,
+                    actionType: tableActionEnums.BATCH_DELETE,
                     show: true,
                     title: "批量删除",
                 }
