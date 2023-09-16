@@ -1,27 +1,34 @@
 package ginyi.server.web.controller;
 
 
-import ginyi.common.annotation.Anonymous;
 import ginyi.common.result.CommonResult;
-import ginyi.framework.websocket.WebSocket;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import ginyi.system.domain.model.dto.LoginDto;
+import ginyi.system.domain.model.vo.LoginVo;
+import ginyi.system.service.ISysLoginService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.util.Date;
-
 @RestController
+@RequestMapping("/api/user")
+@Api(tags = "登录模块")
+@Slf4j
 public class Test {
 
-    @Resource
-    private WebSocket webSocket;
+    @Autowired
+    private ISysLoginService loginService;
 
-    @Anonymous
-    @GetMapping("/test/{userId}")
-    public CommonResult test(@PathVariable(value = "userId") String userId) {
-        webSocket.sendOneMessage(userId, String.valueOf(new Date().getTime()));
-        return CommonResult.success(userId);
+    @ApiOperation("测试用户登录")
+    @PostMapping("/login")
+    public CommonResult<LoginVo> login(@RequestBody @Validated LoginDto loginDto) {
+        LoginVo loginVo = loginService.login(loginDto);
+        return CommonResult.success(loginVo);
     }
 
 

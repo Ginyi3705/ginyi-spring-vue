@@ -232,6 +232,17 @@
         </where>
     </select>
 
+    <!-- 根据部门ids获取用户列表 -->
+    <select id="selectUserByDeptIds" resultType="ginyi.system.domain.SysUser">
+        select user_id, nick_name
+        from sys_user
+        where dept_id in
+        <foreach collection="deptIds" item="deptId" open="(" close=")" separator=",">
+            #{deptId}
+        </foreach>
+    </select>
+
+
     <!-- 插入新用户 -->
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="userId">
         insert into sys_user

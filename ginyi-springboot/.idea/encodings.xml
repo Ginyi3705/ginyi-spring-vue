@@ -2,27 +2,43 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-annotation/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-annotation/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-constants/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-constants/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-enums/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-enums/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-exception/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-exception/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-mysql/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-mysql/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-redis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-redis/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-result/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-result/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-swagger/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-swagger/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-utils/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-common/ginyi-common-utils/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-framework/ginyi-framework-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-framework/ginyi-framework-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-framework/ginyi-framework-security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-framework/ginyi-framework-security/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-framework/ginyi-framework-websocket/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-framework/ginyi-framework-websocket/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-framework/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-framework/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-admin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-admin/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-server/ginyi-server-web/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ginyi-system/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ginyi-system/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>

@@ -1,10 +1,14 @@
 package ginyi.system.service;
 
 import ginyi.system.domain.SysUser;
+import ginyi.system.domain.model.dto.DeptDto;
+import ginyi.system.domain.model.dto.PostDto;
+import ginyi.system.domain.model.dto.RoleDto;
 import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.UserVo;
 
+import java.util.HashMap;
 import java.util.Set;
 
 public interface ISysUserService {
@@ -80,4 +84,25 @@ public interface ISysUserService {
      * @param userDto
      */
     public void updateStatus(UserDto userDto);
+
+    /**
+     * 根据部门 id 获取用户列表
+     * @param deptDto
+     * @return
+     */
+    public BaseVo<HashMap<String, Object>> getUserListByDeptIds(DeptDto deptDto);
+
+    /**
+     * 根据岗位 id 获取用户列表
+     * @param postDto
+     * @return
+     */
+    public BaseVo<HashMap<String, Object>> getUserListByPostIds(PostDto postDto);
+
+    /**
+     * 根据角色 id 获取用户列表
+     * @param roleDto
+     * @return
+     */
+    public BaseVo<HashMap<String, Object>> getUserListByRoleIds(RoleDto roleDto);
 }

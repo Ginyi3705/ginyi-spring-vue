@@ -14,6 +14,9 @@ import ginyi.system.domain.SysDept;
 import ginyi.system.domain.SysPost;
 import ginyi.system.domain.SysRole;
 import ginyi.system.domain.SysUser;
+import ginyi.system.domain.model.dto.DeptDto;
+import ginyi.system.domain.model.dto.PostDto;
+import ginyi.system.domain.model.dto.RoleDto;
 import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.UserVo;
@@ -27,8 +30,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SysUserServiceImpl implements ISysUserService {
@@ -216,6 +222,144 @@ public class SysUserServiceImpl implements ISysUserService {
             throw new CommonException(StateCode.ERROR_NOT_EXIST, userDto.getUserId() + CommonMessageConstants.USER_NOT_EXIST);
         }
         userMapper.updateUserStatus(userDto);
+    }
+
+    /**
+     * 根据部门 id 获取用户列表
+     *
+     * @param deptDto
+     * @return
+     */
+    @Override
+    public BaseVo<HashMap<String, Object>> getUserListByDeptIds(DeptDto deptDto) {
+        List<Long> deptIds = deptDto.getDeptIds();
+        if (deptIds.size() == 0) {
+            throw new CommonException(StateCode.ERROR_PARAMS_SERVICE, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
+        }
+        List<SysDept> deptList = deptMapper.selectList(null);
+        // 判断部门id是否合法
+        for (Long deptId : deptIds) {
+            boolean isExist = false;
+            for (SysDept dept : deptList) {
+                if (deptId.equals(dept.getDeptId())) {
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
+                throw new CommonException(StateCode.ERROR_NOT_EXIST, deptId + CommonMessageConstants.DEPT_NOT_EXIST);
+            }
+        }
+        List<SysUser> userList = userMapper.selectUserByDeptIds(deptIds);
+
+        ArrayList<HashMap<String, Object>> arrayList = new ArrayList<>();
+        for (SysUser user : userList) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("userId", user.getUserId());
+            map.put("nickName", user.getNickName());
+            arrayList.add(map);
+        }
+
+        BaseVo<HashMap<String, Object>> baseVo = new BaseVo<>();
+        baseVo.setList(arrayList);
+        baseVo.setCount(arrayList.size());
+        return baseVo;
+    }
+
+    /**
+     * 根据岗位id获取用户列表
+     * @param postDto
+     * @return
+     */
+    @Override
+    public BaseVo<HashMap<String, Object>> getUserListByPostIds(PostDto postDto) {
+        List<Long> postIds = postDto.getPostIds();
+        if (postIds.size() == 0) {
+            throw new CommonException(StateCode.ERROR_PARAMS_SERVICE, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
+        }
+        List<SysPost> postList = postMapper.selectList(null);
+        // 判断岗位id是否合法
+        for (Long postId : postIds) {
+            boolean isExist = false;
+            for (SysPost post : postList) {
+                if (postId.equals(post.getPostId())) {
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
+                throw new CommonException(StateCode.ERROR_NOT_EXIST, postId + CommonMessageConstants.POST_NOT_EXIST);
+            }
+        }
+        // 查出所有用户
+        IPage<UserVo> userList = userMapper.list(new UserDto(), new MyPage(null, null).getPage());
+
+        ArrayList<HashMap<String, Object>> arrayList = new ArrayList<>();
+        for (Long postId : postDto.getPostIds()) {
+            for (UserVo user : userList.getRecords()) {
+                HashMap<String, Object> map = new HashMap<>();
+                if (user.getPostIds().contains(postId)) {
+                    map.put("userId", user.getUserId());
+                    map.put("nickName", user.getNickName());
+                    arrayList.add(map);
+                }
+            }
+        }
+        // 去重
+        List<HashMap<String, Object>> resultList = arrayList.stream().distinct().collect(Collectors.toList());
+
+        BaseVo<HashMap<String, Object>> baseVo = new BaseVo<>();
+        baseVo.setList(resultList);
+        baseVo.setCount(resultList.size());
+        return baseVo;
+    }
+
+    /**
+     * 根据角色 id 获取用户列表
+     * @param roleDto
+     * @return
+     */
+    @Override
+    public BaseVo<HashMap<String, Object>> getUserListByRoleIds(RoleDto roleDto) {
+        List<Long> roleIds = roleDto.getRoleIds();
+        if (roleIds.size() == 0) {
+            throw new CommonException(StateCode.ERROR_PARAMS_SERVICE, CommonMessageConstants.SYS_REQUEST_ILLEGAL);
+        }
+        List<SysRole> roleList = roleMapper.selectList(null);
+        // 判断岗位id是否合法
+        for (Long roleId : roleIds) {
+            boolean isExist = false;
+            for (SysRole role : roleList) {
+                if (roleId.equals(role.getRoleId())) {
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
+                throw new CommonException(StateCode.ERROR_NOT_EXIST, roleId + CommonMessageConstants.ROLE_NOT_EXIST);
+            }
+        }
+        // 查出所有用户
+        IPage<UserVo> userList = userMapper.list(new UserDto(), new MyPage(null, null).getPage());
+
+        ArrayList<HashMap<String, Object>> arrayList = new ArrayList<>();
+        for (Long roleId : roleDto.getRoleIds()) {
+            for (UserVo user : userList.getRecords()) {
+                HashMap<String, Object> map = new HashMap<>();
+                if (user.getRoleIds().contains(roleId)) {
+                    map.put("userId", user.getUserId());
+                    map.put("nickName", user.getNickName());
+                    arrayList.add(map);
+                }
+            }
+        }
+        // 去重
+        List<HashMap<String, Object>> resultList = arrayList.stream().distinct().collect(Collectors.toList());
+
+        BaseVo<HashMap<String, Object>> baseVo = new BaseVo<>();
+        baseVo.setList(resultList);
+        baseVo.setCount(resultList.size());
+        return baseVo;
     }
 
     /**

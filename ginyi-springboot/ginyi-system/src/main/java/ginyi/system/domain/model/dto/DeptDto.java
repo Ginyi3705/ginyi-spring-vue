@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -19,6 +20,12 @@ public class DeptDto extends BaseEntity {
     @ApiModelProperty("部门id")
     @NotNull(groups = UpdateGroup.class, message = "部门id不能为空")
     private Long deptId;
+
+    /**
+     * 根据部门ids获取用户列表专用
+     */
+    @ApiModelProperty("部门id（根据部门ids获取用户列表专用）")
+    private List<Long> deptIds;
 
     @ApiModelProperty("父级id")
     private Long parentId;

@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -23,6 +24,12 @@ public class PostDto extends BaseEntity {
     @ApiModelProperty("岗位id")
     @NotNull(groups = UpdateGroup.class, message = "岗位id不能为空")
     private Long postId;
+
+    /**
+     * 根据岗位ids获取用户列表专用
+     */
+    @ApiModelProperty("岗位id（根据岗位ids获取用户列表专用）")
+    private List<Long> postIds;
 
     @ApiModelProperty("岗位编码")
     @NotBlank(groups = {UpdateGroup.class, AddGroup.class}, message = "岗位编码不能为空")

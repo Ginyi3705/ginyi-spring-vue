@@ -33,6 +33,7 @@ public class CommonMessageConstants {
     public static final String USER_NOT_FOUND = "请求参数错误，请仔细检查！";
     public static final String USER_ID_NOT_FOUND = "请求参数错误，用户ID不能为空！";
     public static final String USER_STATUS_ILLEGAL = "请求参数错误，用户状态不合法！";
+    public static final String USER_IDS_ILLEGAL = "通知的用户不能为空！";
 
 
     public static final String MENU_COMPONENT_NOT_EXIST = "组件路径不存在！";
@@ -64,6 +65,12 @@ public class CommonMessageConstants {
     public static final String DEPT_PARENT_NOT_EXIST = "上级部门不存在！";
     public static final String DEPT_ID_NOT_FOUND = "请求参数错误，部门ID不能为空！";
     public static final String DEPT_STATUS_ILLEGAL = "请求参数错误，部门状态不合法！";
+
+
+    public static final String NOTICE_NOT_EXIST = "通知公告不存在！";
+    public static final String NOTICE_CURRENT_USER_NOT_EXIST = "当前用户不存在该消息！";
+    public static final String NOTICE_HAVE_READ = "当前通知公告已确认，无需二次确认！";
+    public static final String NOTICE_NOT_ALLOW = "当前通知公告无法被修改！";
 
 
 

@@ -8,6 +8,8 @@ import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 用户表
  */
@@ -94,4 +96,12 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param userDto
      */
     public void updateUserStatus(@Param("userDto") UserDto userDto);
+
+    /**
+     * 根据部门ids获取用户列表
+     * @param deptIds
+     * @return
+     */
+    public List<SysUser> selectUserByDeptIds(List<Long> deptIds);
+
 }

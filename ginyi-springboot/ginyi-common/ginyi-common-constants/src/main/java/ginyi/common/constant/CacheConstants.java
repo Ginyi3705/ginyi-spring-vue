@@ -93,4 +93,7 @@ public class CacheConstants {
     /** 角色详情 */
     public static final String ROLE_DETAILS_BY_ROLEID_KEY = "role_details_by_roleId:";
 
+    /** 通知公告不存在的key */
+    public static final String NOTICE_NOT_EXIST_KEY = "notice_not_exist:";
+
 }

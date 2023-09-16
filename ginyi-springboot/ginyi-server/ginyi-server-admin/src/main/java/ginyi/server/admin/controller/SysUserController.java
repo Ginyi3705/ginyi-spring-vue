@@ -6,6 +6,10 @@ import ginyi.common.enums.BusinessType;
 import ginyi.common.result.CommonResult;
 import ginyi.common.swagger.AddGroup;
 import ginyi.common.swagger.UpdateGroup;
+import ginyi.system.domain.SysUser;
+import ginyi.system.domain.model.dto.DeptDto;
+import ginyi.system.domain.model.dto.PostDto;
+import ginyi.system.domain.model.dto.RoleDto;
 import ginyi.system.domain.model.dto.UserDto;
 import ginyi.system.domain.model.vo.BaseVo;
 import ginyi.system.domain.model.vo.UserVo;
@@ -18,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.Set;
 
 @Api(tags = "用户模块")
@@ -137,5 +142,76 @@ public class SysUserController {
                                              @RequestParam(value = "pageSize", required = false) Long pageSize) {
         BaseVo<UserVo> baseVo = userService.list(userDto, page, pageSize);
         return CommonResult.success(baseVo);
+    }
+
+    @ApiOperation("根据部门id获取用户")
+    @PostMapping("getUserListByDeptIds")
+    @ApiOperationSupport(ignoreParameters = {
+            "deptDto.deptId",
+            "deptDto.parentId",
+            "deptDto.ancestors",
+            "deptDto.deptName",
+            "deptDto.sort",
+            "deptDto.leader",
+            "deptDto.phone",
+            "deptDto.email",
+            "deptDto.beginTime",
+            "deptDto.endTime",
+            "deptDto.updateBy",
+            "deptDto.updateTime",
+            "deptDto.createBy",
+            "deptDto.createTime",
+            "deptDto.remark",
+            "deptDto.params",
+            "deptDto.status",
+    })
+    public CommonResult<BaseVo<HashMap<String, Object>>> getUserListByDeptIds(@RequestBody DeptDto deptDto){
+        BaseVo<HashMap<String, Object>> userList = userService.getUserListByDeptIds(deptDto);
+        return CommonResult.success(userList);
+    }
+
+    @ApiOperation("根据岗位id获取用户")
+    @PostMapping("getUserListByPostIds")
+    @ApiOperationSupport(ignoreParameters = {
+            "postDto.postId",
+            "postDto.postName",
+            "postDto.sort",
+            "postDto.postCode",
+            "postDto.beginTime",
+            "postDto.endTime",
+            "postDto.updateBy",
+            "postDto.updateTime",
+            "postDto.createBy",
+            "postDto.createTime",
+            "postDto.remark",
+            "postDto.params",
+            "postDto.status",
+    })
+    public CommonResult<BaseVo<HashMap<String, Object>>> getUserListByPostIds(@RequestBody PostDto postDto){
+        BaseVo<HashMap<String, Object>> userList = userService.getUserListByPostIds(postDto);
+        return CommonResult.success(userList);
+    }
+
+    @ApiOperation("根据角色id获取用户")
+    @PostMapping("getUserListByRoleIds")
+    @ApiOperationSupport(ignoreParameters = {
+            "roleDto.roleId",
+            "roleDto.roleName",
+            "roleDto.sort",
+            "roleDto.roleKey",
+            "roleDto.beginTime",
+            "roleDto.endTime",
+            "roleDto.updateBy",
+            "roleDto.updateTime",
+            "roleDto.createBy",
+            "roleDto.createTime",
+            "roleDto.remark",
+            "roleDto.params",
+            "roleDto.status",
+            "roleDto.permissions",
+    })
+    public CommonResult<BaseVo<HashMap<String, Object>>> getUserListByPostIds(@RequestBody RoleDto roleDto){
+        BaseVo<HashMap<String, Object>> userList = userService.getUserListByRoleIds(roleDto);
+        return CommonResult.success(userList);
     }
 }

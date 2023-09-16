@@ -25,6 +25,12 @@ public class RoleDto extends BaseEntity {
     @NotNull(groups = UpdateGroup.class, message = "角色id不能为空")
     private Long roleId;
 
+    /**
+     * 根据角色ids获取用户列表专用
+     */
+    @ApiModelProperty("岗位id（根据角色ids获取用户列表专用）")
+    private List<Long> roleIds;
+
     @ApiModelProperty("角色名称")
     @NotBlank(groups = {AddGroup.class, UpdateGroup.class}, message = "角色名称不能为空")
     @Size(max = 20, message = "角色名称不能超过20个字符")

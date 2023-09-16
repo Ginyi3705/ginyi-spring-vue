@@ -32,7 +32,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ginyi-common" options="-parameters" />
+      <module name="ginyi-common" options="" />
       <module name="ginyi-common-annotation" options="-parameters" />
       <module name="ginyi-common-config" options="-parameters" />
       <module name="ginyi-common-constants" options="-parameters" />
@@ -52,7 +52,7 @@
       <module name="ginyi-server-common" options="-parameters" />
       <module name="ginyi-server-system" options="-parameters" />
       <module name="ginyi-server-web" options="-parameters" />
-      <module name="ginyi-springboot" options="" />
+      <module name="ginyi-springboot" options="-parameters" />
       <module name="ginyi-system" options="-parameters" />
     </option>
   </component>
