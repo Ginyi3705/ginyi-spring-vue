@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Ubuntu - MySQL8.0
+ Source Server         : MySQL8.0
  Source Server Type    : MySQL
  Source Server Version : 80027
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 28/06/2023 22:24:12
+ Date: 16/09/2023 15:27:21
 */
 
 SET NAMES utf8mb4;
@@ -309,7 +309,7 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2035 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2039 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -328,10 +328,10 @@ INSERT INTO `sys_menu` VALUES (107, '通知公告', 1, 'notice', 8, 'notice', 'p
 INSERT INTO `sys_menu` VALUES (108, '日志管理', 1, 'log', 9, 'log', '', '', 1, 0, '0', 'M', '0', '0', '', 'Mic', 'admin', '2022-12-03 07:21:33', '', NULL, '日志管理菜单');
 INSERT INTO `sys_menu` VALUES (109, '在线用户', 2, 'online', 1, 'online', 'pages/monitor/online/index', '', 1, 0, '0', 'C', '0', '0', 'monitor:online:list', 'Disc', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-23 21:14:13', '在线用户菜单');
 INSERT INTO `sys_menu` VALUES (110, '定时任务', 2, 'task', 2, 'task', 'pages/monitor/task/index', '', 1, 0, '0', 'C', '0', '0', 'monitor:job:list', 'ExtensionPuzzleSharp', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:59:34', '定时任务菜单');
-INSERT INTO `sys_menu` VALUES (111, '数据监控', 2, 'data', 3, 'data', 'pages/monitor/data/index', '', 1, 0, '0', 'C', '0', '1', 'monitor:druid:list', 'FilterCircle', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:56:44', '数据监控菜单');
-INSERT INTO `sys_menu` VALUES (112, '服务监控', 2, 'service', 4, 'service', 'pages/monitor/service/index', '', 1, 0, '0', 'C', '0', '1', 'monitor:server:list', 'FootballSharp', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:56:58', '服务监控菜单');
-INSERT INTO `sys_menu` VALUES (113, '缓存监控', 2, 'cache', 5, 'cache', 'pages/monitor/cache/index', '', 1, 0, '0', 'C', '0', '1', 'monitor:cache:list', 'Leaf', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:57:11', '缓存监控菜单');
-INSERT INTO `sys_menu` VALUES (114, '缓存列表', 2, 'cacheList', 6, 'cacheList', 'pages/monitor/cacheList/index', '', 1, 0, '0', 'C', '0', '1', 'monitor:cache:list', 'LogoOctocat', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 16:57:28', '缓存列表菜单');
+INSERT INTO `sys_menu` VALUES (111, '数据监控', 2, 'data', 3, 'data', 'pages/monitor/data/index', '', 1, 0, '0', 'C', '0', '0', 'monitor:druid:list', 'FilterCircle', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-06-30 14:02:06', '数据监控菜单');
+INSERT INTO `sys_menu` VALUES (112, '服务监控', 2, 'service', 4, 'service', 'pages/monitor/service/index', '', 1, 0, '0', 'C', '0', '0', 'monitor:server:list', 'FootballSharp', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-06-30 14:02:07', '服务监控菜单');
+INSERT INTO `sys_menu` VALUES (113, '缓存监控', 2, 'cache', 5, 'cache', 'pages/monitor/cache/index', '', 1, 0, '0', 'C', '0', '0', 'monitor:cache:list', 'Leaf', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-06-30 14:02:08', '缓存监控菜单');
+INSERT INTO `sys_menu` VALUES (114, '缓存列表', 2, 'cacheList', 6, 'cacheList', 'pages/monitor/cacheList/index', '', 1, 0, '0', 'C', '0', '0', 'monitor:cache:list', 'LogoOctocat', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-06-30 17:39:42', '缓存列表菜单');
 INSERT INTO `sys_menu` VALUES (116, '代码生成', 3, 'code', 2, 'code', 'pages/systools/code/index', '', 1, 0, '0', 'C', '0', '0', 'tool:gen:list', 'Mail', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-02-26 17:05:52', '代码生成菜单');
 INSERT INTO `sys_menu` VALUES (500, '操作日志', 108, 'operationLog', 1, 'operationLog', 'pages/system/log/operation/index', '', 1, 0, '0', 'C', '0', '0', 'monitor:operlog:list', 'Notifications', 'admin', '2022-12-03 07:21:33', '', NULL, '操作日志菜单');
 INSERT INTO `sys_menu` VALUES (501, '登录日志', 108, 'loginLog', 2, 'loginLog', 'pages/system/log/login/index', '', 1, 0, '0', 'C', '0', '0', 'monitor:loginlog:list', 'Planet', 'admin', '2022-12-03 07:21:33', '', NULL, '登录日志菜单');
@@ -400,6 +400,10 @@ INSERT INTO `sys_menu` VALUES (2031, '订单管理', 0, 'order', 4, 'order', '',
 INSERT INTO `sys_menu` VALUES (2032, '订单列表', 2031, 'orderList', 1, 'orderList', 'pages/order/index', NULL, 1, 0, '0', 'C', '0', '0', 'order:list', 'Card', 'Ginyi', '2023-02-28 21:22:53', 'Ginyi', '2023-02-28 21:28:47', '');
 INSERT INTO `sys_menu` VALUES (2033, '商品管理', 0, 'product', 5, 'product', NULL, NULL, 1, 0, '0', 'M', '0', '0', NULL, 'Cart', 'Ginyi', '2023-02-28 21:35:33', 'Ginyi', '2023-05-28 20:39:38', '');
 INSERT INTO `sys_menu` VALUES (2034, '商品列表', 2033, 'productList', 1, 'productList', 'pages/product/index', NULL, 1, 0, '0', 'C', '0', '0', 'product:list', 'Documents', 'Ginyi', '2023-02-28 21:37:50', 'Ginyi', '2023-05-28 18:01:16', '');
+INSERT INTO `sys_menu` VALUES (2035, '查看缓存详情', 114, NULL, 0, '', NULL, NULL, 1, 0, NULL, 'F', '0', '0', 'monitor:cache:details', '#', 'Ginyi', '2023-06-30 17:35:50', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2036, '删除缓存', 114, NULL, 2, '', NULL, NULL, 1, 0, NULL, 'F', '0', '0', 'monitor:cache:remove', '#', 'Ginyi', '2023-06-30 17:37:58', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2037, '已阅公告', 107, NULL, 5, '', NULL, NULL, 1, 0, NULL, 'F', '0', '0', 'system:notice:haveRead', '#', 'Ginyi', '2023-07-09 00:31:01', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2038, '公告查询（管理员）', 107, NULL, 0, '', NULL, NULL, 1, 0, NULL, 'F', '0', '0', 'system:notice:query:admin', '#', 'Ginyi', '2023-07-09 00:32:29', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -407,23 +411,26 @@ INSERT INTO `sys_menu` VALUES (2034, '商品列表', 2033, 'productList', 1, 'pr
 DROP TABLE IF EXISTS `sys_notice`;
 CREATE TABLE `sys_notice`  (
   `notice_id` int NOT NULL AUTO_INCREMENT COMMENT '公告ID',
-  `notice_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '公告标题',
-  `notice_type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '公告类型（1通知 2公告）',
-  `notice_content` longblob NULL COMMENT '公告内容',
-  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '公告状态（0正常 1关闭）',
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '公告标题',
+  `type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '公告类型（0通知 1公告）',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '公告内容',
+  `user_ids` json NOT NULL COMMENT '通知的用户',
+  `user_read_ids` json NULL COMMENT '已阅的用户',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '公告状态（0正常 1关闭）',
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '通知公告表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '通知公告表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_notice
 -- ----------------------------
-INSERT INTO `sys_notice` VALUES (1, '温馨提醒：2018-07-01 若依新版本发布啦', '2', 0xE696B0E78988E69CACE58685E5AEB9, '0', 'admin', '2022-12-03 07:21:33', '', NULL, '管理员');
-INSERT INTO `sys_notice` VALUES (2, '维护通知：2018-07-01 若依系统凌晨维护', '1', 0xE7BBB4E68AA4E58685E5AEB9, '0', 'admin', '2022-12-03 07:21:33', '', NULL, '管理员');
+INSERT INTO `sys_notice` VALUES (1, '温馨提醒：2018-07-01 若依新版本发布啦', '2', '新版本内容', '[1, 2]', '[1, 2]', '0', 'admin', '2022-12-03 07:21:33', '', NULL, NULL);
+INSERT INTO `sys_notice` VALUES (2, '维护通知：2018-07-01 若依系统凌晨维护', '1', '维护内容', '[1, 2]', '[2]', '0', 'admin', '2022-12-03 07:21:33', '', NULL, NULL);
+INSERT INTO `sys_notice` VALUES (14, '测试标题', '1', '测试标题内容', '[1]', NULL, '0', 'admin', '2023-07-02 18:42:14', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -473,13 +480,13 @@ CREATE TABLE `sys_role`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 112 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, '超级管理员', 'admin', 1, '1', 1, 1, '0', '0', 'admin', '2022-12-03 07:21:33', '', NULL, '超级管理员');
-INSERT INTO `sys_role` VALUES (2, '系统管理员', 'system', 1, '2', 1, 1, '0', '0', 'admin', '2022-12-03 07:21:33', 'admin', '2023-03-03 21:57:45', '专门管理系统的');
+INSERT INTO `sys_role` VALUES (2, '系统管理员', 'system', 1, '2', 1, 1, '0', '0', 'admin', '2022-12-03 07:21:33', 'Ginyi', '2023-07-09 00:40:25', '专门管理系统的');
 INSERT INTO `sys_role` VALUES (111, '订单管理员', 'order', 0, '1', 1, 1, '0', '0', 'Ginyi', '2023-02-26 16:05:39', 'Ginyi', '2023-02-28 21:33:53', '专门管理订单的');
 INSERT INTO `sys_role` VALUES (112, '商品管理员', 'conduct', 2, '1', 1, 1, '0', '0', 'Ginyi', '2023-02-26 16:06:28', 'Ginyi', '2023-05-28 20:39:27', '专门管理商品的');
 
@@ -513,7 +520,7 @@ CREATE TABLE `sys_role_menu`  (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES (2, '[1, 100, 101, 102, 103, 104, 105, 106, 107, 108, 500, 501, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 2, 109, 1046, 1047, 1048, 110, 1049, 1050, 1051, 1052, 1053, 1054, 111, 112, 113, 114, 3, 116, 1055, 1056, 1057, 1058, 1059, 1060]');
+INSERT INTO `sys_role_menu` VALUES (2, '[1, 100, 101, 102, 103, 104, 105, 106, 107, 108, 500, 501, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 2, 109, 1046, 1047, 1048, 110, 1049, 1050, 1051, 1052, 1053, 1054, 111, 112, 113, 114, 3, 116, 1055, 1056, 1057, 1058, 1059, 1060, 2035, 2036, 2037, 2038]');
 INSERT INTO `sys_role_menu` VALUES (111, '[2031, 2032]');
 INSERT INTO `sys_role_menu` VALUES (112, '[2033, 2034]');
 
@@ -542,19 +549,19 @@ CREATE TABLE `sys_user`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 147 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '127.0.0.1', '2023-05-27 22:37:01', 'admin', '2022-12-03 07:21:32', 'Ginyi', '2023-05-27 22:37:01', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'Ginyi', '(´･_･`)', '00', 'Ginyi@aliyun.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '127.0.0.1', '2023-06-28 22:03:44', 'admin', '2022-12-03 07:21:32', 'Ginyi', '2023-06-28 22:03:44', '测试员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.101', '2023-07-09 01:06:17', 'admin', '2022-12-03 07:21:32', 'Ginyi', '2023-07-09 01:06:17', '管理员');
+INSERT INTO `sys_user` VALUES (2, 105, 'Ginyi', '(´･_･`)', '00', 'Ginyi@aliyun.com', '15666666666', '1', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '192.168.0.103', '2023-09-16 15:14:49', 'admin', '2022-12-03 07:21:32', 'Ginyi', '2023-09-16 15:14:49', '测试员');
 INSERT INTO `sys_user` VALUES (133, 101, 'order', '订单管理员', '00', '', '13800138000', '0', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '127.0.0.1', '2023-03-02 23:06:23', 'ginyi', '2022-12-23 07:40:55', 'Ginyi', '2023-03-02 23:06:23', NULL);
 INSERT INTO `sys_user` VALUES (134, 104, 'product', '商品管理员', '00', '', '13800138000', '0', '', '$2a$10$0zqV6SsWmLkjBroBlzgnVO/mNRNTjbJrrCbUhRPOKZa9vyLnyJAR6', '0', '0', '127.0.0.1', '2023-05-27 22:38:58', 'ginyi', '2022-12-23 07:41:02', 'Ginyi', '2023-05-28 17:04:05', NULL);
 INSERT INTO `sys_user` VALUES (138, 106, 'tony', '测试用户3', '00', '', '13800138000', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 07:41:28', 'admin', '2023-03-03 21:50:14', '没有初始化密码，不能登录');
-INSERT INTO `sys_user` VALUES (139, 109, 'lucy', '测试用户4', '00', '', '13800138000', '0', '', '', '1', '0', '', NULL, 'ginyi', '2022-12-23 13:31:22', 'Ginyi', '2023-05-28 17:05:37', '没有初始化密码，不能登录');
+INSERT INTO `sys_user` VALUES (139, 109, 'lucy', '测试用户4', '00', '', '13800138000', '0', '', '', '1', '0', '', NULL, 'ginyi', '2022-12-23 13:31:22', 'Ginyi', '2023-07-09 13:20:26', '没有初始化密码，不能登录');
 INSERT INTO `sys_user` VALUES (140, 101, 'carry', '测试用户5', '00', '', '', '0', '', '', '0', '0', '', NULL, 'ginyi', '2022-12-23 21:35:13', 'Ginyi', '2023-05-28 20:35:40', '没有初始化密码，不能登录');
-INSERT INTO `sys_user` VALUES (145, 109, 'test6', '测试用户6', '00', '', '', '0', '', '', '1', '0', '', NULL, 'Ginyi', '2023-02-26 16:40:51', 'Ginyi', '2023-05-28 20:35:45', '没有初始化密码，不能登录');
+INSERT INTO `sys_user` VALUES (145, 109, 'test6', '测试用户6', '00', '', '', '0', '', '', '0', '0', '', NULL, 'Ginyi', '2023-02-26 16:40:51', 'Ginyi', '2023-07-09 13:20:24', '没有初始化密码，不能登录');
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -593,7 +600,7 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES (1, '[1]');
 INSERT INTO `sys_user_role` VALUES (2, '[2]');
-INSERT INTO `sys_user_role` VALUES (133, '[111]');
+INSERT INTO `sys_user_role` VALUES (133, '[111, 112]');
 INSERT INTO `sys_user_role` VALUES (134, '[112]');
 INSERT INTO `sys_user_role` VALUES (138, '[111]');
 INSERT INTO `sys_user_role` VALUES (139, '[112]');
